@@ -477,3 +477,6 @@ CREATE TABLE product_options (
 		REFERENCES products (id)
 		ON DELETE CASCADE
 );
+
+ALTER TABLE issued_coupons ADD COLUMN coupon_id BIGINT NOT NULL;
+ALTER TABLE issued_coupons ADD 	CONSTRAINT `fk_issuedcoupons_coupon` FOREIGN KEY (coupon_id) REFERENCES coupons (id) ON DELETE CASCADE;

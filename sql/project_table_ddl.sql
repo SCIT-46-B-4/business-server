@@ -477,5 +477,3 @@ CREATE TABLE product_options (
 		REFERENCES products (id)
 		ON DELETE CASCADE
 );
-
-show tables;

@@ -1,0 +1,134 @@
+package com.scit.letsleave.domain.destination.entity;
+
+import com.scit.letsleave.domain.destination.dto.DestinationDTO;
+import com.scit.letsleave.domain.schedule.entity.RouteEntity;
+import com.vladmihalcea.hibernate.type.json.JsonType;
+import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+
+import java.awt.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
+@Builder
+@Table(name = "destinations")
+public class DestinationEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    // Change to Enum
+    // TODO  : @Enumerated(EnumType.STRING)로 수정 고려
+    @Convert(converter = DestinationTypeConverter.class)
+    @Column(name = "type", nullable = false, length = 1)
+    private DestinationType type;
+
+    @Column(name = "kr_name", nullable = false)
+    private String krName;
+
+    @Column(name = "loc_name", nullable = false)
+    private String locName;
+
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    @Column(name = "content", nullable = false)
+    private String content;
+
+    // TODO : DDL상 Spatial Data Types POINT로 변경에 따른 코드 수정 고려
+    // Point Type을 처리하는 방법에 대해서 공부, 변경
+    @Column(name = "latitude", precision = 10, scale = 7, nullable = false)
+    private BigDecimal latitude;
+
+    @Column(name = "longitude", precision = 10, scale = 7, nullable = false)
+    private BigDecimal longitude;
+
+    @Column(name = "address", nullable = false)
+    private String address;
+
+    @Column(name = "contact")
+    private String contact;
+
+    @Column(name = "homepage")
+    private String homepage;
+
+    @Column(name = "how_to_go", nullable = false)
+    private String howToGo;
+
+    @Column(name = "available_time")
+    private String availableTime;
+
+    @Type(JsonType.class)
+    @Column(name = "feature", columnDefinition = "json")
+    private Map<String, Object> feature;
+
+    @Column(name = "score", nullable = false)
+    @Builder.Default
+    private Double score = 0.0;
+
+    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "coordinate", columnDefinition = "POINT", nullable = false)
+    private Point coordinate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
+    private CityEntity city;
+
+    @OneToMany(mappedBy = "destinationEntity", cascade = CascadeType.ALL)
+    private List<RouteEntity> routes;
+
+    public static DestinationEntity toEntity(DestinationDTO dto,
+                                             CityEntity city,
+                                             List<RouteEntity> routeList) {
+        GeometryFactory geometryFactory = new GeometryFactory();
+
+        // 좌표 분리 및 할당
+        Point point = geometryFactory.createPoint(
+                new Coordinate(dto.getLongitude().doubleValue(), dto.getLatitude().doubleValue())
+        );
+        return DestinationEntity.builder()
+                .id(dto.getId())
+                .type(dto.getType())
+                .krName(dto.getKrName())
+                .locName(dto.getLocName())
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .latitude(dto.getLatitude())
+                .longitude(dto.getLongitude())
+                .address(dto.getAddress())
+                .contact(dto.getContact())
+                .homepage(dto.getHomepage())
+                .howToGo(dto.getHowToGo())
+                .availableTime(dto.getAvailableTime())
+                .feature(dto.getFeature())
+                .score(dto.getScore())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .city(city)
+                .routes(routeList)
+                .build();
+    }
+}

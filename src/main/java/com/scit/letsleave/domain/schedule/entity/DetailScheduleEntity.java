@@ -1,6 +1,5 @@
 package com.scit.letsleave.domain.schedule.entity;
 
-import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,33 +7,30 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
 @Builder
-@Table(name = "routes")
-public class RouteEntity {
+@Entity
+@Table(name = "detail_schedules")
+public class DetailScheduleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    // ManytoOne route -> detailSchedules
+    // ManyToOne : detail_schedule -> schedule
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "detail_schedule_id", nullable = false)
-    private DetailScheduleEntity detailScheduleEntity;
+    @JoinColumn(name = "schedule_id", nullable = false)
+    private ScheduleEntity scheduleEntity;
 
-    // ManyToOne route -> destinations
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "destination_id", nullable = false)
-    private DestinationEntity destinationEntity;
-
-    @Column(name = "order_number", nullable = false)
-    private Integer orderNumber;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
@@ -42,4 +38,8 @@ public class RouteEntity {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    // OneToMany : detail_schedule -> route
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "detailScheduleEntity", cascade = CascadeType.ALL)
+    private List<RouteEntity> routes;
 }

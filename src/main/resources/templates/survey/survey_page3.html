@@ -5,13 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 사전 설문</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script>
+        window.onload = function () {
+            // 이전 페이지 선택값 복원
+            document.getElementById('selectedCity').value = localStorage.getItem('selectedCity') || '';
+            document.getElementById('selectedPeriod').value = localStorage.getItem('selectedPeriod') || '';
+            document.getElementById('selectedcompanion').value = localStorage.getItem('selectedCompanion') || '';
+            document.getElementById('selectedtravel_style').value = localStorage.getItem('selectedTravelStyle') || '';
+        }
+
+        function beforeSubmit() {
+            // 이동 방식(transport) 저장
+            const transportChecked = document.querySelectorAll('input[name="transport"]:checked');
+            const transportValues = Array.from(new Set(transportChecked.map(input => input.value)));
+            document.getElementById('selectedtransport').value = transportValues.join(',');
+
+            // 일정 스타일(schedule_style) 저장
+            const scheduleStyle = document.querySelector('input[name="schedule_style"]:checked');
+            if (scheduleStyle) {
+                document.getElementById('selectedschedule_style').value = scheduleStyle.value;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 
 <body>
     <div class="container">
         <a href="#" class="back-button" onclick="history.back(); return false;">←</a>
         <div class="page-number">3/3</div>
-        <form id="surveyForm" method="post">
+        <form id="surveyForm" method="post" th:action="@{/schedule/survey/submit}" onsubmit="return beforeSubmit()">
+            <!-- 1번 페이지의 히든 인풋들 -->
+            <input type="hidden" name="city" id="selectedCity">
+            <input type="hidden" name="period" id="selectedPeriod">
+
+            <!-- 2번 페이지의 히든 인풋들 -->
+            <input type="hidden" name="companion" id="selectedcompanion">
+            <input type="hidden" name="travel_style" id="selectedtravel_style">
+
+            <!-- 3번 페이지의 히든 인풋들 -->
+            <input type="hidden" name="transport" id="selectedtransport">
+            <input type="hidden" name="schedule_style" id="selectedschedule_style">
+
             <!-- 5번 문항 -->
             <div class="question" id="transport">
                 <h3>5. 선호하는 이동 방식은?</h3>
@@ -19,27 +56,27 @@
                 <div class="options">
                     <label>
                         <input type="checkbox" name="transport" value="walk">
-                        도보 위주
+                        <span>도보 위주</span>
                     </label>
                     <label>
                         <input type="checkbox" name="transport" value="public">
-                        대중교통 위주
+                        <span>대중교통 위주</span>
                     </label>
                     <label>
                         <input type="checkbox" name="transport" value="taxi">
-                        택시/차량 위주
+                        <span>택시/차량 위주</span>
                     </label>
                     <label>
                         <input type="checkbox" name="transport" value="rental">
-                        렌터카 위주
+                        <span>렌터카 위주</span>
                     </label>
                     <label>
                         <input type="checkbox" name="transport" value="bike">
-                        자전거/오토바이 위주
+                        <span>자전거/오토바이 위주</span>
                     </label>
                     <label>
                         <input type="checkbox" name="transport" value="flexible">
-                        상황에 따라 유연
+                        <span>상황에 따라 유연</span>
                     </label>
                 </div>
             </div>
@@ -48,9 +85,16 @@
             <div class="question" id="schedule_style">
                 <h3>6. 선호하는 여행 일정은?</h3>
                 <p>선택해주신 스타일로 일정을 만들어드려요.</p>
-                <div class="options">
-                    <button type="button" data-value="tight">빽빽한 일정 선호</button>
-                    <button type="button" data-value="relaxed">널널한 일정 선호</button>
+                <div class="options two-columns">
+
+                    <label>
+                        <input type="radio" name="schedule_style" value="tight">
+                        <span>빽빽한 일정 선호</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="schedule_style" value="relaxed">
+                        <span>널널한 일정 선호</span>
+                    </label>
                 </div>
             </div>
             <button type="submit" class="submit-button">바로 추천 받기</button>

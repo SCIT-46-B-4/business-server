@@ -5,22 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 사전 설문</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script>
+        function saveAndGoToNextPage() {
+            const selectedCity = document.querySelector('input[name="city"]:checked');
+            const selectedPeriod = document.querySelector('input[name="period"]:checked');
+
+            if (!selectedCity || !selectedPeriod) {
+                alert('도시와 기간을 선택해주세요.');
+                return;
+            }
+
+            localStorage.setItem('selectedCity', selectedCity.value);
+            localStorage.setItem('selectedPeriod', selectedPeriod.value);
+
+            location.href = '/schedule/survey/page2';
+        }
+    </script>
 </head>
 
 <body>
     <div class="container">
         <a th:href="@{/}" class="back-button">←</a>
         <div class="page-number">1/3</div>
-        <form id="surveyForm" method="post">
+
+        <form id="surveyForm">
+            <!-- hidden inputs for storing selections -->
+            <input type="hidden" name="city" id="selectedCity">
+            <input type="hidden" name="period" id="selectedPeriod">
             <!-- 1번 문항 -->
             <div class="question" id="city">
                 <h3>1. 떠나고 싶은 도시는?</h3>
                 <p>도시 1곳을 선택해주세요.</p>
-                <div class="options">
-                    <button type="button" data-value="tokyo">도쿄</button>
-                    <button type="button" data-value="osaka">오사카</button>
-                    <button type="button" data-value="fukuoka">후쿠오카</button>
-                    <button type="button" data-value="sapporo">삿포로</button>
+                <div class="options two-columns">
+                    <label>
+                        <input type="radio" value="tokyo" name="city">
+                        <span>도쿄</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="osaka" name="city">
+                        <span>오사카</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="fukuoka" name="city">
+                        <span>후쿠오카</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="sapporo" name="city">
+                        <span>삿포로</span>
+                    </label>
                 </div>
             </div>
 
@@ -29,15 +62,34 @@
                 <h3>2. 여행 기간은?</h3>
                 <p>원하는 기간을 선택해 주세요.</p>
                 <div class="options">
-                    <button type="" data-value="1n2d">1박 2일</button>
-                    <button type="button" data-value="2n3d">2박 3일</button>
-                    <button type="button" data-value="3n4d">3박 4일</button>
-                    <button type="button" data-value="4n5d">4박 5일</button>
-                    <button type="button" data-value="5n6d">5박 6일</button>
+                    <label>
+                        <input type="radio" value="daytrip" name="period">
+                        <span>당일치기</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="1n2d" name="period">
+                        <span>1박 2일</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="2n3d" name="period">
+                        <span>2박 3일</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="3n4d" name="period">
+                        <span>3박 4일</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="4n5d" name="period">
+                        <span>4박 5일</span>
+                    </label>
+                    <label>
+                        <input type="radio" value="5n6d" name="period">
+                        <span>5박 6일</span>
+                    </label>
                 </div>
             </div>
 
-            <button type="button" class="submit-button" onclick="location.href='/schedule/survey/page2'">다음</button>
+            <button type="button" class="submit-button" onclick="saveAndGoToNextPage()">다음</button>
         </form>
     </div>
 </body>

@@ -1,4 +1,4 @@
-package com.scit.letsleave.domain;
+package com.scit.letsleave;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

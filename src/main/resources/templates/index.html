@@ -1,11 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+    <script th:src="@{/script/jQuery.js}" src="../static/script/jQuery.js"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
+    <script th:src="@{/script/index.js}" src="../static/script/index.js"></script>
+    <link rel="stylesheet" th:href="@{/css/reset.css}" href="../static/css/reset.css">
+    <link rel="stylesheet" th:href="@{/css/index.css}" href="../static/css/index.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../static/css/fragments/header.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../static/css/fragments/slidePanel.css">
+    <title>떠나조</title>
 </head>
 <body>
-    index
+    <!-- fragments place -->
+    <div th:insert="fragments/header :: top-bar"></div>
+    <div th:insert="fragments/slidePanel :: slide-panel"></div>
+
+    <!-- Index Contents place -->
+    <div id="mainContentsContainer">
+        <div class="guide-container" id="guideContainer">
+            <button class="arrow-btn" id="prevBtn">&lt;</button>
+            <div class="guide-wrapper" id="guideWrapper">
+                <div class="guide-slide">
+                    <div class="guide-box">1</div>
+                    <div class="guide-box">2</div>
+                    <div class="guide-box">3</div>
+                    <div class="guide-box">4</div>
+                    <div class="guide-box">5</div>
+                    <div class="guide-box">6</div>
+                    <div class="guide-box">7</div>
+                    <div class="guide-box">8</div>
+                    <div class="guide-box">9</div>
+                    <div class="guide-box">10</div>
+                </div>
+                <div class="guide-slide">
+                    <div class="guide-box">11</div>
+                    <div class="guide-box">12</div>
+                    <div class="guide-box">13</div>
+                    <div class="guide-box">14</div>
+                    <div class="guide-box">15</div>
+                    <div class="guide-box">16</div>
+                    <div class="guide-box">17</div>
+                    <div class="guide-box">18</div>
+                    <div class="guide-box">19</div>
+                    <div class="guide-box">20</div>
+                </div>
+                <button class="arrow-btn" id="nextBtn">&gt;</button>
+            </div>
+        </div>
+
+        <div class="city-container" id="cityContainer">
+            <div class="auto-city-slider-wrapper" id="autoCitySliderWrapper">
+                <div class="auto-city-slide">
+                    <img th:src="@{/images/}" src="../static/images/" alt="이미지">
+                </div>
+                <div class="auto-city-slide">
+                    <img th:src="@{/images/}" src="../static/images/" alt="이미지">
+                </div>
+                <div class="auto-city-slide">
+                    <img th:src="@{/images/}" src="../static/images/" alt="이미지">
+                </div>
+            </div>
+        </div>
+
+        <div class="schedule-review-container" id="scheduleReviewContainer">
+            <div class="schedule-review-col">
+                <div class="schedule-review-box">1</div>
+                <div class="schedule-review-box">2</div>
+                <div class="schedule-review-box">3</div>
+                <div class="schedule-review-box">4</div>
+                <div class="schedule-review-box">5</div>
+                <div class="schedule-review-box">6</div>
+                <div class="schedule-review-box">7</div>
+                <div class="schedule-review-box">8</div>
+                <div class="schedule-review-box">9</div>
+                <div class="schedule-review-box">10</div>
+            </div>
+            <a th:href="@{/}" href="#" class="more-button">더보기</a>
+        </div>
+    </div>
 </body>
 </html>

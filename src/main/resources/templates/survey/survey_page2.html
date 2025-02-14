@@ -9,32 +9,9 @@
 
 <body>
     <div class="container">
+        <a href="#" class="back-button" onclick="history.back(); return false;">←</a>
+        <div class="page-number">2/3</div>
         <form id="surveyForm" method="post">
-            <!-- 1번 문항 -->
-            <div class="question" id="city">
-                <h3>1. 떠나고 싶은 도시는?</h3>
-                <p>도시 1곳을 선택해주세요.</p>
-                <div class="options">
-                    <button type="button" data-value="tokyo">도쿄</button>
-                    <button type="button" data-value="osaka">오사카</button>
-                    <button type="button" data-value="fukuoka">후쿠오카</button>
-                    <button type="button" data-value="sapporo">삿포로</button>
-                </div>
-            </div>
-
-            <!-- 2번 문항 -->
-            <div class="question" id="period">
-                <h3>2. 여행 기간은?</h3>
-                <p>원하는 기간을 선택해 주세요.</p>
-                <div class="options">
-                    <button type="" data-value="1n2d">1박 2일</button>
-                    <button type="button" data-value="2n3d">2박 3일</button>
-                    <button type="button" data-value="3n4d">3박 4일</button>
-                    <button type="button" data-value="4n5d">4박 5일</button>
-                    <button type="button" data-value="5n6d">5박 6일</button>
-                </div>
-            </div>
-
             <!-- 3번 문항 -->
             <div class="question" id="companion">
                 <h3>3. 누구와 떠나나요?</h3>
@@ -111,47 +88,7 @@
                 </div>
             </div>
 
-            <!-- 5번 문항 -->
-            <div class="question" id="transport">
-                <h3>5. 선호하는 이동 방식은?</h3>
-                <p>다중 선택이 가능해요.</p>
-                <div class="options">
-                    <label>
-                        <input type="checkbox" name="transport" value="walk">
-                        도보 위주
-                    </label>
-                    <label>
-                        <input type="checkbox" name="transport" value="public">
-                        대중교통 위주
-                    </label>
-                    <label>
-                        <input type="checkbox" name="transport" value="taxi">
-                        택시/차량 위주
-                    </label>
-                    <label>
-                        <input type="checkbox" name="transport" value="rental">
-                        렌터카 위주
-                    </label>
-                    <label>
-                        <input type="checkbox" name="transport" value="bike">
-                        자전거/오토바이 위주
-                    </label>
-                    <label>
-                        <input type="checkbox" name="transport" value="flexible">
-                        상황에 따라 유연
-                    </label>
-                </div>
-            </div>
-
-            <!-- 6번 문항 -->
-            <div class="question" id="schedule_style">
-                <h3>6. 선호하는 여행 일정은?</h3>
-                <p>선택해주신 스타일로 일정을 만들어드려요.</p>
-                <div class="options">
-                    <button type="button" data-value="tight">빽빽한 일정 선호</button>
-                    <button type="button" data-value="relaxed">널널한 일정 선호</button>
-                </div>
-            </div>
+            <button type="button" class="submit-button" onclick="location.href='/schedule/survey/page3'">다음</button>
         </form>
     </div>
 </body>

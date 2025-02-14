@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 사전 설문</title>
+</head>
+
+<body>
+    <div class="container">
+        <a href="#" class="back-button" onclick="history.back(); return false;">←</a>
+        <div class="page-number">3/3</div>
+        <form id="surveyForm" method="post">
+            <!-- 5번 문항 -->
+            <div class="question" id="transport">
+                <h3>5. 선호하는 이동 방식은?</h3>
+                <p>다중 선택이 가능해요.</p>
+                <div class="options">
+                    <label>
+                        <input type="checkbox" name="transport" value="walk">
+                        도보 위주
+                    </label>
+                    <label>
+                        <input type="checkbox" name="transport" value="public">
+                        대중교통 위주
+                    </label>
+                    <label>
+                        <input type="checkbox" name="transport" value="taxi">
+                        택시/차량 위주
+                    </label>
+                    <label>
+                        <input type="checkbox" name="transport" value="rental">
+                        렌터카 위주
+                    </label>
+                    <label>
+                        <input type="checkbox" name="transport" value="bike">
+                        자전거/오토바이 위주
+                    </label>
+                    <label>
+                        <input type="checkbox" name="transport" value="flexible">
+                        상황에 따라 유연
+                    </label>
+                </div>
+            </div>
+
+            <!-- 6번 문항 -->
+            <div class="question" id="schedule_style">
+                <h3>6. 선호하는 여행 일정은?</h3>
+                <p>선택해주신 스타일로 일정을 만들어드려요.</p>
+                <div class="options">
+                    <button type="button" data-value="tight">빽빽한 일정 선호</button>
+                    <button type="button" data-value="relaxed">널널한 일정 선호</button>
+                </div>
+            </div>
+            <button type="submit" class="submit-button">바로 추천 받기</button>
+        </form>
+    </div>
+</body>
+
+</html>

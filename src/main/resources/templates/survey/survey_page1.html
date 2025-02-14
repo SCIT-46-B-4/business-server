@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 사전 설문</title>
+</head>
+
+<body>
+    <div class="container">
+        <a th:href="@{/}" class="back-button">←</a>
+        <div class="page-number">1/3</div>
+        <form id="surveyForm" method="post">
+            <!-- 1번 문항 -->
+            <div class="question" id="city">
+                <h3>1. 떠나고 싶은 도시는?</h3>
+                <p>도시 1곳을 선택해주세요.</p>
+                <div class="options">
+                    <button type="button" data-value="tokyo">도쿄</button>
+                    <button type="button" data-value="osaka">오사카</button>
+                    <button type="button" data-value="fukuoka">후쿠오카</button>
+                    <button type="button" data-value="sapporo">삿포로</button>
+                </div>
+            </div>
+
+            <!-- 2번 문항 -->
+            <div class="question" id="period">
+                <h3>2. 여행 기간은?</h3>
+                <p>원하는 기간을 선택해 주세요.</p>
+                <div class="options">
+                    <button type="" data-value="1n2d">1박 2일</button>
+                    <button type="button" data-value="2n3d">2박 3일</button>
+                    <button type="button" data-value="3n4d">3박 4일</button>
+                    <button type="button" data-value="4n5d">4박 5일</button>
+                    <button type="button" data-value="5n6d">5박 6일</button>
+                </div>
+            </div>
+
+            <button type="button" class="submit-button" onclick="location.href='/schedule/survey/page2'">다음</button>
+        </form>
+    </div>
+</body>
+
+</html>

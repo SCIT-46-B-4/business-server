@@ -53,6 +53,9 @@ CREATE TABLE users (
 	profile_img              VARCHAR(512) NULL  DEFAULT 'default_profile_img_url'
 );
 
+ALTER TABLE users
+ADD COLUMN password VARCHAR(128) NULL AFTER phone;
+
 -- ================================
 -- 4) OAuth (oauth) - user_id → users.id
 -- ================================

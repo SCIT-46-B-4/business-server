@@ -6,21 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 사전 설문</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <script>
-        function saveAndGoToNextPage() {
-            // 동행인 선택 저장
-            const companionChecked = document.querySelectorAll('input[name="companion"]:checked');
-            const companionValues = Array.from(companionChecked).map(input => input.value);
-            localStorage.setItem('selectedCompanion', companionValues.join(','));
-
-            // 여행 스타일 선택 저장
-            const travelStyleChecked = document.querySelectorAll('input[name="travel_style"]:checked');
-            const travelStyleValues = Array.from(travelStyleChecked).map(input => input.value);
-            localStorage.setItem('selectedTravelStyle', travelStyleValues.join(','));
-
-            location.href = '/schedule/survey/page3';
-        }
-    </script>
+    <script defer th:src="@{/script/survey.js}"></script>
 </head>
 
 <body>
@@ -107,7 +93,7 @@
                 </div>
             </div>
 
-            <button type="button" class="submit-button" onclick="saveAndGoToNextPage()">다음</button>
+            <button type="button" class="submit-button" onclick="savePage2AndGoToNext()">다음</button>
         </form>
     </div>
 </body>

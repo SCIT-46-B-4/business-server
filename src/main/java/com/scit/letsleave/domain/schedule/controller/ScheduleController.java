@@ -13,19 +13,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ScheduleController {
 
-    @GetMapping("/survey/page1")
-    public String surveyPage1() {
-        return "survey/survey_page1";
+    @GetMapping("/survey/1")
+    public String survey1() {
+        return "survey/1";
     }
 
-    @GetMapping("/survey/page2")
-    public String surveyPage2() {
-        return "survey/survey_page2";
+    @GetMapping("/survey/2")
+    public String survey2() {
+        return "survey/2";
     }
 
-    @GetMapping("/survey/page3")
-    public String surveyPage3() {
-        return "survey/survey_page3";
+    @GetMapping("/survey/3")
+    public String survey3() {
+        return "survey/3";
     }
 
     @PostMapping("/survey/submit")

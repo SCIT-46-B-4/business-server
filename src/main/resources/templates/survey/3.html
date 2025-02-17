@@ -6,30 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 사전 설문</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <script>
-        window.onload = function () {
-            // 이전 페이지 선택값 복원
-            document.getElementById('selectedCity').value = localStorage.getItem('selectedCity') || '';
-            document.getElementById('selectedPeriod').value = localStorage.getItem('selectedPeriod') || '';
-            document.getElementById('selectedcompanion').value = localStorage.getItem('selectedCompanion') || '';
-            document.getElementById('selectedtravel_style').value = localStorage.getItem('selectedTravelStyle') || '';
-        }
-
-        function beforeSubmit() {
-            // 이동 방식(transport) 저장
-            const transportChecked = document.querySelectorAll('input[name="transport"]:checked');
-            const transportValues = Array.from(new Set(transportChecked.map(input => input.value)));
-            document.getElementById('selectedtransport').value = transportValues.join(',');
-
-            // 일정 스타일(schedule_style) 저장
-            const scheduleStyle = document.querySelector('input[name="schedule_style"]:checked');
-            if (scheduleStyle) {
-                document.getElementById('selectedschedule_style').value = scheduleStyle.value;
-            }
-
-            return true;
-        }
-    </script>
+    <script defer th:src="@{/script/survey.js}"></script>
 </head>
 
 <body>
@@ -46,8 +23,8 @@
             <input type="hidden" name="travel_style" id="selectedtravel_style">
 
             <!-- 3번 페이지의 히든 인풋들 -->
-            <input type="hidden" name="transport" id="selectedtransport">
-            <input type="hidden" name="schedule_style" id="selectedschedule_style">
+            <input type="hidden" id="selectedtransport">
+            <input type="hidden" id="selectedschedule_style">
 
             <!-- 5번 문항 -->
             <div class="question" id="transport">

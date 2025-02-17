@@ -6,22 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행 사전 설문</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <script>
-        function saveAndGoToNextPage() {
-            const selectedCity = document.querySelector('input[name="city"]:checked');
-            const selectedPeriod = document.querySelector('input[name="period"]:checked');
-
-            if (!selectedCity || !selectedPeriod) {
-                alert('도시와 기간을 선택해주세요.');
-                return;
-            }
-
-            localStorage.setItem('selectedCity', selectedCity.value);
-            localStorage.setItem('selectedPeriod', selectedPeriod.value);
-
-            location.href = '/schedule/survey/page2';
-        }
-    </script>
+    <script defer th:src="@{/script/survey.js}"></script>
 </head>
 
 <body>

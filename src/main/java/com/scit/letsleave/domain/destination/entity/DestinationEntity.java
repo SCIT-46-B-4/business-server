@@ -31,6 +31,7 @@ public class DestinationEntity {
     private Long id;
 
     // Change to Enum
+    // TODO  : @Enumerated(EnumType.STRING)로 수정 고려
     @Convert(converter = DestinationTypeConverter.class)
     @Column(name = "type", nullable = false, length = 1)
     private DestinationType type;

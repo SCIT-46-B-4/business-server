@@ -39,4 +39,22 @@ public class UserService {
         // DB 저장
         userRepository.save(userEntity);
     }
+
+    /**
+     * 이메일 중복 여부 확인
+     * @param email 이메일 주소
+     * @return 중복 여부 (true: 중복, false: 중복 아님)
+     */
+    public boolean isEmailExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    /**
+     * 핸드폰 번호 중복 여부 확인
+     * @param phone 핸드폰 번호
+     * @return 중복 여부 (true: 중복, false: 중복 아님)
+     */
+    public boolean isPhoneExists(String phone) {
+        return userRepository.findByPhone(phone).isPresent();
+    }
 }

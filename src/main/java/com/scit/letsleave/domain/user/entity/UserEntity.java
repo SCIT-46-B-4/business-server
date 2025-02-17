@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.user.entity;
 
+import com.scit.letsleave.domain.user.dto.UserDTO;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -52,4 +53,22 @@ public class UserEntity {
 
     @Column(name = "profile_img", length = 512)
     private String profileImg;
+
+    // DTO -> Entity 변환
+    public static UserEntity toEntity(UserDTO dto) {
+        return UserEntity.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .nickname(dto.getNickname())
+                .email(dto.getEmail())
+                .phone(dto.getPhone())
+                .isAgreeLoc(dto.getIsAgreeLoc())
+                .isAgreeNewsNoti(dto.getIsAgreeNewsNoti())
+                .isAgreeMarketingNoti(dto.getIsAgreeMarketingNoti())
+                .joinDate(dto.getJoinDate())
+                .updatedAt(dto.getUpdatedAt())
+                .deletedAt(dto.getDeletedAt())
+                .profileImg(dto.getProfileImg())
+                .build();
+    }
 }

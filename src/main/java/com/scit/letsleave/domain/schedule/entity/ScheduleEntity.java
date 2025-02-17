@@ -1,6 +1,7 @@
 package com.scit.letsleave.domain.schedule.entity;
 
 import com.scit.letsleave.domain.destination.entity.CityEntity;
+import com.scit.letsleave.domain.schedule.dto.ScheduleDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,4 +60,22 @@ public class ScheduleEntity {
     // OneToMany : Schedule -> DetailSchedules
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "scheduleEntity", cascade = CascadeType.ALL)
     private List<DetailScheduleEntity> detailScheduleEntities;
+
+    // DTO -> Entity 변환
+    public static ScheduleEntity toEntity(ScheduleDTO dto, CityEntity city, List<DetailScheduleEntity> detailScheduleList) {
+        return ScheduleEntity.builder()
+                .id(dto.getId())
+                .user_id(dto.getUser_id())
+                .countryId(dto.getCountryId())
+                .name(dto.getName())
+                .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
+                .countryName(dto.getCountryName())
+                .cityName(dto.getCityName())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .city(city)
+                .detailScheduleEntities(detailScheduleList)
+                .build();
+    }
 }

@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.schedule.entity;
 
+import com.scit.letsleave.domain.schedule.dto.DetailScheduleDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,4 +43,19 @@ public class DetailScheduleEntity {
     // OneToMany : detail_schedule -> route
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "detailScheduleEntity", cascade = CascadeType.ALL)
     private List<RouteEntity> routes;
+
+    // DTO -> Entity 변환 (static 메서드)
+    // 외부에서 ScheduleEntity와 RouteEntity 리스트를 주입받아 처리
+    public static DetailScheduleEntity toEntity(DetailScheduleDTO dto,
+                                                ScheduleEntity scheduleEntity,
+                                                List<RouteEntity> routeList) {
+        return DetailScheduleEntity.builder()
+                .id(dto.getId())
+                .date(dto.getDate())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .scheduleEntity(scheduleEntity)
+                .routes(routeList)
+                .build();
+    }
 }

@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.destination.entity;
 
+import com.scit.letsleave.domain.destination.dto.CountryDTO;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -51,4 +52,22 @@ public class CountryEntity {
     // OneToMany 관계: 한 Country는 여러 City를 가질 수 있음
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private List<CityEntity> cities;
+
+    // DTO -> Entity 변환
+    public static CountryEntity toEntity(CountryDTO dto, List<CityEntity> cityList) {
+        return CountryEntity.builder()
+                .id(dto.getId())
+                .krName(dto.getKrName())
+                .engName(dto.getEngName())
+                .iso3(dto.getIso3())
+                .iso2(dto.getIso2())
+                .continent(dto.getContinent())
+                .continentCode(dto.getContinentCode())
+                .currencyCode(dto.getCurrencyCode())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .cities(cityList)
+                .build();
+    }
 }
+

@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.destination.entity;
 
+import com.scit.letsleave.domain.destination.dto.CityDTO;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -50,5 +51,22 @@ public class CityEntity {
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     private List<ScheduleEntity> schedules;
 
-    //
+    // DTO -> Entity 변환 (static 메서드)
+    // 외부에서 CountryEntity, List<DestinationEntity>, List<ScheduleEntity>를 주입받아 설정
+    public static CityEntity toEntity(CityDTO cityDTO,
+                                      CountryEntity countryEntity,
+                                      List<DestinationEntity> destinationList,
+                                      List<ScheduleEntity> scheduleList) {
+        return CityEntity.builder()
+                .id(cityDTO.getId())
+                .krName(cityDTO.getKrName())
+                .engName(cityDTO.getEngName())
+                .cityCode(cityDTO.getCityCode())
+                .createdAt(cityDTO.getCreatedAt())
+                .updatedAt(cityDTO.getUpdatedAt())
+                .country(countryEntity)
+                .destinations(destinationList)
+                .schedules(scheduleList)
+                .build();
+    }
 }

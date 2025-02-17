@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.destination.entity;
 
+import com.scit.letsleave.domain.destination.dto.DestinationDTO;
 import com.scit.letsleave.domain.schedule.entity.RouteEntity;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
@@ -29,12 +30,10 @@ public class DestinationEntity {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id")
-    private CityEntity city;
-
-    @Column(name = "type", nullable = false)
-    private String type;
+    // Change to Enum
+    @Convert(converter = DestinationTypeConverter.class)
+    @Column(name = "type", nullable = false, length = 1)
+    private DestinationType type;
 
     @Column(name = "kr_name", nullable = false)
     private String krName;
@@ -84,7 +83,39 @@ public class DestinationEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // ManyToOne : Destination -> City
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
+    private CityEntity city;
+
     // OneToMany : Destination -> Routes
     @OneToMany(mappedBy = "destinationEntity", cascade = CascadeType.ALL)
     private List<RouteEntity> routes;
+
+    // DTO -> Entity 변환
+    public static DestinationEntity toEntity(DestinationDTO dto,
+                                             CityEntity city,
+                                             List<RouteEntity> routeList) {
+        return DestinationEntity.builder()
+                .id(dto.getId())
+                .type(dto.getType())
+                .krName(dto.getKrName())
+                .locName(dto.getLocName())
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .latitude(dto.getLatitude())
+                .longitude(dto.getLongitude())
+                .address(dto.getAddress())
+                .contact(dto.getContact())
+                .homepage(dto.getHomepage())
+                .howToGo(dto.getHowToGo())
+                .availableTime(dto.getAvailableTime())
+                .feature(dto.getFeature())
+                .score(dto.getScore())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .city(city)
+                .routes(routeList)
+                .build();
+    }
 }

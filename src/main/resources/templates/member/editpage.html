@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>프로필 편집</title>
+    <link href="../css/editpage.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- <th:block sec:authorize="isAuthenticated()">-->
+    <div class="button-container">
+      <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
+      <p><a th:href="@{/mypage/mypage}" class="back-button">마이페이지</a></p>
+    </div>
+    <!-- </th:block>-->
+
+    <div class="edit-profile-section">
+      <h2>프로필 편집</h2>
+      <form th:action="@{/updateProfile}" method="post">
+        <div class="profile-img-container">
+          <img
+            src="../img/circle.png"
+            alt="profile_photo"
+            class="profile-photo"
+          />
+          <input
+            type="file"
+            id="profile-img"
+            name="profileImg"
+            accept="image/*"
+          />
+        </div>
+        <div class="input-group">
+          <label for="name">이름</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            th:value="${user.name}"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="nickname">닉네임</label>
+          <input
+            type="text"
+            id="nickname"
+            name="nickname"
+            th:value="${user.nickname}"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="email">이메일</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            th:value="${user.email}"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="phone">전화번호</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            th:value="${user.phone}"
+            required
+          />
+        </div>
+        <div class="input-group checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              name="agreeLoc"
+              th:checked="${user.agreeLoc}"
+            />
+            위치 정보 동의
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="agreeNewsNoti"
+              th:checked="${user.agreeNewsNoti}"
+            />
+            뉴스 및 알림 동의
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="agreeMarketingNoti"
+              th:checked="${user.agreeMarketingNoti}"
+            />
+            마케팅 알림 동의
+          </label>
+        </div>
+        <button type="submit" class="save-button">저장</button>
+      </form>
+    </div>
+  </body>
+</html>

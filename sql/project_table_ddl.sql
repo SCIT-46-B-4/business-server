@@ -485,3 +485,7 @@ ALTER TABLE destinations ADD COLUMN coordinate POINT NOT NULL SRID 4326; -- EPSG
 ALTER TABLE destinations ADD SPATIAL INDEX idx_coordinate (coordinate);
 ALTER TABLE destinations MODIFY latitude DECIMAL(10,7) NULL;
 ALTER TABLE destinations MODIFY longitude DECIMAL(10,7) NULL;
+ALTER TABLE destinations MODIFY kr_name VARCHAR(256) NOT NULL;
+ALTER TABLE destinations MODIFY loc_name VARCHAR(256) NOT NULL;
+ALTER TABLE destinations MODIFY `address` VARCHAR(512) NULL;
+ALTER TABLE destinations MODIFY available_time VARCHAR(512) NULL;

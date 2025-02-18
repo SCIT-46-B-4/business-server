@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도시검색</title>
+    <!-- css -->
+    <link rel="stylesheet" href="../static/css/main-city-search.css" th:href="@{/css/main-city-search.css}">
+</head>
+<body>
+    <div class="container">
+        
+        <div>
+            <input placeholder="어느 도시가 궁금하세요?" class="search-bar">
+        </div> 
+            
+        <div class="tab-menu">
+            <button class="active">인기기도시</button>
+            <button class="active" disabled>해외도시</button>
+            <button class="active">국내도시</button>
+        </div>
+        <div class="category">
+            <button class="active">전체</button>
+            <button>일본</button>
+            <button>동남아시아</button>
+            <button>남태평양</button>
+            <button>유럽</button>
+            <button>미주</button>
+            <button>중남미</button>
+            <button>서아시아</button>
+            <button>중화/중국</button>
+        </div>
+        <section class="city-section">
+            <h3>일본</h3>
+            <ul class="city-list">
+                <li><img src="tokyo.jpg" alt="도쿄"><strong>도쿄</strong> - 하코네, 요코하마, 가마쿠라</li>
+                <li><img src="fukuoka.jpg" alt="후쿠오카"><strong>후쿠오카</strong> - 후쿠오카, 유후인, 벳푸, 기타큐슈</li>
+                <li><img src="osaka.jpg" alt="오사카"><strong>오사카</strong> - 오사카, 교토, 고베, 나라</li>
+                <li><img src="kagoshima.jpg" alt="가고시마"><strong>가고시마</strong> - 가고시마, 이부스키, 기리시마, 야쿠시마</li>
+                <li><img src="shizuoka.jpg" alt="시즈오카"><strong>시즈오카</strong> - 시즈오카, 후지노미야, 이토, 하마마쓰</li>
+                <li><img src="nagoya.jpg" alt="나고야"><strong>나고야</strong> - 나고야, 다카야마, 시라카와고, 게로</li>
+                <li><img src="sapporo.jpg" alt="삿포로"><strong>삿포로</strong></li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

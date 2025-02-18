@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +27,7 @@ public class AuthController {
      * @param userDto 회원가입 요청 데이터
      * @return 성공 메시지
      */
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<String> register(@ModelAttribute UserDto userDto) {
     userService.registerUser(userDto);
     return ResponseEntity.ok("회원가입이 완료되었습니다.");

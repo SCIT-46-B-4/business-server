@@ -8,11 +8,11 @@ public class UserController {
 
     /**
      * 회원가입 페이지 반환
-     * @return 회원가입 페이지 (register.html)
+     * @return 회원가입 페이지 (signup.html)
      */
-    @GetMapping("/user/register")
+    @GetMapping("/user/signup")
     public String registerPage() {
-        // templates/register.html 파일 반환
-        return "register";
+        // templates/signup.html 파일 반환
+        return "signup";
     }
 }

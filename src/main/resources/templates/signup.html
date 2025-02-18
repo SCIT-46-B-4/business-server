@@ -7,7 +7,7 @@
     <!-- jQuery -->
     <script th:src="@{/script/jQuery.js}" src="../static/script/jQuery.js"></script>
     <!-- JavaScript -->
-    <script defer th:src="@{/script/register.js}" src="../static/script/register.js"></script>
+    <script defer th:src="@{/script/signup.js}" src="../static/script/signup.js"></script>
     <!-- CSS -->
     <style>
         button {
@@ -26,7 +26,7 @@
 </head>
 <body>
     <h1>회원가입</h1>
-    <form id="registerForm" th:action="@{/auth/register}" method="post">
+    <form id="signupForm" th:action="@{/auth/signup}" method="post">
         <!-- 이름 -->
         <label for="name">이름:</label>
         <input type="text" id="name" name="name">

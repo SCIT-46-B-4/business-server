@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지금 가장 HOT한 방문지</title>
+    <!-- css -->
+    <link rel="stylesheet" href="../static/css/main-city.css" th:href="@{/css/main-city.css}">
+    <!-- js -->
+    <!-- <script src="../js/main-city.js" th:src=""></script>  
+    <script defer src="../js/main-city.js" th:src=""></script>
+--> 
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/def97ee41b.js" crossorigin="anonymous"></script>
+
+</head>
+
+
+
+<body>
+    <div class="container">
+        <!-- 검색창 -->
+        <div class="search">
+            <a th:href="@{/main-city-search}" class="search-box">
+                <span class="icon">🔍</span> 어디든지
+            </a>
+        </div>
+       
+        <!-- HOT 방문지 목록 -->
+        <h2>지금 가장 HOT🔥한 방문지 TOP 10</h2>
+        <p>지난 일주일 간 평소보다 더 많이 저장된 관광지 & 맛집</p>
+        <div class="places-list">
+            <!-- 여행지 항목 -->
+            <a href="#" class="tour-item">
+                <img src="img1.jpg" alt="비스타 루프탑 바">
+                <div class="tour-info">
+                    <h2>비스타 루프탑 바</h2>
+                    <p>황금 불탑 ‘쉐다곤 파고다’ 배경의 포토 스팟으로 유명</p>
+                    <p class="rating">⭐ 5.0 (5)</p>
+                    <p class="likes">❤️ 25</p>
+                    <p>술집/바 - 미얀마</p>
+                </div>
+            </a>
+        
+            <a href="#" class="tour-item">
+                <img src="img2.jpg" alt="파스테이스 드 벨렘">
+                <div class="tour-info">
+                    <h2>파스테이스 드 벨렘</h2>
+                    <p>200년 전통의 에그타르트 원조 맛집</p>
+                    <p class="rating">⭐ 4.7 (194)</p>
+                    <p class="likes">❤️ 4,411</p>
+                    <p>카페/디저트 - 리스본</p>
+                </div>
+            </a>
+        
+            <a href="#" class="tour-item">
+                <img src="img3.jpg" alt="마켓 광장">
+                <div class="tour-info">
+                    <h2>마켓 광장</h2>
+                    <p>매년 헬싱키 청어 축제가 개최되는 기념품 쇼핑 명소</p>
+                    <p class="rating">⭐ 4.7 (13)</p>
+                    <p class="likes">❤️ 459</p>
+                    <p>관광명소 - 헬싱키</p>
+                </div>
+            </a>
+        
+            <a href="#" class="tour-item">
+                <img src="img4.jpg" alt="세비야 대성당">
+                <div class="tour-info">
+                    <h2>세비야 대성당</h2>
+                    <p>스페인 최대 규모의 성당이자 필수 여행지</p>
+                    <p class="rating">⭐ 4.8 (114)</p>
+                    <p class="likes">❤️ 4,431</p>
+                    <p>관광명소 - 세비야</p>
+                </div>
+            </a>
+        
+            <a href="#" class="tour-item">
+                <img src="img5.jpg" alt="시부야 스카이">
+                <div class="tour-info">
+                    <h2>시부야 스카이</h2>
+                    <p>스카이 라인을 자랑하는 전망대</p>
+                    <p class="rating">⭐ 4.6 (300)</p>
+                    <p class="likes">❤️ 21,633</p>
+                    <p>관광명소 - 도쿄</p>
+                </div>
+            </a>
+        
+            <a href="#" class="tour-item">
+                <img src="img6.jpg" alt="베니스 그랜드 캐널 몰">
+                <div class="tour-info">
+                    <h2>베니스 그랜드 캐널 몰</h2>
+                    <p>곤돌라를 탈 수 있는 이탈리아 콘셉트 쇼핑몰</p>
+                    <p class="rating">⭐ 4.4 (15)</p>
+                    <p class="likes">❤️ 553</p>
+                    <p>쇼핑 - 마닐라</p>
+                </div>
+            </a>
+        
+            <a href="#" class="tour-item">
+                <img src="img7.jpg" alt="에펠탑">
+                <div class="tour-info">
+                    <h2>에펠탑</h2>
+                    <p>파리의 랜드마크이자 아름다운 야경 명소</p>
+                    <p class="rating">⭐ 4.9 (500)</p>
+                    <p class="likes">❤️ 10,000</p>
+                    <p>관광명소 - 파리</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- <div class="pagination">
+            <button id="prev-btn">이전</button>
+            <span id="page-num">1</span>
+            <button id="next-btn">다음</button>
+        </div> -->
+
+        <div class="pagination">
+            <nav class="pagination">
+                <!-- 이전 버튼 -->
+                 &lsaquo;
+                    <!-- <a th:if="${list.first}" class="page-no disabled">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </a>
+                    <a th:unless="${list.first}" th:href="@{/boardList(page=${list.number})}" class="page-no">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </a> -->
+            
+                <!-- 페이지 번호 -->
+                    <!-- <span th:each="pageNum : ${#numbers.sequence(1, list.totalPages)}">
+                        <a th:if="${list.number + 1 != pageNum}" th:href="@{/boardList(page=${pageNum})}" class="page-no"
+                            th:text="${pageNum}"></a>
+                        <span th:if="${list.number + 1 == pageNum}" class="page-no current" th:text="${pageNum}"></span>
+                    </span> -->
+            
+                <!-- 다음 버튼 -->
+                &rsaquo;
+                    <!-- <a th:if="${list.last}" class="page-no disabled">
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a>
+                    <a th:unless="${list.last}" th:href="@{/boardList(page=${list.number + 2})}" class="page-no">
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a> -->
+            </nav>
+        </div>
+    </div>
+</body>
+
+</html>

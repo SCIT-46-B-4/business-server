@@ -220,6 +220,7 @@ CREATE TABLE guides (
 		ON DELETE SET NULL
 );
 
+
 -- ================================
 -- 12) 여행기 세부 일정 루트 (route_reviews) 
 --     - detail_schedule_review_id(FK), guide_id(FK)

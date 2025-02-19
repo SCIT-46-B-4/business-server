@@ -27,10 +27,8 @@ public class CountryDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // OneToMany 관계: 한 Country는 여러 City를 가질 수 있음
     private List<CityEntity> cities;
 
-    // Entity -> DTO 변환 메서드
     public static CountryDTO toDTO(CountryEntity entity) {
         return CountryDTO.builder()
                 .id(entity.getId())

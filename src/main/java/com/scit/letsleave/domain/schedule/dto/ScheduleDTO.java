@@ -29,10 +29,8 @@ public class ScheduleDTO {
     private LocalDateTime updatedAt;
 
     private CityEntity city;
-    // OneToMany : Schedule -> DetailSchedules
     private List<DetailScheduleEntity> detailScheduleEntities;
 
-    // Entity -> DTO 변환 (static 메서드)
     public static ScheduleDTO toDTO(ScheduleEntity entity) {
         return ScheduleDTO.builder()
                 .id(entity.getId())

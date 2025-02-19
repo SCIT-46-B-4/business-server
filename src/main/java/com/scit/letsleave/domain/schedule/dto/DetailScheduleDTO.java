@@ -23,12 +23,9 @@ public class DetailScheduleDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // OneToMany : detail_schedule -> route
     private List<RouteEntity> routes;
-    // ManyToOne : detail_schedule -> schedule
     private ScheduleEntity scheduleEntity;
 
-    // Entity -> DTO 변환
     public static DetailScheduleDTO toDTO(DetailScheduleEntity entity) {
         return DetailScheduleDTO.builder()
                 .id(entity.getId())

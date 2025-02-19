@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>일정 보기</title>
-    <script defer th:src="@{/js/map.js}"></script>
-    <script defer th:src="@{/js/schedule.js}"></script>
+    <script defer th:src="@{/script/map.js}"></script>
+    <script defer th:src="@{/script/schedule.js}"></script>
     <script async
             defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbtW86eP8dZAoWEWUIc2vumKA3sFeDpFg&callback=initMap">
@@ -97,30 +97,36 @@
             </div> <!-- End .top-footer -->
             <div class="mapContainer bottom-footer">
                 <div class="mapContainer bottom-footer flex-box">
-                    <div class="bottom-footer flex-box">
+                    <div class="bottom-footer flex-box left-button" >
                         <!-- 좌측 사이드 버튼 -->
                         <div class="side-button">
-                            <button class="bottom-footer-button"></button>
+                            <button class="bottom-footer-button">Left</button>
                         </div>
                     </div>
                     <div class="flicking-viewport" style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
                         <div class="flicking-camera">
                             <div class="flicking-panel flex-box guideBox">
-                                <div class="guideBox flex-box">
-                                    <div></div>
-                                    <a class="route-guided-link">
-                                        <div class="guideBox guide-text" style="font-size: 16px;">우라 난바</div>
-                                        <div class="guideBox guide-text" style="font-size: 13px;">
-                                            일본 특유의 분위기를 물씬 풍기는 이자카야 골목
+                                <div class="guideBox flex-box" style="display: flex; flex-direction: row; align-items: center;">
+                                    <a class="route-guided-link" href="#" style="display: flex; flex-direction: row; align-items: center;">
+                                        <!-- 왼쪽 이미지 영역 -->
+                                        <div class="guideBox guide-image" style="flex-shrink: 0;">
+                                            <img src="https://via.placeholder.com/150" alt="우라 난바 이미지" style="width:150px; height:auto;">
                                         </div>
-                                        <div class="guideBox guide-text" style="font-size: 13px; color: gray">
-                                            <span>관광 명소</span>
-                                            <span>::before 난바</span>
-                                        </div>
-                                        <div class="guideBox guide-text">
-                                            <span><!-- 별점에 따른 별 표기 구간 --></span>
-                                            <div class="guideBox guide-text" style="font-size: 13px; color: gray">
-                                                <!-- Review Count -->
+                                        <!-- 오른쪽 텍스트 영역 -->
+                                        <div class="guideBox guide-text" style="display: flex; flex-direction: column; margin-left: 10px;">
+                                            <!-- 제목 -->
+                                            <div style="font-size: 16px; font-weight: bold;">우라 난바</div>
+                                            <!-- 상세 설명 -->
+                                            <div style="font-size: 13px; margin-top: 4px;">일본 특유의 분위기를 물씬 풍기는 이자카야 골목</div>
+                                            <!-- 카테고리 정보 -->
+                                            <div style="font-size: 13px; color: gray; margin-top: 4px;">
+                                                <span>관광 명소</span>
+                                                <span>::before 난바</span>
+                                            </div>
+                                            <!-- 별점 및 리뷰 -->
+                                            <div style="font-size: 13px; color: gray; margin-top: 4px;">
+                                                <span><!-- 별점 표시 --></span>
+                                                <span>(리뷰 2)</span>
                                             </div>
                                         </div>
                                     </a>
@@ -128,10 +134,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bottom-footer flex-box">
+                    <div class="bottom-footer flex-box right-button">
                         <!-- 우측 사이드 버튼 -->
                         <div class="side-button">
-                            <button class="bottom-footer-button"></button>
+                            <button class="bottom-footer-button">Right</button>
                         </div>
                     </div>
                 </div>

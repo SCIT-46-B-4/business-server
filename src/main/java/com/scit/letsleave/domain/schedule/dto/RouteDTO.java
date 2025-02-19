@@ -21,12 +21,9 @@ public class RouteDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // ManytoOne route -> detailSchedules
     private DetailScheduleEntity detailScheduleEntity;
-    // ManyToOne route -> destinations
     private DestinationEntity destinationEntity;
 
-    // Entity -> DTO 변환
     public static RouteDTO toDTO(RouteEntity entity) {
         return RouteDTO.builder()
                 .id(entity.getId())

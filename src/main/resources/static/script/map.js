@@ -1,7 +1,7 @@
 // 데이터를 백엔드에서 가져오는 함수
 async function fetchScheduleDestinations(scheduleId) {
     try {
-        const response = await fetch(`/api/destination/${scheduleId}`);
+        const response = await fetch(`/api/destinations/${scheduleId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -66,6 +66,6 @@ async function initializeMap(scheduleId) {
 
 // Google Maps API가 호출하는 initMap 함수 (매개변수가 전달되지 않으므로 기본 scheduleId 사용)
 window.initMap = function() {
-    const scheduleId = 3;  // 예시 스케줄 아이디
+    const scheduleId = 1;  // 예시 스케줄 아이디
     initializeMap(scheduleId);
 };

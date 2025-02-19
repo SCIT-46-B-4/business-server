@@ -1,7 +1,23 @@
+// 스케줄 존재 여부를 확인하는 함수 (GET /api/schedules/{id}/exists)
+async function checkScheduleExists(scheduleId) {
+    try {
+        const response = await fetch(`/api/schedules/exists/${scheduleId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const exists = await response.json();
+        console.log(`Schedule ${scheduleId} exists:`, exists);
+        return exists;
+    } catch (error) {
+        console.error("Error checking schedule existence:", error);
+        return false;
+    }
+}
+
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
 async function loadScheduleBoxes(scheduleId) {
     try {
-        const response = await fetch(`/api/destination/${scheduleId}`);
+        const response = await fetch(`/api/destinations/${scheduleId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -119,7 +135,7 @@ function renderScheduleBoxesByDay(boxes) {
 }
 
 // DOM이 완전히 로드된 후, scheduleId를 이용하여 데이터를 로드 및 렌더링
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     // 상위 컨테이너가 없는 경우, 동적으로 생성하여 #scroll-root에 추가
     if (!document.getElementById("schedule-container")) {
         const parentDiv = document.createElement("div");
@@ -127,6 +143,6 @@ document.addEventListener("DOMContentLoaded", function() {
         parentDiv.classList.add("container_schedule", "scheduleContainer");
         document.getElementById("scroll-root").appendChild(parentDiv);
     }
-    const scheduleId = 3;  // 예시 스케줄 ID
+    const scheduleId = 1;  // 예시 스케줄 ID
     loadScheduleBoxes(scheduleId);
 });

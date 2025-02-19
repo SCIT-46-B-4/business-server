@@ -20,13 +20,13 @@ html, body {
 
 /* 사이드바 영역: schedule 및 스케줄 관련 콘텐츠 */
 #scroll-root {
-    width: 25%;
+    width: 35%;
     overflow-y: scroll;
 }
 
 /* 지도와 footer가 포함된 영역 */
 #fullscreen-map.mapContainer {
-    width: 75%;
+    width: 65%;
     position: relative;
     height: 100vh;
 }
@@ -157,4 +157,38 @@ html, body {
 
 .footer-item-rating .stars {
     margin-right: 4px;
+}
+
+/* Bottom-footer SideButton */
+/* 기존 하단 footer 영역에 대해 flex 레이아웃 설정 */
+.mapContainer.bottom-footer.flex-box {
+    display: flex;
+    flex-direction: row; /* 가로 배치 */
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+}
+
+/* 좌측, 우측 버튼은 고정 크기로 설정 */
+.left-button, .right-button {
+    flex: 0 0 auto;
+}
+
+/* 중앙 flicking 영역은 남은 공간을 차지하도록 설정 */
+.flicking-viewport {
+    flex: 1 1 auto;
+    margin: 0 10px;  /* 좌우 간격 */
+}
+
+/* (필요에 따라) 버튼 스타일 조정 */
+.bottom-footer-button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bottom-footer-button:hover {
+    background-color: #eee;
 }

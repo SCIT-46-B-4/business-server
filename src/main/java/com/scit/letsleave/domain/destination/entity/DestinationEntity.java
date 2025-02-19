@@ -15,7 +15,6 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 
-import java.awt.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +34,6 @@ public class DestinationEntity {
     private Long id;
 
     // Change to Enum
-    // TODO  : @Enumerated(EnumType.STRING)로 수정 고려
     @Convert(converter = DestinationTypeConverter.class)
     @Column(name = "type", nullable = false, length = 1)
     private DestinationType type;
@@ -52,12 +50,10 @@ public class DestinationEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    // TODO : DDL상 Spatial Data Types POINT로 변경에 따른 코드 수정 고려
-    // Point Type을 처리하는 방법에 대해서 공부, 변경
-    @Column(name = "latitude", precision = 10, scale = 7, nullable = false)
+    @Column(name = "latitude", precision = 10, scale = 7)
     private BigDecimal latitude;
 
-    @Column(name = "longitude", precision = 10, scale = 7, nullable = false)
+    @Column(name = "longitude", precision = 10, scale = 7)
     private BigDecimal longitude;
 
     @Column(name = "address", nullable = false)
@@ -90,7 +86,7 @@ public class DestinationEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "coordinate", columnDefinition = "POINT", nullable = false)
+    @Column(name = "coordinate", columnDefinition = "geometry(POINT, 4326)", nullable = false)
     private Point coordinate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -105,7 +101,6 @@ public class DestinationEntity {
                                              List<RouteEntity> routeList) {
         GeometryFactory geometryFactory = new GeometryFactory();
 
-        // 좌표 분리 및 할당
         Point point = geometryFactory.createPoint(
                 new Coordinate(dto.getLongitude().doubleValue(), dto.getLatitude().doubleValue())
         );
@@ -127,6 +122,7 @@ public class DestinationEntity {
                 .score(dto.getScore())
                 .createdAt(dto.getCreatedAt())
                 .updatedAt(dto.getUpdatedAt())
+                .coordinate(point)
                 .city(city)
                 .routes(routeList)
                 .build();

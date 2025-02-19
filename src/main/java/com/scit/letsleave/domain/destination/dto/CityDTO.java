@@ -25,14 +25,10 @@ public class CityDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // ManyToOne 관계: cities.country_id → countries.id
     private CountryEntity country;
-    // OneToMany 관계: cities.cities → destinations.city_id
     private List<DestinationEntity> destinations;
-    // OneToMany 관계: cities.cities → schedules.city_id
     private List<ScheduleEntity> schedules;
 
-    // Entity -> DTO 변환 메서드
     public static CityDTO toDTO(CityEntity entity) {
         return CityDTO.builder()
                 .id(entity.getId())

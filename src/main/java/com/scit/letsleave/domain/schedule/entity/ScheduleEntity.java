@@ -57,11 +57,9 @@ public class ScheduleEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // OneToMany : Schedule -> DetailSchedules
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "scheduleEntity", cascade = CascadeType.ALL)
     private List<DetailScheduleEntity> detailScheduleEntities;
 
-    // DTO -> Entity 변환
     public static ScheduleEntity toEntity(ScheduleDTO dto, CityEntity city, List<DetailScheduleEntity> detailScheduleList) {
         return ScheduleEntity.builder()
                 .id(dto.getId())

@@ -38,13 +38,9 @@ public class DestinationDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // OneToMany : Destination -> Routes
     private List<RouteEntity> routes;
-
-    // ManyToOne : destination -> city
     private CityEntity city;
 
-    // Entity -> DTO 변환
     public static DestinationDTO toDTO(DestinationEntity entity) {
         return DestinationDTO.builder()
                 .id(entity.getId())

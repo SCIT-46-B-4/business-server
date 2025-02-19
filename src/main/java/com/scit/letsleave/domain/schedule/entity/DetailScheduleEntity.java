@@ -25,7 +25,6 @@ public class DetailScheduleEntity {
     @Column(name = "id")
     private Long id;
 
-    // ManyToOne : detail_schedule -> schedule
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id", nullable = false)
     private ScheduleEntity scheduleEntity;
@@ -40,12 +39,9 @@ public class DetailScheduleEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // OneToMany : detail_schedule -> route
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "detailScheduleEntity", cascade = CascadeType.ALL)
     private List<RouteEntity> routes;
 
-    // DTO -> Entity 변환 (static 메서드)
-    // 외부에서 ScheduleEntity와 RouteEntity 리스트를 주입받아 처리
     public static DetailScheduleEntity toEntity(DetailScheduleDTO dto,
                                                 ScheduleEntity scheduleEntity,
                                                 List<RouteEntity> routeList) {

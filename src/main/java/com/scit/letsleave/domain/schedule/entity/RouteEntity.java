@@ -24,12 +24,10 @@ public class RouteEntity {
     @Column(name = "id")
     private Long id;
 
-    // ManytoOne route -> detailSchedules
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "detail_schedule_id", nullable = false)
     private DetailScheduleEntity detailScheduleEntity;
 
-    // ManyToOne route -> destinations
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destination_id", nullable = false)
     private DestinationEntity destinationEntity;
@@ -44,8 +42,6 @@ public class RouteEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // DTO -> Entity 변환 (static 메서드)
-    // 외부에서 DetailScheduleEntity와 DestinationEntity를 주입받아 설정하는 방식입니다.
     public static RouteEntity toEntity(RouteDTO dto,
                                        DetailScheduleEntity detailScheduleEntity,
                                        DestinationEntity destinationEntity) {

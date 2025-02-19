@@ -22,7 +22,6 @@ public class CityEntity {
     @Column(name = "id")
     private Long id;
 
-    // ManyToOne 관계: cities.country_id → countries.id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
     private CountryEntity country;
@@ -43,16 +42,13 @@ public class CityEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // OneToMany 관계: cities.cities → destinations.city_id
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     private List<DestinationEntity> destinations;
 
-    // OneToMany 관계: cities.cities → schedules.city_id
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     private List<ScheduleEntity> schedules;
 
-    // DTO -> Entity 변환 (static 메서드)
-    // 외부에서 CountryEntity, List<DestinationEntity>, List<ScheduleEntity>를 주입받아 설정
+
     public static CityEntity toEntity(CityDTO cityDTO,
                                       CountryEntity countryEntity,
                                       List<DestinationEntity> destinationList,

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/schedule")
+@RequestMapping("/api/schedules")
 @RequiredArgsConstructor
 @Slf4j
 public class RestScheduleController {
@@ -19,7 +19,7 @@ public class RestScheduleController {
     private final ScheduleService scheduleService;
 
     // 일정 존재 여부 확인 -> front
-    @GetMapping("/{id}/exists")
+    @GetMapping("/exists/{id}")
     public ResponseEntity<Boolean> scheduleExists(@PathVariable Long id) {
         boolean isExists = scheduleService.scheduleExists(id);
         return ResponseEntity.ok(isExists);

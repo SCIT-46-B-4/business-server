@@ -49,11 +49,9 @@ public class CountryEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // OneToMany 관계: 한 Country는 여러 City를 가질 수 있음
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private List<CityEntity> cities;
 
-    // DTO -> Entity 변환
     public static CountryEntity toEntity(CountryDTO dto, List<CityEntity> cityList) {
         return CountryEntity.builder()
                 .id(dto.getId())

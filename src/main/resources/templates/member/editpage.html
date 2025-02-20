@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://thymeleaf.org/extras/spring-security"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>프로필 편집</title>
-    <link href="../../static/css/member.css/editpage.css" rel="stylesheet" />
+    <link th:href="@{/css/member.css/editpage.css}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    <script th:src="@{../../static/script/jquery.js}"></script>
-    <script th:src="@{../../static/script/edit.js}"></script>
+    <script th:src="@{/script/jquery.js}"></script>
+    <script th:src="@{/script/edit.js}"></script>
   </head>
   <body>
     <!-- <th:block sec:authorize="isAuthenticated()">-->
     <div class="button-container">
       <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
-      <p><a th:href="@{./mypage}" class="back-button">마이페이지</a></p>
+      <p><a th:href="@{/}" class="back-button">마이페이지</a></p>
     </div>
     <!-- </th:block>-->
 

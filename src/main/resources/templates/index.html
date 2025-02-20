@@ -17,16 +17,7 @@
     <!-- 로그인된 상태 -->
     <div th:if="${isLoggedIn}">
         <p>로그인됨!</p>
-        <li><a href="#" onclick="logout()">로그아웃</a></li>
+        <li><a th:href="@{/logout}">로그아웃</a></li>
     </div>
-
-    <!-- 로그아웃 스크립트 -->
-    <script>
-        function logout() {
-            document.cookie = "Authorization=; Max-Age=0; path=/"; // 쿠키 삭제
-            alert("로그아웃되었습니다.");
-            window.location.reload();
-        }
-    </script>
 </body>
 </html>

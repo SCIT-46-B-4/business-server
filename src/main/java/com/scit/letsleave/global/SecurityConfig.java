@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.scit.letsleave.global.jwt.JwtFilter;
 
@@ -41,6 +42,13 @@ public class SecurityConfig {
                         , "/script/**").permitAll()
                .anyRequest().authenticated()
            )
+           .logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 URL 설정
+                .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
+                .invalidateHttpSession(true) // 세션 무효화
+                .clearAuthentication(true) // 인증 정보 제거
+                .deleteCookies("Authorization") // Authorization 쿠키 삭제
+            )
            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
        return http.build();

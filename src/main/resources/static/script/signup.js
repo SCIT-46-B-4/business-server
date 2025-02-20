@@ -44,13 +44,33 @@ $(document).ready(function () {
         });
     }
 
-    // 이메일 중복 확인
+    // 이메일 형식 검증 함수
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 간단한 이메일 형식 검증 정규식
+        return emailRegex.test(email);
+    }
+
+    // 이메일 중복 확인 및 형식 검증
     function checkEmail() {
         const email = $("#email").val();
+
+        // 이메일 입력 여부 확인
         if (!validateField("email", "emailError", "email을(를) 입력하세요.")) {
             emailChecked = false;
             return;
         }
+
+        // 이메일 형식 검증
+        if (!isValidEmail(email)) {
+            $("#emailError")
+                .text("올바른 이메일 형식이 아닙니다.")
+                .removeClass("success")
+                .addClass("error");
+            emailChecked = false;
+            return;
+        }
+
+        // 중복 확인 요청
         checkDuplicate(
             "/auth/check-email",
             { email },

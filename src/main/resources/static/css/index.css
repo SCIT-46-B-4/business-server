@@ -202,28 +202,29 @@
     position: relative;
     /* slide box의 너비 = (100 / 슬라이드 개수) % */
     width: 50%;
-    height: 600px;
+    height: 800px;
     /* 축소되지 않도록 고정 */
     flex-shrink: 0;
     /* 배경 설정 */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    filter: brightness(0.9);
+    filter: brightness(0.7);
 }
 
 .slide-right-text {
     position: absolute;
     right: 0;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-100%);
     /* 슬라이드 절반 너비만 차지 */
-    background-color: rgba(255, 255, 255, 0.8);
-    width: 50%;
-    color: #222;
+    background-color: rgba(125, 125, 125, 0.5);
+    width: 75%;
     padding: 20px;
     box-sizing: border-box;
     text-align: right;
+    font-size: xx-large;
+    color: #fff;
 }
 
 /* ----------------------------- */

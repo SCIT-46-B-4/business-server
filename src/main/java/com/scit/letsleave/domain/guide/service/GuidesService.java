@@ -34,7 +34,7 @@ public class GuidesService {
     public List<GuidesDTO> getTop10HotPlaces() {
         // List<GuidesEntity> entityList = guidesRepository.findTop10ByOrderByDestinationIdAsc(); // destinationId 기준 정렬
         List<GuidesEntity> entityList = guidesRepository.findAll();
-        log.info("entityList: {}==", entityList);
+        log.info("entityList size: {}==", entityList.size());
         List<GuidesDTO> dtoList = new ArrayList<>();
         log.info("dtoList: {}==", dtoList);
 

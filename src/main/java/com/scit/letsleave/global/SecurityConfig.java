@@ -54,11 +54,3 @@ public class SecurityConfig {
        return http.build();
    }
 }
-
-/*
- * "/"
-                        ,"/auth/**"
-                        ,"/user/signup"
-                        ,"/user/login"
-                        ,"/script/**"
- */

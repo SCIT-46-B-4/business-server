@@ -1,6 +1,6 @@
 use letsleave;
 INSERT INTO countries (id, kr_name, eng_name, iso3, iso2, continent, continent_code, currency_code)
-VALUES ('일본', 'Japan', 'JPN', 'JP', '아시아', 'AS', 'JPY');
+VALUES (1, '일본', 'Japan', 'JPN', 'JP', '아시아', 'AS', 'JPY');
 
 INSERT INTO cities (id, country_id, kr_name, eng_name, city_code)
 VALUES

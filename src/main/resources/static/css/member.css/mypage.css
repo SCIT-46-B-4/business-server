@@ -1,26 +1,26 @@
 * {
   box-sizing: border-box;
   font-family: "Noto Sans", sans-serif;
-  margin: 0 5em;
 }
 
 .sample-photo {
   width: 80px;
   height: 80px;
   margin-right: 0;
-  margin-left: 11em;
+  margin-left: 19em;
+  margin-bottom: 50px;
 }
 .profile-photo {
-  margin-bottom: 15px;
-  width: 70px;
-  height: 70px;
+  margin-bottom: 10px;
+  width: 90px;
+  height: 90px;
   margin-top: 20px;
 }
 .profile-section {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   margin-top: 20px;
 }
 .menu-section {
@@ -28,12 +28,13 @@
   justify-content: center;
   padding: 15px;
   padding-bottom: 20px;
-  position: relative;
 }
 
 .button-section {
   display: flex;
-  gap: 30px;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 180px;
   position: relative;
 }
 
@@ -41,9 +42,10 @@
   content: "";
   position: absolute;
   bottom: -5px;
-  left: 0;
-  width: 100%;
+  left: 40;
+  width: 160%;
   height: 2px;
+
   border-bottom: solid rgba(0, 0, 0, 0.248) 2px;
 }
 
@@ -74,11 +76,13 @@
 .trip-info {
   display: flex;
   flex-direction: column;
-  margin: 0;
+  height: 9em;
 }
+
 .trip-info h4,
 .trip-info p {
   margin-left: 20px;
+  margin-bottom: 0;
 }
 .trip-history p:first-child {
   top: 2px;
@@ -89,13 +93,13 @@
 }
 
 .trip-record .former-trip {
-  margin-left: 13em;
+  margin-left: 15.5em;
   font-size: 20px;
   margin-bottom: 15px;
 }
 
 .trip-record {
-  margin-top: 40px;
+  margin-top: 30px;
   margin-left: 6em;
 }
 
@@ -103,15 +107,22 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 p {
-  margin-left: -50px;
+  margin-left: 0px;
+}
+
+.logout-button,
+.edit-button {
+  text-decoration: none;
 }
 .logout-button {
-  margin-right: 0;
-  margin-left: 0;
+  margin-right: 25px;
 }
 .edit-button {
-  margin-left: 0;
+  margin-right: 15em;
+}
+.former-trip {
+  margin: 0;
 }

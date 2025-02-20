@@ -54,6 +54,7 @@ body {
 #profile-img {
   border: none;
   cursor: pointer;
+  margin-left: 70px;
 }
 
 .input-group {
@@ -76,8 +77,8 @@ body {
 
 .checkbox-group {
   display: flex;
-  flex-direction: column;
-  align-items: start;
+  flex-direction: row;
+  justify-content: space-around;
   margin-bottom: 20px;
 }
 

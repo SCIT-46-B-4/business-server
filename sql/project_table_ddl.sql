@@ -489,3 +489,4 @@ ALTER TABLE destinations MODIFY kr_name VARCHAR(256) NOT NULL;
 ALTER TABLE destinations MODIFY loc_name VARCHAR(256) NOT NULL;
 ALTER TABLE destinations MODIFY `address` VARCHAR(512) NULL;
 ALTER TABLE destinations MODIFY available_time VARCHAR(512) NULL;
+ALTER TABLE destinations MODIFY title VARCHAR(256) NOT NULL;

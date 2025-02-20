@@ -31,11 +31,10 @@
             <!-- HOT 방문지 목록 -->
             <h2>지금 가장 HOT🔥한 방문지 TOP 10</h2>
             <p>지난 일주일 간 평소보다 더 많이 저장된 관광지 & 맛집</p>
-            <div class="places-list">
-                <h2>test</h2>
+            <div class="places-list">               
                 <div th:each="place : ${places}">
                     <a href="#" class="tour-item">
-                        <img th:src="@{${places.titleImg}}" alt="Place Image"> <!-- 이미지 파일명은 실제 데이터에 맞게 수정 필요 -->
+                        <img th:src="@{${place.titleImg}}" alt="Place Image"> <!-- 이미지 파일명은 실제 데이터에 맞게 수정 필요 -->
                         <div class="tour-info">
                             <h2 th:text="${place.title}"></h2>
                             <p th:text="${place.content}"></p>

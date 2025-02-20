@@ -47,7 +47,7 @@ public class GuidesEntity {
     @Column(name="title_img")
     private String titleImg;
 
-    @Column(name="create_at")
+    @Column(name="created_at")
     private LocalDateTime createdAt;
 
     @Column(name="updated_at")
@@ -70,25 +70,3 @@ public class GuidesEntity {
     }
 }
    
-// -- ================================
-// -- 11) 가이드 (guides) - destination_id, city_id
-// --     (route_reviews에서 guide_id를 FK로 참조하므로 먼저 생성)
-// -- ================================
-// CREATE TABLE guides (
-// 	id             BIGINT       PRIMARY KEY AUTO_INCREMENT,
-// 	destination_id BIGINT       NOT NULL,
-// 	city_id        INT          NULL,
-// 	title          VARCHAR(32)  NOT NULL,
-// 	content        VARCHAR(2048)NOT NULL,
-// 	title_img      VARCHAR(512) NULL,
-// 	created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-// 	updated_at     DATETIME     NULL,
-// 	CONSTRAINT `fk_guides_destination`
-// 		FOREIGN KEY (destination_id)
-// 		REFERENCES destinations (id)
-// 		ON DELETE CASCADE,
-// 	CONSTRAINT `fk_guides_city`
-// 		FOREIGN KEY (city_id)
-// 		REFERENCES cities (id)
-// 		ON DELETE SET NULL
-// );

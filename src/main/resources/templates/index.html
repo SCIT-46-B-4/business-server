@@ -1,11 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>index</title>
 </head>
 <body>
-    index
+    <h1>메인 페이지</h1>
+
+    <!-- 비로그인 상태 -->
+    <div th:if="${!isLoggedIn}">
+        <li><a th:href="@{/user/signup}">회원가입</a></li>
+        <li><a th:href="@{/user/login}">로그인</a></li>
+    </div>
+
+    <!-- 로그인된 상태 -->
+    <div th:if="${isLoggedIn}">
+        <p>로그인됨!</p>
+        <li><a href="#" onclick="logout()">로그아웃</a></li>
+    </div>
+
+    <!-- 로그아웃 스크립트 -->
+    <script>
+        function logout() {
+            document.cookie = "Authorization=; Max-Age=0; path=/"; // 쿠키 삭제
+            alert("로그아웃되었습니다.");
+            window.location.reload();
+        }
+    </script>
 </body>
 </html>

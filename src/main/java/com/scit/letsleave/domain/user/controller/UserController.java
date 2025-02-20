@@ -7,12 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
 
     /**
-     * 회원가입 페이지 반환
-     * @return 회원가입 페이지 (signup.html)
+     * 회원가입 페이지
+     * @return 
      */
     @GetMapping("/user/signup")
     public String registerPage() {
-        // templates/signup.html 파일 반환
-        return "signup";
+        return "/user/signup"; // signup.html
+    }
+
+    /**
+     * 로그인 페이지
+     * @return
+     */
+    @GetMapping("/user/login")
+    public String loginPage() {
+        return "/user/login"; // login.html 반환
     }
 }

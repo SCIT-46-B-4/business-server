@@ -69,4 +69,12 @@ public class UserService {
     public boolean isPhoneExists(String phone) {
         return userRepository.findByPhone(phone).isPresent();
     }
+
+    public UserEntity findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
+    }
 }

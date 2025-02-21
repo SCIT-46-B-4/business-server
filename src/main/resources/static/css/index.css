@@ -324,9 +324,12 @@
 /* 최대 4줄까지 보이도록 (line-clamp) - 실제로는 JS로 토글하는 방식 권장 */
 .review-content p {
     display: -webkit-box;
-    -webkit-line-clamp: 4; /* 최대 4줄 */
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4; /* 4줄로 제한 */
     overflow: hidden;
+    line-height: 1.5em; /* 줄 높이 (필요에 따라 조정) */
+    margin: 0;
+    position: relative;
 }
 .detail-review-more-btn {
     background: none;
@@ -336,6 +339,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
+    font-weight: bold;
 }
 
 /* 리뷰 이미지 (최대 5장): 위 2장, 아래 3장 */

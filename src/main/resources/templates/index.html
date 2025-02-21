@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script th:src="@{/script/jQuery.js}" src="../static/script/jQuery.js"></script>
-    <script th:src="@{/script/index.js}" src="../static/script/index.js"></script>
+    <script type="module" th:src="@{/script/index.js}" src="../static/script/index.js"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
+
     <link rel="stylesheet" th:href="@{/css/reset.css}" href="../static/css/reset.css">
     <link rel="stylesheet" th:href="@{/css/index.css}" href="../static/css/index.css">
     <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../static/css/fragments/header.css">
     <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../static/css/fragments/slidePanel.css">
-    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
     <title>떠나조</title>
 </head>
 <body>
@@ -114,11 +115,16 @@
                         <div class="review-date">2024-02-09</div>
                     </div>
                     <div class="review-content">
-                        <p>리뷰 내용이 들어갑니다.<br>
+                        <p>
+                            리뷰 내용이 들어갑니다.<br>
                             네 그렇다고요 그런가..? <br>
                             4줄 이후에는<br>
-                            이렇게</p>
+                            이렇게 긴 글은 말이죠 어떻게 줄이냐면<br>
+                            이렇게 더보기를 추가하고 말이죠
+                            
+                        </p>
                         <span class="detail-review-more-btn">더보기</span>
+                        
                     </div>
                     <div class="review-images">
                         <div class="top-row">

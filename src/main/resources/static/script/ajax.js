@@ -1,25 +1,23 @@
-const AjaxAPI = {
+export const AjaxAPI = {
     getCities: function () {
         return $.ajax({
-            url: "/destinations/cities",
+            url: "localhost:8080/destinations/cities",
             type: "get",
             dataType: "json"
         })
     },
     getGuides: function () {
         return $.ajax({
-            url: "/guides",
+            url: "localhost:8080/guides",
             type: "get",
             dataType: "json"
         })
     },
     getScheduleReviews: function () {
         return $.ajax({
-            url: "/schedules/reviews",
+            url: "localhost:8080/schedules/reviews",
             type: "get",
             dataType: "json"
         })
     }
 }
-
-export default AjaxAPI;

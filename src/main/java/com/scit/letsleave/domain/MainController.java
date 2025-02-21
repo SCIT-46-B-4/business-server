@@ -9,21 +9,6 @@ public class MainController {
 
     @GetMapping({"/", ""})
     public String index(Model model) {
-        // 로그인 여부는 GlobalControllerAdvice에서 처리되므로 추가 코드가 필요 없음
-        return "index"; // index.html 반환
+        return "index";
     }
 }
-
-
-
-/*
- * @GetMapping({"/", ""})
-    public String index(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        boolean isLoggedIn = authentication != null && authentication.isAuthenticated() &&
-                             !authentication.getPrincipal().equals("anonymousUser");
-        model.addAttribute("isLoggedIn", isLoggedIn);
-        return "index"; // index.html 반환
-    }
- */

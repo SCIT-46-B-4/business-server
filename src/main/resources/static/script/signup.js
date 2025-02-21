@@ -4,13 +4,13 @@ $(document).ready(function () {
 
     // 공통 유효성 검사 함수
     function validateField(fieldId, errorId, message) {
-        const value = $(`#${fieldId}`).val();
-        if (!value) {
+        const value = $(`#${fieldId}`).val().trim(); // 앞뒤 공백 제거
+        if (!value) { // 값이 없거나 빈 문자열인 경우
             $(`#${errorId}`).text(message).removeClass("success").addClass("error");
-            return false;
+            return false; // 유효성 실패
         }
         $(`#${errorId}`).text("").removeClass("error"); // 에러 없으면 초기화
-        return true;
+        return true; // 유효성 성공
     }
 
     // 중복 확인 요청 함수
@@ -46,13 +46,13 @@ $(document).ready(function () {
 
     // 이메일 형식 검증 함수
     function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 간단한 이메일 형식 검증 정규식
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 형식 검증 정규식
         return emailRegex.test(email);
     }
 
     // 이메일 중복 확인 및 형식 검증
     function checkEmail() {
-        const email = $("#email").val();
+        const email = $("#email").val().trim(); // 앞뒤 공백 제거
 
         // 이메일 입력 여부 확인
         if (!validateField("email", "emailError", "email을(를) 입력하세요.")) {
@@ -83,7 +83,7 @@ $(document).ready(function () {
 
     // 전화번호 중복 확인 및 형식 검증
     function checkPhone() {
-        const phone = $("#phone").val();
+        const phone = $("#phone").val().trim(); // 앞뒤 공백 제거
 
         if (!validateField("phone", "phoneError", "전화번호를 입력하세요.")) {
             phoneChecked = false;
@@ -111,8 +111,8 @@ $(document).ready(function () {
 
     // 비밀번호 유효성 검사
     function validatePassword() {
-        const password = $("#password").val();
-        const confirmPassword = $("#confirmPassword").val();
+        const password = $("#password").val().trim(); // 앞뒤 공백 제거
+        const confirmPassword = $("#confirmPassword").val().trim(); // 앞뒤 공백 제거
 
         if (password.length < 8) {
             $("#passwordError")
@@ -132,6 +132,20 @@ $(document).ready(function () {
         return true;
     }
 
+    // 모든 에러 메시지 확인 함수
+    function hasErrors() {
+        let hasError = false;
+
+        $(".error").each(function () {
+            if ($(this).text().trim() !== "") { // 에러 메시지가 비어있지 않으면
+                hasError = true;
+                return false; // 루프 종료
+            }
+        });
+
+        return hasError;
+    }
+
     // 이벤트 핸들러 등록
     $("input").on("keyup blur", function () {
         const fieldId = $(this).attr("id");
@@ -139,7 +153,10 @@ $(document).ready(function () {
 
         switch (fieldId) {
             case "name":
-                validateField(fieldId, errorId, "name을(를) 입력하세요.");
+                validateField(fieldId, errorId, "이름을(를) 입력하세요.");
+                break;
+            case "nickname":
+                validateField(fieldId, errorId, "닉네임을(를) 입력하세요.");
                 break;
             case "email":
                 if ($(this).val()) checkEmail();
@@ -154,43 +171,73 @@ $(document).ready(function () {
         }
     });
 
-    // 폼 제출 전 검증
-    $("#registerForm").on("submit", function (e) {
-		let isValid = true;
+    // 폼 제출 전 검증 및 Ajax 요청 처리
+    $("#signupForm").on("submit", function (e) {
+        e.preventDefault(); // 기본 폼 제출 동작 차단
 
-		// 필수 항목 검증
-		isValid &= validateField("name", "nameError", "name을(를) 입력하세요.");
-		isValid &= validateField("email", "emailError", "email을(를) 입력하세요.");
-		isValid &= validateField("password", "passwordError", "password을(를) 입력하세요.");
+        let isValid = true;
 
-		// 비밀번호 검증
-		isValid &= validatePassword();
+        isValid = validateField("name", "nameError", "이름을(를) 입력하세요.") && isValid;
+        isValid = validateField("nickname", "nicknameError", "닉네임을(를) 입력하세요.") && isValid;
 
-		// 전화번호 검증
-		const phone = $("#phone").val();
-		if (!validateField("phone", "phoneError", "전화번호를 입력하세요.") || !/^\d{11}$/.test(phone)) {
-			$("#phoneError")
-				.text(!/^\d{11}$/.test(phone) ? "전화번호는 숫자 11자리여야 합니다." : "")
-				.removeClass("success")
-				.addClass("error");
-			isValid = false;
-		}
+        if (!emailChecked) {
+            $("#emailError").text("이메일 중복 확인을 완료해주세요.").addClass("error");
+            isValid = false;
+        }
 
-		// 중복 확인 여부 체크
-		if (!emailChecked && !$("#emailError").hasClass("error")) {
-			$("#emailError")
-				.text("이메일 중복 확인을 완료해주세요.")
-				.addClass("error");
-			isValid = false;
-		}
+        if (!phoneChecked) {
+            $("#phoneError").text("전화번호 중복 확인을 완료해주세요.").addClass("error");
+            isValid = false;
+        }
 
-		if (!phoneChecked && !$("#phoneError").hasClass("error")) {
-			$("#phoneError")
-				.text("전화번호 중복 확인을 완료해주세요.")
-				.addClass("error");
-			isValid = false;
-		}
+        isValid = validateField("email", "emailError", "email을(를) 입력하세요.") && isValid;
+        isValid = validateField("phone", "phoneError", "전화번호를 입력하세요.") && isValid;
 
-		if (!isValid) e.preventDefault(); // 폼 제출 차단
-	});
+        isValid = validatePassword() && isValid;
+
+        if (!isValid || hasErrors()) { 
+            alert('입력한 항목에 오류가 있습니다.'); 
+            return; 
+         }
+
+        const formData = {
+            name: $("#name").val(),
+            nickname: $("#nickname").val(),
+            email: $("#email").val(),
+            phone: $("#phone").val(),
+            password: $("#password").val(),
+            isAgreeLoc: $("#isAgreeLoc").is(":checked"),
+            isAgreeNewsNoti: $("#isAgreeNewsNoti").is(":checked"),
+            isAgreeMarketingNoti: $("#isAgreeMarketingNoti").is(":checked")
+        };
+
+        console.log("Form Data Sent:", formData); // 디버깅용 로그 추가
+
+        $.ajax({
+            url: "/auth/signup",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function () {
+                alert("회원가입이 완료되었습니다!");
+                window.location.href = "/user/login"; // 로그인 페이지로 이동
+            },
+            error: function (xhr) {
+                alert(`회원가입 실패: ${xhr.responseText}`);
+                console.error(xhr.responseText);
+                
+                // 서버 응답에 따라 특정 필드에 에러 메시지 표시 가능
+                const responseJson = JSON.parse(xhr.responseText);
+                if (responseJson.emailError) {
+                    $("#emailError").text(responseJson.emailError).addClass("error");
+                }
+                if (responseJson.phoneError) {
+                    $("#phoneError").text(responseJson.phoneError).addClass("error");
+                }
+                
+                console.log(responseJson);
+                
+             }
+         });
+     });
 });

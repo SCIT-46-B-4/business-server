@@ -15,4 +15,3 @@ public class GlobalControllerAdvice {
                !authentication.getPrincipal().equals("anonymousUser");
     }
 }
-

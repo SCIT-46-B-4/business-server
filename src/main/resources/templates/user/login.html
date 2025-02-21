@@ -29,12 +29,12 @@
     <form id="loginForm" th:action="@{/auth/login}" method="post">
         <!-- 이메일 -->
         <label for="email">이메일:</label>
-        <input type="text" id="email" name="email" required>
+        <input type="text" id="email" name="email">
         <div id="emailError" class="error"></div>
 
         <!-- 비밀번호 -->
         <label for="password">비밀번호:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password">
         <div id="passwordError" class="error"></div>
 
         <!-- 로그인 버튼 -->

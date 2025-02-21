@@ -43,7 +43,7 @@ public class AuthController {
      * @return 성공 메시지
      */
     @PostMapping("/signup")
-    public ResponseEntity<String> register(@ModelAttribute UserDto userDto) {
+    public ResponseEntity<String> register(@RequestBody UserDto userDto) {
     userService.registerUser(userDto);
     return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }

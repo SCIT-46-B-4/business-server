@@ -209,7 +209,14 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    filter: brightness(0.7);
+}
+.auto-city-slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* a 값이 낮아 질수록 필터가 밝아짐 */
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
 .slide-right-text {
@@ -218,13 +225,13 @@
     top: 50%;
     transform: translateY(-100%);
     /* 슬라이드 절반 너비만 차지 */
-    background-color: rgba(125, 125, 125, 0.5);
     width: 75%;
     padding: 20px;
     box-sizing: border-box;
     text-align: right;
     font-size: xx-large;
     color: #fff;
+    z-index: 2;
 }
 
 /* ----------------------------- */

@@ -10,8 +10,8 @@
 
     <!-- 비로그인 상태 -->
     <div th:if="${!isLoggedIn}">
-        <li><a th:href="@{/user/signup}">회원가입</a></li>
-        <li><a th:href="@{/user/login}">로그인</a></li>
+        <li><a th:href="@{/users/signup}">회원가입</a></li>
+        <li><a th:href="@{/users/login}">로그인</a></li>
     </div>
 
     <!-- 로그인된 상태 -->

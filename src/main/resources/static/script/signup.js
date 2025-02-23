@@ -16,7 +16,7 @@ $(document).ready(function () {
     // 중복 확인 요청 함수 (이메일, 전화번호)
     function duplicationCheck(type, value, errorId, successMessage, errorMessage, callback) {
         $.ajax({
-            url: `/auth/check?type=${type}&val=${value}`, // 쿼리 스트링으로 type과 val 전달
+            url: `/users/auth/check?type=${type}&val=${value}`, // 쿼리 스트링으로 type과 val 전달
             method: "GET",
             success: function (response) {
                 if (response.exists) { // 중복된 경우
@@ -196,13 +196,13 @@ $(document).ready(function () {
         console.log("Form Data Sent:", formData); // 디버깅용 로그 추가
 
         $.ajax({
-            url: "/auth/signup",
+            url: "/users/auth/signup",
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(formData),
             success: function () {
                 alert("회원가입이 완료되었습니다!");
-                window.location.href = "/user/login"; // 로그인 페이지로 이동
+                window.location.href = "/users/login"; // 로그인 페이지로 이동
             },
             error: function (xhr) {
                 alert(`회원가입 실패: ${xhr.responseText}`);

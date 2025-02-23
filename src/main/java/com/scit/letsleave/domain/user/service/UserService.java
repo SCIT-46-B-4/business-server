@@ -2,8 +2,6 @@ package com.scit.letsleave.domain.user.service;
 
 import java.time.LocalDateTime;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +17,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     /**
      * 회원가입 처리

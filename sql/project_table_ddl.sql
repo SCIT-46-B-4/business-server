@@ -53,9 +53,6 @@ CREATE TABLE users (
 	profile_img              VARCHAR(512) NULL  DEFAULT 'default_profile_img_url'
 );
 
-ALTER TABLE users
-ADD COLUMN password VARCHAR(128) NULL AFTER phone;
-
 -- ================================
 -- 4) OAuth (oauth) - user_id → users.id
 -- ================================
@@ -483,3 +480,4 @@ CREATE TABLE product_options (
 
 ALTER TABLE issued_coupons ADD COLUMN coupon_id BIGINT NOT NULL;
 ALTER TABLE issued_coupons ADD 	CONSTRAINT `fk_issuedcoupons_coupon` FOREIGN KEY (coupon_id) REFERENCES coupons (id) ON DELETE CASCADE;
+ALTER TABLE users ADD COLUMN password VARCHAR(128) NULL AFTER phone;

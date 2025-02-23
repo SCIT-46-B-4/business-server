@@ -39,4 +39,13 @@ public class UserService {
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }
+
+    /**
+     * ID 기반으로 사용자 정보 조회
+     * @param id 사용자 ID
+     * @return UserEntity 사용자 엔티티 또는 null (존재하지 않을 경우)
+     */
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id).orElse(null); // Optional 처리
+    }
 }

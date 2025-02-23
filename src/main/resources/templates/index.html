@@ -7,17 +7,19 @@
 </head>
 <body>
     <h1>메인 페이지</h1>
+</body>
+</html>
 
-    <!-- 비로그인 상태 -->
+<!--
+    비로그인 상태
     <div th:if="${!isLoggedIn}">
         <li><a th:href="@{/users/signup}">회원가입</a></li>
         <li><a th:href="@{/users/login}">로그인</a></li>
     </div>
 
-    <!-- 로그인된 상태 -->
+    로그인된 상태
     <div th:if="${isLoggedIn}">
-        <p>로그인됨!</p>
+        <p>[[${userInfo.nickname}]]님, 로그인 됨!</p>
         <li><a th:href="@{/logout}">로그아웃</a></li>
     </div>
-</body>
-</html>
+-->

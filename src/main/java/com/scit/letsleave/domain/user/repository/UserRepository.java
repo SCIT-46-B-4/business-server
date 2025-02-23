@@ -7,9 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.scit.letsleave.domain.user.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    // 이메일로 사용자 검색
-    Optional<UserEntity> findByEmail(String email);
+    boolean existsByEmail(String email); // 이메일 존재 여부 확인
+    boolean existsByPhone(String phone); // 전화번호 존재 여부 확인
 
-    // 핸드폰 번호로 사용자 검색
-    Optional<UserEntity> findByPhone(String phone);
+    Optional<UserEntity> findByEmail(String email); // 이메일로 사용자 정보 조회
 }

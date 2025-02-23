@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +28,6 @@ public class UserService {
      */
     public void registerUser(UserDto userDto) {
 
-        // DTO 로그 출력
-        logger.info("회원가입 요청 DTO: {}", userDto);
-
         // DTO -> Entity 변환 및 비밀번호 암호화 처리
         UserEntity userEntity = UserEntity.builder()
                 .name(userDto.getName())
@@ -45,35 +41,43 @@ public class UserService {
                 .joinDate(LocalDateTime.now()) // 가입 날짜 설정
                 .build();
 
-        // Entity 로그 출력
-        logger.info("저장할 엔티티: {}", userEntity);
-
         // DB 저장
         userRepository.save(userEntity);
     }
 
     /**
-     * 이메일 중복 여부 확인
-     * @param email 이메일 주소
-     * @return 중복 여부 (true: 중복, false: 중복 아님)
+     * 이메일 존재 여부 확인.
+     * @param email 이메일 주소.
+     * @return 존재하면 true, 그렇지 않으면 false.
      */
     public boolean isEmailExists(String email) {
-        return userRepository.findByEmail(email).isPresent();
+        return userRepository.existsByEmail(email); // existsBy로 변경됨
     }
 
     /**
-     * 핸드폰 번호 중복 여부 확인
-     * @param phone 핸드폰 번호
-     * @return 중복 여부 (true: 중복, false: 중복 아님)
+     * 전화번호 존재 여부 확인.
+     * @param phone 전화번호.
+     * @return 존재하면 true, 그렇지 않으면 false.
      */
     public boolean isPhoneExists(String phone) {
-        return userRepository.findByPhone(phone).isPresent();
+        return userRepository.existsByPhone(phone); // existsBy로 변경됨
     }
 
+    /**
+     * 이메일로 사용자 정보 조회.
+     * @param email 이메일 주소.
+     * @return UserEntity 사용자 엔티티 또는 null (존재하지 않을 경우)
+     */
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }
 
+    /**
+     * 비밀번호 검증.
+     * @param rawPassword 입력받은 비밀번호(평문).
+     * @param encodedPassword 저장된 암호화된 비밀번호.
+     * @return 비밀번호가 일치하면 true, 그렇지 않으면 false.
+     */
     public boolean checkPassword(String rawPassword, String encodedPassword) {
         return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
     }

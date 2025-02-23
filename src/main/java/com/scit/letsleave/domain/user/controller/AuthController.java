@@ -107,7 +107,7 @@ public class AuthController {
         Cookie cookie = new Cookie("Authorization", encodedToken); // Authorization 쿠키 생성
         cookie.setHttpOnly(true); // HttpOnly 설정 (클라이언트에서 접근 불가)
         cookie.setPath("/"); // 쿠키의 유효 경로 설정 (루트 경로)
-        cookie.setMaxAge(60 * 15); // 쿠키의 유효 기간 설정 (15분)
+        cookie.setMaxAge(60 * 60); // 쿠키의 유효 기간 설정 (1시간으로 변경)
         response.addCookie(cookie); // 응답에 쿠키 추가
 
         // 로그인 성공 메시지를 클라이언트에 반환

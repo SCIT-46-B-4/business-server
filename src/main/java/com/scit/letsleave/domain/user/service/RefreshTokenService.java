@@ -1,4 +1,6 @@
 // TODO 아직 리프레쉬 토큰 구현 안함
+// RefreshTokenService는 리프레쉬토큰을 서버에서 관리할때 필요.. 근데..이걸 서버에서 할거야?? 할 수 있음?
+
 // 토큰 > 이메일 x, id o
 
 // package com.scit.letsleave.domain.user.service;

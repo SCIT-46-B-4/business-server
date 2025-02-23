@@ -479,3 +479,15 @@ CREATE TABLE product_options (
 		ON DELETE CASCADE
 );
 
+ALTER TABLE issued_coupons ADD COLUMN coupon_id BIGINT NOT NULL;
+ALTER TABLE issued_coupons ADD 	CONSTRAINT `fk_issuedcoupons_coupon` FOREIGN KEY (coupon_id) REFERENCES coupons (id) ON DELETE CASCADE;
+ALTER TABLE destinations ADD COLUMN title_img VARCHAR(512) NULL;
+ALTER TABLE destinations ADD COLUMN coordinate POINT NOT NULL SRID 4326; -- EPSG:4326(WGS84) 좌표계로 지정
+ALTER TABLE destinations ADD SPATIAL INDEX idx_coordinate (coordinate);
+ALTER TABLE destinations MODIFY latitude DECIMAL(10,7) NULL;
+ALTER TABLE destinations MODIFY longitude DECIMAL(10,7) NULL;
+ALTER TABLE destinations MODIFY kr_name VARCHAR(256) NOT NULL;
+ALTER TABLE destinations MODIFY loc_name VARCHAR(256) NOT NULL;
+ALTER TABLE destinations MODIFY `address` VARCHAR(512) NULL;
+ALTER TABLE destinations MODIFY available_time VARCHAR(512) NULL;
+ALTER TABLE destinations MODIFY title VARCHAR(256) NOT NULL;

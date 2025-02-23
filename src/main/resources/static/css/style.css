@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #ffffff;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #000;
+    font-size: 24px;
+}
+
+.page-number {
+    text-align: right;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.question {
+    margin-bottom: 40px;
+    text-align: center;
+    /* 질문과 보조문장 가운데 정렬 */
+}
+
+.question h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.question p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* 기본적으로 3개씩 배치 */
+.options label {
+    flex: 0 1 calc(33.333% - 10px);
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* 2개씩 배치할 옵션들 */
+.two-columns label {
+    flex: 0 1 calc(50% - 10px);
+}
+
+/* 라디오 버튼과 체크박스 숨기기 */
+input[type="radio"],
+input[type="checkbox"] {
+    display: none;
+}
+
+/* 선택된 라벨 스타일 */
+.options label input[type="radio"]:checked~span,
+.options label input[type="checkbox"]:checked~span {
+    color: #FF385C;
+}
+
+.options label input[type="radio"]:checked,
+.options label input[type="checkbox"]:checked {
+    &+span {
+        color: #FF385C;
+    }
+
+    &~label {
+        border-color: #FF385C;
+    }
+}
+
+/* 선택된 라벨 자체의 스타일 */
+.options label input[type="radio"]:checked~span,
+.options label input[type="checkbox"]:checked~span {
+    border-color: #FF385C;
+}
+
+.options label:has(input:checked) {
+    border-color: #FF385C;
+}
+
+.options label:hover {
+    background-color: #f8f8f8;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #FF385C;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    /* 네모 모양으로 변경 */
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: #E6314F;
+}

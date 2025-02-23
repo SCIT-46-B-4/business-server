@@ -1,9 +1,10 @@
 package com.scit.letsleave.domain.guide.service;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.scit.letsleave.domain.guide.dto.GuidesDTO;
@@ -31,18 +32,26 @@ public class GuidesService {
     }
 
 
-    public List<GuidesDTO> getTop10HotPlaces() {
-        // List<GuidesEntity> entityList = guidesRepository.findTop10ByOrderByDestinationIdAsc(); // destinationId 기준 정렬
-        List<GuidesEntity> entityList = guidesRepository.findAll();
-        log.info("entityList size: {}==", entityList.size());
-        List<GuidesDTO> dtoList = new ArrayList<>();
-        log.info("dtoList: {}==", dtoList);
-
-
-        entityList.forEach(entity -> dtoList.add(GuidesDTO.toDTO(entity)));
-        return dtoList;
+    // public List<GuidesDTO> getTop10HotPlaces() {
+    //     List<GuidesEntity> entityList = guidesRepository.findAll();        
+    //     List<GuidesDTO> dtoList = new ArrayList<>();
+        
+    //     entityList.forEach(entity -> dtoList.add(GuidesDTO.toDTO(entity)));
+    //     return dtoList;
+    // }
+     public Page<GuidesDTO> getHotPlaces(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<GuidesEntity> entityPage = guidesRepository.findAll(pageRequest);
+        return entityPage.map(GuidesDTO::toDTO);
     }
+
+   
     
+
+
+
+
+
     //  @Transactional
     // public void update(GuidesDTO guidesDTO) {
     //     Optional<GuidesEntity> temp = guidesRepository.findById(guidesDTO.getId());

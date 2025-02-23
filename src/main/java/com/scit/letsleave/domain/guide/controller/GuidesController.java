@@ -1,12 +1,12 @@
 package com.scit.letsleave.domain.guide.controller;
 
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.scit.letsleave.domain.guide.dto.GuidesDTO;
 import com.scit.letsleave.domain.guide.service.GuidesService;
@@ -29,15 +29,23 @@ public class GuidesController {
         return "index";
     }
 
-    @GetMapping("/main-city")
-    public String mainCity(Model model) {
-        List<GuidesDTO> places = guidesService.getTop10HotPlaces();
-        log.info("===={}==", places);
-        model.addAttribute("places", places);
-        
+    // @GetMapping("/main-city")
+    // public String mainCity(Model model) {
+    //     List<GuidesDTO> places = guidesService.getTop10HotPlaces();
+    //     model.addAttribute("places", places);
+
+    //     return "main-city";
+    // }
+
+     @GetMapping("/main-city")
+    public String mainCity(@RequestParam(defaultValue = "0") int page, Model model) {
+        int size = 3; // 한 페이지에 보일 항목 수
+        Page<GuidesDTO> placesPage = guidesService.getHotPlaces(page, size);
+        model.addAttribute("places", placesPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", placesPage.getTotalPages());
         return "main-city";
     }
-
 
     @GetMapping("/main-city-search")
     public String mainCitySearch() {
@@ -78,7 +86,6 @@ public class GuidesController {
     //     // 5. 반환할 뷰 페이지
     //     return "/guides/guidesDetail";  // Thymeleaf 파일 경로 (guidesDetail.html)
     // }
-
 
 }
 

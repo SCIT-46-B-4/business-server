@@ -51,7 +51,7 @@ p {
 /* 여행지 카드 목록 스타일 */
 .places-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     padding: 0;
     list-style: none;
@@ -65,6 +65,8 @@ p {
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    padding: 20px;
 }
 
 .tour-item:hover {
@@ -77,6 +79,7 @@ p {
     height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border-radius: 8px;
 }
 
 .tour-item:hover img {
@@ -84,7 +87,7 @@ p {
 }
 
 .tour-info {
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .tour-info h2 {
@@ -100,16 +103,6 @@ p {
     margin-bottom: 8px;
 }
 
-.rating,
-.likes {
-    font-size: 16px;
-    color: #ff6a00;
-}
-
-.likes {
-    color: #e60000;
-}
-
 /* 페이지 네비게이션 스타일 */
 .pagination {
     display: flex;
@@ -120,6 +113,13 @@ p {
 .pagination nav {
     display: flex;
     align-items: center;
+}
+
+.pagination ul {
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
 }
 
 .pagination a,
@@ -141,6 +141,12 @@ p {
 .pagination .current {
     background-color: #ff6a00;
     color: #fff;
+    font-weight: bold;
+}
+
+.pagination .current {
+    pointer-events: none;
+    cursor: default;
 }
 
 /* 반응형 디자인 */
@@ -155,10 +161,15 @@ p {
     }
 
     .places-list {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
     }
 
     .tour-item {
         border-radius: 8px;
+    }
+
+    .pagination ul {
+        flex-direction: column;
+        gap: 5px;
     }
 }

@@ -10,7 +10,7 @@
 .button-container {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   margin-top: 3em;
   padding-right: 12em;
 }
@@ -31,7 +31,7 @@
 }
 
 .edit-profile-section h2 {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .profile-img-container {

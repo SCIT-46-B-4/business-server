@@ -1,6 +1,8 @@
 * {
   box-sizing: border-box;
   font-family: "Noto Sans", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .sample-photo {
@@ -67,7 +69,6 @@
 .trip-history {
   display: flex;
   align-items: center;
-
   position: relative;
   width: fit-content;
   padding: 10px;
@@ -76,13 +77,13 @@
 .trip-info {
   display: flex;
   flex-direction: column;
-  height: 9em;
+  height: 6em;
 }
 
 .trip-info h4,
 .trip-info p {
   margin-left: 20px;
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 .trip-history p:first-child {
   top: 2px;
@@ -93,7 +94,7 @@
 }
 
 .trip-record .former-trip {
-  margin-left: 15.5em;
+  margin-left: 16em;
   font-size: 20px;
   margin-bottom: 15px;
 }
@@ -106,22 +107,17 @@
 .button-container {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  margin-top: 20px;
+  margin-bottom: 50px;
+  margin-top: 3em;
+  padding-right: 12em;
 }
-p {
-  margin-left: 0px;
-}
-
 .logout-button,
 .edit-button {
   text-decoration: none;
-}
-.logout-button {
-  margin-right: 25px;
-}
-.edit-button {
-  margin-right: 15em;
+  margin-right: 15px;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
 }
 .former-trip {
   margin: 0;

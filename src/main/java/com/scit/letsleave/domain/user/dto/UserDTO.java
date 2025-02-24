@@ -1,8 +1,6 @@
 package com.scit.letsleave.domain.user.dto;
 
-import java.time.LocalDateTime;
-
-import com.scit.letsleave.domain.user.entity.MypageEntity;
+import com.scit.letsleave.domain.user.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,33 +15,23 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
-public class MypageDTO {
+public class UserDTO {
      private Long id;
      private String name;
      private String nickname;
-     private String email;
-     private String phone;
      private boolean isAgreeLoc;
      private boolean isAgreeNewsNoti;
      private boolean isAgreeMarketingNoti;
-     private LocalDateTime joinDate;
-     private LocalDateTime updatedAt ;
-     private LocalDateTime deletedAt ;
      private String profileImg;
      
-     public static MypageDTO toDTO(MypageEntity entity) {
- 		return MypageDTO.builder()
+     public static UserDTO toDTO(UserEntity entity) {
+ 		return UserDTO.builder()
  				.id(entity.getId())
  				.name(entity.getName())
  				.nickname(entity.getNickname())
- 				.email(entity.getEmail())
- 				.phone(entity.getPhone())
  				.isAgreeLoc(entity.isAgreeLoc())
  				.isAgreeNewsNoti(entity.isAgreeNewsNoti())
  				.isAgreeMarketingNoti(entity.isAgreeMarketingNoti())
- 				.joinDate(entity.getJoinDate())
- 				.updatedAt(entity.getUpdatedAt())
- 				.deletedAt(entity.getDeletedAt())
  				.profileImg(entity.getProfileImg())
  				.build();
  	}

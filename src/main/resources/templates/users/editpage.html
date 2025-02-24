@@ -18,13 +18,13 @@
     <!-- <th:block sec:authorize="isAuthenticated()">-->
     <div class="button-container">
       <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
-      <p><a th:href="@{/}" class="back-button">마이페이지</a></p>
+      <p><a th:href="@{/users/mypage}" class="back-button">마이페이지</a></p>
     </div>
     <!-- </th:block>-->
 
     <div class="edit-profile-section">
       <h2>프로필 편집</h2>
-      <form th:action="@{/member/updateProfile}" method="post">
+      <form th:action="@{/api/users/updateProfile}" method="post">
         <div class="profile-img-container">
           <img alt="profile_photo" id="profilePhoto" class="profile-photo" />
           <input

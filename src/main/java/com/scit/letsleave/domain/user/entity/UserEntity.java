@@ -1,7 +1,7 @@
 package com.scit.letsleave.domain.user.entity;
 import java.time.LocalDateTime;
 
-import com.scit.letsleave.domain.user.dto.MypageDTO;
+import com.scit.letsleave.domain.user.dto.UserDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +23,7 @@ import lombok.Setter;
 @Entity
 
 @Table(name = "users")
-public class MypageEntity {
+public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -63,19 +63,14 @@ public class MypageEntity {
 	private String profileImg = "default_profile_img_url";
 	
 	
-	 public static MypageEntity toEntity(MypageDTO dto) {
-	 		return MypageEntity.builder()
+	 public static UserEntity toEntity(UserDTO dto) {
+	 		return UserEntity.builder()
 	 				.id(dto.getId())
 	 				.name(dto.getName())
 	 				.nickname(dto.getNickname())
-	 				.email(dto.getEmail())
-	 				.phone(dto.getPhone())
 	 				.isAgreeLoc(dto.isAgreeLoc())
 	 				.isAgreeNewsNoti(dto.isAgreeNewsNoti())
 	 				.isAgreeMarketingNoti(dto.isAgreeMarketingNoti())
-	 				.joinDate(dto.getJoinDate())
-	 				.updatedAt(dto.getUpdatedAt())
-	 				.deletedAt(dto.getDeletedAt())
 	 				.profileImg(dto.getProfileImg())
 	 				.build();
 	 	}

@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $.ajax({
-    url: "/member/mypage",
+    url: "/api/users/mypage",
     type: "GET",
     dataType: "json",
     success: function (data) {

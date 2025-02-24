@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/guides")
 @RequiredArgsConstructor
 @Slf4j
 

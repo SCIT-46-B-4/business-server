@@ -11,7 +11,6 @@ import com.scit.letsleave.domain.guide.entity.GuidesEntity;
 
 public interface GuidesRepository extends JpaRepository<GuidesEntity, Long> {
 
-    // //DestinationId 로 순서
-    // List<GuidesEntity> findTop10ByOrderByDestinationIdAsc();
+    // //DestinationId 로 순서    
      Page<GuidesEntity> findAll(Pageable pageable);
 }

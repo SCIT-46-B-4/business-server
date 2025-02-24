@@ -29,63 +29,23 @@ public class GuidesController {
         return "index";
     }
 
-    // @GetMapping("/main-city")
-    // public String mainCity(Model model) {
-    //     List<GuidesDTO> places = guidesService.getTop10HotPlaces();
-    //     model.addAttribute("places", places);
-
-    //     return "main-city";
-    // }
-
-     @GetMapping("/main-city")
+    //main-city화면 + 페이지네이션
+      @GetMapping("/main-city")
     public String mainCity(@RequestParam(defaultValue = "0") int page, Model model) {
         int size = 3; // 한 페이지에 보일 항목 수
         Page<GuidesDTO> placesPage = guidesService.getHotPlaces(page, size);
         model.addAttribute("places", placesPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", placesPage.getTotalPages());
-        return "main-city";
+        return "guides/main-city";
     }
 
     @GetMapping("/main-city-search")
     public String mainCitySearch() {
-        return "main-city-search";
+        return "guides/main-city-search";
     }
 
-    // @GetMapping("/hot-places")
-    // public String getHotPlace0000s(Model model) {
-    //     List<GuidesDTO> places = guidesService.getTop10HotPlaces();
-    //     model.addAttribute("places", places);
-    //     return "hot_places";
-    // }
-
-    //     @GetMapping("/guidesDetail")
-    //     public String guidesDetail(
-    //     // @AuthenticationPrincipal LoginUserDetails loginUser,  // 로그인 정보
-    //         @RequestParam(name = "Id") Long Id,         // 가이드 ID
-    //         @RequestParam(name = "searchItem", defaultValue = "title") String searchItem,
-    //         @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
-    //         Model model) {
-
-    //     // 1. 가이드 정보 조회 (DB에서 guideId에 해당하는 데이터 가져오기)
-    //     GuidesDTO guideDTO = guidesService.selectOne(Id);
-
-    //     // // 2. 조회수 증가 (필요하면)
-    //     // guidesService.incrementHitcount(guideId);  
-
-    //     // 3. 모델에 데이터 추가 (Thymeleaf에서 사용할 데이터)
-    //     model.addAttribute("guide", guideDTO);
-    //     model.addAttribute("searchWord", searchWord);
-    //     model.addAttribute("searchItem", searchItem);
-
-    //     // 4. 로그인한 사용자 정보 추가 (있으면)
-    //     // if (loginUser != null) {
-    //     //     model.addAttribute("loginName", loginUser.getUserName());
-    //     // }
-
-    //     // 5. 반환할 뷰 페이지
-    //     return "/guides/guidesDetail";  // Thymeleaf 파일 경로 (guidesDetail.html)
-    // }
+   
 
 }
 

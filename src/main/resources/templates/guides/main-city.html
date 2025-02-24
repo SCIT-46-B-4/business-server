@@ -8,11 +8,7 @@
     <!-- css -->
     <link rel="stylesheet" href="../static/css/main-city.css" th:href="@{/css/main-city.css}">
     <!-- js -->
-    <!-- <script src="../js/main-city.js" th:src=""></script>  
-    <script defer src="../js/main-city.js" th:src=""></script>
---> 
-    <!-- font awesome -->
-    <script src="https://kit.fontawesome.com/def97ee41b.js" crossorigin="anonymous"></script>
+    <!-- <script src="../js/main-city.js" th:src=""></script> --> 
 
 </head>
 
@@ -22,7 +18,7 @@
     <div class="container">
         <!-- 검색창 -->
         <div class="search">
-            <a th:href="@{/main-city-search}" class="search-box">
+            <a th:href="@{/guides/main-city-search}" class="search-box">
                 <span class="icon">🔍</span> 어디든지
             </a>
         </div>
@@ -56,15 +52,15 @@
                 <ul>
                     <!-- 이전 버튼 -->
                     <li th:if="${currentPage > 0}">
-                        <a th:href="@{/main-city(page=${currentPage - 1})}">&lsaquo; </a>
+                        <a th:href="@{/guides/main-city(page=${currentPage - 1})}">&lsaquo; </a>
                     </li>
                     <!-- 페이지 번호 -->
                     <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                        <a th:href="@{/main-city(page=${i})}" th:text="${i + 1}"></a>
+                        <a th:href="@{/guides/main-city(page=${i})}" th:text="${i + 1}"></a>
                     </li>
                     <!-- 다음 버튼 -->
                     <li th:if="${currentPage < totalPages - 1}">
-                        <a th:href="@{/main-city(page=${currentPage + 1})}"> &rsaquo;</a>
+                        <a th:href="@{/guides/main-city(page=${currentPage + 1})}"> &rsaquo;</a>
                     </li>
                 </ul>                
                 

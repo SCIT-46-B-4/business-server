@@ -1,13 +1,28 @@
 package com.scit.letsleave.domain.destination.entity;
 
-import com.scit.letsleave.domain.destination.dto.CityDTO;
-import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
-import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.scit.letsleave.domain.destination.dto.CityDto;
+import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,20 +64,22 @@ public class CityEntity {
     private List<ScheduleEntity> schedules;
 
 
-    public static CityEntity toEntity(CityDTO cityDTO,
-                                      CountryEntity countryEntity,
-                                      List<DestinationEntity> destinationList,
-                                      List<ScheduleEntity> scheduleList) {
+    public static CityEntity toEntity(
+        CityDto cityDTO,
+        CountryEntity countryEntity,
+        List<DestinationEntity> destinationList,
+        List<ScheduleEntity> scheduleList
+    ) {
         return CityEntity.builder()
-                .id(cityDTO.getId())
-                .krName(cityDTO.getKrName())
-                .engName(cityDTO.getEngName())
-                .cityCode(cityDTO.getCityCode())
-                .createdAt(cityDTO.getCreatedAt())
-                .updatedAt(cityDTO.getUpdatedAt())
-                .country(countryEntity)
-                .destinations(destinationList)
-                .schedules(scheduleList)
-                .build();
+            .id(cityDTO.getId())
+            .krName(cityDTO.getKrName())
+            .engName(cityDTO.getEngName())
+            .cityCode(cityDTO.getCityCode())
+            .createdAt(cityDTO.getCreatedAt())
+            .updatedAt(cityDTO.getUpdatedAt())
+            .country(countryEntity)
+            .destinations(destinationList)
+            .schedules(scheduleList)
+            .build();
     }
 }

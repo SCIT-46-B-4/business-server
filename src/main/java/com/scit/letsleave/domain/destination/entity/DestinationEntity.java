@@ -1,6 +1,6 @@
 package com.scit.letsleave.domain.destination.entity;
 
-import com.scit.letsleave.domain.destination.dto.DestinationDTO;
+import com.scit.letsleave.domain.destination.dto.DestinationDto;
 import com.scit.letsleave.domain.schedule.entity.RouteEntity;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
@@ -23,8 +23,8 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
 @Builder
+@Entity
 @Table(name = "destinations")
 public class DestinationEntity {
 
@@ -96,9 +96,7 @@ public class DestinationEntity {
     @OneToMany(mappedBy = "destinationEntity", cascade = CascadeType.ALL)
     private List<RouteEntity> routes;
 
-    public static DestinationEntity toEntity(DestinationDTO dto,
-                                             CityEntity city,
-                                             List<RouteEntity> routeList) {
+    public static DestinationEntity toEntity(DestinationDto dto, CityEntity city, List<RouteEntity> routeList) {
         GeometryFactory geometryFactory = new GeometryFactory();
 
         Point point = geometryFactory.createPoint(
@@ -126,5 +124,5 @@ public class DestinationEntity {
                 .city(city)
                 .routes(routeList)
                 .build();
-    }
+        }
 }

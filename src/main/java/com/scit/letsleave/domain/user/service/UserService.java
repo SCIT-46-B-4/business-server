@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.scit.letsleave.domain.user.dto.UserDTO;
+import com.scit.letsleave.domain.user.dto.UserDto;
 import com.scit.letsleave.domain.user.entity.UserEntity;
 import com.scit.letsleave.domain.user.repository.UserRepository;
 
@@ -20,7 +20,7 @@ public class UserService {
     private final UserRepository repository;
 	
 	@Transactional
-	public void updateProfile(Long id, UserDTO dto) {
+	public void updateProfile(Long id, UserDto dto) {
 		
 		Optional<UserEntity> userInfo = repository.findById(id);
 		if(userInfo.isPresent()) {
@@ -33,8 +33,40 @@ public class UserService {
 			repository.save(user);
 		}
 	}
-	
-	public UserEntity getUserById(Long id) {
-		return repository.findById(id).orElse(null);
-	}
+
+    /**
+     * 이메일 존재 여부 확인.
+     * @param email 이메일 주소.
+     * @return 존재하면 true, 그렇지 않으면 false.
+     */
+    public boolean isEmailExists(String email) {
+        return repository.existsByEmail(email); // existsBy로 변경됨
+    }
+
+    /**
+     * 전화번호 존재 여부 확인.
+     * @param phone 전화번호.
+     * @return 존재하면 true, 그렇지 않으면 false.
+     */
+    public boolean isPhoneExists(String phone) {
+        return repository.existsByPhone(phone); // existsBy로 변경됨
+    }
+
+    /**
+     * 이메일로 사용자 정보 조회.
+     * @param email 이메일 주소.
+     * @return UserEntity 사용자 엔티티 또는 null (존재하지 않을 경우)
+     */
+    public UserEntity findByEmail(String email) {
+        return repository.findByEmail(email).orElse(null);
+    }
+
+    /**
+     * ID 기반으로 사용자 정보 조회
+     * @param id 사용자 ID
+     * @return UserEntity 사용자 엔티티 또는 null (존재하지 않을 경우)
+     */
+    public UserEntity findById(Long id) {
+        return repository.findById(id).orElse(null); // Optional 처리
+    }
 }

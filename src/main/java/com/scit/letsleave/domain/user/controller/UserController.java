@@ -17,4 +17,21 @@ public class UserController {
     public String edipage() {
     return "users/editpage";
 }
+    /**
+     * 회원가입 페이지
+     * @return 
+     */
+    @GetMapping("/signup")
+    public String registerPage() {
+        return "user/signup"; // signup.html
+    }
+
+    /**
+     * 로그인 페이지
+     * @return
+     */
+    @GetMapping("/login")
+    public String loginPage() {
+        return "user/login"; // login.html 반환
+    }
 }

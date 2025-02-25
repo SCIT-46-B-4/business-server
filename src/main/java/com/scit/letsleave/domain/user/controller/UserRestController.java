@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.scit.letsleave.domain.user.dto.UserDTO;
+import com.scit.letsleave.domain.user.dto.UserDto;
 import com.scit.letsleave.domain.user.entity.UserEntity;
 import com.scit.letsleave.domain.user.service.UserService;
 
@@ -31,16 +31,16 @@ public class UserRestController {
 	private final UserService service;
 	
 	@GetMapping("/mypage")
-	public ResponseEntity<UserDTO> getProfile(HttpSession session) {
+	public ResponseEntity<UserDto> getProfile(HttpSession session) {
         Long id = (Long) session.getAttribute("id");
         if (id == null) {
        	id = 1L;
        	session.setAttribute("id", id);
         //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        UserEntity user = service.getUserById(id);
+        UserEntity user = service.findById(id);
        if (user != null) {
-        UserDTO responseDto = UserDTO.toDTO(user);
+        UserDto responseDto = UserDto.toDto(user);
 				return ResponseEntity.ok(responseDto);
 			} else {
 				return ResponseEntity.notFound().build();
@@ -48,7 +48,7 @@ public class UserRestController {
 			}
 		
 	@PatchMapping("/updateProfile")
-	public ResponseEntity<Object> updateProfile(@RequestBody UserDTO dto,
+	public ResponseEntity<Object> updateProfile(@RequestBody UserDto dto,
 	        HttpSession session) {
 			Long id = (Long) session.getAttribute("id");
 			

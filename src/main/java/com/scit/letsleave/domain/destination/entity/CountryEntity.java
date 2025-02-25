@@ -1,12 +1,24 @@
 package com.scit.letsleave.domain.destination.entity;
 
-import com.scit.letsleave.domain.destination.dto.CountryDTO;
-import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.scit.letsleave.domain.destination.dto.CountryDto;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -52,20 +64,20 @@ public class CountryEntity {
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private List<CityEntity> cities;
 
-    public static CountryEntity toEntity(CountryDTO dto, List<CityEntity> cityList) {
+    public static CountryEntity toEntity(CountryDto dto, List<CityEntity> cityList) {
         return CountryEntity.builder()
-                .id(dto.getId())
-                .krName(dto.getKrName())
-                .engName(dto.getEngName())
-                .iso3(dto.getIso3())
-                .iso2(dto.getIso2())
-                .continent(dto.getContinent())
-                .continentCode(dto.getContinentCode())
-                .currencyCode(dto.getCurrencyCode())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .cities(cityList)
-                .build();
+            .id(dto.getId())
+            .krName(dto.getKrName())
+            .engName(dto.getEngName())
+            .iso3(dto.getIso3())
+            .iso2(dto.getIso2())
+            .continent(dto.getContinent())
+            .continentCode(dto.getContinentCode())
+            .currencyCode(dto.getCurrencyCode())
+            .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
+            .cities(cityList)
+            .build();
     }
 }
 

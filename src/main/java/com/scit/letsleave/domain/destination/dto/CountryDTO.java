@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class CountryDTO {
+public class CountryDto {
 
     private Long id;
     private String krName;
@@ -29,20 +29,20 @@ public class CountryDTO {
 
     private List<CityEntity> cities;
 
-    public static CountryDTO toDTO(CountryEntity entity) {
-        return CountryDTO.builder()
-                .id(entity.getId())
-                .krName(entity.getKrName())
-                .engName(entity.getEngName())
-                .iso3(entity.getIso3())
-                .iso2(entity.getIso2())
-                .continent(entity.getContinent())
-                .continentCode(entity.getContinentCode())
-                .currencyCode(entity.getCurrencyCode())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .cities(entity.getCities())
-                .build();
+    public static CountryDto toDTO(CountryEntity entity) {
+        return CountryDto.builder()
+            .id(entity.getId())
+            .krName(entity.getKrName())
+            .engName(entity.getEngName())
+            .iso3(entity.getIso3())
+            .iso2(entity.getIso2())
+            .continent(entity.getContinent())
+            .continentCode(entity.getContinentCode())
+            .currencyCode(entity.getCurrencyCode())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .cities(entity.getCities())
+            .build();
     }
 }
 

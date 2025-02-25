@@ -1,6 +1,5 @@
 package com.scit.letsleave.domain.destination.dto;
 
-import com.scit.letsleave.domain.destination.entity.DestinationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Builder
-public class DestinationScheduleDTO {
+public class DestinationScheduleDto {
 
     private Long id;
     private String krName;

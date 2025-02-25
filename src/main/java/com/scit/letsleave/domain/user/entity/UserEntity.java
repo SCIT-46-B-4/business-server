@@ -70,18 +70,18 @@ public class UserEntity {
     // DTO -> Entity 변환
     public static UserEntity toEntity(UserDto dto) {
         return UserEntity.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .nickname(dto.getNickname())
-                .email(dto.getEmail())
-                .phone(dto.getPhone())
-                .isAgreeLoc(dto.getIsAgreeLoc())
-                .isAgreeNewsNoti(dto.getIsAgreeNewsNoti())
-                .isAgreeMarketingNoti(dto.getIsAgreeMarketingNoti())
-                .joinDate(dto.getJoinDate())
-                .updatedAt(dto.getUpdatedAt())
-                .deletedAt(dto.getDeletedAt())
-                .profileImg(dto.getProfileImg())
-                .build();
+            .id(dto.getId())
+            .name(dto.getName())
+            .nickname(dto.getNickname())
+            .email(dto.getEmail())
+            .phone(dto.getPhone())
+            .isAgreeLoc(dto.getIsAgreeLoc())
+            .isAgreeNewsNoti(dto.getIsAgreeNewsNoti())
+            .isAgreeMarketingNoti(dto.getIsAgreeMarketingNoti())
+            .joinDate(dto.getJoinDate())
+            .updatedAt(dto.getUpdatedAt())
+            .deletedAt(dto.getDeletedAt())
+            .profileImg(dto.getProfileImg())
+            .build();
     }
 }

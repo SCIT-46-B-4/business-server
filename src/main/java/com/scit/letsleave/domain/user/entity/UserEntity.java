@@ -1,11 +1,19 @@
 package com.scit.letsleave.domain.user.entity;
 
-import com.scit.letsleave.domain.user.dto.UserDTO;
-import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,6 +39,9 @@ public class UserEntity {
 
     @Column(name = "phone", nullable = false, length = 64)
     private String phone;
+
+    @Column(name = "password", length = 128) // 비밀번호- 소셜로그인 사용자 null 허용
+    private String password;
 
     @Column(name = "is_agree_loc", nullable = false)
     private Boolean isAgreeLoc;

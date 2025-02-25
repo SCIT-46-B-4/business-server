@@ -21,7 +21,7 @@ public class GlobalControllerAdvice {
     public boolean addIsLoggedInAttribute() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null && authentication.isAuthenticated() &&
-               !authentication.getPrincipal().equals("anonymousUser");
+                !authentication.getPrincipal().equals("anonymousUser");
     }
 
     /**

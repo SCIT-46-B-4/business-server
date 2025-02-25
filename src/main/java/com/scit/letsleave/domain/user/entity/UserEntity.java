@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.scit.letsleave.domain.user.dto.UserDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -66,7 +68,7 @@ public class UserEntity {
     private String profileImg;
 
     // DTO -> Entity 변환
-    public static UserEntity toEntity(UserDTO dto) {
+    public static UserEntity toEntity(UserDto dto) {
         return UserEntity.builder()
                 .id(dto.getId())
                 .name(dto.getName())

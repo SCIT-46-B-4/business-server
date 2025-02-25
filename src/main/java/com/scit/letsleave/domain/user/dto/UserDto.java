@@ -35,15 +35,10 @@ public class UserDto {
     public static UserDto toDto(UserEntity userEntity) {
         return UserDto.builder()
                 .id(userEntity.getId())
-                .name(userEntity.getName())
                 .nickname(userEntity.getNickname())
-                .email(userEntity.getEmail())
-                .phone(userEntity.getPhone())
                 .isAgreeLoc(userEntity.getIsAgreeLoc())
                 .isAgreeNewsNoti(userEntity.getIsAgreeNewsNoti())
                 .isAgreeMarketingNoti(userEntity.getIsAgreeMarketingNoti())
-                .joinDate(userEntity.getJoinDate())
                 .build();
     }
-
 }

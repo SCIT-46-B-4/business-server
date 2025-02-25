@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 사전 설문</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script defer th:src="@{/script/survey.js}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <a href="#" class="back-button" onclick="history.back(); return false;">←</a>
+        <div class="page-number">2/3</div>
+        <form id="surveyForm">
+            <!-- hidden inputs for storing selections -->
+            <input type="hidden" name="companion" id="selectedcompanion">
+            <input type="hidden" name="travel_style" id="selectedtravel_style">
+            <!-- 3번 문항 -->
+            <div class="question" id="companion">
+                <h3>3. 누구와 떠나나요?</h3>
+                <p>다중 선택이 가능해요.</p>
+                <div class="options">
+                    <label>
+                        <input type="checkbox" name="companion" value="friend">
+                        <span>친구와</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="companion" value="couple">
+                        <span>연인과</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="companion" value="spouse">
+                        <span>배우자와</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="companion" value="kid">
+                        <span>아이와</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="companion" value="parents">
+                        <span>부모님과</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="companion" value="other">
+                        <span>기타</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 4번 문항 -->
+            <div class="question" id="travel_style">
+                <h3>4. 내가 선호하는 여행 스타일은?</h3>
+                <p>다중 선택이 가능합니다.</p>
+                <div class="options">
+                    <label>
+                        <input type="checkbox" name="travel_style" value="experience">
+                        <span>체험·액티비티</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="travel_style" value="sns">
+                        <span>SNS 핫플레이스</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="travel_style" value="nature">
+                        <span>자연과 함께</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="travel_style" value="famous">
+                        <span>유명 관광지는 필수</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="travel_style" value="healing">
+                        <span>여유롭게 힐링</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="travel_style" value="culture">
+                        <span>문화·예술·역사</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="travel_style" value="local">
+                        <span>여행지 느낌 물씬</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="travel_style" value="shopping">
+                        <span>쇼핑은 열정적으로</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="travel_style" value="food">
+                        <span>관광보다 먹방</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="button" class="submit-button" onclick="savePage2AndGoToNext()">다음</button>
+        </form>
+    </div>
+</body>
+
+</html>

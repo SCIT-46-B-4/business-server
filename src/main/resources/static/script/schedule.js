@@ -35,7 +35,7 @@ function formatDate(dtString) {
     return dt.toISOString().split('T')[0];
 }
 
-// 받은 DestinationScheduleDTO 데이터를 detailDate 기준으로 그룹화하여,
+// 받은 DestinationScheduleDto 데이터를 detailDate 기준으로 그룹화하여,
 // 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
 function renderScheduleBoxesByDay(boxes) {
     // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함

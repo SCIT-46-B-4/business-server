@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class CityDTO {
+public class CityDto {
 
     private Long id;
     private String krName;
@@ -29,17 +29,17 @@ public class CityDTO {
     private List<DestinationEntity> destinations;
     private List<ScheduleEntity> schedules;
 
-    public static CityDTO toDTO(CityEntity entity) {
-        return CityDTO.builder()
-                .id(entity.getId())
-                .krName(entity.getKrName())
-                .engName(entity.getEngName())
-                .cityCode(entity.getCityCode())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .country(entity.getCountry())
-                .destinations(entity.getDestinations())
-                .schedules(entity.getSchedules())
-                .build();
+    public static CityDto toDTO(CityEntity entity) {
+        return CityDto.builder()
+            .id(entity.getId())
+            .krName(entity.getKrName())
+            .engName(entity.getEngName())
+            .cityCode(entity.getCityCode())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .country(entity.getCountry())
+            .destinations(entity.getDestinations())
+            .schedules(entity.getSchedules())
+            .build();
     }
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Data
 @Builder
-public class DestinationDTO {
+public class DestinationDto {
 
     private Long id;
     private DestinationType type;
@@ -41,27 +41,27 @@ public class DestinationDTO {
     private List<RouteEntity> routes;
     private CityEntity city;
 
-    public static DestinationDTO toDTO(DestinationEntity entity) {
-        return DestinationDTO.builder()
-                .id(entity.getId())
-                .type(entity.getType())
-                .krName(entity.getKrName())
-                .locName(entity.getLocName())
-                .title(entity.getTitle())
-                .content(entity.getContent())
-                .latitude(entity.getLatitude())
-                .longitude(entity.getLongitude())
-                .address(entity.getAddress())
-                .contact(entity.getContact())
-                .homepage(entity.getHomepage())
-                .howToGo(entity.getHowToGo())
-                .availableTime(entity.getAvailableTime())
-                .feature(entity.getFeature())
-                .score(entity.getScore())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .routes(entity.getRoutes())
-                .city(entity.getCity())
-                .build();
+    public static DestinationDto toDTO(DestinationEntity entity) {
+        return DestinationDto.builder()
+            .id(entity.getId())
+            .type(entity.getType())
+            .krName(entity.getKrName())
+            .locName(entity.getLocName())
+            .title(entity.getTitle())
+            .content(entity.getContent())
+            .latitude(entity.getLatitude())
+            .longitude(entity.getLongitude())
+            .address(entity.getAddress())
+            .contact(entity.getContact())
+            .homepage(entity.getHomepage())
+            .howToGo(entity.getHowToGo())
+            .availableTime(entity.getAvailableTime())
+            .feature(entity.getFeature())
+            .score(entity.getScore())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .routes(entity.getRoutes())
+            .city(entity.getCity())
+            .build();
     }
 }

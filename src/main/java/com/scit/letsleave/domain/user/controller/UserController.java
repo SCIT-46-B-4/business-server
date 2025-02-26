@@ -8,13 +8,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users")
 public class UserController {
 
+    @GetMapping("/mypage")
+    public String mypage() {
+    return "users/mypage";
+}
+
+    @GetMapping("/editpage")
+    public String edipage() {
+    return "users/editpage";
+}
     /**
      * 회원가입 페이지
      * @return 
      */
     @GetMapping("/signup")
     public String registerPage() {
-        return "/user/signup"; // signup.html
+        return "user/signup"; // signup.html
     }
 
     /**
@@ -23,6 +32,6 @@ public class UserController {
      */
     @GetMapping("/login")
     public String loginPage() {
-        return "/user/login"; // login.html 반환
+        return "user/login"; // login.html 반환
     }
 }

@@ -1,17 +1,38 @@
 package com.scit.letsleave.domain.user.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
+import com.scit.letsleave.domain.user.dto.UserDto;
 import com.scit.letsleave.domain.user.entity.UserEntity;
 import com.scit.letsleave.domain.user.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+@Slf4j
 
-    private final UserRepository userRepository;
+public class UserService {
+    private final UserRepository repository;
+	
+	@Transactional
+	public void updateProfile(Long id, UserDto dto) {
+		
+		Optional<UserEntity> userInfo = repository.findById(id);
+		if(userInfo.isPresent()) {
+			UserEntity user = userInfo.get();
+			user.setNickname(dto.getNickname());
+			user.setAgreeLoc(dto.isAgreeLoc());
+			user.setAgreeMarketingNoti(dto.isAgreeMarketingNoti());
+			user.setAgreeNewsNoti(dto.isAgreeNewsNoti());
+			user.setProfileImg(dto.getProfileImg());
+			repository.save(user);
+		}
+	}
 
     /**
      * 이메일 존재 여부 확인.
@@ -19,7 +40,7 @@ public class UserService {
      * @return 존재하면 true, 그렇지 않으면 false.
      */
     public boolean isEmailExists(String email) {
-        return userRepository.existsByEmail(email); // existsBy로 변경됨
+        return repository.existsByEmail(email); // existsBy로 변경됨
     }
 
     /**
@@ -28,7 +49,7 @@ public class UserService {
      * @return 존재하면 true, 그렇지 않으면 false.
      */
     public boolean isPhoneExists(String phone) {
-        return userRepository.existsByPhone(phone); // existsBy로 변경됨
+        return repository.existsByPhone(phone); // existsBy로 변경됨
     }
 
     /**
@@ -37,7 +58,7 @@ public class UserService {
      * @return UserEntity 사용자 엔티티 또는 null (존재하지 않을 경우)
      */
     public UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+        return repository.findByEmail(email).orElse(null);
     }
 
     /**
@@ -46,6 +67,6 @@ public class UserService {
      * @return UserEntity 사용자 엔티티 또는 null (존재하지 않을 경우)
      */
     public UserEntity findById(Long id) {
-        return userRepository.findById(id).orElse(null); // Optional 처리
+        return repository.findById(id).orElse(null); // Optional 처리
     }
 }

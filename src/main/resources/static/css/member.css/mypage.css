@@ -1,0 +1,124 @@
+* {
+  box-sizing: border-box;
+  font-family: "Noto Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.sample-photo {
+  width: 80px;
+  height: 80px;
+  margin-right: 0;
+  margin-left: 19em;
+  margin-bottom: 50px;
+}
+.profile-photo {
+  margin-bottom: 10px;
+  width: 90px;
+  height: 90px;
+  margin-top: 20px;
+}
+.profile-section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 25px;
+  margin-top: 20px;
+}
+.menu-section {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  padding-bottom: 20px;
+}
+
+.button-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 180px;
+  position: relative;
+}
+
+.button-section::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 40;
+  width: 160%;
+  height: 2px;
+
+  border-bottom: solid rgba(0, 0, 0, 0.248) 2px;
+}
+
+.menu-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.77);
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  margin-bottom: 10px;
+}
+
+.menu-btn:hover,
+.menu-btn.active {
+  color: #007bff;
+}
+.trip-history {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: fit-content;
+  padding: 10px;
+}
+
+.trip-info {
+  display: flex;
+  flex-direction: column;
+  height: 6em;
+}
+
+.trip-info h4,
+.trip-info p {
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+.trip-history p:first-child {
+  top: 2px;
+  left: 0;
+  font-weight: bold;
+  font-size: 14px;
+  color: black;
+}
+
+.trip-record .former-trip {
+  margin-left: 16em;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.trip-record {
+  margin-top: 30px;
+  margin-left: 6em;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 50px;
+  margin-top: 3em;
+  padding-right: 12em;
+}
+.logout-button,
+.edit-button {
+  text-decoration: none;
+  margin-right: 15px;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+}
+.former-trip {
+  margin: 0;
+}

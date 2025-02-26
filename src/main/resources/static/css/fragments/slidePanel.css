@@ -1,0 +1,48 @@
+/* 슬라이드 패널 */
+.slide-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;           /* 화면 오른쪽 바깥에 위치시켜 숨김 */
+    width: 400px;
+    height: 100%;
+    background-color: #f4f4f4;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease;  /* 애니메이션 효과 */
+    overflow-y: auto;             /* 내용이 길어지면 스크롤 */
+    z-index: 9999;                /* 다른 요소보다 위에 위치 */
+}
+
+/* 패널 열릴 때(클래스 추가) */
+.slide-panel.open {
+    right: 0;
+}
+
+/* 패널 헤더(닫기 버튼) */
+.panel-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #eee;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px 10px;
+}
+
+/* 패널 내용 영역 */
+.panel-content-container {
+    padding: 20px;
+}
+
+.panel-box {
+    margin: 20px;
+}
+
+.panel-content {
+    color: var(--color-black);
+    font-size: 1.2em;
+    text-decoration: none;
+}

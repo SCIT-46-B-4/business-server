@@ -1,23 +1,23 @@
 package com.scit.letsleave.domain.destination.dto;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.scit.letsleave.domain.destination.entity.CityEntity;
 import com.scit.letsleave.domain.destination.entity.CountryEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class CityDto {
-
     private Long id;
     private String krName;
     private String engName;

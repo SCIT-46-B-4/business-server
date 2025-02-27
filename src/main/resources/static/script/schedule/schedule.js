@@ -8,7 +8,7 @@ function loadScheduleBoxes(scheduleId) {
         console.log(data);
     })
     .fail((xhr, _, errorThrown) => {
-        console.error(`Schedule ${scheduleId} Does Not Exists: ${xhr.status}, ${xhr.responseText}`);
+        console.error(`checkScheduleExistsById => Schedule ${scheduleId} Does Not Exists: ${xhr.status}, ${xhr.responseText}`);
         // ToDo: error 발생 시 forward 주소 확정하기.
         // location.href = "/";
     });
@@ -19,7 +19,7 @@ function loadScheduleBoxes(scheduleId) {
         renderScheduleBoxesByDay(data);
     })
     .fail((xhr, _, errorThrown) => {
-        console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
+        console.log(`getScheduleById => HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule boxes:", errorThrown);
         // ToDo: error 발생 시 forward 주소 확정하기.
         // location.href = "/";
@@ -138,17 +138,6 @@ function renderScheduleBoxesByDay(boxes) {
 
 // DOM이 완전히 로드된 후, scheduleId를 이용하여 데이터를 로드 및 렌더링
 $(function() {
-    $.ajax({
-        url: "/api/schedules",
-        method: "get",
-        dataType: "json",
-        success: (resp) => {
-            console.log(resp);
-        },
-        error: ((xhr, _, errorThrown) => {
-            console.log(xhr, _, errorThrown);
-        })
-    })
     // 상위 컨테이너가 없는 경우, 동적으로 생성하여 #scroll-root에 추가
     if (!$("#schedule-container")) {
         let $parentDiv = $("<div>");

@@ -30,8 +30,8 @@
 </head>
 <body>
     <!-- fragments place -->
-    <div th:insert="fragments/header :: top-bar"></div>
-    <div th:insert="fragments/slidePanel :: slide-panel"></div>
+    <div th:insert="~{fragments/header :: top-bar}"></div>
+    <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
     <h1>로그인</h1>
     <form id="loginForm" th:action="@{/auth/login}" method="post">
         <!-- 이메일 -->

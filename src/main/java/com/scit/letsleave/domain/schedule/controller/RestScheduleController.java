@@ -25,14 +25,12 @@ public class RestScheduleController {
     private final ScheduleService scheduleService;
 
     @GetMapping({"/", ""})
-    public List<ScheduleDto> userSchedules() {
-        System.out.println("good");
+    public ResponseEntity<List<ScheduleDto>> userSchedules() {
         // ToDo: Response Dto 분리 후 Schedule 목록만 반환하게 수정 필요.
         // ToDo: 매번 SecurityContextHolder를 호출할 필요 없이 간단하게 유저 정보를 조회할 수 있는지 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        List<ScheduleDto> scheduleDtoList = scheduleService.findByUserId(Long.valueOf(authentication.getName()));
-        return scheduleDtoList;
+        List<ScheduleDto> list = scheduleService.findByUserId(Long.valueOf(authentication.getName()));
+        return ResponseEntity.ok(list);
     }
 
     // 일정 존재 여부 확인 -> front
@@ -46,7 +44,6 @@ public class RestScheduleController {
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleDto> getSchedule(@PathVariable("id") Long id) {
         ScheduleDto scheduleDTO = scheduleService.getSchedule(id);
-        System.out.println(scheduleDTO);
         return ResponseEntity.ok(scheduleDTO);
     }
 }

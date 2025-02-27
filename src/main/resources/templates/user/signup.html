@@ -30,8 +30,9 @@
 </head>
 <body>
     <!-- fragments place -->
-    <div th:insert="fragments/header :: top-bar"></div>
-    <div th:insert="fragments/slidePanel :: slide-panel"></div>
+    <div th:insert="~{fragments/header :: top-bar}"></div>
+    <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
+    
     <form id="signupForm" th:action="@{/auth/signup}" method="post">
         <!-- 이름 -->
         <label for="name">이름:</label>

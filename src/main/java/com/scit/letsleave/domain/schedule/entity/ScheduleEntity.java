@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.schedule.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.scit.letsleave.domain.destination.entity.CityEntity;
 import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
 import jakarta.persistence.*;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -58,6 +61,8 @@ public class ScheduleEntity {
     private LocalDateTime updatedAt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "scheduleEntity", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonManagedReference
     private List<DetailScheduleEntity> detailScheduleEntities;
 
     public static ScheduleEntity toEntity(

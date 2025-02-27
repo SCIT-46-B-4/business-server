@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.schedule.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.schedule.dto.RouteDto;
 import jakarta.persistence.*;
@@ -26,6 +27,7 @@ public class RouteEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "detail_schedule_id", nullable = false)
+    @JsonBackReference
     private DetailScheduleEntity detailScheduleEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

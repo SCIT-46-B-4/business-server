@@ -1,11 +1,15 @@
 package com.scit.letsleave.domain.schedule.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.scit.letsleave.domain.schedule.dto.DetailScheduleDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -27,6 +31,7 @@ public class DetailScheduleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id", nullable = false)
+    @JsonBackReference
     private ScheduleEntity scheduleEntity;
 
     @Column(name = "date", nullable = false)
@@ -40,6 +45,8 @@ public class DetailScheduleEntity {
     private LocalDateTime updatedAt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "detailScheduleEntity", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonManagedReference
     private List<RouteEntity> routes;
 
     public static DetailScheduleEntity toEntity(

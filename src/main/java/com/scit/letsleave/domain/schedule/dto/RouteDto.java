@@ -21,7 +21,6 @@ public class RouteDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private DetailScheduleEntity detailScheduleEntity;
     private DestinationEntity destinationEntity;
 
     public static RouteDto toDto(RouteEntity entity) {
@@ -30,7 +29,6 @@ public class RouteDto {
             .orderNumber(entity.getOrderNumber())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
-            .detailScheduleEntity(entity.getDetailScheduleEntity())
             .destinationEntity(entity.getDestinationEntity())
             .build();
     }

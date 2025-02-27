@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.schedule.dto;
 
+import com.scit.letsleave.domain.destination.dto.CityDto;
 import com.scit.letsleave.domain.destination.entity.CityEntity;
 import com.scit.letsleave.domain.schedule.entity.DetailScheduleEntity;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
@@ -28,8 +29,8 @@ public class ScheduleDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private CityEntity city;
-    private List<DetailScheduleEntity> detailScheduleEntities;
+    private CityDto city;
+    private List<DetailScheduleDto> detailScheduleDtos;
 
     public static ScheduleDto toDto(ScheduleEntity entity) {
         return ScheduleDto.builder()

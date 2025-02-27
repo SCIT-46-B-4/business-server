@@ -22,7 +22,6 @@ public class ScheduleService {
     }
 
     public ScheduleDto getSchedule(Long scheduleId) {
-        System.out.println("여긴 서비스");
         return scheduleRepository.findById(scheduleId).map(ScheduleDto::toDto)
         .orElseThrow(() -> new RuntimeException("Schedule with id: " + scheduleId + " not found"));
         // ToDo: RuntimeException말고 Error Exception customizing 필요. NotFoundException:404 등

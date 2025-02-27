@@ -14,8 +14,8 @@
 </head>
 <body>
     <!-- fragments place -->
-    <div th:insert="fragments/header :: top-bar"></div>
-    <div th:insert="fragments/slidePanel :: slide-panel"></div>
+    <div th:insert="~{fragments/header :: top-bar}"></div>
+    <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
 
     <!-- Manual slide Guide Section -->
     <div id="mainContentsContainer">

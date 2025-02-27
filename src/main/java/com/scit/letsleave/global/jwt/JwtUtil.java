@@ -3,21 +3,29 @@ package com.scit.letsleave.global.jwt;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "your-256-bit-secret-your-256-bit-secret";
-    private static final long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 1000; // 1시간
+    @Value("${JWT_SECRET_KEY}")
+    private String SECRET_KEY;
+    private final long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 1000; // 1시간
     // private static final long REFRESH_TOKEN_EXPIRATION = 7 * 24 * 60 * 60 * 1000; // 7일
 
-    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private Key key;
+    @PostConstruct
+    public void init() {
+        // secretKey가 주입된 후에 key 초기화
+        key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
 
     /**
      * Access 토큰 생성

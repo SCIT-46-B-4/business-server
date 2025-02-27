@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
     <!-- jQuery -->
-    <script th:src="@{/script/jquery.js}" src="../static/script/jquery.js"></script>
+    <script th:src="@{/script/global/jquery.js}" src="../../static/script/global/jquery.js"></script>
     <!-- JavaScript -->
-    <script defer th:src="@{/script/signup.js}" src="../static/script/signup.js"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
+    <script defer th:src="@{/script/user/signup.js}" src="../../static/script/user/signup.js"></script>
     <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/global/reset.css}" href="../static/css/global/reset.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../static/css/fragments/header.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../static/css/fragments/slidePanel.css">
     <style>
         button {
             cursor: pointer;
@@ -25,7 +29,9 @@
     </style>
 </head>
 <body>
-    <h1>회원가입</h1>
+    <!-- fragments place -->
+    <div th:insert="fragments/header :: top-bar"></div>
+    <div th:insert="fragments/slidePanel :: slide-panel"></div>
     <form id="signupForm" th:action="@{/auth/signup}" method="post">
         <!-- 이름 -->
         <label for="name">이름:</label>
@@ -75,7 +81,7 @@
         </div>
 
         <!-- 버튼 -->
-        <button type="submit">회원가입</button>
+        <button type="submit" id="submitButton">회원가입</button>
     </form>
 </body>
 </html>

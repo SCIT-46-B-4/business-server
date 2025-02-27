@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Builder
-public class RouteDTO {
+public class RouteDto {
 
     private Long id;
     private Integer orderNumber;
@@ -24,14 +24,14 @@ public class RouteDTO {
     private DetailScheduleEntity detailScheduleEntity;
     private DestinationEntity destinationEntity;
 
-    public static RouteDTO toDTO(RouteEntity entity) {
-        return RouteDTO.builder()
-                .id(entity.getId())
-                .orderNumber(entity.getOrderNumber())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .detailScheduleEntity(entity.getDetailScheduleEntity())
-                .destinationEntity(entity.getDestinationEntity())
-                .build();
+    public static RouteDto toDto(RouteEntity entity) {
+        return RouteDto.builder()
+            .id(entity.getId())
+            .orderNumber(entity.getOrderNumber())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .detailScheduleEntity(entity.getDetailScheduleEntity())
+            .destinationEntity(entity.getDestinationEntity())
+            .build();
     }
 }

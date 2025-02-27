@@ -1,7 +1,7 @@
 package com.scit.letsleave.domain.schedule.entity;
 
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
-import com.scit.letsleave.domain.schedule.dto.RouteDTO;
+import com.scit.letsleave.domain.schedule.dto.RouteDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,16 +42,18 @@ public class RouteEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public static RouteEntity toEntity(RouteDTO dto,
-                                       DetailScheduleEntity detailScheduleEntity,
-                                       DestinationEntity destinationEntity) {
+    public static RouteEntity toEntity(
+        RouteDto dto,
+        DetailScheduleEntity detailScheduleEntity,
+        DestinationEntity destinationEntity
+    ) {
         return RouteEntity.builder()
-                .id(dto.getId())
-                .orderNumber(dto.getOrderNumber())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .detailScheduleEntity(detailScheduleEntity)
-                .destinationEntity(destinationEntity)
-                .build();
+            .id(dto.getId())
+            .orderNumber(dto.getOrderNumber())
+            .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
+            .detailScheduleEntity(detailScheduleEntity)
+            .destinationEntity(destinationEntity)
+            .build();
     }
 }

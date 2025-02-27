@@ -19,6 +19,7 @@ public class UserService {
      * @return 존재하면 true, 그렇지 않으면 false.
      */
     public boolean isEmailExists(String email) {
+        System.out.println("check1");
         return userRepository.existsByEmail(email); // existsBy로 변경됨
     }
 

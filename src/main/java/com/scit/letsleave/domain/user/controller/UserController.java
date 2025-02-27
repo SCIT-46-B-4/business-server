@@ -14,7 +14,7 @@ public class UserController {
      */
     @GetMapping("/signup")
     public String registerPage() {
-        return "/user/signup"; // signup.html
+        return "user/signup"; // signup.html
     }
 
     /**
@@ -23,6 +23,6 @@ public class UserController {
      */
     @GetMapping("/login")
     public String loginPage() {
-        return "/user/login"; // login.html 반환
+        return "user/login"; // login.html 반환
     }
 }

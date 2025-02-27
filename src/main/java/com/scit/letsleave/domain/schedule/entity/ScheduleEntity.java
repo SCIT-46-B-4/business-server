@@ -1,7 +1,7 @@
 package com.scit.letsleave.domain.schedule.entity;
 
 import com.scit.letsleave.domain.destination.entity.CityEntity;
-import com.scit.letsleave.domain.schedule.dto.ScheduleDTO;
+import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class ScheduleEntity {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private Long user_id;
+    private Long userId;
 
     @Column(name = "country_id")
     private Integer countryId;
@@ -60,20 +60,24 @@ public class ScheduleEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "scheduleEntity", cascade = CascadeType.ALL)
     private List<DetailScheduleEntity> detailScheduleEntities;
 
-    public static ScheduleEntity toEntity(ScheduleDTO dto, CityEntity city, List<DetailScheduleEntity> detailScheduleList) {
+    public static ScheduleEntity toEntity(
+        ScheduleDto dto,
+        CityEntity city,
+        List<DetailScheduleEntity> detailScheduleList
+    ) {
         return ScheduleEntity.builder()
-                .id(dto.getId())
-                .user_id(dto.getUser_id())
-                .countryId(dto.getCountryId())
-                .name(dto.getName())
-                .startDate(dto.getStartDate())
-                .endDate(dto.getEndDate())
-                .countryName(dto.getCountryName())
-                .cityName(dto.getCityName())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .city(city)
-                .detailScheduleEntities(detailScheduleList)
-                .build();
+            .id(dto.getId())
+            .userId(dto.getUserId())
+            .countryId(dto.getCountryId())
+            .name(dto.getName())
+            .startDate(dto.getStartDate())
+            .endDate(dto.getEndDate())
+            .countryName(dto.getCountryName())
+            .cityName(dto.getCityName())
+            .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
+            .city(city)
+            .detailScheduleEntities(detailScheduleList)
+            .build();
     }
 }

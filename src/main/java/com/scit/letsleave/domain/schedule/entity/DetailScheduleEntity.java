@@ -1,6 +1,6 @@
 package com.scit.letsleave.domain.schedule.entity;
 
-import com.scit.letsleave.domain.schedule.dto.DetailScheduleDTO;
+import com.scit.letsleave.domain.schedule.dto.DetailScheduleDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,16 +42,18 @@ public class DetailScheduleEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "detailScheduleEntity", cascade = CascadeType.ALL)
     private List<RouteEntity> routes;
 
-    public static DetailScheduleEntity toEntity(DetailScheduleDTO dto,
-                                                ScheduleEntity scheduleEntity,
-                                                List<RouteEntity> routeList) {
+    public static DetailScheduleEntity toEntity(
+        DetailScheduleDto dto,
+        ScheduleEntity scheduleEntity,
+        List<RouteEntity> routeList
+    ) {
         return DetailScheduleEntity.builder()
-                .id(dto.getId())
-                .date(dto.getDate())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .scheduleEntity(scheduleEntity)
-                .routes(routeList)
-                .build();
+            .id(dto.getId())
+            .date(dto.getDate())
+            .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
+            .scheduleEntity(scheduleEntity)
+            .routes(routeList)
+            .build();
     }
 }

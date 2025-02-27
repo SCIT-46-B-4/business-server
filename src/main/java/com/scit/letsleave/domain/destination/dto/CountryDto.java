@@ -29,7 +29,7 @@ public class CountryDto {
 
     private List<CityEntity> cities;
 
-    public static CountryDto toDTO(CountryEntity entity) {
+    public static CountryDto toDto(CountryEntity entity) {
         return CountryDto.builder()
             .id(entity.getId())
             .krName(entity.getKrName())

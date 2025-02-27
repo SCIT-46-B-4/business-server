@@ -26,12 +26,12 @@ public class JwtUtil {
      */
     public String generateAccessToken(String id) {
         return Jwts.builder()
-                .setSubject(id) // 사용자 ID를 Subject로 설정
-                .claim("roles", "ROLE_USER") // 권한 정보 추가
-                .setIssuedAt(new Date()) // 토큰 생성 시간 설정
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION)) // 만료 시간 설정
-                .signWith(key, SignatureAlgorithm.HS256) // HMAC-SHA256 알고리즘으로 서명
-                .compact(); // 토큰 생성 및 반환
+            .setSubject(id) // 사용자 ID를 Subject로 설정
+            .claim("roles", "ROLE_USER") // 권한 정보 추가
+            .setIssuedAt(new Date()) // 토큰 생성 시간 설정
+            .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION)) // 만료 시간 설정
+            .signWith(key, SignatureAlgorithm.HS256) // HMAC-SHA256 알고리즘으로 서명
+            .compact(); // 토큰 생성 및 반환
     }
     
     
@@ -55,9 +55,9 @@ public class JwtUtil {
         try {
             // 토큰을 파싱하여 유효한지 검사 (서명 검증 포함)
             Jwts.parserBuilder()
-                    .setSigningKey(key) // 서명 검증을 위한 키 설정
-                    .build()
-                    .parseClaimsJws(token); // 토큰을 파싱하여 검증
+                .setSigningKey(key) // 서명 검증을 위한 키 설정
+                .build()
+                .parseClaimsJws(token); // 토큰을 파싱하여 검증
             return true; // 검증 성공 시 true 반환
         } catch (JwtException | IllegalArgumentException e) {
             return false; // 토큰이 변조되었거나 유효하지 않은 경우 false 반환
@@ -71,10 +71,10 @@ public class JwtUtil {
      */
     public String extractSubject(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key) // 서명 검증을 위한 키 설정
-                .build()
-                .parseClaimsJws(token) // 토큰 파싱 및 검증
-                .getBody()
-                .getSubject(); // Subject(ID) 추출
+            .setSigningKey(key) // 서명 검증을 위한 키 설정
+            .build()
+            .parseClaimsJws(token) // 토큰 파싱 및 검증
+            .getBody()
+            .getSubject(); // Subject(ID) 추출
     }
 }

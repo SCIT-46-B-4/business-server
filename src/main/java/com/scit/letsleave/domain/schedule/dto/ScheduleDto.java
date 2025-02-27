@@ -15,10 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
-public class ScheduleDTO {
+public class ScheduleDto {
 
     private Long id;
-    private Long user_id;
+    private Long userId;
     private Integer countryId;
     private String name;
     private LocalDateTime startDate;
@@ -31,20 +31,20 @@ public class ScheduleDTO {
     private CityEntity city;
     private List<DetailScheduleEntity> detailScheduleEntities;
 
-    public static ScheduleDTO toDTO(ScheduleEntity entity) {
-        return ScheduleDTO.builder()
-                .id(entity.getId())
-                .user_id(entity.getUser_id())
-                .countryId(entity.getCountryId())
-                .name(entity.getName())
-                .startDate(entity.getStartDate())
-                .endDate(entity.getEndDate())
-                .countryName(entity.getCountryName())
-                .cityName(entity.getCityName())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .city(entity.getCity())
-                .detailScheduleEntities(entity.getDetailScheduleEntities())
-                .build();
+    public static ScheduleDto toDto(ScheduleEntity entity) {
+        return ScheduleDto.builder()
+            .id(entity.getId())
+            .userId(entity.getUserId())
+            .countryId(entity.getCountryId())
+            .name(entity.getName())
+            .startDate(entity.getStartDate())
+            .endDate(entity.getEndDate())
+            .countryName(entity.getCountryName())
+            .cityName(entity.getCityName())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .city(entity.getCity())
+            .detailScheduleEntities(entity.getDetailScheduleEntities())
+            .build();
     }
 }

@@ -41,7 +41,7 @@ public class DestinationDto {
     private List<RouteEntity> routes;
     private CityEntity city;
 
-    public static DestinationDto toDTO(DestinationEntity entity) {
+    public static DestinationDto toDto(DestinationEntity entity) {
         return DestinationDto.builder()
             .id(entity.getId())
             .type(entity.getType())

@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
-public class DetailScheduleDTO {
+public class DetailScheduleDto {
 
     private Long id;
     private LocalDate date;
@@ -26,14 +26,14 @@ public class DetailScheduleDTO {
     private List<RouteEntity> routes;
     private ScheduleEntity scheduleEntity;
 
-    public static DetailScheduleDTO toDTO(DetailScheduleEntity entity) {
-        return DetailScheduleDTO.builder()
-                .id(entity.getId())
-                .date(entity.getDate())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .routes(entity.getRoutes())
-                .scheduleEntity(entity.getScheduleEntity())
-                .build();
+    public static DetailScheduleDto toDto(DetailScheduleEntity entity) {
+        return DetailScheduleDto.builder()
+            .id(entity.getId())
+            .date(entity.getDate())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .routes(entity.getRoutes())
+            .scheduleEntity(entity.getScheduleEntity())
+            .build();
     }
 }

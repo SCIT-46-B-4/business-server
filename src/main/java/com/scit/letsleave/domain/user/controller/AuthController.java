@@ -52,9 +52,9 @@ public class AuthController {
     // 중복 확인 (이메일, 전화번호)
     @GetMapping("/check")
     public ResponseEntity<Map<String, Object>> duplicationCheck(
-            @RequestParam String type,
-            @RequestParam String val) {
-
+        @RequestParam(name="type") String type,
+        @RequestParam(name="val") String val
+    ) {
         // 이메일 중복 확인
         if (type.equals("email")) {
             boolean emailExists = userService.isEmailExists(val);
@@ -84,10 +84,10 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         // 사용자 인증
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequestDto.getEmail(),
-                        loginRequestDto.getPassword()
-                )
+            new UsernamePasswordAuthenticationToken(
+                loginRequestDto.getEmail(),
+                loginRequestDto.getPassword()
+            )
         );
 
         // 인증 성공 시 Spring Security의 SecurityContext에 인증 정보 설정

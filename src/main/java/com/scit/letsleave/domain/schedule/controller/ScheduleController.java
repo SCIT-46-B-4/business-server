@@ -1,16 +1,17 @@
 package com.scit.letsleave.domain.schedule.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.ui.Model;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/schedule")
+@RequestMapping("/schedules")
 @Slf4j
 public class ScheduleController {
 
@@ -38,15 +39,13 @@ public class ScheduleController {
             @RequestParam(value = "transport", required = false) String transport,
             @RequestParam(value = "schedule_style") String scheduleStyle) {
 
-        log.info("Survey submitted with: " +
-                "city={}, period={}, companion={}, travelStyle={}, transport={}, scheduleStyle={}",
-                city, period, companion, travelStyle, transport, scheduleStyle);
-
         return "redirect:/";
     }
 
-    @GetMapping("/scheduleRoute")
-    public String scheduleRoute(Model model) {
+    @GetMapping("/{id}")
+    public String scheduleRoute(@PathVariable(name="id") Long id, Model model) {
+        model.addAttribute("id", id);
+
         return "schedule/scheduleRoute";
     }
 }

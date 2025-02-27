@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>일정 보기</title>
-    <script defer th:src="@{/script/map.js}"></script>
-    <script defer th:src="@{/script/schedule.js}"></script>
-    <script async
-            defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbtW86eP8dZAoWEWUIc2vumKA3sFeDpFg&callback=initMap">
-    </script>
-    <link rel="stylesheet" href="../../static/css/scheduleRoute.css" th:href="@{/css/scheduleRoute.css}">
+    <!-- script -->
+    <script th:src="@{/script/global/jquery.js}" src="../static/script/global/jquery.js"></script>
+    <script defer th:src="@{/script/schedule/map.js}"></script>
+    <script defer type="module" th:src="@{/script/schedule/schedule.js}"></script>
+    <!-- google map api script -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbtW86eP8dZAoWEWUIc2vumKA3sFeDpFg&callback=initMap"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
+
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/schedule/scheduleRoute.css}" href="../../static/css/schedule/scheduleRoute.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../static/css/fragments/header.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../static/css/fragments/slidePanel.css">
 </head>
 <body>
+<!-- fragments place -->
+    <div th:insert="fragments/header :: top-bar"></div>
+    <div th:insert="fragments/slidePanel :: slide-panel"></div>
 <!-- header class -->
 <!-- total-container -->
 <div class="total-container">
@@ -91,7 +99,7 @@
                     </div>
                 </div>
                 <div role="tablist" aria-orientation="horizontal" class="buttonBox top-footer flex-box"
-                     style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
+                    style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
                     <!-- 동적인 버튼 생성 자리 button : day1, day2 ,,, -->
                 </div>
             </div> <!-- End .top-footer -->
@@ -145,5 +153,6 @@
         </div>
     </div> <!-- end #fullscreen-map -->
 </div>
+<span id="scheduleId" th:data-id="${id}" hidden></span>
 </body>
 </html>

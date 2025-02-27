@@ -1,13 +1,14 @@
 package com.scit.letsleave.domain.schedule.service;
 
-import com.scit.letsleave.domain.schedule.dto.ScheduleDTO;
-import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
-import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
+import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
@@ -20,14 +21,15 @@ public class ScheduleService {
         return scheduleRepository.existsById(scheduleId);
     }
 
-    // 특정 Schedule의 상세 정보 조회
-    public ScheduleDTO getSchedule(Long scheduleId) {
-        Optional<ScheduleEntity> temp = scheduleRepository.findById(scheduleId);
+    public ScheduleDto getSchedule(Long scheduleId) {
+        System.out.println("여긴 서비스");
+        return scheduleRepository.findById(scheduleId).map(ScheduleDto::toDto)
+        .orElseThrow(() -> new RuntimeException("Schedule with id: " + scheduleId + " not found"));
+        // ToDo: RuntimeException말고 Error Exception customizing 필요. NotFoundException:404 등
+    }
 
-        if (temp.isPresent()) {
-            return ScheduleDTO.toDTO(temp.get());
-        } else {
-            throw new RuntimeException("Schedule not found");
-        }
+    public List<ScheduleDto> findByUserId(Long userId) {
+        return scheduleRepository.findByUserIdOrderByCreatedAtDesc(userId)
+            .stream().map(ScheduleDto::toDto).toList();
     }
 }

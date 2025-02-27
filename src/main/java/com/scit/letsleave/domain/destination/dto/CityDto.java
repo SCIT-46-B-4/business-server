@@ -29,7 +29,7 @@ public class CityDto {
     private List<DestinationEntity> destinations;
     private List<ScheduleEntity> schedules;
 
-    public static CityDto toDTO(CityEntity entity) {
+    public static CityDto toDto(CityEntity entity) {
         return CityDto.builder()
             .id(entity.getId())
             .krName(entity.getKrName())

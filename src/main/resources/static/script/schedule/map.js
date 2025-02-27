@@ -57,7 +57,7 @@ function drawMapWithMarkers(map, destinations) {
 // 실제 지도 초기화 함수: scheduleId를 인자로 받음
 async function initializeMap(scheduleId) {
     const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 37.5400456, lng: 126.9921017 },
+        center: { lat: 35.405271, lng: 139.46081 },
         zoom: 10,
     });
     const destinations = await fetchScheduleDestinations(scheduleId);

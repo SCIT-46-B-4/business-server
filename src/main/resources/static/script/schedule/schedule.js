@@ -1,32 +1,29 @@
-// 스케줄 존재 여부를 확인하는 함수 (GET /api/schedules/{id}/exists)
-async function checkScheduleExists(scheduleId) {
-    try {
-        const response = await fetch(`/api/schedules/exists/${scheduleId}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const exists = await response.json();
-        console.log(`Schedule ${scheduleId} exists:`, exists);
-        return exists;
-    } catch (error) {
-        console.error("Error checking schedule existence:", error);
-        return false;
-    }
-}
+import { AjaxAPI } from "../global/ajax.js";
 
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
-async function loadScheduleBoxes(scheduleId) {
-    try {
-        const response = await fetch(`/api/destinations/${scheduleId}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const boxes = await response.json();
-        console.log("Fetched schedule boxes:", boxes);
-        renderScheduleBoxesByDay(boxes);
-    } catch (error) {
-        console.error("Error fetching schedule boxes:", error);
-    }
+function loadScheduleBoxes(scheduleId) {
+    // 스케줄 존재 여부를 확인하는 함수 (GET /api/schedules/{id}/exists)
+    AjaxAPI.checkScheduleExistsById(scheduleId)
+    .done((data) => {
+        console.log(data);
+    })
+    .fail((xhr, _, errorThrown) => {
+        console.error(`Schedule ${scheduleId} Does Not Exists: ${xhr.status}, ${xhr.responseText}`);
+        // ToDo: error 발생 시 forward 주소 확정하기.
+        // location.href = "/";
+    });
+
+    AjaxAPI.getScheduleById(scheduleId)
+    .done((data) => {
+        console.log(data);
+        renderScheduleBoxesByDay(data);
+    })
+    .fail((xhr, _, errorThrown) => {
+        console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
+        console.log("Error fetching schedule boxes:", errorThrown);
+        // ToDo: error 발생 시 forward 주소 확정하기.
+        // location.href = "/";
+    });
 }
 
 // 날짜 형식 변환 함수 (YYYY-MM-DD)
@@ -45,7 +42,12 @@ function renderScheduleBoxesByDay(boxes) {
         return;
     }
     container.innerHTML = ""; // 기존 내용 초기화
+    
+    const $container = $("#schedule-container");
+    $container.val("");
+    boxes.sort((a, b) => {
 
+    })
     // 그룹화: 각 DTO의 detailDate를 기준 ("YYYY-MM-DD")
     const groups = boxes.reduce((acc, box) => {
         const day = box.detailDate;
@@ -135,14 +137,25 @@ function renderScheduleBoxesByDay(boxes) {
 }
 
 // DOM이 완전히 로드된 후, scheduleId를 이용하여 데이터를 로드 및 렌더링
-document.addEventListener("DOMContentLoaded", async function() {
+$(function() {
+    $.ajax({
+        url: "/api/schedules",
+        method: "get",
+        dataType: "json",
+        success: (resp) => {
+            console.log(resp);
+        },
+        error: ((xhr, _, errorThrown) => {
+            console.log(xhr, _, errorThrown);
+        })
+    })
     // 상위 컨테이너가 없는 경우, 동적으로 생성하여 #scroll-root에 추가
-    if (!document.getElementById("schedule-container")) {
-        const parentDiv = document.createElement("div");
-        parentDiv.id = "schedule-container";
-        parentDiv.classList.add("container_schedule", "scheduleContainer");
-        document.getElementById("scroll-root").appendChild(parentDiv);
+    if (!$("#schedule-container")) {
+        let $parentDiv = $("<div>");
+        $parentDiv.attr("id", "schedule-container");
+        $parentDiv.addClass("container_schedule scheduleContainer");
+        $("#scroll-root").appendChild($parentDiv);
     }
-    const scheduleId = 1;  // 예시 스케줄 ID
+    const scheduleId = $("#scheduleId").attr("data-id");
     loadScheduleBoxes(scheduleId);
-});
+})

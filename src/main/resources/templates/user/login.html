@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
     <!-- jQuery -->
-    <script th:src="@{/script/jquery.js}"></script>
+    <script th:src="@{/script/global/jquery.js}"></script>
     <!-- JavaScript -->
-    <script defer th:src="@{/script/login.js}"></script>
+    <script defer th:src="@{/script/user/login.js}"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
     <!-- CSS -->
     <style>
         button {
@@ -23,8 +24,14 @@
             color: green;
         }
     </style>
+    <link rel="stylesheet" th:href="@{/css/global/reset.css}" href="../static/css/global/reset.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../../static/css/fragments/header.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../../static/css/fragments/slidePanel.css">
 </head>
 <body>
+    <!-- fragments place -->
+    <div th:insert="fragments/header :: top-bar"></div>
+    <div th:insert="fragments/slidePanel :: slide-panel"></div>
     <h1>로그인</h1>
     <form id="loginForm" th:action="@{/auth/login}" method="post">
         <!-- 이메일 -->

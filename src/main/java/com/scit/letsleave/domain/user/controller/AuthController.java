@@ -47,11 +47,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> register(@RequestBody UserDto userDto) {
         authService.registerUser(userDto);
-
-        // 등록 성공시 로그인 페이지로 리다이렉트
-        return ResponseEntity.status(HttpStatus.FOUND)
-            .header("Location", "/user/login")
-            .build();
+        return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
 
     // 중복 확인 (이메일, 전화번호)
@@ -115,9 +111,7 @@ public class AuthController {
         response.addCookie(cookie); // 응답에 쿠키 추가
 
         //로그인 성공시 메인 페이지로 리다이렉트
-        return ResponseEntity.status(HttpStatus.FOUND)
-            .header("Location", "/")
-            .build();
+        return ResponseEntity.ok(Map.of("message", "로그인 성공"));
     }
 }
 

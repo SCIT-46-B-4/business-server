@@ -1,7 +1,6 @@
 package com.scit.letsleave.domain.user.controller;
 
 import java.net.URI;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,6 +21,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.scit.letsleave.domain.user.dto.UserDto;
 import com.scit.letsleave.domain.user.entity.UserEntity;
 import com.scit.letsleave.domain.user.service.UserService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,9 +48,9 @@ public class UserRestController {
         UserDto responseDto = UserDto.toDto(user);
 		return ResponseEntity.ok(responseDto);
 	}
-		
+	
 	@PatchMapping(value="/updateProfile", consumes="multipart/form-data")
-	public ResponseEntity<Object> updateProfile(@ModelAttribute UserDto dto) {
+	public ResponseEntity<Object> updateProfile(@ModelAttribute UserDto dto, HttpServletResponse response) {
 			
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			

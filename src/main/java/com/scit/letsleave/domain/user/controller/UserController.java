@@ -8,14 +8,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users")
 public class UserController {
 
+    /**
+     * 개인 페이지
+     * @return 
+     */
     @GetMapping("/mypage")
     public String mypage() {
-    return "users/mypage";
+    return "user/mypage";
 }
-
+    /**
+     * 프로필 편집 페이지
+     * @return 
+     */
     @GetMapping("/editpage")
     public String edipage() {
-    return "users/editpage";
+    return "user/editpage";
 }
     /**
      * 회원가입 페이지

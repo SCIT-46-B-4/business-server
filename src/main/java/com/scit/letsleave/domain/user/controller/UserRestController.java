@@ -1,15 +1,19 @@
 package com.scit.letsleave.domain.user.controller;
 
 import java.net.URI;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +24,6 @@ import com.scit.letsleave.domain.user.dto.UserDto;
 import com.scit.letsleave.domain.user.entity.UserEntity;
 import com.scit.letsleave.domain.user.service.UserService;
 
-import jakarta.servlet.http.HttpSession;
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -31,36 +33,36 @@ public class UserRestController {
 	private final UserService service;
 	
 	@GetMapping("/mypage")
-	public ResponseEntity<UserDto> getProfile(HttpSession session) {
-        Long id = (Long) session.getAttribute("id");
-        if (id == null) {
-       	id = 1L;
-       	session.setAttribute("id", id);
-        //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        UserEntity user = service.findById(id);
-       if (user != null) {
-        UserDto responseDto = UserDto.toDto(user);
-				return ResponseEntity.ok(responseDto);
-			} else {
-				return ResponseEntity.notFound().build();
-			}
-			}
+	public ResponseEntity<Object> getProfile() {
 		
-	@PatchMapping("/updateProfile")
-	public ResponseEntity<Object> updateProfile(@RequestBody UserDto dto,
-	        HttpSession session) {
-			Long id = (Long) session.getAttribute("id");
+		// SecurityContextHolder에서 인증 객체를 가져오기
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		//JWT의 subject에 저장된 사용자 ID를 반환
+		String userId = authentication.getName();
+		Long id = Long.parseLong(userId);
+
+		//pk로 조회
+		UserEntity user = service.findById(id);
+
+        UserDto responseDto = UserDto.toDto(user);
+		return ResponseEntity.ok(responseDto);
+	}
+		
+	@PatchMapping(value="/updateProfile", consumes="multipart/form-data")
+	public ResponseEntity<Object> updateProfile(@ModelAttribute UserDto dto) {
 			
-			  if (id == null) {
-					id = 1L;
-       				session.setAttribute("id", id);
-			        //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-			    }
-			    
-			    service.updateProfile(id, dto);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			
+		Long id = Long.parseLong(authentication.getName());	    
+		
+		if(dto.getProfileImgFile() != null || !dto.getProfileImgFile().isEmpty()){
+			dto.setProfileImg(dto.getProfileImgFile().getOriginalFilename());
+		}
+
+		service.updateProfile(id, dto);
 			    URI redirectUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-			            .path("/users/mypage")
+			            .path("/user/mypage")
 			            .build()
 			            .toUri();
 			    return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();

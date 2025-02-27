@@ -15,22 +15,24 @@
     <script th:src="@{/script/edit.js}"></script>
   </head>
   <body>
-    <!-- <th:block sec:authorize="isAuthenticated()">-->
     <div class="button-container">
       <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
-      <p><a th:href="@{/users/mypage}" class="back-button">마이페이지</a></p>
+      <p><a th:href="@{/user/mypage}" class="back-button">마이페이지</a></p>
     </div>
-    <!-- </th:block>-->
 
     <div class="edit-profile-section">
       <h2>프로필 편집</h2>
-      <form th:action="@{/api/users/updateProfile}" method="post">
+      <form
+        th:action="@{/api/users/updateProfile}"
+        method="post"
+        enctype="multipart/form-data"
+      >
         <div class="profile-img-container">
           <img alt="profile_photo" id="profilePhoto" class="profile-photo" />
           <input
             type="file"
             id="profile-img"
-            name="profileImg"
+            name="profileImgFile"
             accept="image/*"
           />
         </div>

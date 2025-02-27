@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,7 +47,11 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> register(@RequestBody UserDto userDto) {
         authService.registerUser(userDto);
-        return ResponseEntity.ok("회원가입이 완료되었습니다.");
+
+        // 등록 성공시 로그인 페이지로 리다이렉트
+        return ResponseEntity.status(HttpStatus.FOUND)
+            .header("Location", "/user/login")
+            .build();
     }
 
     // 중복 확인 (이메일, 전화번호)
@@ -73,7 +78,6 @@ public class AuthController {
                 "message", "유효하지 않은 type 값입니다. (email 또는 phone)"
         ));
     }
-
     /**
      * 로그인 처리
      * @param loginRequestDto 클라이언트에서 전달받은 로그인 요청 데이터 (이메일, 비밀번호)
@@ -110,8 +114,10 @@ public class AuthController {
         cookie.setMaxAge(60 * 60); // 쿠키의 유효 기간 설정 (1시간으로 변경)
         response.addCookie(cookie); // 응답에 쿠키 추가
 
-        // 로그인 성공 메시지를 클라이언트에 반환
-        return ResponseEntity.ok(Map.of("message", "로그인 성공"));
+        //로그인 성공시 메인 페이지로 리다이렉트
+        return ResponseEntity.status(HttpStatus.FOUND)
+            .header("Location", "/")
+            .build();
     }
 }
 

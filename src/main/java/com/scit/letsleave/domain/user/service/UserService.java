@@ -19,21 +19,28 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
     private final UserRepository repository;
 	
+       /**
+        * 주어진 사용자 ID에 해당하는 사용자의 프로필 정보를 업데이트
+        *
+        * @param id   업데이트할 사용자의 고유 식별자 (PK)
+        * @param dto  업데이트할 프로필 정보를 담은 UserDto 객체
+        */
+
 	@Transactional
 	public void updateProfile(Long id, UserDto dto) {
-		
+
 		Optional<UserEntity> userInfo = repository.findById(id);
 		if(userInfo.isPresent()) {
 			UserEntity user = userInfo.get();
 			user.setNickname(dto.getNickname());
-			user.setAgreeLoc(dto.isAgreeLoc());
-			user.setAgreeMarketingNoti(dto.isAgreeMarketingNoti());
-			user.setAgreeNewsNoti(dto.isAgreeNewsNoti());
+			user.setIsAgreeLoc(dto.getIsAgreeLoc());
+			user.setIsAgreeMarketingNoti(dto.getIsAgreeMarketingNoti());
+			user.setIsAgreeNewsNoti(dto.getIsAgreeNewsNoti());
 			user.setProfileImg(dto.getProfileImg());
 			repository.save(user);
 		}
 	}
-
+    
     /**
      * 이메일 존재 여부 확인.
      * @param email 이메일 주소.

@@ -15,7 +15,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -50,9 +49,7 @@ public class DetailScheduleEntity {
     private List<RouteEntity> routes;
 
     public static DetailScheduleEntity toEntity(
-        DetailScheduleDto dto,
-        ScheduleEntity scheduleEntity,
-        List<RouteEntity> routeList
+        DetailScheduleDto dto, ScheduleEntity scheduleEntity, List<RouteEntity> routeList
     ) {
         return DetailScheduleEntity.builder()
             .id(dto.getId())

@@ -3,12 +3,15 @@ package com.scit.letsleave.domain.schedule.dto;
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.schedule.entity.DetailScheduleEntity;
 import com.scit.letsleave.domain.schedule.entity.RouteEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+
+import com.scit.letsleave.domain.destination.dto.DestinationDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +24,7 @@ public class RouteDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private DestinationEntity destinationEntity;
+    private DestinationDto destinationDto;
 
     public static RouteDto toDto(RouteEntity entity) {
         return RouteDto.builder()
@@ -29,7 +32,11 @@ public class RouteDto {
             .orderNumber(entity.getOrderNumber())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
-            .destinationEntity(entity.getDestinationEntity())
+            .destinationDto(
+                entity.getDestinationEntity() != null ?
+                DestinationDto.toDto(entity.getDestinationEntity()) :
+                null
+            )
             .build();
     }
 }

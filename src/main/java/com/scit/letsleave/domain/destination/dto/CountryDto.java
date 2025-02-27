@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +28,7 @@ public class CountryDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<CityEntity> cities;
+    private List<CityDto> cities;
 
     public static CountryDto toDto(CountryEntity entity) {
         return CountryDto.builder()
@@ -41,7 +42,7 @@ public class CountryDto {
             .currencyCode(entity.getCurrencyCode())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
-            .cities(entity.getCities())
+            .cities(entity.getCities().stream().map(CityDto::toDto).collect(Collectors.toList()))
             .build();
     }
 }

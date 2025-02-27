@@ -2,6 +2,8 @@ package com.scit.letsleave.domain.user.dto;
 
 import java.time.LocalDateTime;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.scit.letsleave.domain.user.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +32,8 @@ public class UserDto {
     private LocalDateTime deletedAt;
     private String profileImg;
 
+    private MultipartFile profileImgFile; //프로필 사진 파일 업로드 처리를 위한 필드
+
     // 엔티티 -> DTO 변환 메서드
     public static UserDto toDto(UserEntity userEntity) {
         return UserDto.builder()
@@ -38,6 +42,7 @@ public class UserDto {
             .isAgreeLoc(userEntity.getIsAgreeLoc())
             .isAgreeNewsNoti(userEntity.getIsAgreeNewsNoti())
             .isAgreeMarketingNoti(userEntity.getIsAgreeMarketingNoti())
+            .profileImg(userEntity.getProfileImg())
             .build();
     }
 }

@@ -11,155 +11,188 @@
     <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../static/css/fragments/header.css">
     <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../static/css/fragments/slidePanel.css">
     <title>떠나조</title>
-</head>
-<body>
+  </head>
+  <body>
     <!-- fragments place -->
     <div th:insert="~{fragments/header :: top-bar}"></div>
     <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
 
     <!-- Manual slide Guide Section -->
     <div id="mainContentsContainer">
-        <div class="guide-container" id="guideContainer">
-            <button class="arrow-btn" id="prevBtn">&lt;</button>
-            <div class="slides-area">
-                <div class="guide-wrapper" id="guideWrapper">
-                    <div class="guide-slide">
-                        <div class="guide-box">
-                            <div class="guide-image">
-                                <img th:src="@{/images/test_images/tokyo.jpg}" src="../static/images/test_images/tokyo.jpg" alt="이미지">
-                            </div>
-                            <div class="guide-contents">
-                                <div class="contents-header">
-                                    <span class="seq">1</span>
-                                    <span class="title">도쿄 어디까지 가봤니?</span>
-                                </div>
-                                <div class="contents-description">
-                                    색다른 도쿄 여행 떠나는 방법!
-                                </div>
-                                <div class="rating-like">
-                                    <span class="star">★</span>
-                                    <span class="score">4.8</span>
-                                    <span class="review-count">(5)</span>
-                                    <span class="heart">♥</span>
-                                    <span class="like-count">1225</span>
-                                </div>
-                                <div class="metadata">
-                                    <div class="country">일본</div>
-                                    <div class="dot">·</div>
-                                    <div class="city">도쿄</div>
-                                </div>
-                            </div>
-                        </div>
+      <div class="guide-container" id="guideContainer">
+        <button class="arrow-btn" id="prevBtn">&lt;</button>
+        <div class="slides-area">
+          <div class="guide-wrapper" id="guideWrapper">
+            <div class="guide-slide">
+              <div class="guide-box">
+                <div class="guide-image">
+                  <img
+                    th:src="@{/images/test_images/tokyo.jpg}"
+                    src="../static/images/test_images/tokyo.jpg"
+                    alt="이미지"
+                  />
+                </div>
+                <div class="guide-contents">
+                  <div class="contents-header">
+                    <span class="seq">1</span>
+                    <span class="title">도쿄 어디까지 가봤니?</span>
+                  </div>
+                  <div class="contents-description">
+                    색다른 도쿄 여행 떠나는 방법!
+                  </div>
+                  <div class="rating-like">
+                    <span class="star">★</span>
+                    <span class="score">4.8</span>
+                    <span class="review-count">(5)</span>
+                    <span class="heart">♥</span>
+                    <span class="like-count">1225</span>
+                  </div>
+                  <div class="metadata">
+                    <div class="country">일본</div>
+                    <div class="dot">·</div>
+                    <div class="city">도쿄</div>
+                  </div>
+                </div>
+              </div>
 
-                        <div class="guide-box">2</div>
-                        <div class="guide-box">3</div>
-                        <div class="guide-box">4</div>
-                    </div>
-                    <div class="guide-slide">
-                        <div class="guide-box">11</div>
-                        <div class="guide-box">12</div>
-                        <div class="guide-box">13</div>
-                        <div class="guide-box">14</div>
-                    </div>
-                    <div class="guide-slide">
-                        <div class="guide-box">21</div>
-                        <div class="guide-box">22</div>
-                        <div class="guide-box">23</div>
-                        <div class="guide-box">24</div>
-                    </div>
-                </div>
+              <div class="guide-box">2</div>
+              <div class="guide-box">3</div>
+              <div class="guide-box">4</div>
             </div>
-            <button class="arrow-btn" id="nextBtn">&gt;</button>
+            <div class="guide-slide">
+              <div class="guide-box">11</div>
+              <div class="guide-box">12</div>
+              <div class="guide-box">13</div>
+              <div class="guide-box">14</div>
+            </div>
+            <div class="guide-slide">
+              <div class="guide-box">21</div>
+              <div class="guide-box">22</div>
+              <div class="guide-box">23</div>
+              <div class="guide-box">24</div>
+            </div>
+          </div>
         </div>
+        <button class="arrow-btn" id="nextBtn">&gt;</button>
+      </div>
 
-        <!-- Auto slide City Section -->
-        <div class="city-container" id="cityContainer">
-            <div class="auto-city-slide-wrapper" id="autoCitySliderWrapper">
-                <div class="auto-city-slide"
-                    th:style="|background-image: url('@{/images/test_images/tokyo.jpg}');|"
-                    style="background-image: url('../static/images/test_images/tokyo.jpg');"
-                >
-                    <div class="slide-right-text">
-                        <h2>도쿄 어디까지 올라가볼까?</h2>
-                        <p>선샤인 시티부터 스카이 트리까지 도쿄 천마루 여행</p>
-                    </div>
-                </div>
-                <div class="auto-city-slide"
-                    th:style="|background-image: url('@{/images/test_images/sapporo.png}');|"
-                    style="background-image: url('../static/images/test_images/sapporo.png');"
-                >
-                    <div class="slide-right-text">
-                        <h2>겨울의 삿포로?</h2>
-                        <p>봄 여름 가을 겨울 사계절 삿포로 즐기기!</p>
-                    </div>
-                </div>
+      <!-- Auto slide City Section -->
+      <div class="city-container" id="cityContainer">
+        <div class="auto-city-slide-wrapper" id="autoCitySliderWrapper">
+          <div
+            class="auto-city-slide"
+            th:style="|background-image: url('@{/images/test_images/tokyo.jpg}');|"
+            style="
+              background-image: url('../static/images/test_images/tokyo.jpg');
+            "
+          >
+            <div class="slide-right-text">
+              <h2>도쿄 어디까지 올라가볼까?</h2>
+              <p>선샤인 시티부터 스카이 트리까지 도쿄 천마루 여행</p>
             </div>
+          </div>
+          <div
+            class="auto-city-slide"
+            th:style="|background-image: url('@{/images/test_images/sapporo.png}');|"
+            style="
+              background-image: url('../static/images/test_images/sapporo.png');
+            "
+          >
+            <div class="slide-right-text">
+              <h2>겨울의 삿포로?</h2>
+              <p>봄 여름 가을 겨울 사계절 삿포로 즐기기!</p>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="schedule-review-container" id="scheduleReviewContainer">
-            <div class="schedule-review-col">
-                <div class="schedule-review-box">
-                    <div class="review-top">
-                        <div class="dest-left">시부야 스카이</div>
-                        <div class="profile-right">
-                            <img th:src="@{/images/logo.png}" src="../static/images/logo.png" alt="프로필" class="profile-img">
-                            <div class="user-info">
-                                <div class="nickname">홍길동</div>
-                                <div class="total-reviews">총 리뷰 11개</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-middle">
-                        <div class="star-rating">★★★★★</div>
-                        <div class="review-date">2024-02-09</div>
-                    </div>
-                    <div class="review-content">
-                        <p>
-                            리뷰 내용이 들어갑니다.<br>
-                            네 그렇다고요 그런가..? <br>
-                            4줄 이후에는<br>
-                            이렇게 긴 글은 말이죠 어떻게 줄이냐면<br>
-                            이렇게 더보기를 추가하고 말이죠
-                            
-                        </p>
-                        <span class="detail-review-more-btn">더보기</span>
-                        
-                    </div>
-                    <div class="review-images">
-                        <div class="top-row">
-                            <div class="img-box">
-                                <img th:src="@{/images/test_images/hukuoka.jpg}" src="../static/images/test_images/hukuoka.jpg" alt="이미지1">
-                            </div>
-                            <div class="img-box">
-                                <img th:src="@{/images/test_images/tokyo.jpg}" src="../static/images/test_images/tokyo.jpg" alt="이미지2">
-                            </div>
-                        </div>
-                        <!-- 아래 행: 3장 -->
-                        <div class="bottom-row">
-                            <div class="img-box">
-                                <img th:src="@{/images/test_images/sapporo.png}" src="../static/images/test_images/sapporo.png" alt="이미지3">
-                            </div>
-                            <div class="img-box">
-                                <img th:src="@{/images/test_images/osaka.png}" src="../static/images/test_images/osaka.png" alt="이미지4">
-                            </div>
-                            <div class="img-box">
-                                <img th:src="@{/images/test_images/hukuoka.jpg}" src="../static/images/test_images/hukuoka.jpg" alt="이미지5">
-                            </div>
-                        </div>
-                    </div>
+      <div class="schedule-review-container" id="scheduleReviewContainer">
+        <div class="schedule-review-col">
+          <div class="schedule-review-box">
+            <div class="review-top">
+              <div class="dest-left">시부야 스카이</div>
+              <div class="profile-right">
+                <img
+                  th:src="@{/images/logo.png}"
+                  src="../static/images/logo.png"
+                  alt="프로필"
+                  class="profile-img"
+                />
+                <div class="user-info">
+                  <div class="nickname">홍길동</div>
+                  <div class="total-reviews">총 리뷰 11개</div>
                 </div>
-                <div class="schedule-review-box">2</div>
-                <div class="schedule-review-box">3</div>
-                <div class="schedule-review-box">4</div>
-                <div class="schedule-review-box">5</div>
-                <div class="schedule-review-box">6</div>
-                <div class="schedule-review-box">7</div>
-                <div class="schedule-review-box">8</div>
-                <div class="schedule-review-box">9</div>
-                <div class="schedule-review-box">10</div>
+              </div>
             </div>
-            <a th:href="@{/}" href="#" class="more-button">더보기</a>
+            <div class="review-middle">
+              <div class="star-rating">★★★★★</div>
+              <div class="review-date">2024-02-09</div>
+            </div>
+            <div class="review-content">
+              <p>
+                리뷰 내용이 들어갑니다.<br />
+                네 그렇다고요 그런가..? <br />
+                4줄 이후에는<br />
+                이렇게 긴 글은 말이죠 어떻게 줄이냐면<br />
+                이렇게 더보기를 추가하고 말이죠
+              </p>
+              <span class="detail-review-more-btn">더보기</span>
+            </div>
+            <div class="review-images">
+              <div class="top-row">
+                <div class="img-box">
+                  <img
+                    th:src="@{/images/test_images/hukuoka.jpg}"
+                    src="../static/images/test_images/hukuoka.jpg"
+                    alt="이미지1"
+                  />
+                </div>
+                <div class="img-box">
+                  <img
+                    th:src="@{/images/test_images/tokyo.jpg}"
+                    src="../static/images/test_images/tokyo.jpg"
+                    alt="이미지2"
+                  />
+                </div>
+              </div>
+              <!-- 아래 행: 3장 -->
+              <div class="bottom-row">
+                <div class="img-box">
+                  <img
+                    th:src="@{/images/test_images/sapporo.png}"
+                    src="../static/images/test_images/sapporo.png"
+                    alt="이미지3"
+                  />
+                </div>
+                <div class="img-box">
+                  <img
+                    th:src="@{/images/test_images/osaka.png}"
+                    src="../static/images/test_images/osaka.png"
+                    alt="이미지4"
+                  />
+                </div>
+                <div class="img-box">
+                  <img
+                    th:src="@{/images/test_images/hukuoka.jpg}"
+                    src="../static/images/test_images/hukuoka.jpg"
+                    alt="이미지5"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="schedule-review-box">2</div>
+          <div class="schedule-review-box">3</div>
+          <div class="schedule-review-box">4</div>
+          <div class="schedule-review-box">5</div>
+          <div class="schedule-review-box">6</div>
+          <div class="schedule-review-box">7</div>
+          <div class="schedule-review-box">8</div>
+          <div class="schedule-review-box">9</div>
+          <div class="schedule-review-box">10</div>
         </div>
+        <a th:href="@{/}" href="#" class="more-button">더보기</a>
+      </div>
     </div>
-</body>
+  </body>
 </html>

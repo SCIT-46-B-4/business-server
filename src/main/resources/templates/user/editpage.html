@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>프로필 편집</title>
+    <link th:href="@{/css/member.css/editpage.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script th:src="@{/script/jquery.js}"></script>
+    <script th:src="@{/script/edit.js}"></script>
+  </head>
+  <body>
+    <div class="button-container">
+      <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
+      <p><a th:href="@{/user/mypage}" class="back-button">마이페이지</a></p>
+    </div>
+
+    <div class="edit-profile-section">
+      <h2>프로필 편집</h2>
+      <form
+        th:action="@{/api/users/updateProfile}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="profile-img-container">
+          <img alt="profile_photo" id="profilePhoto" class="profile-photo" />
+          <input
+            type="file"
+            id="profile-img"
+            name="profileImgFile"
+            accept="image/*"
+          />
+        </div>
+        <div class="input-group">
+          <label for="nickname">닉네임</label>
+          <input type="text" id="nickname" name="nickname" required />
+        </div>
+        <div class="input-group checkbox-group">
+          <label>
+            <input type="checkbox" id="agreeLoc" name="isAgreeLoc" />
+            위치 정보 동의
+          </label>
+          <label>
+            <input type="checkbox" id="agreeNewsNoti" name="isAgreeNewsNoti" />
+            뉴스 및 알림 동의
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              id="agreeMarketingNoti"
+              name="isAgreeMarketingNoti"
+            />
+            마케팅 알림 동의
+          </label>
+        </div>
+        <button type="submit" class="save-button">저장</button>
+      </form>
+    </div>
+  </body>
+</html>

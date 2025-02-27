@@ -193,8 +193,6 @@ $(document).ready(function () {
             isAgreeMarketingNoti: $("#isAgreeMarketingNoti").is(":checked")
         };
 
-        console.log("Form Data Sent:", formData); // 디버깅용 로그 추가
-
         $.ajax({
             url: "/users/auth/signup",
             method: "POST",

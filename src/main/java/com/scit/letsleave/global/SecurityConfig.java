@@ -37,6 +37,7 @@ public class SecurityConfig {
            .authorizeHttpRequests(auth -> auth
                .requestMatchers(
                         "/"
+                        , "/**" // 임시
                         , "/users/auth/**"
                         , "/users/signup"
                         , "/users/login"
@@ -62,8 +63,18 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/users/login")) // 인증되지 않은 사용자 처리
             )
-           .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+           .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // JWT 관련
 
        return http.build();
    }
 }
+
+/*
+ * // 이거 뭔가.. 쓸 수 있지 않을까..? 킵해둬  
+ * @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() { // security를 적용하지 않을 리소스
+        return web -> web.ignoring()
+                // error endpoint를 열어줘야 함, favicon.ico 추가!
+                .requestMatchers("/error", "/favicon.ico");
+    }
+ */

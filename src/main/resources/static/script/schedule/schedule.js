@@ -4,25 +4,21 @@ import { AjaxAPI } from "../global/ajax.js";
 function loadScheduleBoxes(scheduleId) {
     // 스케줄 존재 여부를 확인하는 함수 (GET /api/schedules/{id}/exists)
     AjaxAPI.checkScheduleExistsById(scheduleId)
-    .done((data) => {
-        console.log(data);
-    })
     .fail((xhr, _, errorThrown) => {
         console.error(`checkScheduleExistsById => Schedule ${scheduleId} Does Not Exists: ${xhr.status}, ${xhr.responseText}`);
         // ToDo: error 발생 시 forward 주소 확정하기.
-        // location.href = "/";
+        location.href = "/";
     });
 
     AjaxAPI.getScheduleById(scheduleId)
     .done((data) => {
-        console.log(data);
         renderScheduleBoxesByDay(data);
     })
     .fail((xhr, _, errorThrown) => {
         console.log(`getScheduleById => HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule boxes:", errorThrown);
         // ToDo: error 발생 시 forward 주소 확정하기.
-        // location.href = "/";
+        location.href = "/";
     });
 }
 
@@ -36,18 +32,13 @@ function formatDate(dtString) {
 // 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
 function renderScheduleBoxesByDay(boxes) {
     // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함
-    const container = document.getElementById("schedule-container");
-    if (!container) {
+    const $container = $("#schedule-container");
+    if (!$container) {
         console.error("Schedule container not found.");
         return;
     }
-    container.innerHTML = ""; // 기존 내용 초기화
-    
-    const $container = $("#schedule-container");
-    $container.val("");
-    boxes.sort((a, b) => {
-
-    })
+    $container.empty();
+    console.log(boxes);
     // 그룹화: 각 DTO의 detailDate를 기준 ("YYYY-MM-DD")
     const groups = boxes.reduce((acc, box) => {
         const day = box.detailDate;

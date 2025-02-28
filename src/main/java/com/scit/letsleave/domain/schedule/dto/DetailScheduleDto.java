@@ -18,19 +18,19 @@ import java.util.stream.Collectors;
 @Data
 public class DetailScheduleDto {
 
+    // Request & Response
     private Long id;
     private LocalDate date;
+    private List<RouteDto> routes;
+
+    // Request Only
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    private List<RouteDto> routes;
 
     public static DetailScheduleDto toDto(DetailScheduleEntity entity) {
         return DetailScheduleDto.builder()
             .id(entity.getId())
             .date(entity.getDate())
-            .createdAt(entity.getCreatedAt())
-            .updatedAt(entity.getUpdatedAt())
             .routes(
                 entity.getRoutes() != null ?
                 entity.getRoutes().stream().map(RouteDto::toDto).collect(Collectors.toList()) :

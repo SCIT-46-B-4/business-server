@@ -1,47 +1,55 @@
 package com.scit.letsleave.domain.schedule.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.schedule.dto.RouteDto;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Builder
-@Table(name = "routes")
+@Table(name="routes")
 public class RouteEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "detail_schedule_id", nullable = false)
-    @JsonBackReference
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="detail_schedule_id", nullable=false)
     private DetailScheduleEntity detailScheduleEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "destination_id", nullable = false)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="destination_id", nullable=false)
     private DestinationEntity destinationEntity;
 
-    @Column(name = "order_number", nullable = false)
+    @Column(name="order_number", nullable=false)
     private Integer orderNumber;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name="created_at", nullable=false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
     public static RouteEntity toEntity(
@@ -52,7 +60,6 @@ public class RouteEntity {
         return RouteEntity.builder()
             .id(dto.getId())
             .orderNumber(dto.getOrderNumber())
-            .createdAt(dto.getCreatedAt())
             .updatedAt(dto.getUpdatedAt())
             .detailScheduleEntity(detailScheduleEntity)
             .destinationEntity(destinationEntity)

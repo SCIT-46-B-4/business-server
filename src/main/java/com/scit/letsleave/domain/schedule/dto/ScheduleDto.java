@@ -18,32 +18,32 @@ import java.util.stream.Collectors;
 @Data
 public class ScheduleDto {
 
+    // Request & Response
     private Long id;
-    private Long userId;
-    private Integer countryId;
     private String name;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private List<DetailScheduleDto> detailScheduleDtoes;
+    
+    // Response Only
     private String countryName;
     private String cityName;
+    
+    // Request Only
+    private Long userId;
+    private Integer countryId;
+    private Integer cityId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private CityDto city;
-    private List<DetailScheduleDto> detailScheduleDtoes;
-
     public static ScheduleDto toDto(ScheduleEntity entity) {
-        System.out.println(entity);
         return ScheduleDto.builder()
             .id(entity.getId())
-            .userId(entity.getUserId())
             .name(entity.getName())
             .startDate(entity.getStartDate())
             .endDate(entity.getEndDate())
             .countryName(entity.getCountryName())
             .cityName(entity.getCityName())
-            .createdAt(entity.getCreatedAt())
-            .updatedAt(entity.getUpdatedAt())
             .detailScheduleDtoes(
                 entity.getDetailScheduleEntities() != null ?
                 entity.getDetailScheduleEntities().stream().map(DetailScheduleDto::toDto).collect(Collectors.toList()) :

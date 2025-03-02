@@ -2,14 +2,6 @@ import { AjaxAPI } from "../global/ajax.js";
 
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
 function loadScheduleBoxes(scheduleId) {
-    // 스케줄 존재 여부를 확인하는 함수 (GET /api/schedules/{id}/exists)
-    AjaxAPI.checkScheduleExistsById(scheduleId)
-    .fail((xhr, _, errorThrown) => {
-        console.error(`checkScheduleExistsById => Schedule ${scheduleId} Does Not Exists: ${xhr.status}, ${xhr.responseText}`);
-        // ToDo: error 발생 시 forward 주소 확정하기.
-        location.href = "/";
-    });
-
     AjaxAPI.getScheduleById(scheduleId)
     .done((data) => {
         renderScheduleBoxesByDay(data);
@@ -38,7 +30,19 @@ function renderScheduleBoxesByDay(boxes) {
         return;
     }
     $container.empty();
-    console.log(boxes);
+    const scheduleName = boxes["name"];
+    const cityName =  boxes["cityName"];
+    const countryName =  boxes["countryName"];
+    const endDate = boxes["endDate"];
+    const startDate = boxes["startDate"];
+    const detailScheduleDtoes = boxes["detailScheduleDtoes"];
+    console.log(scheduleName);
+    console.log(cityName);
+    console.log(countryName);
+    console.log(endDate);
+    console.log(startDate);
+    detailScheduleDtoes.forEach((el) => console.log(el));
+
     // 그룹화: 각 DTO의 detailDate를 기준 ("YYYY-MM-DD")
     const groups = boxes.reduce((acc, box) => {
         const day = box.detailDate;

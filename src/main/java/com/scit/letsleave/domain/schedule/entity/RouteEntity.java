@@ -36,11 +36,11 @@ public class RouteEntity {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="detail_schedule_id", nullable=false)
-    private DetailScheduleEntity detailScheduleEntity;
+    private DetailScheduleEntity detailSchedule;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="destination_id", nullable=false)
-    private DestinationEntity destinationEntity;
+    private DestinationEntity destination;
 
     @Column(name="order_number", nullable=false)
     private Integer orderNumber;
@@ -61,8 +61,8 @@ public class RouteEntity {
             .id(dto.getId())
             .orderNumber(dto.getOrderNumber())
             .updatedAt(dto.getUpdatedAt())
-            .detailScheduleEntity(detailScheduleEntity)
-            .destinationEntity(destinationEntity)
+            .detailSchedule(detailScheduleEntity)
+            .destination(destinationEntity)
             .build();
     }
 }

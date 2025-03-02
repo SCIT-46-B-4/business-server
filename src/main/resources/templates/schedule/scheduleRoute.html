@@ -5,11 +5,11 @@
     <title>일정 보기</title>
     <!-- script -->
     <script th:src="@{/script/global/jquery.js}" src="../static/script/global/jquery.js"></script>
-    <script defer th:src="@{/script/schedule/map.js}"></script>
     <script defer type="module" th:src="@{/script/schedule/schedule.js}"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
     <!-- google map api script -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbtW86eP8dZAoWEWUIc2vumKA3sFeDpFg&callback=initMap"></script>
-    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
+    <script defer th:src="@{/script/schedule/map.js}"></script>
 
     <!-- css -->
     <link rel="stylesheet" th:href="@{/css/schedule/scheduleRoute.css}" href="../../static/css/schedule/scheduleRoute.css">

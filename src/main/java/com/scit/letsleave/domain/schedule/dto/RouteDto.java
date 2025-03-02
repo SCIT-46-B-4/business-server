@@ -30,8 +30,8 @@ public class RouteDto {
             .id(entity.getId())
             .orderNumber(entity.getOrderNumber())
             .destinationDto(
-                entity.getDestinationEntity() != null ?
-                DestinationDto.toDto(entity.getDestinationEntity()) :
+                entity.getDestination() != null ?
+                DestinationDto.toDto(entity.getDestination()) :
                 null
             )
             .build();

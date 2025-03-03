@@ -35,6 +35,8 @@ public class GuidesController {
         return "index";
     }
 
+    
+
     //main-city화면 + 페이지네이션 + 도시 선택
 @GetMapping("/main-city")
 public String mainCity(

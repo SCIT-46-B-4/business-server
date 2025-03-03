@@ -169,7 +169,14 @@ p {
     }
 
     .pagination ul {
-        flex-direction: column;
+        flex-wrap: wrap;
         gap: 5px;
+        justify-content: center;
+    }
+
+    .pagination a,
+    .pagination span {
+        margin: 0;
+        padding: 8px 12px;
     }
 }

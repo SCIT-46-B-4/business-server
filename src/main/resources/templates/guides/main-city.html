@@ -27,10 +27,11 @@
             <!-- HOT 방문지 목록 -->
             <h2>지금 가장 HOT🔥한 방문지 TOP 10</h2>
             <p>지난 일주일 간 평소보다 더 많이 저장된 관광지 & 맛집</p>
-            <div class="places-list">               
-                <div th:each="place : ${places}">
+            <div class="places-list">
+                <div th:each="place : ${list}">
                     <a href="#" class="tour-item">
-                        <img th:src="@{${place.titleImg}}" alt="Place Image"> <!-- 이미지 파일명은 실제 데이터에 맞게 수정 필요 -->
+                        <!-- 이미지 파일명은 실제 데이터에 맞게 수정 필요 -->
+                        <!-- <img th:src="@{${place.titleImg}}" alt="Place Image">  -->
                         <div class="tour-info">
                             <h2 th:text="${place.title}"></h2>
                             <p th:text="${place.content}"></p>
@@ -48,21 +49,34 @@
         </div>
 
         <div class="pagination">
-            <nav class="pagination">                
+            <nav class="pagination"> 
                 <ul>
-                    <!-- 이전 버튼 -->
+                <!-- 페이지네이션에서 currentPage 값 사용 -->
+                <li th:if="${currentPage > 0}">
+                    <a th:href="@{/guides/main-city(page=${currentPage - 1})}">&lsaquo;</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{/guides/main-city(page=${i})}" th:text="${i + 1}"></a>
+                </li>
+                <li th:if="${currentPage < totalPages - 1}">
+                    <a th:href="@{/guides/main-city(page=${currentPage + 1})}"> &rsaquo;</a>
+                </li>
+
+                </ul>
+                <!-- <ul>
+                    이전 버튼
                     <li th:if="${currentPage > 0}">
                         <a th:href="@{/guides/main-city(page=${currentPage - 1})}">&lsaquo; </a>
                     </li>
-                    <!-- 페이지 번호 -->
+                    페이지 번호 
                     <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
                         <a th:href="@{/guides/main-city(page=${i})}" th:text="${i + 1}"></a>
                     </li>
-                    <!-- 다음 버튼 -->
+                     다음 버튼 
                     <li th:if="${currentPage < totalPages - 1}">
                         <a th:href="@{/guides/main-city(page=${currentPage + 1})}"> &rsaquo;</a>
                     </li>
-                </ul>                
+                </ul>                 -->
                 
             </nav>
         </div>

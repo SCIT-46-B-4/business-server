@@ -12,6 +12,14 @@ import com.scit.letsleave.domain.guide.entity.GuidesEntity;
 public interface GuidesRepository extends JpaRepository<GuidesEntity, Long> {
 
     // //DestinationId 로 순서    
-     @Override
-     Page<GuidesEntity> findAll(Pageable pageable);
+    //  @Override
+    //  Page<GuidesEntity> findAll(Pageable pageable);
+
+    // Page<GuidesEntity> findByCityId(Integer cityId, Pageable pageable);
+
+     Page<GuidesEntity> findTop10ByOrderByIdDesc(Pageable pageable);
+
+     Page<GuidesEntity> findTop10ByCityIdOrderByIdDesc(Integer cityId, Pageable pageable);
+    
+     
 }

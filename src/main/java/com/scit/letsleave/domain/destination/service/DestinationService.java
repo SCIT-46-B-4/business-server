@@ -35,7 +35,7 @@ public class DestinationService {
                     .flatMap(
                         detail -> detail.getRoutes().stream().map(
                             route -> {
-                                DestinationEntity destination = route.getDestinationEntity();
+                                DestinationEntity destination = route.getDestination();
                                 return DestinationScheduleDto.builder()
                                     .id(destination.getId())
                                     .krName(destination.getKrName())

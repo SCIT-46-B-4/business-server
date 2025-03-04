@@ -13,6 +13,8 @@
                     </span>
                 </th:block>
                 <th:block th:if="${isLoggedIn}">
+                    <span><a th:href="@{/users/mypage}">[[ ${userInfo.nickname} ]]님</a>, 반갑습니다!</span>
+                    \n
                     <span>
                         <a th:href="@{/users/logout}" class="panel-content">로그아웃</a>
                     </span>

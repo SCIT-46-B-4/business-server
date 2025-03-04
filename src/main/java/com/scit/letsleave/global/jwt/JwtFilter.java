@@ -49,7 +49,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String id = jwtUtil.extractSubject(token); // JWT에서 사용자 ID 추출
 
             // 사용자 ID를 기반으로 사용자 정보 로드
-            UserDetails userDetails = customUserDetailsService.loadUserById(Long.parseLong(id));
+            UserDetails userDetails = customUserDetailsService.loadUserById(Long.valueOf(id));
 
             if (userDetails != null) {
                 // 인증 객체 생성 및 Spring Security 컨텍스트에 설정

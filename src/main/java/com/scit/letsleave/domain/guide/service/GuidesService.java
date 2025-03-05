@@ -61,7 +61,7 @@ public class GuidesService {
 
         return temp.map(GuidesDTO::toDTO);
     }
-    // public Page<GuidesDTO> selectAll(Pageable pageable) {
+    // public Page<GuidesDTO> selectAll(Pageable pageable) {git 
     //     // -1을 한 이유 : DB의 Page는 0부터 시작함. 사용자는 1을 요청하기 떄문에!!
     //     // 사용자가 요청한 페이지 번호
     //     int pageNumber = pageable.getPageNumber();

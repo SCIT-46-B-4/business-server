@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scit.letsleave.domain.guide.dto.GuidesDTO;
 import com.scit.letsleave.domain.guide.service.GuidesService;
@@ -41,6 +42,7 @@ public class GuidesController {
 @GetMapping("/main-city")
 public String mainCity(
     @RequestParam(value = "page", defaultValue = "0") int page, // 기본 페이지는 0으로 설정
+    @RequestParam(value = "cityId", defaultValue = "1") int cityId,
     @PageableDefault(page = 0) Pageable pageable,
     Model model) {
 
@@ -112,6 +114,11 @@ public String mainCity(
     }
 
    
+     @GetMapping("/search")
+    @ResponseBody
+    public Page<GuidesDTO> search(@RequestParam String query, Pageable pageable) {
+        return guidesService.search(query, pageable);
+    }
 
 }
 

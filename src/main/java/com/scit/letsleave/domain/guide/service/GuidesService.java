@@ -47,19 +47,30 @@ public class GuidesService {
     }
 
 
-    public Page<GuidesDTO> selectAll(Pageable pageable) {
-		// -1을 한 이유 : DB의 Page는 0부터 시작함. 사용자는 1을 요청하기 떄문에!!
-		// 사용자가 요청한 페이지 번호
-		int pageNumber = pageable.getPageNumber();
-        Page<GuidesEntity> temp = null;
-		PageRequest pageRequest = PageRequest.of(pageNumber, pageLimit, Sort.by(Sort.Direction.DESC, "createdAt"));
-        temp = guidesRepository.findAll(pageRequest);
-		Page<GuidesDTO> list =null;
+     public Page<GuidesDTO> selectAll(Pageable pageable) {
+        int pageNumber = pageable.getPageNumber();
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageLimit, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<GuidesEntity> temp = guidesRepository.findAll(pageRequest);
+        return temp.map(GuidesDTO::toDTO);
+    }
+    // public Page<GuidesDTO> selectAll(Pageable pageable) {
+    //     // -1을 한 이유 : DB의 Page는 0부터 시작함. 사용자는 1을 요청하기 떄문에!!
+    //     // 사용자가 요청한 페이지 번호
+    //     int pageNumber = pageable.getPageNumber();
+    //     Page<GuidesEntity> temp = null;
+    //     PageRequest pageRequest = PageRequest.of(pageNumber, pageLimit, Sort.by(Sort.Direction.DESC, "createdAt"));
+    //     temp = guidesRepository.findAll(pageRequest);
+    //     Page<GuidesDTO> list = null;
 
-		list = temp.map((entity) -> GuidesDTO.toDTO(entity));
+    //     list = temp.map((entity) -> GuidesDTO.toDTO(entity));
 
-		return list;
-	}
+    //     return list;
+    // }
+    
+    public Page<GuidesDTO> search(String query, Pageable pageable) {
+        Page<GuidesEntity> temp = guidesRepository.findByTitleContaining(query, pageable);
+        return temp.map(GuidesDTO::toDTO);
+    }
     
 
     // public Page<GuidesDTO> getHotPlacesByCityId(Integer cityId, int page, int size) {

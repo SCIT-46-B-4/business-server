@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,21 +9,21 @@
     <!-- JavaScript -->
     <script src="../../static/js/main-city-search.js" th:src="@{/js/main-city-search.js}"></script>
 </head>
-
 <body>
 <div class="container">
         <div class="search-container">
                 <div class="back-button"><i class="fas fa-arrow-left"></i></div>
-                <input placeholder="어느 도시가 궁금하세요?" class="search-bar">
+                <input id="searchInput" placeholder="어느 도시가 궁금하세요?" class="search-bar">
+                <div id="searchButton" class="search-button">검색</div>
         </div>
 
         <div class="tab-menu">
-                <button class="tab-button" data-target="popular-cities" >인기도시</button>
+                <button class="tab-button" data-target="popular-cities">인기도시</button>
                 <button class="tab-button" data-target="overseas-cities">해외도시</button>
                 <button class="tab-button" data-target="domestic-cities">국내도시</button>
         </div>
         <div class="category">
-                <div class="category-item" data-country="all">전체</div>
+                <div class="category-item active" data-country="all">전체</div>
                 <div class="category-item" data-country="japan">일본</div>
                 <div class="category-item" data-country="southeast-asia">동남아시아</div>
                 <div class="category-item" data-country="south-pacific">남태평양</div>
@@ -34,6 +33,8 @@
                 <div class="category-item" data-country="west-asia">서아시아</div>
                 <div class="category-item" data-country="china">중화/중국</div>
         </div>
+
+        <div id="searchResults"></div>
 
         <div>
                 <section id="popular-cities" class="city-section" aria-selected="true">
@@ -137,7 +138,5 @@
                 </section>
         </div>
 </div>
-    
 </body>
-
 </html>

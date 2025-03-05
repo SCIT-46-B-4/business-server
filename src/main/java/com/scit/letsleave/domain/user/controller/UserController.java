@@ -25,4 +25,13 @@ public class UserController {
     public String loginPage() {
         return "/user/login"; // login.html 반환
     }
+
+    /**
+     * 추가 정보 입력 페이지 요청 처리
+     * @return additional-info.html 반환
+     */
+    @GetMapping("/auth/google/additional-info")
+    public String additionalInfoPage() {
+        return "/user/additional-info"; // src/main/resources/templates/user/additional-info.html
+    }
 }

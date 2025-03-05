@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.user.controller;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import com.scit.letsleave.domain.user.service.UserService;
 import com.scit.letsleave.global.jwt.JwtUtil;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +38,6 @@ public class AuthController {
     private final UserService userService;
     private final AuthService authService;
     private final JwtUtil jwtUtil;
-    // private final RefreshTokenService refreshTokenService;
     private final AuthenticationManager authenticationManager;
 
     /**
@@ -113,25 +115,39 @@ public class AuthController {
         // 로그인 성공 메시지를 클라이언트에 반환
         return ResponseEntity.ok(Map.of("message", "로그인 성공"));
     }
+
+    /**
+     * 추가 정보 저장 및 회원가입 처리
+     */
+    @PostMapping("/google/register")
+    public ResponseEntity<?> registerWithGoogle(
+            @RequestBody Map<String, Object> requestData,
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).body(Map.of("message", "유효한 인증 정보가 없습니다."));
+        }
+
+        Object principal = authentication.getPrincipal();
+        if (!(principal instanceof UserDetails)) {
+            return ResponseEntity.status(401).body(Map.of("message", "인증 정보가 올바르지 않습니다."));
+        }
+
+        String userId = authentication.getName(); 
+
+        // 요청 데이터에서 추가 정보 추출
+        String name = (String) requestData.get("name");
+        String nickname = (String) requestData.get("nickname");
+        String phone = (String) requestData.get("phone");
+        Boolean isAgreeLoc = (Boolean) requestData.getOrDefault("isAgreeLoc", false);
+        Boolean isAgreeNewsNoti = (Boolean) requestData.getOrDefault("isAgreeNewsNoti", false);
+        Boolean isAgreeMarketingNoti = (Boolean) requestData.getOrDefault("isAgreeMarketingNoti", false);
+
+        // 사용자 정보 업데이트
+        authService.updateUserInfo(Long.parseLong(userId), name, nickname, phone, isAgreeLoc, isAgreeNewsNoti, isAgreeMarketingNoti);
+
+        return ResponseEntity.ok(Map.of("message", "추가 정보가 성공적으로 저장되고 로그인되었습니다."));
+    }
 }
-
-    // /**
-    //  * refresh 토큰.. 나중에 해.. 뒤지겟으니깐..
-    //  */
-    // @PostMapping("/refresh")
-    // public ResponseEntity<?> refreshAccessToken(@RequestBody Map<String, String> request) {
-    //     String refreshToken = request.get("refreshToken");
-
-    //     if (!refreshTokenService.validateRefreshToken(refreshToken)) {
-    //         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("유효하지 않은 Refresh Token입니다.");
-    //     }
-
-    //     // Refresh Token으로 새로운 Access Token 생성
-    //     String email = refreshTokenService.getEmailFromRefreshToken(refreshToken);
-    //     String newAccessToken = jwtUtil.generateAccessToken(email);
-
-    //     return ResponseEntity.ok(Map.of(
-    //         "accessToken", newAccessToken
-    //     ));
-    // }
-

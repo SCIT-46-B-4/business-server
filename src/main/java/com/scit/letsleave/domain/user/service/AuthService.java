@@ -50,4 +50,35 @@ public class AuthService {
     public boolean checkPassword(String rawPassword, String encodedPassword) {
         return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
     }
+
+    /**
+     * 기존 사용자 정보를 업데이트.
+     */
+    public void updateUserInfo(Long userId, String name, String nickname, String phone,
+                               Boolean isAgreeLoc, Boolean isAgreeNewsNoti, Boolean isAgreeMarketingNoti) {
+
+        UserEntity user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. ID: " + userId));
+
+        if (name != null && !name.isEmpty()) {
+            user.setName(name);
+        }
+        if (nickname != null && !nickname.isEmpty()) {
+            user.setNickname(nickname);
+        }
+        if (phone != null && !phone.isEmpty()) {
+            user.setPhone(phone);
+        }
+        if (isAgreeLoc != null) {
+            user.setIsAgreeLoc(isAgreeLoc);
+        }
+        if (isAgreeNewsNoti != null) {
+            user.setIsAgreeNewsNoti(isAgreeNewsNoti);
+        }
+        if (isAgreeMarketingNoti != null) {
+            user.setIsAgreeMarketingNoti(isAgreeMarketingNoti);
+        }
+
+        userRepository.save(user); // 업데이트된 사용자 정보를 저장
+    }
 }

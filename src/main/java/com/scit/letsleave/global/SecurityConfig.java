@@ -39,6 +39,9 @@ public class SecurityConfig {
                         , "/users/auth/**"
                         , "/users/signup"
                         , "/users/login"
+                        , "/script/**"
+                        , "/guides/**"
+                        , "/css/**"
                         , "/script/**").permitAll()
                .anyRequest().authenticated()
            )

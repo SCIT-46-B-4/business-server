@@ -44,7 +44,7 @@ public String mainCity(
     @RequestParam(value = "page", defaultValue = "0") int page, // 기본 페이지는 0으로 설정
     @RequestParam(value = "cityId", defaultValue = "1") int cityId,
     @PageableDefault(page = 0) Pageable pageable,
-    Model model) {
+        Model model) {
 
     // 페이지 번호가 음수일 경우 0으로 처리
     if (page < 0) {
@@ -52,19 +52,33 @@ public String mainCity(
     }
 
     Pageable validPageable = PageRequest.of(page, pageable.getPageSize()); // 페이지 크기는 Pageable에서 가져옴
-    Page<GuidesDTO> list = guidesService.selectAll(validPageable);
+    Page<GuidesDTO> list = guidesService.selectPart(validPageable, cityId);
     int totalPages = list.getTotalPages();
     PageNavigator navi = new PageNavigator(pageLimit, page, totalPages);
 
     model.addAttribute("list", list);
     model.addAttribute("navi", navi);
     model.addAttribute("totalPages", totalPages);
-    model.addAttribute("currentPage", page);  // 현재 페이지
+    model.addAttribute("currentPage", page); // 현재 페이지
 
     model.addAttribute("startintItemNum", (pageLimit * page));
 
     return "guides/main-city";
 }
+//   Pageable validPageable = PageRequest.of(page, pageable.getPageSize()); // 페이지 크기는 Pageable에서 가져옴
+//     Page<GuidesDTO> list = guidesService.selectAll(validPageable);
+//     int totalPages = list.getTotalPages();
+//     PageNavigator navi = new PageNavigator(pageLimit, page, totalPages);
+
+//     model.addAttribute("list", list);
+//     model.addAttribute("navi", navi);
+//     model.addAttribute("totalPages", totalPages);
+//     model.addAttribute("currentPage", page);  // 현재 페이지
+
+//     model.addAttribute("startintItemNum", (pageLimit * page));
+
+//     return "guides/main-city";
+// }
 
 
 

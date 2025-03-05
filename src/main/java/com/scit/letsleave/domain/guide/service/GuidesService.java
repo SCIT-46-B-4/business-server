@@ -47,10 +47,18 @@ public class GuidesService {
     }
 
 
-     public Page<GuidesDTO> selectAll(Pageable pageable) {
+    public Page<GuidesDTO> selectAll(Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
         PageRequest pageRequest = PageRequest.of(pageNumber, pageLimit, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<GuidesEntity> temp = guidesRepository.findAll(pageRequest);
+        return temp.map(GuidesDTO::toDTO);
+    }
+    
+    public Page<GuidesDTO> selectPart(Pageable pageable, int cityId) {
+        int pageNumber = pageable.getPageNumber();
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageLimit, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<GuidesEntity> temp = guidesRepository.findByCityId(cityId, pageRequest);
+
         return temp.map(GuidesDTO::toDTO);
     }
     // public Page<GuidesDTO> selectAll(Pageable pageable) {

@@ -1,142 +1,76 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>도시검색</title>
-    <!-- css -->
-    <link rel="stylesheet" href="../../static/css/main-city-search.css" th:href="@{/css/main-city-search.css}">
-    <!-- JavaScript -->
-    <script src="../../static/js/main-city-search.js" th:src="@{/js/main-city-search.js}"></script>
-</head>
-<body>
-<div class="container">
-        <div class="search-container">
-                <div class="back-button"><i class="fas fa-arrow-left"></i></div>
-                <input id="searchInput" placeholder="어느 도시가 궁금하세요?" class="search-bar">
-                <div id="searchButton" class="search-button">검색</div>
+    <link
+      rel="stylesheet"
+      href="/css/main-city-search.css"
+      th:href="@{/css/main-city-search.css}"
+    />
+    <script
+      src="../../static/js/jquery-3.7.1.min.js"
+      th:src="@{/js/jquery-3.7.1.min.js}"
+    ></script>
+    <script
+      src="/js/main-city-search.js"
+      th:src="@{/js/main-city-search.js}"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="search-container">
+        <input
+          id="searchInput"
+          placeholder="어느 도시가 궁금하세요?"
+          class="search-bar"
+        />
+        <div id="searchButton" class="search-button">검색</div>
+      </div>
+      <div class="tab-menu">
+        <button class="tab-button" data-target="popular-cities">
+          인기도시
+        </button>
+        <button class="tab-button" data-target="overseas-cities">
+          해외도시
+        </button>
+        <button class="tab-button" data-target="domestic-cities">
+          국내도시
+        </button>
+      </div>
+      <div id="popular-cities" class="city-list">
+        <div class="city-card" data-city-id="1">
+          <img src="/images/tokyo.jpg" alt="도쿄" />
+          <p>도쿄</p>
         </div>
-
-        <div class="tab-menu">
-                <button class="tab-button" data-target="popular-cities">인기도시</button>
-                <button class="tab-button" data-target="overseas-cities">해외도시</button>
-                <button class="tab-button" data-target="domestic-cities">국내도시</button>
+        <div class="city-card" data-city-id="2">
+          <img src="/images/osaka.jpg" alt="오사카" />
+          <p>오사카</p>
         </div>
-        <div class="category">
-                <div class="category-item active" data-country="all">전체</div>
-                <div class="category-item" data-country="japan">일본</div>
-                <div class="category-item" data-country="southeast-asia">동남아시아</div>
-                <div class="category-item" data-country="south-pacific">남태평양</div>
-                <div class="category-item" data-country="europe">유럽</div>
-                <div class="category-item" data-country="america">미주</div>
-                <div class="category-item" data-country="latin-america">중남미</div>
-                <div class="category-item" data-country="west-asia">서아시아</div>
-                <div class="category-item" data-country="china">중화/중국</div>
+        <div class="city-card" data-city-id="3">
+          <img src="/images/fukuoka.jpg" alt="후쿠오카" />
+          <p>후쿠오카</p>
         </div>
-
-        <div id="searchResults"></div>
-
-        <div>
-                <section id="popular-cities" class="city-section" aria-selected="true">
-                        <!-- 인기도시 목록 -->
-                        <div class="city-list">
-                                <div class="city-item" data-city-id="1" data-country="japan"><img src="tokyo.jpg"
-                                                alt="도쿄"><strong>도쿄</strong> - 하코네, 요코하마, 가마쿠라</div>
-                                <div class="city-item" data-city-id="2" data-country="japan"><img src="osaka.jpg"
-                                                alt="오사카"><strong>오사카</strong> - 오사카, 교토, 고베, 나라</div>
-                                <div class="city-item" data-city-id="3" data-country="japan"><img src="fukuoka.jpg"
-                                                alt="후쿠오카"><strong>후쿠오카</strong> - 후쿠오카, 유후인, 벳푸, 기타큐슈</div>
-                                <div class="city-item" data-city-id="4" data-country="japan"><img src="sapporo.jpg"
-                                                alt="삿포로"><strong>삿포로</strong></div>
-                        </div>
-                </section>
-
-                <section id="overseas-cities" class="city-section">
-                        <!-- 해외도시 목록 -->
-                        <div class="city-list">
-                                <div class="country-group" data-country="japan">
-                                        <h3>일본</h3>
-                                        <div class="city-item" data-city-id="1" data-country="japan"><img
-                                                        src="tokyo.jpg" alt="도쿄"><strong>도쿄</strong> - 하코네, 요코하마, 가마쿠라
-                                        </div>
-                                        <div class="city-item" data-city-id="3" data-country="japan"><img
-                                                        src="fukuoka.jpg" alt="후쿠오카"><strong>후쿠오카</strong> - 후쿠오카, 유후인,
-                                                벳푸, 기타큐슈</div>
-                                        <div class="city-item" data-city-id="2" data-country="japan"><img
-                                                        src="osaka.jpg" alt="오사카"><strong>오사카</strong> - 오사카, 교토, 고베, 나라
-                                        </div>
-                                        <div class="city-item" data-city-id="4" data-country="japan"><img
-                                                        src="sapporo.jpg" alt="삿포로"><strong>삿포로</strong></div>
-                                </div>
-                                <div class="country-group" data-country="southeast-asia">
-                                        <h3>동남아시아</h3>
-                                        <div class="city-item" data-city-id="5" data-country="southeast-asia"><img
-                                                        src="bangkok.jpg" alt="방콕"><strong>방콕</strong> - 태국</div>
-                                        <div class="city-item" data-city-id="6" data-country="southeast-asia"><img
-                                                        src="hanoi.jpg" alt="하노이"><strong>하노이</strong> - 베트남</div>
-                                </div>
-                                <div class="country-group" data-country="south-pacific">
-                                        <h3>남태평양</h3>
-                                        <div class="city-item" data-city-id="7" data-country="south-pacific"><img
-                                                        src="sydney.jpg" alt="시드니"><strong>시드니</strong> - 호주</div>
-                                        <div class="city-item" data-city-id="8" data-country="south-pacific"><img
-                                                        src="auckland.jpg" alt="오클랜드"><strong>오클랜드</strong> - 뉴질랜드</div>
-                                </div>
-                                <div class="country-group" data-country="europe">
-                                        <h3>유럽</h3>
-                                        <div class="city-item" data-city-id="9" data-country="europe"><img
-                                                        src="paris.jpg" alt="파리"><strong>파리</strong> - 프랑스</div>
-                                        <div class="city-item" data-city-id="10" data-country="europe"><img
-                                                        src="london.jpg" alt="런던"><strong>런던</strong> - 영국</div>
-                                </div>
-                                <div class="country-group" data-country="america">
-                                        <h3>미주</h3>
-                                        <div class="city-item" data-city-id="11" data-country="america"><img
-                                                        src="newyork.jpg" alt="뉴욕"><strong>뉴욕</strong> - 미국</div>
-                                        <div class="city-item" data-city-id="12" data-country="america"><img
-                                                        src="losangeles.jpg" alt="로스앤젤레스"><strong>로스앤젤레스</strong> - 미국
-                                        </div>
-                                </div>
-                                <div class="country-group" data-country="latin-america">
-                                        <h3>중남미</h3>
-                                        <div class="city-item" data-city-id="13" data-country="latin-america"><img
-                                                        src="mexicocity.jpg" alt="멕시코시티"><strong>멕시코시티</strong> - 멕시코
-                                        </div>
-                                        <div class="city-item" data-city-id="14" data-country="latin-america"><img
-                                                        src="buenosaires.jpg" alt="부에노스아이레스"><strong>부에노스아이레스</strong> -
-                                                아르헨티나</div>
-                                </div>
-                                <div class="country-group" data-country="west-asia">
-                                        <h3>서아시아</h3>
-                                        <div class="city-item" data-city-id="15" data-country="west-asia"><img
-                                                        src="dubai.jpg" alt="두바이"><strong>두바이</strong> - 아랍에미리트</div>
-                                        <div class="city-item" data-city-id="16" data-country="west-asia"><img
-                                                        src="istanbul.jpg" alt="이스탄불"><strong>이스탄불</strong> - 터키</div>
-                                </div>
-                                <div class="country-group" data-country="china">
-                                        <h3>중화/중국</h3>
-                                        <div class="city-item" data-city-id="17" data-country="china"><img
-                                                        src="beijing.jpg" alt="베이징"><strong>베이징</strong> - 중국</div>
-                                        <div class="city-item" data-city-id="18" data-country="china"><img
-                                                        src="shanghai.jpg" alt="상하이"><strong>상하이</strong> - 중국</div>
-                                </div>
-                        </div>
-                </section>
-
-                <section id="domestic-cities" class="city-section">
-                        <!-- 국내도시 목록 -->
-                        <div class="city-list">
-                                <div class="city-item" data-city-id="19" data-country="korea"><img src="seoul.jpg"
-                                                alt="서울"><strong>서울</strong></div>
-                                <div class="city-item" data-city-id="20" data-country="korea"><img src="busan.jpg"
-                                                alt="부산"><strong>부산</strong></div>
-                                <div class="city-item" data-city-id="21" data-country="korea"><img src="jeju.jpg"
-                                                alt="제주"><strong>제주</strong></div>
-                                <div class="city-item" data-city-id="22" data-country="korea"><img src="incheon.jpg"
-                                                alt="인천"><strong>인천</strong></div>
-                        </div>
-                </section>
+        <div class="city-card" data-city-id="4">
+          <img src="/images/sapporo.jpg" alt="삿뽀로" />
+          <p>삿뽀로</p>
         </div>
-</div>
-</body>
+      </div>
+      <div id="overseas-cities" class="city-list hidden">
+        <div class="city-card"><p>일본</p></div>
+        <div class="city-card"><p>동남아시아</p></div>
+        <div class="city-card"><p>남태평양</p></div>
+        <div class="city-card"><p>유럽</p></div>
+        <div class="city-card"><p>미주</p></div>
+        <div class="city-card"><p>중남미</p></div>
+        <div class="city-card"><p>서아시아</p></div>
+        <div class="city-card"><p>중화/중국</p></div>
+      </div>
+      <div id="domestic-cities" class="city-list hidden">
+        <p>국내 도시 목록 준비 중...</p>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,69 +1,74 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>지금 가장 HOT한 방문지</title>
     <!-- css -->
-    <link rel="stylesheet" href="../../static/css/main-city.css" th:href="@{/css/main-city.css}">
+    <link
+      rel="stylesheet"
+      href="../../static/css/main-city.css"
+      th:href="@{/css/main-city.css}"
+    />
     <!-- js -->
-    <!-- <script src="../js/main-city.js" th:src=""></script> --> 
+    <!-- <script src="../js/main-city.js" th:src=""></script> -->
+  </head>
 
-</head>
-
-
-
-<body>
+  <body>
     <div class="container">
-        <!-- 검색창 -->
-        <div class="search">
-            <a th:href="@{/guides/main-city-search}" class="search-box">
-                <span class="icon">🔍</span> 어디든지
-            </a>
-        </div>
+      <!-- 검색창 -->
+      <div class="search">
+        <a th:href="@{/guides/main-city-search}" class="search-box">
+          <span class="icon">🔍</span> 어디든지
+        </a>
+      </div>
 
-        <div>    
-            <!-- HOT 방문지 목록 -->
-            <h2>지금 가장 HOT🔥한 방문지 TOP 10</h2>
-            <p>지난 일주일 간 평소보다 더 많이 저장된 관광지 & 맛집</p>
-            <div class="places-list">
-                <div th:each="place : ${list}">
-                    <a href="#" class="tour-item">
-                        <!-- 이미지 파일명은 실제 데이터에 맞게 수정 필요 -->
-                        <!-- <img th:src="@{${place.titleImg}}" alt="Place Image">  -->
-                        <div class="tour-info">
-                            <h2 th:text="${place.title}"></h2>
-                            <p th:text="${place.content}"></p>
-                           
-                        
-                            <!-- <p class="rating">⭐ <span th:text="${place.score}"></span></p>
+      <div>
+        <!-- HOT 방문지 목록 -->
+        <h2>지금 가장 HOT🔥한 방문지 TOP 10</h2>
+        <p>지난 일주일 간 평소보다 더 많이 저장된 관광지 & 맛집</p>
+        <div class="places-list">
+          <div th:each="place : ${list}">
+            <a href="#" class="tour-item">
+              <!-- 이미지 파일명은 실제 데이터에 맞게 수정 필요 -->
+              <!-- <img th:src="@{${place.titleImg}}" alt="Place Image">  -->
+              <div class="tour-info">
+                <h2 th:text="${place.title}"></h2>
+                <p th:text="${place.content}"></p>
+
+                <!-- <p class="rating">⭐ <span th:text="${place.score}"></span></p>
                             <p class="likes">❤️ <span th:text="${place.likes}"></span></p>  좋아요 수는 데이터에서 가져옴 
                             <p
                                 th:text="${place.type == '1' ? '관광명소' : (place.type == '2' ? '식당' : (place.type == '3' ? '쇼핑센터' : (place.type == '4' ? '숙박업소' : '대중교통')))} + ' - ' + ${place.address}">
                             </p> -->
-                        </div>
-                    </a>
-                </div>
-            </div>
+              </div>
+            </a>
+          </div>
         </div>
+      </div>
 
-        <div class="pagination">
-            <nav class="pagination"> 
-                <ul>
-                <!-- 페이지네이션에서 currentPage 값 사용 -->
-                <li th:if="${currentPage > 0}">
-                    <a th:href="@{/guides/main-city(page=${currentPage - 1})}">&lsaquo;</a>
-                </li>
-                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a th:href="@{/guides/main-city(page=${i})}" th:text="${i + 1}"></a>
-                </li>
-                <li th:if="${currentPage < totalPages - 1}">
-                    <a th:href="@{/guides/main-city(page=${currentPage + 1})}"> &rsaquo;</a>
-                </li>
-
-                </ul>
-                <!-- <ul>
+      <div class="pagination">
+        <nav class="pagination">
+          <ul>
+            <!-- 페이지네이션에서 currentPage 값 사용 -->
+            <li th:if="${currentPage > 0}">
+              <a th:href="@{/guides/main-city(page=${currentPage - 1})}"
+                >&lsaquo;</a
+              >
+            </li>
+            <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+              <a
+                th:href="@{/guides/main-city(page=${i})}"
+                th:text="${i + 1}"
+              ></a>
+            </li>
+            <li th:if="${currentPage < totalPages - 1}">
+              <a th:href="@{/guides/main-city(page=${currentPage + 1})}">
+                &rsaquo;</a
+              >
+            </li>
+          </ul>
+          <!-- <ul>
                     이전 버튼
                     <li th:if="${currentPage > 0}">
                         <a th:href="@{/guides/main-city(page=${currentPage - 1})}">&lsaquo; </a>
@@ -77,10 +82,8 @@
                         <a th:href="@{/guides/main-city(page=${currentPage + 1})}"> &rsaquo;</a>
                     </li>
                 </ul>                 -->
-                
-            </nav>
-        </div>
+        </nav>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>

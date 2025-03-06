@@ -30,30 +30,24 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-   @Bean
-   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       http.csrf(csrf -> csrf.disable())
-           .authorizeHttpRequests(auth -> auth
-               .requestMatchers(
-                        "/"
-                        , "/users/auth/**"
-                        , "/users/signup"
-                        , "/users/login"
-                        , "/script/**"
-                        , "/guides/**"
-                        , "/css/**"
-                        , "/script/**").permitAll()
-               .anyRequest().authenticated()
-           )
-           .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 URL 설정
-                .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
-                .invalidateHttpSession(true) // 세션 무효화
-                .clearAuthentication(true) // 인증 정보 제거
-                .deleteCookies("Authorization") // Authorization 쿠키 삭제
-            )
-           .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/", "/users/auth/**", "/users/signup", "/users/login", "/script/**", "/guides/**",
+                                "/css/**", "/js/**", "/script/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 URL 설정
+                        .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
+                        .invalidateHttpSession(true) // 세션 무효화
+                        .clearAuthentication(true) // 인증 정보 제거
+                        .deleteCookies("Authorization") // Authorization 쿠키 삭제
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-       return http.build();
-   }
+        return http.build();
+    }
 }

@@ -43,7 +43,7 @@ public class SecurityConfig {
            .authorizeHttpRequests(auth -> auth
                .requestMatchers(
                         "/"
-                        , "/**" // 임시
+                        // , "/**" // 임시
                         , "/users/auth/**"
                         , "/users/signup"
                         , "/users/login"

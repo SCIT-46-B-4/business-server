@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.scit.letsleave.domain.user.dto.UserDto;
-import com.scit.letsleave.domain.user.entity.UserEntity;
-import com.scit.letsleave.domain.user.service.UserService;
-
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import com.scit.letsleave.domain.user.dto.UserDto;
+import com.scit.letsleave.domain.user.entity.UserEntity;
+import com.scit.letsleave.domain.user.service.UserService;
 
 
 @RestController
@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRestController {
 
 	private final UserService service;
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getProfile(@PathVariable("id") Long id) {
 		// SecurityContextHolder에서 인증 객체를 가져오기
@@ -44,13 +44,14 @@ public class UserRestController {
 		return ResponseEntity.status(403).build();
 	}
 
-	@PatchMapping(value="/updateProfile", consumes="multipart/form-data")
-	public ResponseEntity<Object> updateProfile(@ModelAttribute UserDto dto, HttpServletResponse response) {
-			
+	@PatchMapping(value="/{id}", consumes="multipart/form-data")
+	public ResponseEntity<Object> updateProfile(@PathVariable("id") Long id, @ModelAttribute UserDto dto, HttpServletResponse response) {
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			
-		Long id = Long.valueOf(authentication.getName());
-		
+
+		if(Long.valueOf(authentication.getName()).equals(id)) {
+
+		}
 		if(dto.getProfileImgFile() != null || !dto.getProfileImgFile().isEmpty()){
 			dto.setProfileImg(dto.getProfileImgFile().getOriginalFilename());
 		}
@@ -60,6 +61,6 @@ public class UserRestController {
 			.path("/user/mypage")
 			.build()
 			.toUri();
-		return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).location(redirectUri).build();
 	}
 }

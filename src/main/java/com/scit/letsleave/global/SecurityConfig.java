@@ -32,23 +32,29 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/css/**", "/script/**", "/images/**", // static files
-                    "/", // index
-                    "/users/auth/**", "/users/signup", "/users/login" // etc
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
-            .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/users/logout")) // 로그아웃 URL 설정
-                .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
-                .invalidateHttpSession(true) // 세션 무효화
-                .clearAuthentication(true) // 인증 정보 제거
-                .deleteCookies("Authorization")  // Authorization 쿠키 삭제
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth.requestMatchers(
+            // index
+            "/",
+            // auth
+            "/users/auth/**",
+            "/users/signup",
+            "/users/login",
+            // statics
+            "/script/**",
+            "/css/**",
+            "/images/**"
+        ).permitAll()
+        .anyRequest().authenticated()
+        ).logout(logout -> logout
+            .logoutRequestMatcher(new AntPathRequestMatcher("/users/auth/logout")) // 로그아웃 URL 설정
+            .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
+            .invalidateHttpSession(true) // 세션 무효화
+            .clearAuthentication(true) // 인증 정보 제거
+            .deleteCookies("Authorization") // Authorization 쿠키 삭제
+        )
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

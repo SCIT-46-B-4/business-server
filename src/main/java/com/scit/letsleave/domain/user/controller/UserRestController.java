@@ -25,25 +25,23 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 @RequestMapping("/api/users")
+@Slf4j
 public class UserRestController {
-	
+
 	private final UserService service;
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getProfile(@PathVariable("id") Long id) {
-		
 		// SecurityContextHolder에서 인증 객체를 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		//JWT의 subject에 저장된 사용자 ID를 반환
-		if(Long.valueOf(authentication.getName()) == id) {
+		if(Long.valueOf(authentication.getName()).equals(id)) {
 			UserEntity user = service.findById(id);
 			UserDto responseDto = UserDto.toDto(user);
 
 			return ResponseEntity.ok(responseDto);
 		}
-		
+		return ResponseEntity.status(403).build();
 	}
 
 	@PatchMapping(value="/updateProfile", consumes="multipart/form-data")

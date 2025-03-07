@@ -65,18 +65,18 @@ public class CityEntity {
 
 
     public static CityEntity toEntity(
-        CityDto cityDTO,
+        CityDto dto,
         CountryEntity countryEntity,
         List<DestinationEntity> destinationList,
         List<ScheduleEntity> scheduleList
     ) {
         return CityEntity.builder()
-            .id(cityDTO.getId())
-            .krName(cityDTO.getKrName())
-            .engName(cityDTO.getEngName())
-            .cityCode(cityDTO.getCityCode())
-            .createdAt(cityDTO.getCreatedAt())
-            .updatedAt(cityDTO.getUpdatedAt())
+            .id(dto.getId())
+            .krName(dto.getKrName())
+            .engName(dto.getEngName())
+            .cityCode(dto.getCityCode())
+            .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
             .country(countryEntity)
             .destinations(destinationList)
             .schedules(scheduleList)

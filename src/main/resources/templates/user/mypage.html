@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link th:href="@{/css/member.css/mypage.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script th:src="@{/script/jquery.js}"></script>
+    <script th:src="@{/script/edit.js}"></script>
+  </head>
+  <body>
+    <div class="button-container">
+      <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
+      <p>
+        <a th:href="@{/user/editpage}" class="edit-button">프로필 편집</a>
+      </p>
+    </div>
+
+    <div class="profile-section">
+      <img
+        th:src="@{/img/circle.png}"
+        alt="profile_photo"
+        class="profile-photo"
+        id="profilePhoto"
+      />
+      <h1 id="name">이름</h1>
+    </div>
+
+    <div class="menu-section">
+      <div class="button-section">
+        <button class="menu-btn">내 여행</button>
+        <button class="menu-btn">리뷰</button>
+        <button class="menu-btn">여행기</button>
+      </div>
+    </div>
+
+    <div class="trip-record">
+      <h4 class="former-trip">지난 여행</h4>
+      <div class="trip-history">
+        <img
+          th:src="@{/img/circle.png}"
+          alt="plus-image"
+          class="sample-photo"
+        />
+        <div class="trip-info">
+          <h4>여행 이름</h4>
+          <p>일정 기간</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

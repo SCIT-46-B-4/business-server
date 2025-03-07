@@ -9,12 +9,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
     /**
+     * 개인 페이지
+     * @return 
+     */
+    @GetMapping("/mypage")
+    public String mypage() {
+    return "user/mypage";
+}
+    /**
+     * 프로필 편집 페이지
+     * @return 
+     */
+    @GetMapping("/editpage")
+    public String edipage() {
+    return "user/editpage";
+}
+    /**
      * 회원가입 페이지
      * @return 
      */
     @GetMapping("/signup")
     public String registerPage() {
-        return "/user/signup"; // signup.html
+        return "user/signup"; // signup.html
     }
 
     /**
@@ -23,7 +39,7 @@ public class UserController {
      */
     @GetMapping("/login")
     public String loginPage() {
-        return "/user/login"; // login.html 반환
+        return "user/login"; // login.html 반환
     }
 
     /**

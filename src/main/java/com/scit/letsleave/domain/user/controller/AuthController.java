@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -75,7 +76,6 @@ public class AuthController {
                 "message", "유효하지 않은 type 값입니다. (email 또는 phone)"
         ));
     }
-
     /**
      * 로그인 처리
      * @param loginRequestDto 클라이언트에서 전달받은 로그인 요청 데이터 (이메일, 비밀번호)
@@ -112,7 +112,7 @@ public class AuthController {
         cookie.setMaxAge(24 * 60 * 60); // 24시간 = 86400초
         response.addCookie(cookie); // 응답에 쿠키 추가
 
-        // 로그인 성공 메시지를 클라이언트에 반환
+        //로그인 성공시 메인 페이지로 리다이렉트
         return ResponseEntity.ok(Map.of("message", "로그인 성공"));
     }
 

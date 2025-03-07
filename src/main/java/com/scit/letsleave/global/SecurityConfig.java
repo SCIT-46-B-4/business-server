@@ -39,20 +39,19 @@ public class SecurityConfig {
    @Bean
    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        http.csrf(csrf -> csrf.disable())
-           .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성화
-           .authorizeHttpRequests(auth -> auth
-               .requestMatchers(
-                        "/"
-                        // , "/**" // 임시
-                        , "/users/auth/**"
-                        , "/users/signup"
-                        , "/users/login"
-                        , "/script/**"
-                        , "/css/**"
-                        , "/images/**"
-                        , "/favicon.ico"
-                        , "/guides/**"
-                        , "/schedules/**").permitAll()
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성화
+            .authorizeHttpRequests(auth -> auth
+            .requestMatchers(
+                "/",
+                 "/users/auth/**",
+                 "/users/signup",
+                 "/users/login",
+                 "/script/**",
+                 "/css/**",
+                 "/images/**",
+                 "/favicon.ico",
+                 "/guides/**",
+                 "/schedules/**").permitAll()
                .anyRequest().authenticated()
            )
            .formLogin(form -> form
@@ -64,7 +63,7 @@ public class SecurityConfig {
                 .successHandler(customOAuth2SuccessHandler)
             )
            .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 URL 설정
+                .logoutRequestMatcher(new AntPathRequestMatcher("/users/auth/slogout")) // 로그아웃 URL 설정
                 .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
                 .invalidateHttpSession(true) // 세션 무효화
                 .clearAuthentication(true) // 인증 정보 제거
@@ -75,6 +74,6 @@ public class SecurityConfig {
             )
            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // JWT 관련
 
-       return http.build();
-   }
+        return http.build();
+    }
 }

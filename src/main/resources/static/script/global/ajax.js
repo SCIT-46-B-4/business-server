@@ -1,7 +1,7 @@
 export const AjaxAPI = {
-    getCities: function () {
+    getCities: function() {
         return $.ajax({
-            url: "localhost:8080/destinations/cities",
+            url: "/destinations/cities",
             type: "get",
             dataType: "json",
             headers: {
@@ -9,9 +9,9 @@ export const AjaxAPI = {
             }
         })
     },
-    getGuides: function () {
+    getGuides: function() {
         return $.ajax({
-            url: "localhost:8080/guides",
+            url: "/guides",
             type: "get",
             dataType: "json",
             headers: {
@@ -19,9 +19,9 @@ export const AjaxAPI = {
             }
         })
     },
-    getScheduleReviews: function () {
+    getScheduleReviews: function() {
         return $.ajax({
-            url: "localhost:8080/schedules/reviews",
+            url: "/schedules/reviews",
             type: "get",
             dataType: "json",
             headers: {
@@ -39,6 +39,16 @@ export const AjaxAPI = {
             }
         })
     },
+    getSchedule: function() {
+        return $.ajax({
+            url: "/api/schedules",
+            method: "get",
+            dataType: "json",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+    },
     getScheduleById: function(scheduleId) {
         return $.ajax({
             url: `/api/schedules/${scheduleId}`,
@@ -49,4 +59,25 @@ export const AjaxAPI = {
             }
         })
     },
+    getUserInfo: function() {
+        return $.ajax({
+            url: `/api/users/info`,
+            method: "get",
+            dataType: "json",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+    },
+    getRecommendSchedule: function(surveyData) {
+        return $.ajax({
+            url: "/api/schedules/recommend",
+            method: "get",
+            dataType: "json",
+            data: surveyData,
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+    }
 }

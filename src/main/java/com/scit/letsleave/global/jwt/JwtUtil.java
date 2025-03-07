@@ -12,11 +12,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 
+
 @Component
 public class JwtUtil {
 
     @Value("${JWT_SECRET_KEY}")
     private String SECRET_KEY;
+    @Value("${JWT_Algorithm}")
+    private String JWT_Algorithm;
     private final long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 1000; // 1시간
     // private static final long REFRESH_TOKEN_EXPIRATION = 7 * 24 * 60 * 60 * 1000; // 7일
 
@@ -38,7 +41,7 @@ public class JwtUtil {
             .claim("roles", "ROLE_USER") // 권한 정보 추가
             .setIssuedAt(new Date()) // 토큰 생성 시간 설정
             .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION)) // 만료 시간 설정
-            .signWith(key, SignatureAlgorithm.HS256) // HMAC-SHA256 알고리즘으로 서명
+            .signWith(key, SignatureAlgorithm.valueOf(JWT_Algorithm)) // HMAC-SHA256 알고리즘으로 서명
             .compact(); // 토큰 생성 및 반환
     }
     

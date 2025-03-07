@@ -1,16 +1,17 @@
 package com.scit.letsleave.domain.schedule.dto;
 
-import com.scit.letsleave.domain.destination.dto.CityDto;
-import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,14 +22,14 @@ public class ScheduleDto {
     // Request & Response
     private Long id;
     private String name;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private List<DetailScheduleDto> detailScheduleDtoes;
-    
+
     // Response Only
     private String countryName;
     private String cityName;
-    
+
     // Request Only
     private Long userId;
     private Integer countryId;

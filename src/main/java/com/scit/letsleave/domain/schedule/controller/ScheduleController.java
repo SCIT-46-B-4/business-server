@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @RequestMapping("/schedules")
@@ -17,35 +17,26 @@ public class ScheduleController {
 
     @GetMapping("/survey/1")
     public String survey1() {
-        return "survey/1";
+        return "schedule/survey/1";
     }
 
     @GetMapping("/survey/2")
     public String survey2() {
-        return "survey/2";
+        return "schedule/survey/2";
     }
 
     @GetMapping("/survey/3")
     public String survey3() {
-        return "survey/3";
+        return "schedule/survey/3";
     }
 
-    @PostMapping("/survey/submit")
-    public String submitSurvey(
-            @RequestParam(value = "city") String city,
-            @RequestParam(value = "period") String period,
-            @RequestParam(value = "companion", required = false) String companion,
-            @RequestParam(value = "travel_style", required = false) String travelStyle,
-            @RequestParam(value = "transport", required = false) String transport,
-            @RequestParam(value = "schedule_style") String scheduleStyle) {
-
-        return "redirect:/";
+    @GetMapping("")
+    public String recommendScheduleRoute(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend) {
+        return "schedule/scheduleRoute";
     }
 
     @GetMapping("/{id}")
     public String scheduleRoute(@PathVariable(name="id") Long id, Model model) {
-        model.addAttribute("id", id);
-
         return "schedule/scheduleRoute";
     }
 }

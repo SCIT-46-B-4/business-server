@@ -14,15 +14,15 @@
                 </th:block>
                 <th:block th:if="${isLoggedIn}">
                     <span><a th:href="@{/users/mypage}">[[ ${userInfo.nickname} ]]님</a>, 반갑습니다!</span>
-                    \n
+                    <br>
                     <span>
-                        <a th:href="@{/users/logout}" class="panel-content">로그아웃</a>
+                        <a th:href="@{/users/auth/logout}" class="panel-content">로그아웃</a>
                     </span>
                 </th:block>
             </div>
             <div class="panel-box">
                 <span>
-                    <a th:href="@{/schedules/1}" class="panel-content">내 스케줄</a>
+                    <a th:href="@{/users/mypage}" class="panel-content">마이 페이지</a>
                 </span>
             </div>
             <div class="panel-box">
@@ -32,7 +32,7 @@
             </div>
             <div class="panel-box">
                 <span>
-                    <a th:href="@{#}" class="panel-content">AI 추천 맞춤 일정</a>
+                    <a th:href="@{/schedules/survey/1}" class="panel-content">AI 추천 맞춤 일정</a>
                 </span>
             </div>
             <div class="panel-box">

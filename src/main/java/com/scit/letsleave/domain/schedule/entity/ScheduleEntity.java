@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.schedule.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -57,10 +58,10 @@ public class ScheduleEntity {
     private String name;
 
     @Column(name="start_date", nullable=false)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name="end_date", nullable=false)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @Column(name="country_name", nullable=false)
     private String countryName;

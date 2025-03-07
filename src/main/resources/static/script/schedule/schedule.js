@@ -1,16 +1,27 @@
 import { AjaxAPI } from "../global/ajax.js";
 
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
-function loadScheduleBoxes(scheduleId) {
-    AjaxAPI.getScheduleById(scheduleId)
-    .done((data) => {
+function loadScheduleBoxes(scheduleId, isRecommend) {
+    let ajaxCall;
+    if (isRecommend && scheduleId == null) {
+        const surveyData = {
+            city: localStorage.getItem("selectedCity"),
+            period: localStorage.getItem("selectedPeriod"),
+            companion: localStorage.getItem("selectedCompanion"),
+            travelStyle: localStorage.getItem("selectedTravelStyle"),
+            transport: localStorage.getItem("selectedTransport"),
+            scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
+        }
+        ajaxCall = AjaxAPI.getRecommendSchedule(surveyData)
+    } else {
+        ajaxCall = AjaxAPI.getScheduleById(scheduleId)
+    }
+    ajaxCall.done((data) => {
         renderScheduleBoxesByDay(data);
-    })
-    .fail((xhr, _, errorThrown) => {
-        console.log(`getScheduleById => HTTP ${xhr.status} error! ${xhr.responseText}`);
+    }).fail(function(xhr, _, errorThrown) {
+        console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule boxes:", errorThrown);
-        // ToDo: error 발생 시 forward 주소 확정하기.
-        location.href = "/";
+        // location.href = "/";
     });
 }
 
@@ -36,11 +47,6 @@ function renderScheduleBoxesByDay(boxes) {
     const endDate = boxes["endDate"];
     const startDate = boxes["startDate"];
     const detailScheduleDtoes = boxes["detailScheduleDtoes"];
-    console.log(scheduleName);
-    console.log(cityName);
-    console.log(countryName);
-    console.log(endDate);
-    console.log(startDate);
     detailScheduleDtoes.forEach((el) => console.log(el));
 
     // 그룹화: 각 DTO의 detailDate를 기준 ("YYYY-MM-DD")
@@ -140,6 +146,18 @@ $(function() {
         $parentDiv.addClass("container_schedule scheduleContainer");
         $("#scroll-root").appendChild($parentDiv);
     }
-    const scheduleId = $("#scheduleId").attr("data-id");
-    loadScheduleBoxes(scheduleId);
+
+    let scheduleId = null;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const isRecommend = urlParams.get('isRecommend') == "true";
+    
+    if (!isRecommend) {
+        const path = window.location.pathname;
+        const pathSegments = path.split('/');
+    
+        scheduleId = Number(getLastElement(pathSegments));
+    }
+
+    loadScheduleBoxes(scheduleId, isRecommend);
 })

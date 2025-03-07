@@ -1,55 +1,45 @@
-// 페이지 1 함수들
-function saveAndGoToNextPage() {
-    const selectedCity = document.querySelector('input[name="city"]:checked');
-    const selectedPeriod = document.querySelector('input[name="period"]:checked');
+$(function() {
+    // 페이지 1: 도시와 여행 기간 선택 후 다음 페이지로 이동
+    $("#saveAndGoToNextPage").on("click", () => {
+        const $selectedCity = $('input[name="city"]:checked');
+        const $selectedPeriod = $('input[name="period"]:checked');
 
-    if (!selectedCity || !selectedPeriod) {
-        alert('도시와 기간을 선택해주세요.');
-        return;
-    }
+        if (!$selectedCity.length || !$selectedPeriod.length) {
+            alert('도시와 기간을 선택해주세요.');
+            return;
+        }
 
-    localStorage.setItem('selectedCity', selectedCity.value);
-    localStorage.setItem('selectedPeriod', selectedPeriod.value);
+        localStorage.setItem('selectedCity', $selectedCity.val());
+        localStorage.setItem('selectedPeriod', $selectedPeriod.val());
 
-    location.href = '/schedule/survey/2';
-}
+        window.location.href = '/schedules/survey/2';
+    })
 
-// 페이지 2 함수들
-function savePage2AndGoToNext() {
-    // 동행인 선택 저장
-    const companionChecked = document.querySelectorAll('input[name="companion"]:checked');
-    const companionValues = Array.from(companionChecked).map(input => input.value);
-    localStorage.setItem('selectedCompanion', companionValues.join(','));
+    // 페이지 2: 동행인 및 여행 스타일 선택 후 다음 페이지로 이동
+    $("#savePage2AndGoToNext").on("click", () => {
+        const companionValues = $('input[name="companion"]:checked').map(function () {
+            return $(this).val();
+        }).get();
+        const travelStyleValues = $('input[name="travel_style"]:checked').map(function () {
+            return $(this).val();
+        }).get();
 
-    // 여행 스타일 선택 저장
-    const travelStyleChecked = document.querySelectorAll('input[name="travel_style"]:checked');
-    const travelStyleValues = Array.from(travelStyleChecked).map(input => input.value);
-    localStorage.setItem('selectedTravelStyle', travelStyleValues.join(','));
+        localStorage.setItem('selectedCompanion', companionValues.join(','));
+        localStorage.setItem('selectedTravelStyle', travelStyleValues.join(','));
 
-    location.href = '/schedule/survey/3';
-}
+        window.location.href = '/schedules/survey/3';
+    })
 
-// 페이지 3 함수
-function beforeSubmit() {
-    // transport 저장
-    const transportChecked = document.querySelectorAll('input[name="transport"]:checked');
-    const transportValues = Array.from(transportChecked).map(input => input.value);
-    document.getElementById('selectedtransport').value = transportValues.join(',');
+    // 페이지 3: 이동 방식 및 여행 일정 선택 후 AJAX로 설문 결과 제출
+    $("#submitSurvey").on("click", () => {
+        const transportValues = $('input[name="transport"]:checked').map(function () {
+            return $(this).val();
+        }).get();
+        const scheduleStyle = $('input[name="schedule_style"]:checked').val();
 
-    // schedule_style 저장
-    const scheduleStyle = document.querySelector('input[name="schedule_style"]:checked');
-    document.getElementById('selectedschedule_style').value = scheduleStyle.value;
+        localStorage.setItem('selectedTransport', transportValues.join(','));
+        localStorage.setItem('selectedScheduleStyle', scheduleStyle);
 
-    return true;
-}
-
-window.onload = function () {
-    const currentPage = window.location.pathname.split('/').pop();
-
-    if (currentPage === '3') {
-        document.getElementById('selectedCity').value = localStorage.getItem('selectedCity') || '';
-        document.getElementById('selectedPeriod').value = localStorage.getItem('selectedPeriod') || '';
-        document.getElementById('selectedcompanion').value = localStorage.getItem('selectedCompanion') || '';
-        document.getElementById('selectedtravel_style').value = localStorage.getItem('selectedTravelStyle') || '';
-    }
-}
+        window.location.href = "/schedules?isRecommend=true"
+    })
+})

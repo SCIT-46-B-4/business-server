@@ -3,138 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>일정 보기</title>
-    <!-- script -->
-    <script th:src="@{/script/global/jquery.js}" src="../static/script/global/jquery.js"></script>
-    <script defer type="module" th:src="@{/script/schedule/schedule.js}"></script>
-    <script th:src="@{/script/fragments/slidePanel.js}" src="../static/script/fragments/slidePanel.js"></script>
-    <!-- google map api script -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbtW86eP8dZAoWEWUIc2vumKA3sFeDpFg&callback=initMap"></script>
-    <script defer th:src="@{/script/schedule/map.js}"></script>
-
     <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/global/reset.css}", href="../../static/css/global/reset.css">
     <link rel="stylesheet" th:href="@{/css/schedule/scheduleRoute.css}" href="../../static/css/schedule/scheduleRoute.css">
     <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../static/css/fragments/header.css">
     <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../static/css/fragments/slidePanel.css">
+    <!-- script -->
+    <script th:src="@{/script/global/jquery.js}"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}"></script>
+    <script th:src="@{/script/schedule/schedule.js}" type="module"></script>
+    <!-- google map api script -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbtW86eP8dZAoWEWUIc2vumKA3sFeDpFg&callback=initMap"></script>
+    <script defer th:src="@{/script/schedule/map.js}"></script>
 </head>
 <body>
 <!-- fragments place -->
     <div th:insert="~{fragments/header :: top-bar}"></div>
     <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
-<!-- header class -->
-<!-- total-container -->
-<div class="total-container">
-    <div id="scroll-root">
-        <div class="container_schedule">
-            <!-- 제목 입력 구간 -->
-            <div>
-                <!-- 제목 Tag 입력 구간 -->
-                <div class="container_title title_tag tagContainer">
-                    <div class="container_title title_tag tagName">
-                        <div class="title_tag flex-box">
-                            <div class="text_tag" style="font-size: 13px; color: gray;">오사카 여행</div>
-                        </div>
-                    </div>
-                </div>
+    <!-- header class -->
+    <!-- total-container -->
+    <div class="total-container">
+        <div id="scroll-root">
+            <div class="container_schedule">
                 <!-- 제목 입력 구간 -->
-                <div class="container_title title titleContainer">
-                    현지인 맛집으로 떠나는 오사카 먹방 여행
-                </div>
-                <div class="container_title title float titleContainer" style="font-size: 13px"></div>
-
-                <!-- Sticky Element : Day 별 이동 버튼 -->
-                <div id="sticky-element" class="container_schedule">
-                    <div class="container_schedule option">
-                        <!-- 옵션 버튼 : 외부에서 가져온 걸 이용하는데 Select-option으로 바꾸는게 효율적일 수 있음-->
-                        <button class="option-button">
-                            <span class="text_textButton">Day1</span>
-                            <span class="image"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- end .container_schedule -->
-
-        <!-- Schedule Box -->
-        <div class="container_schedule scheduleContainer">
-            <div id="schedule-container" class="container_schedule">
-                <div class="container_schedule scheduleBox">
-                    <!-- 반복문을 돌려서 뽑아낼 데이터 및 일정자리 -->
-                    <div>
-                        <br>
-                        <!-- id자리에는 증가시켜서 값을 넣을 idx / count값으로 대체 -->
-                        <div id="component" class="scheduleBox flex-box">
-                            <div class="scheduleBox flex-box flexItem">
-                                <a class="route-guide-link" href="" target="_blank">
-                                    <div class="scheduleBox text">
-                                        <div class="scheduleBox attraction-name" style="font-size: 24px">
-                                            도톤보리
-                                            <button class="removeBtn">-</button>
-                                        </div>
-                                        <div class="scheduleBox flex-box">
-                                            <div class="text" style="font-size: 13px; color: gray">
-                                                <span>관광명소</span>
-                                                <span>
-                                                        ::before
-                                                        "난바"
-                                                    </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                <div>
+                    <!-- 제목 Tag 입력 구간 -->
+                    <div class="container_title title_tag tagContainer">
+                        <div class="container_title title_tag tagName">
+                            <div class="title_tag flex-box">
+                                <div class="text_tag" style="font-size: 13px; color: gray;">오사카 여행</div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div> <!-- end .scheduleContainer -->
-    </div> <!-- end #scroll-root -->
-
-    <div id="fullscreen-map" class="mapContainer">
-        <div id="map"></div>
-        <div class="mapContainer footer">
-            <div class="mapContainer top-footer buttonBox">
-                <div class="mapContainer top-footer flex-box buttonBox">
-                    <div class="buttonBox top-footer">
-                        <button class="top-footer-button"></button>
+                    <!-- 제목 입력 구간 -->
+                    <div class="container_title title titleContainer">
+                        현지인 맛집으로 떠나는 오사카 먹방 여행
                     </div>
-                </div>
-                <div role="tablist" aria-orientation="horizontal" class="buttonBox top-footer flex-box"
-                    style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
-                    <!-- 동적인 버튼 생성 자리 button : day1, day2 ,,, -->
-                </div>
-            </div> <!-- End .top-footer -->
-            <div class="mapContainer bottom-footer">
-                <div class="mapContainer bottom-footer flex-box">
-                    <div class="bottom-footer flex-box left-button" >
-                        <!-- 좌측 사이드 버튼 -->
-                        <div class="side-button">
-                            <button class="bottom-footer-button">Left</button>
+                    <div class="container_title title float titleContainer" style="font-size: 13px"></div>
+
+                    <!-- Sticky Element : Day 별 이동 버튼 -->
+                    <div id="sticky-element" class="container_schedule">
+                        <div class="container_schedule option">
+                            <!-- 옵션 버튼 : 외부에서 가져온 걸 이용하는데 Select-option으로 바꾸는게 효율적일 수 있음-->
+                            <button class="option-button">
+                                <span class="text_textButton">Day1</span>
+                                <span class="image"></span>
+                            </button>
                         </div>
                     </div>
-                    <div class="flicking-viewport" style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
-                        <div class="flicking-camera">
-                            <div class="flicking-panel flex-box guideBox">
-                                <div class="guideBox flex-box" style="display: flex; flex-direction: row; align-items: center;">
-                                    <a class="route-guided-link" href="#" style="display: flex; flex-direction: row; align-items: center;">
-                                        <!-- 왼쪽 이미지 영역 -->
-                                        <div class="guideBox guide-image" style="flex-shrink: 0;">
-                                            <img src="https://via.placeholder.com/150" alt="우라 난바 이미지" style="width:150px; height:auto;">
-                                        </div>
-                                        <!-- 오른쪽 텍스트 영역 -->
-                                        <div class="guideBox guide-text" style="display: flex; flex-direction: column; margin-left: 10px;">
-                                            <!-- 제목 -->
-                                            <div style="font-size: 16px; font-weight: bold;">우라 난바</div>
-                                            <!-- 상세 설명 -->
-                                            <div style="font-size: 13px; margin-top: 4px;">일본 특유의 분위기를 물씬 풍기는 이자카야 골목</div>
-                                            <!-- 카테고리 정보 -->
-                                            <div style="font-size: 13px; color: gray; margin-top: 4px;">
-                                                <span>관광 명소</span>
-                                                <span>::before 난바</span>
+                </div>
+            </div> <!-- end .container_schedule -->
+
+            <!-- Schedule Box -->
+            <div class="container_schedule scheduleContainer">
+                <div id="schedule-container" class="container_schedule">
+                    <div class="container_schedule scheduleBox">
+                        <!-- 반복문을 돌려서 뽑아낼 데이터 및 일정자리 -->
+                        <div>
+                            <br>
+                            <!-- id자리에는 증가시켜서 값을 넣을 idx / count값으로 대체 -->
+                            <div id="component" class="scheduleBox flex-box">
+                                <div class="scheduleBox flex-box flexItem">
+                                    <a class="route-guide-link" href="" target="_blank">
+                                        <div class="scheduleBox text">
+                                            <div class="scheduleBox attraction-name" style="font-size: 24px">
+                                                도톤보리
+                                                <button class="removeBtn">-</button>
                                             </div>
-                                            <!-- 별점 및 리뷰 -->
-                                            <div style="font-size: 13px; color: gray; margin-top: 4px;">
-                                                <span><!-- 별점 표시 --></span>
-                                                <span>(리뷰 2)</span>
+                                            <div class="scheduleBox flex-box">
+                                                <div class="text" style="font-size: 13px; color: gray">
+                                                    <span>관광명소</span>
+                                                    <span>
+                                                            ::before
+                                                            "난바"
+                                                        </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
@@ -142,17 +85,73 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bottom-footer flex-box right-button">
-                        <!-- 우측 사이드 버튼 -->
-                        <div class="side-button">
-                            <button class="bottom-footer-button">Right</button>
+                </div>
+            </div> <!-- end .scheduleContainer -->
+        </div> <!-- end #scroll-root -->
+
+        <div id="fullscreen-map" class="mapContainer">
+            <div id="map"></div>
+            <div class="mapContainer footer">
+                <div class="mapContainer top-footer buttonBox">
+                    <div class="mapContainer top-footer flex-box buttonBox">
+                        <div class="buttonBox top-footer">
+                            <button class="top-footer-button"></button>
+                        </div>
+                    </div>
+                    <div role="tablist" aria-orientation="horizontal" class="buttonBox top-footer flex-box"
+                        style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
+                        <!-- 동적인 버튼 생성 자리 button : day1, day2 ,,, -->
+                    </div>
+                </div> <!-- End .top-footer -->
+                <div class="mapContainer bottom-footer">
+                    <div class="mapContainer bottom-footer flex-box">
+                        <div class="bottom-footer flex-box left-button" >
+                            <!-- 좌측 사이드 버튼 -->
+                            <div class="side-button">
+                                <button class="bottom-footer-button">Left</button>
+                            </div>
+                        </div>
+                        <div class="flicking-viewport" style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
+                            <div class="flicking-camera">
+                                <div class="flicking-panel flex-box guideBox">
+                                    <div class="guideBox flex-box" style="display: flex; flex-direction: row; align-items: center;">
+                                        <a class="route-guided-link" href="#" style="display: flex; flex-direction: row; align-items: center;">
+                                            <!-- 왼쪽 이미지 영역 -->
+                                            <div class="guideBox guide-image" style="flex-shrink: 0;">
+                                                <img src="https://via.placeholder.com/150" alt="우라 난바 이미지" style="width:150px; height:auto;">
+                                            </div>
+                                            <!-- 오른쪽 텍스트 영역 -->
+                                            <div class="guideBox guide-text" style="display: flex; flex-direction: column; margin-left: 10px;">
+                                                <!-- 제목 -->
+                                                <div style="font-size: 16px; font-weight: bold;">우라 난바</div>
+                                                <!-- 상세 설명 -->
+                                                <div style="font-size: 13px; margin-top: 4px;">일본 특유의 분위기를 물씬 풍기는 이자카야 골목</div>
+                                                <!-- 카테고리 정보 -->
+                                                <div style="font-size: 13px; color: gray; margin-top: 4px;">
+                                                    <span>관광 명소</span>
+                                                    <span>::before 난바</span>
+                                                </div>
+                                                <!-- 별점 및 리뷰 -->
+                                                <div style="font-size: 13px; color: gray; margin-top: 4px;">
+                                                    <span><!-- 별점 표시 --></span>
+                                                    <span>(리뷰 2)</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom-footer flex-box right-button">
+                            <!-- 우측 사이드 버튼 -->
+                            <div class="side-button">
+                                <button class="bottom-footer-button">Right</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div> <!-- end #fullscreen-map -->
-</div>
-<span id="scheduleId" th:data-id="${id}" hidden></span>
+        </div> <!-- end #fullscreen-map -->
+    </div>
 </body>
 </html>

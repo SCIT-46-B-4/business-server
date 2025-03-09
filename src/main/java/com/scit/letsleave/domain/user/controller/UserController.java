@@ -44,10 +44,10 @@ public class UserController {
 
     /**
      * 추가 정보 입력 페이지 요청 처리
-     * @return additional-info.html 반환
+     * @return additionalInfo.html 반환
      */
-    @GetMapping("/auth/google/additional-info")
+    @GetMapping("/auth/google/additionalInfo")
     public String additionalInfoPage() {
-        return "/user/additional-info"; // src/main/resources/templates/user/additional-info.html
+        return "/user/additionalInfo"; // src/main/resources/templates/user/additionalInfo.html
     }
 }

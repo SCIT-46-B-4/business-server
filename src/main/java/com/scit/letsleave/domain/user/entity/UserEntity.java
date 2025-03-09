@@ -103,7 +103,6 @@ public class UserEntity {
                 ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", password='" + password + '\'' +
                 ", isAgreeLoc=" + isAgreeLoc +
                 ", isAgreeNewsNoti=" + isAgreeNewsNoti +
                 ", isAgreeMarketingNoti=" + isAgreeMarketingNoti +

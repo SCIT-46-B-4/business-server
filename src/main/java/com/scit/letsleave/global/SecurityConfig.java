@@ -49,7 +49,6 @@ public class SecurityConfig {
                  "/script/**",
                  "/css/**",
                  "/images/**",
-                 "/favicon.ico",
                  "/guides/**",
                  "/schedules/**").permitAll()
                .anyRequest().authenticated()

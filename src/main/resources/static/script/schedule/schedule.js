@@ -1,32 +1,28 @@
-// 스케줄 존재 여부를 확인하는 함수 (GET /api/schedules/{id}/exists)
-async function checkScheduleExists(scheduleId) {
-    try {
-        const response = await fetch(`/api/schedules/exists/${scheduleId}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const exists = await response.json();
-        console.log(`Schedule ${scheduleId} exists:`, exists);
-        return exists;
-    } catch (error) {
-        console.error("Error checking schedule existence:", error);
-        return false;
-    }
-}
+import { AjaxAPI } from "../global/ajax.js";
 
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
-async function loadScheduleBoxes(scheduleId) {
-    try {
-        const response = await fetch(`/api/destinations/${scheduleId}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+function loadScheduleBoxes(scheduleId, isRecommend) {
+    let ajaxCall;
+    if (isRecommend && scheduleId == null) {
+        const surveyData = {
+            city: localStorage.getItem("selectedCity"),
+            period: localStorage.getItem("selectedPeriod"),
+            companion: localStorage.getItem("selectedCompanion"),
+            travelStyle: localStorage.getItem("selectedTravelStyle"),
+            transport: localStorage.getItem("selectedTransport"),
+            scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
         }
-        const boxes = await response.json();
-        console.log("Fetched schedule boxes:", boxes);
-        renderScheduleBoxesByDay(boxes);
-    } catch (error) {
-        console.error("Error fetching schedule boxes:", error);
+        ajaxCall = AjaxAPI.getRecommendSchedule(surveyData)
+    } else {
+        ajaxCall = AjaxAPI.getScheduleById(scheduleId)
     }
+    ajaxCall.done((data) => {
+        renderScheduleBoxesByDay(data);
+    }).fail(function(xhr, _, errorThrown) {
+        console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
+        console.log("Error fetching schedule boxes:", errorThrown);
+        // location.href = "/";
+    });
 }
 
 // 날짜 형식 변환 함수 (YYYY-MM-DD)
@@ -39,12 +35,19 @@ function formatDate(dtString) {
 // 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
 function renderScheduleBoxesByDay(boxes) {
     // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함
-    const container = document.getElementById("schedule-container");
-    if (!container) {
+    const $container = $("#schedule-container");
+    if (!$container) {
         console.error("Schedule container not found.");
         return;
     }
-    container.innerHTML = ""; // 기존 내용 초기화
+    $container.empty();
+    const scheduleName = boxes["name"];
+    const cityName =  boxes["cityName"];
+    const countryName =  boxes["countryName"];
+    const endDate = boxes["endDate"];
+    const startDate = boxes["startDate"];
+    const detailScheduleDtoes = boxes["detailScheduleDtoes"];
+    detailScheduleDtoes.forEach((el) => console.log(el));
 
     // 그룹화: 각 DTO의 detailDate를 기준 ("YYYY-MM-DD")
     const groups = boxes.reduce((acc, box) => {
@@ -135,14 +138,26 @@ function renderScheduleBoxesByDay(boxes) {
 }
 
 // DOM이 완전히 로드된 후, scheduleId를 이용하여 데이터를 로드 및 렌더링
-document.addEventListener("DOMContentLoaded", async function() {
+$(function() {
     // 상위 컨테이너가 없는 경우, 동적으로 생성하여 #scroll-root에 추가
-    if (!document.getElementById("schedule-container")) {
-        const parentDiv = document.createElement("div");
-        parentDiv.id = "schedule-container";
-        parentDiv.classList.add("container_schedule", "scheduleContainer");
-        document.getElementById("scroll-root").appendChild(parentDiv);
+    if (!$("#schedule-container")) {
+        let $parentDiv = $("<div>");
+        $parentDiv.attr("id", "schedule-container");
+        $parentDiv.addClass("container_schedule scheduleContainer");
+        $("#scroll-root").appendChild($parentDiv);
     }
-    const scheduleId = 1;  // 예시 스케줄 ID
-    loadScheduleBoxes(scheduleId);
-});
+
+    let scheduleId = null;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const isRecommend = urlParams.get('isRecommend') == "true";
+    
+    if (!isRecommend) {
+        const path = window.location.pathname;
+        const pathSegments = path.split('/');
+    
+        scheduleId = Number(getLastElement(pathSegments));
+    }
+
+    loadScheduleBoxes(scheduleId, isRecommend);
+})

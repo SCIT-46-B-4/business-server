@@ -1,20 +1,10 @@
-// 데이터를 백엔드에서 가져오는 함수
-async function fetchScheduleDestinations(scheduleId) {
-    try {
-        const response = await fetch(`/api/destination/${scheduleId}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("Fetched schedule destinations: (map.js)", data);
-        return data;
-    } catch (error) {
-        console.error("Error fetching schedule destinations:", error);
-        return [];
-    }
-}
+import { AjaxAPI } from "../global/ajax.js";
 
+// * 필요 함수 *
+// 지도 초기화 함수
 // 지도에 마커와 Polyline을 그리는 함수
+// marker focus on 함수
+
 function drawMapWithMarkers(map, destinations) {
     const bounds = new google.maps.LatLngBounds();
     const infoWindow = new google.maps.InfoWindow();
@@ -56,8 +46,21 @@ function drawMapWithMarkers(map, destinations) {
 
 // 실제 지도 초기화 함수: scheduleId를 인자로 받음
 async function initializeMap(scheduleId) {
+    AjaxAPI.getScheduleById(scheduleId)
+    .done((data) => {
+        const detailScheduleDtoes = data["detailScheduleDtoes"];
+        detailScheduleDtoes.forEach((detailScheduleDtoe) => {
+            const routes = detailScheduleDtoe["routes"];
+            routes.forEach((route) => {
+                const latitude = route["destination"]["latitude"]
+                const longitude = route["destination"]["latitude"]
+
+            })
+        })
+    })
+    .fail()
     const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 37.5400456, lng: 126.9921017 },
+        center: { lat: 35.405271, lng: 139.46081 },
         zoom: 10,
     });
     const destinations = await fetchScheduleDestinations(scheduleId);
@@ -66,6 +69,6 @@ async function initializeMap(scheduleId) {
 
 // Google Maps API가 호출하는 initMap 함수 (매개변수가 전달되지 않으므로 기본 scheduleId 사용)
 window.initMap = function() {
-    const scheduleId = 3;  // 예시 스케줄 아이디
+    const scheduleId = 1;  // 예시 스케줄 아이디
     initializeMap(scheduleId);
 };

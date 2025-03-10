@@ -15,34 +15,36 @@ $(document).ready(function () {
 
     // 중복 확인 요청 함수 (이메일, 전화번호)
     function duplicationCheck(type, value, errorId, successMessage, errorMessage, callback) {
-        $.ajax({
-            url: `/users/auth/check?type=${type}&val=${value}`, // 쿼리 스트링으로 type과 val 전달
-            method: "GET",
-            success: function (response) {
-                if (response.exists) { // 중복된 경우
+        setTimeout(() => {
+            $.ajax({
+                url: `/users/auth/check?type=${type}&val=${value}`, // 쿼리 스트링으로 type과 val 전달
+                method: "GET",
+                success: function (response) {
+                    if (response.exists) { // 중복된 경우
+                        $(`#${errorId}`)
+                            .text(errorMessage)
+                            .removeClass("success")
+                            .addClass("error");
+                        callback(false);
+                    } else { // 사용 가능한 경우
+                        $(`#${errorId}`)
+                            .text(successMessage)
+                            .removeClass("error")
+                            .addClass("success");
+                        callback(true);
+                    }
+                    toggleSubmitButton(); // 버튼 활성화/비활성화 상태 업데이트
+                },
+                error: function () {
                     $(`#${errorId}`)
-                        .text(errorMessage)
+                        .text("중복 확인 중 오류가 발생했습니다.")
                         .removeClass("success")
                         .addClass("error");
                     callback(false);
-                } else { // 사용 가능한 경우
-                    $(`#${errorId}`)
-                        .text(successMessage)
-                        .removeClass("error")
-                        .addClass("success");
-                    callback(true);
+                    toggleSubmitButton(); // 버튼 활성화/비활성화 상태 업데이트
                 }
-                toggleSubmitButton(); // 버튼 활성화/비활성화 상태 업데이트
-            },
-            error: function () {
-                $(`#${errorId}`)
-                    .text("중복 확인 중 오류가 발생했습니다.")
-                    .removeClass("success")
-                    .addClass("error");
-                callback(false);
-                toggleSubmitButton(); // 버튼 활성화/비활성화 상태 업데이트
-            }
-        });
+            });
+        }, 500);
     }
 
     // 이메일 형식 검증 함수
@@ -55,8 +57,10 @@ $(document).ready(function () {
     function checkEmail() {
         const email = $("#email").val().trim(); // 앞뒤 공백 제거
 
-        if (!validateField("email", "emailError", "이메일을 입력하세요.") ||
-            !isValidEmail(email)) {
+        if (
+            !validateField("email", "emailError", "이메일을 입력하세요.") ||
+            !isValidEmail(email)
+        ) {
             $("#emailError")
                 .text("올바른 이메일 형식이 아닙니다.")
                 .removeClass("success")

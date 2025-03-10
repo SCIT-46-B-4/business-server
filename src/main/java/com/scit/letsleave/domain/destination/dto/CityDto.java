@@ -1,11 +1,14 @@
 package com.scit.letsleave.domain.destination.dto;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.scit.letsleave.domain.destination.entity.CityEntity;
 import com.scit.letsleave.domain.destination.entity.CountryEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
+import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
 
 import lombok.AllArgsConstructor;
@@ -25,11 +28,10 @@ public class CityDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private CountryEntity country;
-    private List<DestinationEntity> destinations;
-    private List<ScheduleEntity> schedules;
+    private CountryDto country;
+    private List<DestinationDto> destinations;
 
-    public static CityDto toDTO(CityEntity entity) {
+    public static CityDto toDto(CityEntity entity) {
         return CityDto.builder()
             .id(entity.getId())
             .krName(entity.getKrName())
@@ -37,9 +39,16 @@ public class CityDto {
             .cityCode(entity.getCityCode())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
-            .country(entity.getCountry())
-            .destinations(entity.getDestinations())
-            .schedules(entity.getSchedules())
+            // .country(
+            //     entity.getCountry() != null ?
+            //     CountryDto.toDto(entity.getCountry()) :
+            //     null
+            // )
+            // .destinations(
+            //     entity.getDestinations() != null ?
+            //     entity.getDestinations().stream().map(DestinationDto::toDto).collect(Collectors.toList()) :
+            //     Collections.emptyList()
+            // )
             .build();
     }
 }

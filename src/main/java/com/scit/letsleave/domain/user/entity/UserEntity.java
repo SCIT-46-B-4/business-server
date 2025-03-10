@@ -1,16 +1,21 @@
 package com.scit.letsleave.domain.user.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.scit.letsleave.domain.user.dto.UserDto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -67,6 +72,10 @@ public class UserEntity {
     @Column(name = "profile_img", length = 512)
     private String profileImg;
 
+    // User와 OAuth 간의 1:N 관계 설정
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OAuthEntity> oauthAccounts = new ArrayList<>();
+
     // DTO -> Entity 변환
     public static UserEntity toEntity(UserDto dto) {
         return UserEntity.builder()
@@ -83,5 +92,24 @@ public class UserEntity {
             .deletedAt(dto.getDeletedAt())
             .profileImg(dto.getProfileImg())
             .build();
+    }
+
+    // 커스텀 toString() 메서드 (oauthAccounts 제외)
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", isAgreeLoc=" + isAgreeLoc +
+                ", isAgreeNewsNoti=" + isAgreeNewsNoti +
+                ", isAgreeMarketingNoti=" + isAgreeMarketingNoti +
+                ", joinDate=" + joinDate +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                ", profileImg='" + profileImg + '\'' +
+                '}';
     }
 }

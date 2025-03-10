@@ -491,3 +491,4 @@ ALTER TABLE destinations MODIFY `address` VARCHAR(512) NULL;
 ALTER TABLE destinations MODIFY available_time VARCHAR(512) NULL;
 ALTER TABLE destinations MODIFY title VARCHAR(256) NOT NULL;
 ALTER TABLE users ADD COLUMN password VARCHAR(128) NULL AFTER phone;
+ALTER TABLE oauth CHANGE providerId provider_id VARCHAR(256) NOT NULL;

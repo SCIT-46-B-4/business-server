@@ -55,7 +55,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
         // 신규 사용자라면 추가 정보 입력 페이지로 리다이렉트
         if ("소셜 사용자".equals(userEntity.getName())) { // 기본값인 경우
-            response.sendRedirect("/users/auth/google/additional-info");
+            response.sendRedirect("/users/auth/google/additionalInfo");
             return;
         }
 

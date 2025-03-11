@@ -43,7 +43,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
             .requestMatchers(
                 "/",
-                 "/users/auth/**",
+                 "/api/users/auth/**",
                  "/users/signup",
                  "/users/login",
                  "/script/**",

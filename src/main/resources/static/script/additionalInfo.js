@@ -61,7 +61,7 @@ $(document).ready(function () {
     // 중복 확인 요청 함수 (전화번호)
     function duplicationCheck(type, value, errorId, successMessage, errorMessage, callback) {
         $.ajax({
-            url: `/users/auth/check?type=${type}&val=${value}`, // 쿼리 스트링으로 type과 val 전달
+            url: `/api/users/auth/check?type=${type}&val=${value}`, // 쿼리 스트링으로 type과 val 전달
             method: "GET",
             success: function (response) {
                 if (response.exists) { // 중복된 경우
@@ -148,7 +148,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: "/users/auth/google/register",
+            url: "/api/users/auth/google/register",
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(formData),

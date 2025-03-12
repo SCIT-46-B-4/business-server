@@ -45,7 +45,7 @@ function drawMapWithMarkers(map, destinations) {
 }
 
 // 실제 지도 초기화 함수: scheduleId를 인자로 받음
-async function initializeMap(scheduleId) {
+function initializeMap(scheduleId) {
     AjaxAPI.getScheduleById(scheduleId)
     .done((data) => {
     //     const detailScheduleDtoes = data["detailScheduleDtoes"];
@@ -71,5 +71,5 @@ async function initializeMap(scheduleId) {
 // Google Maps API가 호출하는 initMap 함수 (매개변수가 전달되지 않으므로 기본 scheduleId 사용)
 window.initMap = function() {
     const scheduleId = 12;  // 예시 스케줄 아이디
-    initializeMap(scheduleId).then(() => {console.log("초기화 완료")}).error((err) => {console.log("에러" + err)});
+    initializeMap(scheduleId);
 };

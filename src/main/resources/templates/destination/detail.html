@@ -98,7 +98,7 @@
             <p class="availableTime" th:text="${destination.availableTime}" style="white-space: pre-wrap;">10:00 AM - 10:00 PM</p>
         </div>
 
-        <!-- 이용 팁 이거 feathure가 []인 경우 에러남!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--> 
+        <!-- 이용 팁 --> 
         <div class="tips">
             <h3>이용 팁</h3>
             <div th:each="entry : ${destination.feature}">
@@ -110,6 +110,7 @@
         <div class="divider"></div>
         <h3>함께 본 장소</h3>
         <div class="scroll-container">
+            <div>함께 본 장소?? 그게 뭐죠</div>
             <div>장소 1</div>
             <div>장소 2</div>
             <div>장소 3</div>
@@ -119,14 +120,41 @@
         <div class="divider"></div>
         <div class="reviews">
             <h3>리뷰</h3>
-            <p>사용자 리뷰를 여기에 띄우기로 해</p>
+            <p>리뷰를 할건가요? 그렇다면 사용자 리뷰를 여기에 띄우기로 해요..</p>
         </div>
         
         <div class="divider"></div>
+
         <div class="nearby">
             <h3>근처의 추천 장소</h3>
-            <p>추천 장소 목록... 거리 계산?</p>
+        
+            <!-- 타입별 분류 -->
+            <div class="tabs">
+                <button class="tab-button" th:each="type : ${nearbyDestinations.keySet()}" th:data-type="${type}" th:text="${type}">타입</button>
+            </div>
+        
+            <!-- 여행지 목록 -->
+            <div class="places-container">
+                <div th:each="entry : ${nearbyDestinations}" class="places-list" th:data-type="${entry.key}">
+                    <div th:each="destination : ${entry.value}" class="place-card">
+                        <img th:src="@{/images/destination/{city}/{type}/{titleImg}(city=${destination.city.engName.toLowerCase()}, type=${destination.type.toString().toLowerCase()}, titleImg=${destination.titleImg})}" 
+                             alt="대표 이미지" class="place-image" />
+                        <div class="place-info">
+                            <h4 th:text="${destination.krName}">여행지 이름</h4>
+                            <p th:text="${destination.title}">여행지 설명</p>
+                            <div class="place-meta">
+                                <span class="score" th:text="'★ ' + ${destination.score}">★ 4.5</span>
+                                <span class="distance" th:text="'거리 ' + ${destination.distance} + 'm'">839m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
+
+
+    
     </div>
 </body>
 </html>

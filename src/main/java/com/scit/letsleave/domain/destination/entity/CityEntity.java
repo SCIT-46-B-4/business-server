@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.scit.letsleave.domain.destination.dto.CityDto;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
 
@@ -21,15 +22,18 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "cities")
+@JsonIgnoreProperties({"destinations", "schedules"}) // 직렬화에서 제외할 필드 지정
 public class CityEntity {
 
     @Id

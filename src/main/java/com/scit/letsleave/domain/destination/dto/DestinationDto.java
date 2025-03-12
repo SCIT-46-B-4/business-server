@@ -12,12 +12,14 @@ import com.scit.letsleave.domain.schedule.entity.RouteEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 @Builder
 public class DestinationDto {
 
@@ -42,6 +44,8 @@ public class DestinationDto {
 
     private List<RouteEntity> routes;
     private CityEntity city;
+
+    private Integer distance; // 거리 (미터 단위)
 
     public static DestinationDto toDTO(DestinationEntity entity) {
         return DestinationDto.builder()

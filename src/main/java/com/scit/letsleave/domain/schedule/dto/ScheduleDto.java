@@ -47,8 +47,8 @@ public class ScheduleDto {
             .cityName(entity.getCityName())
             .detailScheduleDtos(
                 entity.getDetailScheduleEntities().isEmpty() ?
-                entity.getDetailScheduleEntities().stream().map(DetailScheduleDto::toDto).collect(Collectors.toList()) :
-                Collections.emptyList()
+                Collections.emptyList() :
+                entity.getDetailScheduleEntities().stream().map(DetailScheduleDto::toDto).collect(Collectors.toList())
             )
             .build();
     }

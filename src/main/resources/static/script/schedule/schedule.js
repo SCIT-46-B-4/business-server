@@ -1,4 +1,5 @@
 import { AjaxAPI } from "../global/ajax.js";
+import { moveToFocus, drawMapWithMarkers } from "./map.js";
 
 
 // 날짜 형식 변환 함수 (YYYY-MM-DD)
@@ -7,10 +8,9 @@ function formatDate(dtString) {
     return dt.toISOString().split('T')[0];
 }
 
-// 받은 DestinationScheduleDto 데이터를 detailDate 기준으로 그룹화하여,
 // 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
-function renderScheduleBoxesByDay(boxes) {
-    console.log(boxes);
+function renderScheduleBoxByDay(schedule) {
+    console.log(schedule);
     // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함
     const $container = $("#schedule-container");
     if (!$container) {
@@ -18,26 +18,14 @@ function renderScheduleBoxesByDay(boxes) {
         return;
     }
     $container.empty();
-    const scheduleName = boxes["name"];
-    const cityName =  boxes["cityName"];
-    const countryName =  boxes["countryName"];
-    const endDate = boxes["endDate"];
-    const startDate = boxes["startDate"];
-    const detailScheduleDtoes = boxes["detailScheduleDtoes"];
-    detailScheduleDtoes.forEach((el) => console.log(el));
-
-    // 그룹화: 각 DTO의 detailDate를 기준 ("YYYY-MM-DD")
-    const groups = boxes.reduce((acc, box) => {
-        const day = box.detailDate;
-        if (!acc[day]) {
-            acc[day] = [];
-        }
-        acc[day].push(box);
-        return acc;
-    }, {});
-
-    // 날짜를 오름차순 정렬
-    const sortedDates = Object.keys(groups).sort();
+    const scheduleName = schedule["name"];
+    const cityName =  schedule["cityName"];
+    const countryName =  schedule["countryName"];
+    const endDate = schedule["endDate"];
+    const startDate = schedule["startDate"];
+    const detailScheduleDtoes = schedule["detailScheduleDtoes"];
+    console.log(detailScheduleDtoes);
+    console.log(typeof detailScheduleDtoes);
 
     // 각 날짜 그룹마다 별도의 anchor 컨테이너 생성
     sortedDates.forEach((day, index) => {
@@ -113,6 +101,7 @@ function renderScheduleBoxesByDay(boxes) {
         container.appendChild(dayAnchor);
     });
 }
+
 function getSurveyData() {
     return {
         city: localStorage.getItem("selectedCity"),
@@ -131,36 +120,34 @@ function getScheduleData(scheduleId, isRecommend) {
         AjaxAPI.getScheduleById(scheduleId);
 
     ajaxCall
-    .done((data) => {
-        renderScheduleBoxesByDay(data);
+    .done((schedule) => {
+        renderScheduleBoxByDay(schedule);
     })
     .fail((xhr, _, errorThrown) => {
         console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
-        console.log("Error fetching schedule boxes:", errorThrown);
+        console.log("Error fetching schedule schedule:", errorThrown);
         // location.href = "/";
     })
 }
 
-// DOM이 완전히 로드된 후, scheduleId를 이용하여 데이터를 로드 및 렌더링
 $(function() {
-    // 상위 컨테이너가 없는 경우, 동적으로 생성하여 #scroll-root에 추가
-    if (!$("#schedule-container")) {
-        let $parentDiv = $("<div>");
-        $parentDiv.attr("id", "schedule-container");
-        $parentDiv.addClass("container_schedule scheduleContainer");
-        $("#scroll-root").appendChild($parentDiv);
+    if ($("#schedule-container").length === 0) {
+        let $parentDiv = $("<div>", {
+            id: "schedule-container",
+            class: "container_schedule scheduleContainer"
+        });
+        $("#scroll-root").append($parentDiv);
     }
 
     let scheduleId = null;
     const urlParams = new URLSearchParams(window.location.search);
-    const isRecommend = urlParams.get('isRecommend') == "true";
+    const isRecommend = urlParams.get('isRecommend') === "true";
 
     if (!isRecommend) {
         const path = window.location.pathname;
-        const pathSegments = path.split('/');
-
-        scheduleId = parseInt(pathSegments.pop());
+        const lastSlashIndex = path.lastIndexOf('/');
+        scheduleId = parseInt(path.substring(lastSlashIndex + 1), 10);
     }
-
     getScheduleData(scheduleId, isRecommend);
-})
+});
+

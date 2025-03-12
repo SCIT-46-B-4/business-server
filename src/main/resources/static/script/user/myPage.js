@@ -20,20 +20,14 @@ function renderSchedules(data) {
     let insertHtml = "";
 
     if (data.length) {
-        data.forEach((el) => {
-            const id = el["id"];
-            const name = el["name"];
-            const startDate = el["startDate"];
-            const endDate = el["endDate"];
-            const countryName = el["countryName"];
-            const cityName = el["cityName"];
+        data.forEach((schedule) => {
             insertHtml += `
-                <div id="tripHistory" class="trip-history" data-id="${id}">
+                <div id="tripHistory" class="trip-history" data-id="${schedule["id"]}">
                     <img src="/images/user/circle.png" alt="plus-image" class="sample-photo"/>
                     <div class="trip-info">
-                        <h4>${name}</h4>
-                        <span class="tripName">${countryName}・${cityName}</span>
-                        <span class="tripPeriod">${startDate} ~ ${endDate}</span>
+                        <h4>${schedule["name"]}</h4>
+                        <span class="tripName">${schedule["countryName"]}・${schedule["cityName"]}</span>
+                        <span class="tripPeriod">${schedule["startDate"]} ~ ${schedule["endDate"]}</span>
                     </div>
                 </div>
             `;

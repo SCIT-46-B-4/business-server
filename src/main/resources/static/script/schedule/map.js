@@ -1,23 +1,22 @@
-import { AjaxAPI } from "../global/ajax.js";
+let map;
 
-// * 필요 함수 *
-// 지도 초기화 함수
 // 지도에 마커와 Polyline을 그리는 함수
-// marker focus on 함수
-function drawMapWithMarkers(map, destinations) {
+function drawMapWithMarkers(routes) {
     const bounds = new google.maps.LatLngBounds();
     const infoWindow = new google.maps.InfoWindow();
 
-    destinations.forEach(dest => {
+    routes.forEach(route => {
+        const dest = route["destination"]
         const lat = parseFloat(dest.latitude);
         const lng = parseFloat(dest.longitude);
+
         const marker = new google.maps.Marker({
             position: { lat, lng },
             map,
             title: dest.krName,
         });
         marker.addListener("click", () => {
-            map.panTo(marker.position);
+            map.panTo(marker.position)
             infoWindow.setContent(dest.krName);
             infoWindow.open({ anchor: marker, map });
         });
@@ -25,9 +24,9 @@ function drawMapWithMarkers(map, destinations) {
     });
 
     const pathLine = new google.maps.Polyline({
-        path: destinations.map(dest => ({
-            lat: parseFloat(dest.latitude),
-            lng: parseFloat(dest.longitude)
+        path: routes.map(route => ({
+            lat: parseFloat(route.destination.latitude),
+            lng: parseFloat(route.destination.longitude)
         })),
         geodesic: true,
         strokeColor: "gray",
@@ -43,8 +42,13 @@ function drawMapWithMarkers(map, destinations) {
     map.fitBounds(bounds);
 }
 
-
-let map;
+// Forcus On 함수
+function moveToFocus(lat, lng) {
+    if (map) {
+        const newPosition = new google.maps.LatLng(lat, lng);
+        map.panTo(newPosition);
+    }
+}
 
 // Google Maps API가 호출하는 initMap 함수
 function initMap() {
@@ -54,12 +58,7 @@ function initMap() {
     });
 };
 
-function moveMapCenter(lat, lng) {
-    if (map) {
-        map.panTo({lat: lat, lng: lng});
-    }
-}
 
 window.initMap = initMap
 
-export {moveMapCenter};
+export {moveToFocus, drawMapWithMarkers};

@@ -29,11 +29,7 @@ public class RouteDto {
         return RouteDto.builder()
             .id(entity.getId())
             .orderNumber(entity.getOrderNumber())
-            .destinationDto(
-                entity.getDestination() != null ?
-                DestinationDto.toDto(entity.getDestination()) :
-                null
-            )
+            .destinationDto(DestinationDto.toDto(entity.getDestination()))
             .build();
     }
 }

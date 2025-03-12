@@ -1,15 +1,16 @@
 package com.scit.letsleave.domain.destination.dto;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Map;
+
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -58,9 +59,9 @@ public class DestinationDto {
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
             .city(
-                entity.getCity() != null ?
-                CityDto.toDto(entity.getCity()) :
-                null
+                entity.getCity() == null ?
+                null :
+                CityDto.toDto(entity.getCity())
             )
             .build();
     }

@@ -58,7 +58,6 @@ public class RouteEntity {
         DestinationEntity destinationEntity
     ) {
         return RouteEntity.builder()
-            .id(dto.getId())
             .orderNumber(dto.getOrderNumber())
             .updatedAt(dto.getUpdatedAt())
             .detailSchedule(detailScheduleEntity)

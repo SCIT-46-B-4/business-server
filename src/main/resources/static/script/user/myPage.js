@@ -16,7 +16,7 @@ function init() {
 }
 
 function renderSchedules(data) {
-    const $scheduleContainer = $(".scheduleContainer");
+    const $scheduleContainer = $("#scheduleContainer");
     let insertHtml = "";
     console.log(data)
     if (data.length) {
@@ -32,8 +32,8 @@ function renderSchedules(data) {
                     <img src="/images/user/circle.png" alt="plus-image" class="sample-photo"/>
                     <div class="trip-info">
                         <h4>${name}</h4>
-                        <span>${countryName}・${cityName}</span>
-                        <span>${startDate} ~ ${endDate}</span>
+                        <span class="tripName>${countryName}・${cityName}</span>
+                        <span class="tripPeriod>${startDate} ~ ${endDate}</span>
                     </div>
                 </div>
             `;

@@ -77,7 +77,6 @@ public class ScheduleEntity {
     private LocalDateTime updatedAt;
 
     @OneToMany(fetch=FetchType.LAZY, mappedBy="scheduleEntity", cascade=CascadeType.ALL)
-    @ToString.Exclude
     @JsonManagedReference
     private List<DetailScheduleEntity> detailScheduleEntities;
 

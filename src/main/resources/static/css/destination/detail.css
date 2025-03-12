@@ -1,0 +1,156 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+.breadcrumb {
+    font-size: 14px;
+    color: gray;
+}
+.krName {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.locName {
+    font-size: 16px;
+    color: gray;
+}
+.stars {
+    display: flex;
+    font-size: 20px;
+}
+.stars span {
+    color: lightgray;
+}
+.stars .filled {
+    color: gold;
+}
+.stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+.location {
+    font-size: 14px;
+    color: gray;
+}
+.destination-image {
+    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+    max-width: 800px; /* 최대 너비 제한 */
+    height: 400px; /* 고정된 높이 */
+    margin: 20px auto; /* 상하 여백과 중앙 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* 컨테이너를 벗어나는 부분 숨김 */
+}
+.destination-image img {
+    width: 100%; /* 반응형 너비 */
+    height: 100%; /* 컨테이너 높이에 맞춤 */
+    object-fit: cover; /* 비율 유지하며 컨테이너를 채움 */
+    border-radius: 10px; /* 모서리를 둥글게 */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+}
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+.actions button {
+    flex: 1;
+    margin: 5px;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.divider {
+    height: 1px;
+    background: #ddd;
+    margin: 20px 0;
+}
+.info p, .tips p {
+    display: none;
+}
+.info p:not(:empty), .tips p:not(:empty) {
+    display: block;
+}
+.map {
+    width: 100%;
+    height: 200px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.info-box {
+    background-color: #f5f5f5; /* 연한 회색 */
+    padding: 10px 30px;
+    border-radius: 5px;
+    margin: 30px 0;
+}
+.info-box span {
+    display: inline; /* 인라인 요소 유지 */
+    margin-left: 5px; /* 텍스트와 간격 추가 */
+}
+.info-box strong {
+    margin-right: 5px; /* 레이블과 텍스트 간격 추가 */
+}
+/******************
+|   별점
+*******************/
+.star-ratings {
+    position: relative;
+    unicode-bidi: bidi-override;
+    width: max-content;
+    color: #aaa9a9; /* 기본 별 색상 */
+}
+
+.star-ratings-fill {
+    color: gold; /* 채워진 별 색상 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden; /* 채워진 부분만 표시 */
+}
+
+.star-ratings-base {
+    color: #aaa9a9; /* 기본 별 색상 */
+}
+
+.star-heart-container {
+    display: flex; /* 가로 정렬 */
+    align-items: center; /* 세로 정렬 */
+    gap: 10px; /* 요소 간 간격 */
+}
+
+.star {
+    display: flex;
+    align-items: center;
+}
+
+.star .review-count {
+    margin-left: 10px; /* 별점과 리뷰 개수 사이 간격 */
+    font-size: 14px;
+    color: #555;
+}
+
+.heart {
+    font-size: 20px; /* 하트 크기 */
+    color: pink; /* 하트 색상 */
+}

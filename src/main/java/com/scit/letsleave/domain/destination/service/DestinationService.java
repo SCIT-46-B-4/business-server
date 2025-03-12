@@ -1,17 +1,21 @@
 package com.scit.letsleave.domain.destination.service;
 
-import com.scit.letsleave.domain.destination.dto.DestinationScheduleDto;
-import com.scit.letsleave.domain.destination.entity.DestinationEntity;
-import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
-import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import com.scit.letsleave.domain.destination.dto.DestinationDto;
+import com.scit.letsleave.domain.destination.dto.DestinationScheduleDto;
+import com.scit.letsleave.domain.destination.entity.DestinationEntity;
+import com.scit.letsleave.domain.destination.repository.DestinationRepository;
+import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
+import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class DestinationService {
 
     private final ScheduleRepository scheduleRepository;
+    private final DestinationRepository destinationRepository;
 
     // Schedule에 속한 Destination을 추출하는 메서드
     public List<DestinationScheduleDto> getDestinationByScheduleId(Long scheduleId) {
@@ -54,5 +59,12 @@ public class DestinationService {
                         )
                     ).collect(Collectors.toList());
         }
+    }
+
+    // 특정 여행지의 상세 정보를 가져오는 메서드
+    public DestinationDto getDestinationById(Long destinationId) {
+        DestinationEntity entity = destinationRepository.findById(destinationId)
+                .orElseThrow(() -> new RuntimeException("Destination not found"));
+        return DestinationDto.toDTO(entity);
     }
 }

@@ -44,7 +44,10 @@ public class SecurityConfig {
             // statics
             "/script/**",
             "/css/**",
-            "/images/**"
+            "/images/**",
+            // ?
+            "/destinations/**",
+            "/api/destinations/**"
         ).permitAll()
         .anyRequest().authenticated()
         ).logout(logout -> logout

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${destination.krName}">상세 정보</title>
+    <link
+      rel="stylesheet"
+      th:href="@{/css/destination/detail.css}"
+      href="../../static/css/destination/detail.css"
+    />
+    <script
+      th:src="@{/script/jQuery.js}"
+      src="../../static/script/jQuery.js"
+    ></script>
+    <script
+      th:src="@{/script/destinationDetail.js}"
+      src="../../static/script/destinationDetail.js"
+    ></script>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a th:href="@{#}" 
+               th:text="${destination.city.krName}">도시</a> >
+            <a th:href="@{#}" 
+               th:text="${destination.type.description}">타입</a>
+        </div>
+
+        <!-- 여행지명 -->
+        <h1 class="krName" th:text="${destination.krName}">krName</h1>
+        <p class="locName" th:text="${destination.locName}">locName</p>
+        
+        <div class="star-heart-container">
+            <!-- 별점 -->
+            <div class="star">
+                <div class="star-ratings">
+                    <!-- 채워진 별 -->
+                    <div class="star-ratings-fill" th:style="'width: ' + (${destination.score / 5.0 * 100}) + '%'">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <!-- 기본 별 -->
+                    <div class="star-ratings-base">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+                <!-- 리뷰 개수 -->
+                <span>(리뷰개수)</span>
+            </div>
+        
+            <!-- 분홍색 하트 -->
+            <div class="heart">
+                ❤️
+            </div>
+        </div>
+
+        <!-- 도시 -->
+        <div class = "city">
+            <span th:text="${destination.city.krName}">도쿄</span> <!-- 핀아이콘 -->
+        </div>
+
+        <!-- 이미지 ... 이게 맞아..? 몰라..-->
+        <div class="destination-image">
+            <img th:src="@{/images/destination/{city}/{type}/{titleImg}(city=${destination.city.engName.toLowerCase()}, type=${destination.type.toString().toLowerCase()}, titleImg=${destination.titleImg})}" 
+                 alt="Destination Image" />
+        </div>
+        
+        <div class="actions">
+            <button>⭐ 저장</button>
+            <button>📅 일정 추가</button>
+            <button>✍ 리뷰 쓰기</button>
+            <button>🔗 공유</button>
+        </div>
+        
+        <!-- 설명/내용 -->
+        <div class="divider"></div>
+        <p class="title" th:text="${destination.title}">title</p> 
+        <p class="content" th:text="${destination.content}">content</p> 
+        <div class="divider"></div>
+        
+        <div class="info">
+            <h3>기본 정보</h3>
+            <div class="map">지도</div>
+            <div class="info-box">
+                <p><strong>주소</strong><span class="address" th:text="${destination.address}"> 성남시 분당구 구미동 어쩌구구</span></p>
+                <p><strong>연락처</strong><span class="contact" th:text="${destination.contact}"> 02-1234-5678</span></p>
+                <p><strong>홈페이지</strong><span class="homepage" th:text="${destination.homepage}"> example.com</span></p>
+            </div>
+        </div>
+        
+        <div class="info">
+            <h3>가는 방법</h3>
+            <p class="howToGo" th:text="${destination.howToGo}">지하철 ○○역에서 도보 5분</p>
+        </div>
+        
+        <div class="info">
+            <h3>이용 시간</h3>
+            <p class="availableTime" th:text="${destination.availableTime}" style="white-space: pre-wrap;">10:00 AM - 10:00 PM</p>
+        </div>
+
+        <!-- 이용 팁 이거 feathure가 []인 경우 에러남!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--> 
+        <div class="tips">
+            <h3>이용 팁</h3>
+            <div th:each="entry : ${destination.feature}">
+                <strong th:text="${entry.key}"></strong>: 
+                <span th:text="${#strings.arrayJoin(entry.value, ', ')}"></span><br>
+            </div>
+        </div>
+        
+        <div class="divider"></div>
+        <h3>함께 본 장소</h3>
+        <div class="scroll-container">
+            <div>장소 1</div>
+            <div>장소 2</div>
+            <div>장소 3</div>
+            <div>장소 4</div>
+        </div>
+        
+        <div class="divider"></div>
+        <div class="reviews">
+            <h3>리뷰</h3>
+            <p>사용자 리뷰를 여기에 띄우기로 해</p>
+        </div>
+        
+        <div class="divider"></div>
+        <div class="nearby">
+            <h3>근처의 추천 장소</h3>
+            <p>추천 장소 목록... 거리 계산?</p>
+        </div>
+    </div>
+</body>
+</html>

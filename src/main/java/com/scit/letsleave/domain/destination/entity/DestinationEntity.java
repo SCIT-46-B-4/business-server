@@ -1,24 +1,36 @@
 package com.scit.letsleave.domain.destination.entity;
 
-import com.scit.letsleave.domain.destination.dto.DestinationDto;
-import com.scit.letsleave.domain.schedule.entity.RouteEntity;
-import com.vladmihalcea.hibernate.type.json.JsonType;
-import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
+import com.scit.letsleave.domain.destination.dto.DestinationDto;
+import com.scit.letsleave.domain.schedule.entity.RouteEntity;
+import com.vladmihalcea.hibernate.type.json.JsonType;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -89,6 +101,9 @@ public class DestinationEntity {
     @Column(name = "coordinate", columnDefinition = "geometry(POINT, 4326)", nullable = false)
     private Point coordinate;
 
+    @Column(name = "title_img", length = 512)
+    private String titleImg;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private CityEntity city;
@@ -120,6 +135,7 @@ public class DestinationEntity {
                 .score(dto.getScore())
                 .createdAt(dto.getCreatedAt())
                 .updatedAt(dto.getUpdatedAt())
+                .titleImg(dto.getTitleImg()) 
                 .coordinate(point)
                 .city(city)
                 .routes(routeList)

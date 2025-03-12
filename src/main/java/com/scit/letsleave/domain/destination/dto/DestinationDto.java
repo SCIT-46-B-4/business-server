@@ -1,18 +1,19 @@
 package com.scit.letsleave.domain.destination.dto;
 
-import com.scit.letsleave.domain.destination.entity.CityEntity;
-import com.scit.letsleave.domain.destination.entity.DestinationEntity;
-import com.scit.letsleave.domain.destination.entity.DestinationType;
-import com.scit.letsleave.domain.schedule.entity.RouteEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+
+import com.scit.letsleave.domain.destination.entity.CityEntity;
+import com.scit.letsleave.domain.destination.entity.DestinationEntity;
+import com.scit.letsleave.domain.destination.entity.DestinationType;
+import com.scit.letsleave.domain.schedule.entity.RouteEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,6 +38,7 @@ public class DestinationDto {
     private Double score;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String titleImg;
 
     private List<RouteEntity> routes;
     private CityEntity city;
@@ -60,6 +62,7 @@ public class DestinationDto {
             .score(entity.getScore())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
+            .titleImg(entity.getTitleImg())
             .routes(entity.getRoutes())
             .city(entity.getCity())
             .build();

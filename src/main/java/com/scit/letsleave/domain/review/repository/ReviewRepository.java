@@ -37,22 +37,54 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
 
     // TODO : 조인이 많아도 거의 변하지 않는 데이터이며, 또한 유저들은 오래된, 좋아요 수가 많이 없는 페이지는 대부분 보지 않기 때문에 Nginx 에 캐싱하면 충분
     @Query("""
-        SELECT new com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection(
-            r.id, r.title, r.content, r.likeCount, r.createdAt,
-            s.id, s.name, s.countryName, s.cityName,
-            u.id, u.nickname,
-            d.id, d.date,
-            ro.id, ro.orderNumber,
-            de.krName, de.type, de.content, de.score, de.titleImg
-        )
-        FROM ReviewEntity r
-        JOIN r.schedule s
-        JOIN UserEntity u ON s.user_id = u.id
-        LEFT JOIN s.detailScheduleEntities d
-        LEFT JOIN d.routes ro
-        LEFT JOIN ro.destinationEntity de
-        WHERE r.id = :reviewId
-        ORDER BY d.date ASC, ro.orderNumber ASC
-    """)
+                SELECT new com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection(
+                    r.id, r.title, r.content, r.likeCount, r.createdAt,
+                    s.id, s.name, s.countryName, s.cityName,
+                    u.id, u.nickname,
+                    d.id, d.date,
+                    ro.id, ro.orderNumber,
+                    de.krName, de.type, de.content, de.score, de.titleImg
+                )
+                FROM ReviewEntity r
+                JOIN r.schedule s
+                JOIN UserEntity u ON s.user_id = u.id
+                LEFT JOIN s.detailScheduleEntities d
+                LEFT JOIN d.routes ro
+                LEFT JOIN ro.destinationEntity de
+                WHERE r.id = :reviewId
+                ORDER BY d.date ASC, ro.orderNumber ASC
+            """)
     List<DetailReviewResponseProjection> findReviewWithScheduleAndUserAndDetailsAndRoutes(@Param("reviewId") Long reviewId);
+
+    /**
+     * @param reviewId 수정하려는 reviewId
+     * @param userId 현재 접속중인 userId
+     * @return 상기 두 아이디가 일치하는 데이터를 리턴
+     */
+    @Query("""
+                SELECT new com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection(
+                    r.id, r.title, r.content, r.likeCount, r.createdAt,
+                    s.id, s.name, s.countryName, s.cityName,
+                    u.id, u.nickname,
+                    d.id, d.date,
+                    ro.id, ro.orderNumber,
+                    de.krName, de.type, de.content, de.score, de.titleImg
+                )
+                FROM ReviewEntity r
+                JOIN r.schedule s
+                JOIN UserEntity u ON s.user_id = u.id
+                LEFT JOIN s.detailScheduleEntities d
+                LEFT JOIN d.routes ro
+                LEFT JOIN ro.destinationEntity de
+                WHERE r.id = :reviewId and r.userId = :userId
+                ORDER BY d.date ASC, ro.orderNumber ASC
+            """)
+    List<DetailReviewResponseProjection> findReviewIdAndUserIdWithScheduleAndUserAndDetailsAndRoutes(
+            @Param("reviewId") Long reviewId
+            , @Param("userId") Long userId
+    );
+
+    Optional<ReviewEntity> findByIdAndUserId(Long id, Long userId);
+
+    void deleteByIdAndUserId(Long id, Long userId);
 }

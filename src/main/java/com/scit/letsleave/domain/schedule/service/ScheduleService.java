@@ -9,9 +9,13 @@ import com.scit.letsleave.domain.schedule.projectioon.ScheduleWithDetailInfoResp
 import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 @Service
@@ -36,11 +40,19 @@ public class ScheduleService {
         }
     }
 
+    /**
+     * 스케줄에 대한 리뷰를 작성하기 위한 스케줄 데이터 조회
+     * @param userDetails 접속 유저
+     * @param scheduleId 리뷰 작성하려는 스케줄 아이디
+     * @return
+     */
     @Transactional(readOnly = true)
-    public ScheduleWithDetailInfoResponseDTO getScheduleWithDetailInfo(Long scheduleId) {
-        List<ScheduleWithDetailInfoResponseProjection> projections = scheduleRepository.findScheduleAndUserAndDetailsAndRoutes(scheduleId);
+    public ScheduleWithDetailInfoResponseDTO getScheduleWithDetailInfo(UserDetails userDetails, Long scheduleId) {
+        Long userId = Long.parseLong(userDetails.getUsername());
+        List<ScheduleWithDetailInfoResponseProjection> projections = scheduleRepository.findScheduleAndUserAndDetailsAndRoutes(scheduleId, userId);
         if (projections.isEmpty()) {
-            return null;
+            log.info("scheduleId {}, userId {} 인 스케줄이 존재하지 않습니다. ", scheduleId, userId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "작성하려는 스케줄이 존재하지 않습니다.");
         }
 
         ScheduleWithDetailInfoResponseProjection first = projections.get(0);

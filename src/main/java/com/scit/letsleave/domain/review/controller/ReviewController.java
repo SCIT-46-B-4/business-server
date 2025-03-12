@@ -3,14 +3,20 @@ package com.scit.letsleave.domain.review.controller;
 import com.scit.letsleave.domain.review.dto.request.ReviewListRequestDTO;
 import com.scit.letsleave.domain.review.dto.request.ReviewRequestDTO;
 import com.scit.letsleave.domain.review.service.ReviewService;
+import com.scit.letsleave.domain.schedule.dto.ScheduleWithDetailInfoResponseDTO;
 import com.scit.letsleave.domain.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 // TODO : redirection 위치, 공통 에러 처리
-// TODO : 인정 정보를 사용해서 자신의 데이터만 처리할 수 있도록 처리하기
 @Controller
 @RequestMapping("/schedules")
 @RequiredArgsConstructor
@@ -36,7 +42,7 @@ public class ReviewController {
             Model model,
             @PathVariable Long reviewId) {
         model.addAttribute("reviewDetail",
-                reviewService.getReviewDetail(
+                reviewService.getReviewDetailForEdit(
                         reviewId
                 )
         );
@@ -47,12 +53,15 @@ public class ReviewController {
     @GetMapping("/{scheduleId}/reviews/new")
     public String createReviewPage(
             Model model,
+            @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable("scheduleId") final Long scheduleId
     ) {
+        ScheduleWithDetailInfoResponseDTO scheduleWithDetailInfoResponseDTO = scheduleService.getScheduleWithDetailInfo(
+                userDetails,
+                scheduleId
+        );
         model.addAttribute("scheduleDetail",
-                scheduleService.getScheduleWithDetailInfo(
-                        scheduleId
-                )
+                scheduleWithDetailInfoResponseDTO
         );
         return "review/reviewCreate";
     }
@@ -61,10 +70,12 @@ public class ReviewController {
     @GetMapping("/reviews/{reviewId}/edit")
     public String updateScheduleReviewPage(
             Model model,
+            @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable("reviewId") final Long reviewId
     ) {
         model.addAttribute("reviewDetail",
-                reviewService.getReviewDetail(
+                reviewService.getReviewDetailForEdit(
+                        userDetails,
                         reviewId
                 )
         );
@@ -74,17 +85,19 @@ public class ReviewController {
     @PostMapping("/reviews/{reviewId}/edit")
     public String updateScheduleReview(
             @PathVariable("reviewId") final Long reviewId,
+            @AuthenticationPrincipal UserDetails userDetails,
             @ModelAttribute ReviewRequestDTO requestDTO
     ) {
-        reviewService.updateReview(reviewId, requestDTO);
+        reviewService.updateReview(userDetails, reviewId, requestDTO);
         return "redirect:/schedules/reviews";
     }
 
     @GetMapping("/reviews/{reviewId}/delete")
     public String deleteScheduleReview(
+            @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable("reviewId") final Long reviewId
     ) {
-        reviewService.deleteReview(reviewId);
+        reviewService.deleteReview(userDetails, reviewId);
         return "redirect:review/reviewList";
     }
 }

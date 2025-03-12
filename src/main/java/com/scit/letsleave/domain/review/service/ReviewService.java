@@ -12,14 +12,19 @@ import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
 import com.scit.letsleave.domain.schedule.repository.DetailScheduleRepository;
 import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -75,10 +80,11 @@ public class ReviewService {
      */
     // TODO : 후에 ReviewComment 와 통합
     @Transactional(readOnly = true)
-    public DetailReviewResponseDTO getReviewDetail(Long reviewId) {
+    public DetailReviewResponseDTO getReviewDetailForEdit(Long reviewId) {
         List<DetailReviewResponseProjection> projections = reviewRepository.findReviewWithScheduleAndUserAndDetailsAndRoutes(reviewId);
         if (projections.isEmpty()) {
-            return null;
+            log.info("리뷰 상세 조회를 위한 id {} 리뷰가 존재하지 않음.", reviewId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않음.");
         }
 
         DetailReviewResponseProjection first = projections.get(0);
@@ -127,17 +133,76 @@ public class ReviewService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public DetailReviewResponseDTO getReviewDetailForEdit(UserDetails userDetails, Long reviewId) {
+        long userId = Long.parseLong(userDetails.getUsername());
+        List<DetailReviewResponseProjection> projections = reviewRepository.findReviewIdAndUserIdWithScheduleAndUserAndDetailsAndRoutes(reviewId, userId);
+        if (projections.isEmpty()) {
+            log.info("리뷰 상세 조회를 위한 id {} 리뷰가 존재하지 않음.", reviewId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않음.");
+        }
+
+        DetailReviewResponseProjection first = projections.get(0);
+
+        Map<Long, DetailReviewResponseDTO.DetailScheduleDTO> detailScheduleMap = new LinkedHashMap<>();
+        Map<Long, List<DetailReviewResponseDTO.RouteDTO>> routeMap = new HashMap<>();
+
+        for (DetailReviewResponseProjection row : projections) {
+            detailScheduleMap.putIfAbsent(
+                    row.getDetailScheduleId(),
+                    new DetailReviewResponseDTO.DetailScheduleDTO(row.getDetailScheduleId(), row.getDate(), new ArrayList<>())
+            );
+
+            routeMap.computeIfAbsent(row.getDetailScheduleId(), k -> new ArrayList<>())
+                    .add(new DetailReviewResponseDTO.RouteDTO(
+                            row.getRouteId(),
+                            row.getOrderNumber(),
+                            row.getName(),
+                            row.getType() != null ? row.getType().getCode() : "None",
+                            row.getContents(),
+                            row.getScore(),
+                            row.getTitleImg()
+                    ));
+        }
+
+        List<DetailReviewResponseDTO.DetailScheduleDTO> detailSchedules =
+                detailScheduleMap
+                        .values()
+                        .stream()
+                        .peek(d -> d.getRoutes().addAll(routeMap.getOrDefault(d.getDetailScheduleId(), new ArrayList<>())))
+                        .toList();
+
+        return new DetailReviewResponseDTO(
+                first.getReviewId(),
+                first.getReviewTitle(),
+                first.getReviewContent(),
+                first.getLikeCount(),
+                first.getReviewCreatedAt(),
+                first.getScheduleId(),
+                first.getScheduleName(),
+                first.getCountryName(),
+                first.getCityName(),
+                first.getUserId(),
+                first.getNickName(),
+                detailSchedules
+        );
+    }
+
+
     /**
-     * @param scheduleId 스케줄 ID
-     * @param requestDTO userId, title, content
+     * @param userDetails
+     * @param scheduleId  스케줄 ID
+     * @param requestDTO  userId, title, content
      * @return 리뷰 생성 결과 BOOLEAN
      * TODO : Exception 으로 처리하기
      */
     @Transactional
-    public Boolean createReview(Long scheduleId, ReviewRequestDTO requestDTO) {
-        Optional<ScheduleEntity> scheduleOpt = scheduleRepository.findById(scheduleId);
+    public void createReview(UserDetails userDetails, Long scheduleId, ReviewRequestDTO requestDTO) {
+        long userId = Long.parseLong(userDetails.getUsername());
+        Optional<ScheduleEntity> scheduleOpt = scheduleRepository.findByIdAndUser_id(scheduleId, userId);
         if(scheduleOpt.isEmpty()) {
-            return false;
+            log.info("리뷰 생성을 위한 id {} 스케쥴이 존재하지 않음.", scheduleId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않음.");
         }
         ScheduleEntity scheduleEntity = scheduleOpt.get();
 
@@ -149,17 +214,18 @@ public class ReviewService {
                 .build();
 
         reviewRepository.save(review);
-        return true;
     }
 
     /**
      * 리뷰 업데이트
      */
     @Transactional
-    public void updateReview(Long reviewId, ReviewRequestDTO requestDTO) {
-        Optional<ReviewEntity> reviewOpt = reviewRepository.findById(reviewId);
+    public void updateReview(UserDetails userDetails, Long reviewId, ReviewRequestDTO requestDTO) {
+        long userId = Long.parseLong(userDetails.getUsername());
+        Optional<ReviewEntity> reviewOpt = reviewRepository.findByIdAndUserId(reviewId, userId);
         if(reviewOpt.isEmpty()) {
-            return;
+            log.info("업데이트 하기 위한 id {} 리뷰가 존재하지 않음.", reviewId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않음.");
         }
         ReviewEntity review = reviewOpt.get();
 
@@ -171,7 +237,8 @@ public class ReviewService {
      * 리뷰 삭제
      */
     @Transactional
-    public void deleteReview(Long reviewId) {
-        reviewRepository.deleteById(reviewId);
+    public void deleteReview(UserDetails userDetails, Long reviewId) {
+        long userId = Long.parseLong(userDetails.getUsername());
+        reviewRepository.deleteByIdAndUserId(reviewId, userId);
     }
 }

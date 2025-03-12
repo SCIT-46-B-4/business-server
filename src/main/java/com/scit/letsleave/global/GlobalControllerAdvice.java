@@ -1,5 +1,6 @@
 package com.scit.letsleave.global;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +17,17 @@ import lombok.RequiredArgsConstructor;
 public class GlobalControllerAdvice {
 
     private final UserService userService;
+
+    /**
+     * Product/Develop 환경 정적 파일 url
+     */
+    @Value("${app.static-resource-base}")
+    private String staticResourceBase;
+
+    @ModelAttribute("staticPath")
+    public String addStaticPath() {
+        return staticResourceBase;
+    }
 
     @ModelAttribute("isLoggedIn")
     public boolean addIsLoggedInAttribute() {

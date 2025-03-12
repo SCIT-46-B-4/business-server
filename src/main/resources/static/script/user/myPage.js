@@ -28,20 +28,22 @@ function renderSchedules(data) {
             const countryName = el["countryName"];
             const cityName = el["cityName"];
             insertHtml += `
-                <div id="detailSchedule" data-id="${id}">
+                <div id="tripHistory" class="trip-history" data-id="${id}">
                     <img src="/images/user/circle.png" alt="plus-image" class="sample-photo"/>
                     <div class="trip-info">
                         <h4>${name}</h4>
-                        <span class="tripName>${countryName}・${cityName}</span>
-                        <span class="tripPeriod>${startDate} ~ ${endDate}</span>
+                        <span class="tripName">${countryName}・${cityName}</span>
+                        <span class="tripPeriod">${startDate} ~ ${endDate}</span>
                     </div>
                 </div>
             `;
-            $("#detailSchedule").on("click", function () {
-                const id = $(this).attr("data-id");
-                location.href = `/schedules/${id}`
-            })
         });
     }
     $scheduleContainer.html(insertHtml);
 }
+
+$(document).on("click", ".trip-history", function () {
+    const id = $(this).attr("data-id");
+    location.href = `/schedules/${id}`;
+});
+

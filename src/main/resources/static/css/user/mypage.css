@@ -80,8 +80,8 @@
   height: 6em;
 }
 
-.trip-info h4,
-.trip-info p {
+.trip-info span.tripName,
+.trip-info span.tripPeriod {
   margin-left: 20px;
   margin-bottom: 5px;
 }

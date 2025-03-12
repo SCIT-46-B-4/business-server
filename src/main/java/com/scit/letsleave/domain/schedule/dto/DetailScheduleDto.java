@@ -32,10 +32,10 @@ public class DetailScheduleDto {
             .id(entity.getId())
             .date(entity.getDate())
             .routes(
-                entity.getRoutes() != null ?
+                entity.getRoutes().isEmpty() ?
                 entity.getRoutes().stream().map(RouteDto::toDto).collect(Collectors.toList()) :
                 Collections.emptyList()
-                )
+            )
             .build();
     }
 }

@@ -24,7 +24,7 @@ public class ScheduleDto {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private List<DetailScheduleDto> detailScheduleDtoes;
+    private List<DetailScheduleDto> detailScheduleDtos;
 
     // Response Only
     private String countryName;
@@ -45,8 +45,8 @@ public class ScheduleDto {
             .endDate(entity.getEndDate())
             .countryName(entity.getCountryName())
             .cityName(entity.getCityName())
-            .detailScheduleDtoes(
-                entity.getDetailScheduleEntities() != null ?
+            .detailScheduleDtos(
+                entity.getDetailScheduleEntities().isEmpty() ?
                 entity.getDetailScheduleEntities().stream().map(DetailScheduleDto::toDto).collect(Collectors.toList()) :
                 Collections.emptyList()
             )

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
+import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
 import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,8 @@ public class ScheduleService {
     }
 
     public List<ScheduleDto> findByUserId(Long userId) {
-        return scheduleRepository.findByUserIdOrderByCreatedAtDesc(userId)
-            .stream().map(ScheduleDto::toDto).toList();
+        List<ScheduleEntity> entities = scheduleRepository.findByUserIdOrderByCreatedAtDesc(userId);
+        log.info("======={}====", entities);
+        return entities.stream().map(ScheduleDto::toDto).toList();
     }
 }

@@ -77,7 +77,6 @@ public class ScheduleEntity {
     private LocalDateTime updatedAt;
 
     @OneToMany(fetch=FetchType.LAZY, mappedBy="scheduleEntity", cascade=CascadeType.ALL)
-    @JsonManagedReference
     private List<DetailScheduleEntity> detailScheduleEntities;
 
     public static ScheduleEntity toEntity(ScheduleDto dto, UserEntity user, CountryEntity country, CityEntity city) {

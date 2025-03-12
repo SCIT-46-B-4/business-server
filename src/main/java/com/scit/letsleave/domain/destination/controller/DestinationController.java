@@ -24,7 +24,7 @@ public class DestinationController {
     @GetMapping("/{scheduleId}")
     public ResponseEntity<List<DestinationScheduleDto>> getScheduleDestinations(@PathVariable("scheduleId") Long scheduleId) {
         List<DestinationScheduleDto> destinations = destinationService.getDestinationByScheduleId(scheduleId);
-        log.info("Schedule : {} destinations : {}", scheduleId, destinations);
+
         return ResponseEntity.ok(destinations);
     }
 }

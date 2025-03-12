@@ -32,11 +32,15 @@ public class ScheduleController {
 
     @GetMapping("")
     public String recommendScheduleRoute(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend) {
-        return "schedule/scheduleRoute";
+        if (isRecommend) {
+            return "schedule/scheduleRoute";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/{id}")
-    public String scheduleRoute(@PathVariable(name="id") Long id, Model model) {
+    public String scheduleRoute(@PathVariable(name="id") Long id) {
         return "schedule/scheduleRoute";
     }
 }

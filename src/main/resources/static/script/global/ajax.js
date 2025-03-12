@@ -1,7 +1,7 @@
 export const AjaxAPI = {
     getCities: function() {
         return $.ajax({
-            url: "/destinations/cities",
+            url: "/api/destinations/cities",
             type: "get",
             dataType: "json",
             headers: {
@@ -11,7 +11,7 @@ export const AjaxAPI = {
     },
     getGuides: function() {
         return $.ajax({
-            url: "/guides",
+            url: "/api/guides",
             type: "get",
             dataType: "json",
             headers: {
@@ -21,7 +21,7 @@ export const AjaxAPI = {
     },
     getScheduleReviews: function() {
         return $.ajax({
-            url: "/schedules/reviews",
+            url: "/api/schedules/reviews",
             type: "get",
             dataType: "json",
             headers: {

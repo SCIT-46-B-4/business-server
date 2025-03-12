@@ -9,12 +9,12 @@
     <script defer type="module" th:src="@{/script/schedule/schedule.js}"></script>
     <script th:inline="javascript">
         function loadGoogleMapsApi() {
-            const script = document.createElement("script");
-            script.src = "https://maps.googleapis.com/maps/api/js?key="
+            const gmaScript = document.createElement("script");
+            gmaScript.src = "https://maps.googleapis.com/maps/api/js?key="
             + /*[[${googleMapsApiKey}]]*/
             + "&loading=async&callback=initMap"
-            script.async = true;
-            script.defer = true;
+            gmaScript.async = true;
+            gmaScript.defer = true;
             document.head.appendChild(script);
         }
         document.addEventListener("DOMContentLoaded", loadGoogleMapsApi);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>여행 후기 목록</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        let staticPath = "[[${staticPath}]]"; // Thymeleaf 변수를 JS에서 사용 가능하게 설정
+    </script>
+
+    <!-- List 관련 -->
+    <script th:src="${staticPath + '/script/reviewList.js'}"></script>
+    <link th:href="${staticPath + '/css/reviewList.css'}" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h1>여행 후기 목록</h1>
+        <div class="filter-bar">
+            <!-- 왼쪽: select 요소들 -->
+            <select name="country" id="countrySelect">
+                <option value="">국가 선택</option>
+                <option value="1">일본</option>
+            </select>
+            <select name="city" id="citySelect">
+                <option value="">도시 선택</option>
+            </select>
+            <select name="order" id="orderSelect">
+                <option value="LATEST">최신순</option>
+                <option value="POPULAR">좋아요 많은 순</option>
+            </select>
+            <!-- 오른쪽: 검색창과 버튼 -->
+            <input type="text" placeholder="검색 키워드" />
+            <button type="button">Search</button>
+        </div>
+        <div id="reviewList"
+             th:attr="data-city-id=${cityId}, data-title=${title}, data-order-type=${orderType}, data-page=${page}">
+        </div>
+        <div id="loadMore">
+            <button>Load more</button>
+        </div>
+    </div>
+</body>
+</html>

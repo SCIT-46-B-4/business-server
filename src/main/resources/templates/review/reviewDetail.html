@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'여행 후기 상세보기 - ' + ${reviewDetail.scheduleName}">여행 후기 상세보기</title>
+
+    <link rel="stylesheet" th:href="${staticPath + '/css/reviewDetail.css'}" />
+    <script th:src="${staticPath + '/script/reviewComment.js'}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${reviewDetail.scheduleName}">여행 일정 이름</h1>
+        <p>
+            <span th:text="${reviewDetail.getUserNickName()}"></span>
+            <span th:text="${#temporals.format(reviewDetail.reviewCreatedAt, 'yyyy-MM-dd')}">작성일</span>
+        </p>
+        <p>
+            <span th:text="'❤️ ' + ${#numbers.formatInteger(reviewDetail.likeCount, 0)}">좋아요</span>
+        </p>
+        <div class="schedule-details">
+            <h3>일정 상세</h3>
+            <div th:each="detail : ${reviewDetail.detailSchedules}">
+                <div class="detail-schedule">
+                    <h4 th:text="${#temporals.format(detail.date, 'yyyy-MM-dd')}">날짜</h4>
+                    <div th:each="route : ${detail.routes}">
+                        <div class="route">
+                            <div class="route-info">
+                                <p>
+                                    <!-- 주문 번호를 2자리 형식으로 표시 -->
+                                    <span class="route-order"
+                                          th:text="${route.orderNumber < 10 ? '0' + route.orderNumber : route.orderNumber}"
+                                          th:classappend="${(route.destinationType == '1') ? ' blue-text' :
+                                                            (route.destinationType == '2') ? ' red-text' :
+                                                            (route.destinationType == '3') ? ' orange-text' :
+                                                            (route.destinationType == '4') ? ' green-text' : ' gray-text'}">
+                                    </span>
+                                    <strong th:text="${route.name}">장소 이름</strong>
+                                    <!-- 별점은 소수점 한자리까지 표시. 컨트롤러에서 별점 문자열을 만들어 전달해도 좋습니다. -->
+                                    <span class="star-rating" th:text="${'⭐' + #numbers.formatDecimal(route.score, 1, 1)}"></span>
+                                </p>
+                                <p th:text="${route.contents}">세부 내용</p>
+                            </div>
+                            <div class="route-img">
+                                <!-- 이미지 경로는 필요에 따라 수정 -->
+                                <img th:src="${staticPath} + '/images/destination/' +
+                                             ${
+                                                 reviewDetail.cityName == '도쿄' ? 'tokyo' :
+                                                 reviewDetail.cityName == '오사카' ? 'osaka' :
+                                                 reviewDetail.cityName == '후쿠오카' ? 'fukuoka' :
+                                                 reviewDetail.cityName == '사포로' ? 'sapporo' : 'none'
+                                             } +
+                                             '/' +
+                                             ${
+                                                 route.destinationType == '1' ? 'sightseeing' :
+                                                 route.destinationType == '2' ? 'restaurant' :
+                                                 route.destinationType == '3' ? 'shopping' :
+                                                 route.destinationType == '4' ? 'accommodation' : 'transport'
+                                             } +
+                                             '/' +
+                                             ${route.titleImg}"
+                                     alt="이미지" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-section">
+            <h3 th:text="${reviewDetail.reviewTitle}">리뷰 제목</h3>
+            <p th:text="${reviewDetail.reviewContent}">리뷰 내용</p>
+        </div>
+
+        <!-- 댓글 영역: REST API로 댓글 데이터를 받아와서 동적으로 렌더링 -->
+        <div class="comment-section">
+            <h3>댓글 목록</h3>
+            <div id="commentList">
+                <!-- REST API로 댓글 데이터를 불러올 때까지 이곳에 "댓글이 없습니다" 등의 메시지 또는 로딩 스피너를 표시할 수 있습니다. -->
+                <p>댓글을 불러오는 중입니다...</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

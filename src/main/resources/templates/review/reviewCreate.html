@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'여행 후기 작성 - ' + ${scheduleDetail.scheduleName}"></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        let staticPath = "[[${staticPath}]]"; // Thymeleaf 변수를 JS에서 사용 가능하게 설정
+    </script>
+
+    <link rel="stylesheet" th:href="${staticPath + '/css/reviewCreate.css'}" />
+    <script th:src="${staticPath + '/script/reviewCreate.js'}"></script>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${scheduleDetail.scheduleName}">여행 일정 이름</h1>
+    <div class="schedule-details">
+        <h3>일정 상세</h3>
+        <div th:each="detail : ${scheduleDetail.detailSchedules}">
+            <div class="detail-schedule">
+                <h4 th:text="${#temporals.format(detail.date, 'yyyy-MM-dd')}">날짜</h4>
+                <div th:each="route : ${detail.routes}">
+                    <div class="route">
+                        <div class="route-info">
+                            <p>
+                                <!-- 주문 번호를 2자리 형식으로 표시 -->
+                                <span class="route-order"
+                                      th:text="${route.orderNumber < 10 ? '0' + route.orderNumber : route.orderNumber}"
+                                      th:classappend="${(route.destinationType == '1') ? ' blue-text' :
+                                                            (route.destinationType == '2') ? ' red-text' :
+                                                            (route.destinationType == '3') ? ' orange-text' :
+                                                            (route.destinationType == '4') ? ' green-text' : ' gray-text'}">
+                                    </span>
+                                <strong th:text="${route.name}">장소 이름</strong>
+                                <!-- 별점은 소수점 한자리까지 표시. 컨트롤러에서 별점 문자열을 만들어 전달해도 좋습니다. -->
+                                <span class="star-rating" th:text="${'⭐' + #numbers.formatDecimal(route.score, 1, 1)}"></span>
+                            </p>
+                            <p th:text="${route.contents}">세부 내용</p>
+                        </div>
+                        <div class="route-img">
+                            <!-- 이미지 경로는 필요에 따라 수정 -->
+                            <img th:src="${staticPath} + '/images/destination/' +
+                                             ${
+                                                 scheduleDetail.cityName == '도쿄' ? 'tokyo' :
+                                                 scheduleDetail.cityName == '오사카' ? 'osaka' :
+                                                 scheduleDetail.cityName == '후쿠오카' ? 'fukuoka' :
+                                                 scheduleDetail.cityName == '사포로' ? 'sapporo' : 'none'
+                                             } +
+                                             '/' +
+                                             ${
+                                                 route.destinationType == '1' ? 'sightseeing' :
+                                                 route.destinationType == '2' ? 'restaurant' :
+                                                 route.destinationType == '3' ? 'shopping' :
+                                                 route.destinationType == '4' ? 'accommodation' : 'transport'
+                                             } +
+                                             '/' +
+                                             ${route.titleImg}"
+                                 alt="이미지" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="review-section">
+        <!--
+          1) Give the form an ID (e.g., "reviewForm").
+          2) Store the scheduleId in a data attribute or hidden field.
+             Here, let's use a data attribute for demonstration.
+        -->
+        <form id="reviewForm" th:attr="data-schedule-id=${scheduleDetail.scheduleId}, data-user-id=${scheduleDetail.userId}">
+            <div class="form-group">
+                <label for="reviewTitle">리뷰 제목</label>
+                <input type="text" id="reviewTitle" name="reviewTitle" placeholder="제목을 입력하세요" required />
+            </div>
+            <div class="form-group">
+                <label for="reviewContent">리뷰 내용</label>
+                <textarea id="reviewContent" name="reviewContent" rows="5" placeholder="내용을 입력하세요" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">리뷰 작성</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

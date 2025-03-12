@@ -25,7 +25,13 @@
 
       <div>
         <!-- HOT 방문지 목록 -->
-        <h2>지금 가장 HOT🔥한 방문지 TOP 10</h2>
+        <h2>
+          <span th:if="${cityId == 0}">지금 가장 HOT🔥한 방문지 TOP 10</span>
+          <span
+            th:unless="${cityId == 0}"
+            th:text="${cityName} + '에서 가장 HOT🔥한 방문지 TOP 10'"
+          ></span>
+        </h2>
         <p>지난 일주일 간 평소보다 더 많이 저장된 관광지 & 맛집</p>
         <div class="places-list">
           <div th:each="place : ${list}">
@@ -47,11 +53,11 @@
         </div>
       </div>
 
-      <div class="pagination">
+      <!-- <div class="pagination">
         <nav class="pagination">
           <ul>
-            <!-- 페이지네이션에서 currentPage 값 사용 -->
-            <li th:if="${currentPage > 0}">
+            페이지네이션에서 currentPage 값 사용 
+            <li th:if="${currentPage > 1}">
               <a th:href="@{/guides/main-city(page=${currentPage - 1})}"
                 >&lsaquo;</a
               >
@@ -68,20 +74,38 @@
               >
             </li>
           </ul>
-          <!-- <ul>
-                    이전 버튼
-                    <li th:if="${currentPage > 0}">
-                        <a th:href="@{/guides/main-city(page=${currentPage - 1})}">&lsaquo; </a>
-                    </li>
-                    페이지 번호 
-                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                        <a th:href="@{/guides/main-city(page=${i})}" th:text="${i + 1}"></a>
-                    </li>
-                     다음 버튼 
-                    <li th:if="${currentPage < totalPages - 1}">
-                        <a th:href="@{/guides/main-city(page=${currentPage + 1})}"> &rsaquo;</a>
-                    </li>
-                </ul>                 -->
+        </nav>
+      </div> -->
+
+      <div class="pagination">
+        <nav class="pagination">
+          <ul>
+            <!-- 이전 페이지 -->
+            <li th:if="${currentPage > 0}">
+              <a
+                th:href="@{/guides/main-city(page=${currentPage - 1}, cityId=${cityId})}"
+                >&lsaquo;</a
+              >
+            </li>
+
+            <!-- 페이지 번호 (1부터 시작) -->
+            <li th:each="i : ${#numbers.sequence(1, totalPages)}">
+              <a
+                th:href="@{/guides/main-city(page=${i - 1}, cityId=${cityId})}"
+                th:text="${i}"
+                th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+              >
+              </a>
+            </li>
+
+            <!-- 다음 페이지 -->
+            <li th:if="${currentPage < totalPages - 1}">
+              <a
+                th:href="@{/guides/main-city(page=${currentPage + 1}, cityId=${cityId})}"
+                >&rsaquo;</a
+              >
+            </li>
+          </ul>
         </nav>
       </div>
     </div>

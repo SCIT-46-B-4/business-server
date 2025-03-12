@@ -31,15 +31,15 @@ public class CityDto {
 
     public static CityDto toDTO(CityEntity entity) {
         return CityDto.builder()
-            .id(entity.getId())
-            .krName(entity.getKrName())
-            .engName(entity.getEngName())
-            .cityCode(entity.getCityCode())
-            .createdAt(entity.getCreatedAt())
-            .updatedAt(entity.getUpdatedAt())
-            .country(entity.getCountry())
-            .destinations(entity.getDestinations())
-            .schedules(entity.getSchedules())
-            .build();
+                .id(entity.getId())
+                .krName(entity.getKrName())
+                .engName(entity.getEngName())
+                .cityCode(entity.getCityCode())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
+                .country(entity.getCountry())
+                .destinations(entity.getDestinations())
+                .schedules(entity.getSchedules())
+                .build();
     }
 }

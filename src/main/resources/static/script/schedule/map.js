@@ -45,7 +45,7 @@ function drawMapWithMarkers(map, destinations) {
 }
 
 // 실제 지도 초기화 함수: scheduleId를 인자로 받음
-function initializeMap(scheduleId) {
+async function initializeMap(scheduleId) {
     AjaxAPI.getScheduleById(scheduleId)
     .done((data) => {
     //     const detailScheduleDtoes = data["detailScheduleDtoes"];

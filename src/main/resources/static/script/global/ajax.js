@@ -1,83 +1,55 @@
-export const AjaxAPI = {
-    getCities: function() {
+const AjaxAPI = (() => {
+    const API_BASE_URL = "/api";
+
+    function request({ endpoint, method="GET", data=null, headers={}, contentType="application/json" }) {
         return $.ajax({
-            url: "/api/destinations/cities",
-            type: "get",
+            url: `${API_BASE_URL}${endpoint}`,
+            method: method,
             dataType: "json",
+            contentType: contentType,
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-    },
-    getGuides: function() {
-        return $.ajax({
-            url: "/api/guides",
-            type: "get",
-            dataType: "json",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-    },
-    getScheduleReviews: function() {
-        return $.ajax({
-            url: "/api/schedules/reviews",
-            type: "get",
-            dataType: "json",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-    },
-    checkScheduleExistsById: function(scheduleId) {
-        return $.ajax({
-            url:`/api/schedules/${scheduleId}/exists`,
-            method: "get",
-            dataType: "json",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-    },
-    getSchedule: function() {
-        return $.ajax({
-            url: "/api/schedules",
-            method: "get",
-            dataType: "json",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-    },
-    getScheduleById: function(scheduleId) {
-        return $.ajax({
-            url: `/api/schedules/${scheduleId}`,
-            method: "get",
-            dataType: "json",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-    },
-    getUserInfo: function() {
-        return $.ajax({
-            url: `/api/users/info`,
-            method: "get",
-            dataType: "json",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-    },
-    getRecommendSchedule: function(surveyData) {
-        return $.ajax({
-            url: "/api/schedules/recommend",
-            method: "get",
-            dataType: "json",
-            data: surveyData,
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                ...headers
+            },
+            data: method === "GET" ? data : JSON.stringify(data)
+        });
     }
-}
+
+    return {
+        checkScheduleExistsById: (scheduleId) => request({endpoint: `/schedules/${scheduleId}/exists`}),
+        getCities: () => request({endpoint: "/destinations/cities"}),
+        getGuides: () => request({endpoint: "/guides"}),
+        getRecommendSchedule: (surveyData) => request({endpoint: "/schedules/recommend", method: "POST", data: surveyData}),
+        getSchedule: () => request({endpoint: "/schedules"}),
+        getScheduleById: (scheduleId) => request({endpoint: `/schedules/${scheduleId}`}),
+        getScheduleReviews: () => request({endpoint: "/schedules/reviews"}),
+        getUserInfo: () => request({endpoint: "/users/info"}),
+
+        // // POST 예제 - 일정 생성 (새로운 데이터 전송)
+        // createSchedule: (scheduleData) => request({ 
+        //     endpoint: "/schedules", 
+        //     method: "POST", 
+        //     data: scheduleData 
+        // }),
+
+        // // PUT 예제 - 일정 수정
+        // updateSchedule: (scheduleId, scheduleData) => request({ 
+        //     endpoint: `/schedules/${scheduleId}`, 
+        //     method: "PUT", 
+        //     data: scheduleData 
+        // }),
+
+        // // DELETE 예제 - 일정 삭제
+        // deleteSchedule: (scheduleId) => request({ 
+        //     endpoint: `/schedules/${scheduleId}`, 
+        //     method: "DELETE" 
+        // }),
+
+        // // 커스텀 요청 (사용자가 직접 설정 가능)
+        // customRequest: ({endpoint, method, data, headers, contentType}) => request({
+        // endpoint, method, data, headers, contentType
+        // })
+    };
+})();
+
+export { AjaxAPI };

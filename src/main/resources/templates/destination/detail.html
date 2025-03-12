@@ -17,6 +17,10 @@
       th:src="@{/script/destinationDetail.js}"
       src="../../static/script/destinationDetail.js"
     ></script>
+    <script 
+      src="https://kit.fontawesome.com/def97ee41b.js" 
+      crossorigin="anonymous"
+    ></script>
 </head>
 <body>
     <div class="container">
@@ -57,7 +61,8 @@
 
         <!-- 도시 -->
         <div class = "city">
-            <span th:text="${destination.city.krName}">도쿄</span> <!-- 핀아이콘 -->
+            <i class="fa-solid fa-location-dot"></i>
+            <span th:text="${destination.city.krName}">도쿄</span>
         </div>
 
         <!-- 이미지 ... 이게 맞아..? 몰라..-->
@@ -137,7 +142,7 @@
             <!-- 여행지 목록 -->
             <div class="places-container">
                 <div th:each="entry : ${nearbyDestinations}" class="places-list" th:data-type="${entry.key}">
-                    <div th:each="destination : ${entry.value}" class="place-card">
+                    <a th:href="@{/destinations/detail/{id}(id=${destination.id})}" class="place-card" th:each="destination : ${entry.value}">
                         <img th:src="@{/images/destination/{city}/{type}/{titleImg}(city=${destination.city.engName.toLowerCase()}, type=${destination.type.toString().toLowerCase()}, titleImg=${destination.titleImg})}" 
                              alt="대표 이미지" class="place-image" />
                         <div class="place-info">
@@ -148,10 +153,11 @@
                                 <span class="distance" th:text="'거리 ' + ${destination.distance} + 'm'">839m</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
+        
         
 
 

@@ -23,9 +23,7 @@ function renderScheduleBoxByDay(schedule) {
     const countryName =  schedule["countryName"];
     const endDate = schedule["endDate"];
     const startDate = schedule["startDate"];
-    const detailScheduleDtoes = schedule["detailScheduleDtoes"];
-    console.log(detailScheduleDtoes);
-    console.log(typeof detailScheduleDtoes);
+    const detailScheduleDtos = schedule["detailScheduleDtos"];
 
     // 각 날짜 그룹마다 별도의 anchor 컨테이너 생성
     sortedDates.forEach((day, index) => {

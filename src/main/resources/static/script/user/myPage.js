@@ -18,7 +18,7 @@ function init() {
 function renderSchedules(data) {
     const $scheduleContainer = $("#scheduleContainer");
     let insertHtml = "";
-    console.log(data)
+
     if (data.length) {
         data.forEach((el) => {
             const id = el["id"];

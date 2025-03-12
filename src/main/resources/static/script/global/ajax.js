@@ -16,7 +16,6 @@ const AjaxAPI = (() => {
     }
 
     return {
-        checkScheduleExistsById: (scheduleId) => request({endpoint: `/schedules/${scheduleId}/exists`}),
         getCities: () => request({endpoint: "/destinations/cities"}),
         getGuides: () => request({endpoint: "/guides"}),
         getRecommendSchedule: (surveyData) => request({endpoint: "/schedules/recommend", method: "POST", data: surveyData}),

@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>일정 보기</title>
+    <script th:src="@{/script/global/jquery.js}"></script>
     <!-- google map api script -->
-    <script defer th:src="@{/script/global/jquery.js}"></script>
-    <script defer tpye="module" th:src="@{/script/schedule/map.js}"></script>
-    <script defer type="module" th:src="@{/script/schedule/schedule.js}"></script>
     <script th:inline="javascript">
         function loadGoogleMapsApi() {
             const gmaScript = document.createElement("script");
@@ -15,11 +13,13 @@
             + "&loading=async&callback=initMap"
             gmaScript.async = true;
             gmaScript.defer = true;
-            document.head.appendChild(script);
+            document.head.appendChild(gmaScript);
         }
         document.addEventListener("DOMContentLoaded", loadGoogleMapsApi);
     </script>
     <!-- script -->
+    <script defer type="module" th:src="@{/script/schedule/map.js}"></script>
+    <script defer type="module" th:src="@{/script/schedule/schedule.js}"></script>
     <script defer th:src="@{/script/fragments/slidePanel.js}"></script>
 
     <!-- css -->

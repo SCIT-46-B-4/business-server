@@ -1,31 +1,5 @@
 import { AjaxAPI } from "../global/ajax.js";
 
-// 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
-function loadScheduleBoxes(scheduleId, isRecommend) {
-    let ajaxCall;
-    if (isRecommend) {
-        const surveyData = {
-            city: localStorage.getItem("selectedCity"),
-            period: localStorage.getItem("selectedPeriod"),
-            companion: localStorage.getItem("selectedCompanion"),
-            travelStyle: localStorage.getItem("selectedTravelStyle"),
-            transport: localStorage.getItem("selectedTransport"),
-            scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
-        }
-        ajaxCall = AjaxAPI.getRecommendSchedule(surveyData)
-    } else {
-        ajaxCall = AjaxAPI.getScheduleById(scheduleId)
-    }
-    ajaxCall
-    .done((data) => {
-        renderScheduleBoxesByDay(data);
-    })
-    .fail((xhr, _, errorThrown) => {
-        console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
-        console.log("Error fetching schedule boxes:", errorThrown);
-        // location.href = "/";
-    });
-}
 
 // 날짜 형식 변환 함수 (YYYY-MM-DD)
 function formatDate(dtString) {
@@ -139,6 +113,33 @@ function renderScheduleBoxesByDay(boxes) {
         container.appendChild(dayAnchor);
     });
 }
+function getSurveyData() {
+    return {
+        city: localStorage.getItem("selectedCity"),
+        period: localStorage.getItem("selectedPeriod"),
+        companion: localStorage.getItem("selectedCompanion"),
+        travelStyle: localStorage.getItem("selectedTravelStyle"),
+        transport: localStorage.getItem("selectedTransport"),
+        scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
+    }
+}
+
+// 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
+function getScheduleData(scheduleId, isRecommend) {
+    let ajaxCall = isRecommend ?
+        AjaxAPI.getRecommendSchedule(getSurveyData()) :
+        AjaxAPI.getScheduleById(scheduleId);
+
+    ajaxCall
+    .done((data) => {
+        renderScheduleBoxesByDay(data);
+    })
+    .fail((xhr, _, errorThrown) => {
+        console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
+        console.log("Error fetching schedule boxes:", errorThrown);
+        // location.href = "/";
+    })
+}
 
 // DOM이 완전히 로드된 후, scheduleId를 이용하여 데이터를 로드 및 렌더링
 $(function() {
@@ -158,8 +159,8 @@ $(function() {
         const path = window.location.pathname;
         const pathSegments = path.split('/');
 
-        scheduleId = parseInt(getLastElement(pathSegments));
+        scheduleId = parseInt(pathSegments.pop());
     }
 
-    loadScheduleBoxes(scheduleId, isRecommend);
+    getScheduleData(scheduleId, isRecommend);
 })

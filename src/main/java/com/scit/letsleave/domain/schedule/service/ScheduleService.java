@@ -30,7 +30,7 @@ public class ScheduleService {
 
     public List<ScheduleDto> findByUserId(Long userId) {
         List<ScheduleEntity> entities = scheduleRepository.findByUserIdOrderByCreatedAtDesc(userId);
-        log.info("======={}====", entities);
+
         return entities.stream().map(ScheduleDto::toDto).toList();
     }
 }

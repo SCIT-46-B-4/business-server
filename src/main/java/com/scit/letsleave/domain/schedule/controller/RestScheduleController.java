@@ -33,14 +33,14 @@ public class RestScheduleController {
     public ResponseEntity<List<ScheduleDto>> userSchedules() {
         // ToDo: 매번 SecurityContextHolder를 호출할 필요 없이 간단하게 유저 정보를 조회할 수 있는지 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<ScheduleDto> schedules = scheduleService.findByUserId(Long.valueOf(authentication.getName()));
-        log.info("==={}===", schedules);
-        return ResponseEntity.ok(schedules);
+
+        return ResponseEntity.ok(scheduleService.findByUserId(Long.valueOf(authentication.getName())));
     }
 
     // 일정 상세 조회를 위한 api
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleDto> getSchedule(@PathVariable(name="id") Long id) {
+
         return ResponseEntity.ok(scheduleService.getScheduleById(id));
     }
 

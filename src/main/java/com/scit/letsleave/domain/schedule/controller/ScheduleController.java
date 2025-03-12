@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.schedule.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/schedules")
 @Slf4j
 public class ScheduleController {
+
+    @Value("${google.maps.api.key}")
+    private String googleMapsApiKey;
 
     @GetMapping("/survey/1")
     public String survey1() {
@@ -31,8 +35,10 @@ public class ScheduleController {
     }
 
     @GetMapping("")
-    public String recommendScheduleRoute(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend) {
+    public String recommendScheduleRoute(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend, Model model) {
         if (isRecommend) {
+            model.addAttribute("googleMapsApiKey", googleMapsApiKey);
+
             return "schedule/scheduleRoute";
         } else {
             return "redirect:/";
@@ -40,7 +46,9 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}")
-    public String scheduleRoute(@PathVariable(name="id") Long id) {
+    public String scheduleRoute(@PathVariable(name="id") Long id, Model model) {
+        model.addAttribute("googleMapsApiKey", googleMapsApiKey);
+
         return "schedule/scheduleRoute";
     }
 }

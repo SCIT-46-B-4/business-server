@@ -48,27 +48,28 @@ function drawMapWithMarkers(map, destinations) {
 async function initializeMap(scheduleId) {
     AjaxAPI.getScheduleById(scheduleId)
     .done((data) => {
-        const detailScheduleDtoes = data["detailScheduleDtoes"];
-        detailScheduleDtoes.forEach((detailScheduleDtoe) => {
-            const routes = detailScheduleDtoe["routes"];
-            routes.forEach((route) => {
-                const latitude = route["destination"]["latitude"]
-                const longitude = route["destination"]["latitude"]
+    //     const detailScheduleDtoes = data["detailScheduleDtoes"];
+    //     detailScheduleDtoes.forEach((detailScheduleDtoe) => {
+    //         const routes = detailScheduleDtoe["routes"];
+    //         routes.forEach((route) => {
+    //             const latitude = route["destination"]["latitude"]
+    //             const longitude = route["destination"]["latitude"]
 
-            })
+    //         })
+        console.log(data);
         })
-    })
-    .fail()
+    // })
+    // .fail()
     const map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 35.405271, lng: 139.46081 },
         zoom: 10,
     });
-    const destinations = await fetchScheduleDestinations(scheduleId);
-    drawMapWithMarkers(map, destinations);
+    // const destinations = await fetchScheduleDestinations(scheduleId);
+    // drawMapWithMarkers(map, destinations);
 }
 
 // Google Maps API가 호출하는 initMap 함수 (매개변수가 전달되지 않으므로 기본 scheduleId 사용)
 window.initMap = function() {
-    const scheduleId = 1;  // 예시 스케줄 아이디
-    initializeMap(scheduleId);
+    const scheduleId = 12;  // 예시 스케줄 아이디
+    initializeMap(scheduleId).then(() => {console.log("초기화 완료")}).error((err) => {console.log("에러" + err)});
 };

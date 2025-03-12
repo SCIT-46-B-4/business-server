@@ -3,24 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>일정 보기</title>
-    <!-- css -->
-    <link rel="stylesheet" th:href="@{/css/global/reset.css}", href="../../static/css/global/reset.css">
-    <link rel="stylesheet" th:href="@{/css/schedule/scheduleRoute.css}" href="../../static/css/schedule/scheduleRoute.css">
-    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../static/css/fragments/header.css">
-    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../static/css/fragments/slidePanel.css">
-    <!-- script -->
-    <script th:src="@{/script/global/jquery.js}"></script>
-    <script th:src="@{/script/fragments/slidePanel.js}"></script>
-    <script th:src="@{/script/schedule/schedule.js}" type="module"></script>
     <!-- google map api script -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbtW86eP8dZAoWEWUIc2vumKA3sFeDpFg&callback=initMap"></script>
-    <script defer th:src="@{/script/schedule/map.js}"></script>
+    <script th:inline="javascript">
+        function loadGoogleMapsApi() {
+            const script = document.createElement("script");
+            script.src = "https://maps.googleapis.com/maps/api/js?key="
+            + /*[[${googleMapsApiKey}]]*/
+            + "&loading=async&callback=initMap"
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+        document.addEventListener("DOMContentLoaded", loadGoogleMapsApi);
+        </script>
+    <!-- script -->
+    <script defer th:src="@{/script/global/jquery.js}"></script>
+    <script defer th:src="@{/script/fragments/slidePanel.js}"></script>
+    <script defer type="module" th:src="@{/script/schedule/schedule.js}"></script>
+    <script defer tpye="module" th:src="@{/script/schedule/map.js}"></script>
+
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/schedule/scheduleRoute.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}">
 </head>
 <body>
 <!-- fragments place -->
     <div th:insert="~{fragments/header :: top-bar}"></div>
     <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
-    <!-- header class -->
+
     <!-- total-container -->
     <div class="total-container">
         <div id="scroll-root">
@@ -102,7 +113,9 @@
                         style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
                         <!-- 동적인 버튼 생성 자리 button : day1, day2 ,,, -->
                     </div>
-                </div> <!-- End .top-footer -->
+                </div>
+
+                <!-- End .top-footer -->
                 <div class="mapContainer bottom-footer">
                     <div class="mapContainer bottom-footer flex-box">
                         <div class="bottom-footer flex-box left-button" >

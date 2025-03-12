@@ -3,7 +3,7 @@ import { AjaxAPI } from "../global/ajax.js";
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
 function loadScheduleBoxes(scheduleId, isRecommend) {
     let ajaxCall;
-    if (isRecommend && scheduleId == null) {
+    if (isRecommend) {
         const surveyData = {
             city: localStorage.getItem("selectedCity"),
             period: localStorage.getItem("selectedPeriod"),
@@ -16,9 +16,11 @@ function loadScheduleBoxes(scheduleId, isRecommend) {
     } else {
         ajaxCall = AjaxAPI.getScheduleById(scheduleId)
     }
-    ajaxCall.done((data) => {
+    ajaxCall
+    .done((data) => {
         renderScheduleBoxesByDay(data);
-    }).fail(function(xhr, _, errorThrown) {
+    })
+    .fail((xhr, _, errorThrown) => {
         console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule boxes:", errorThrown);
         // location.href = "/";
@@ -34,6 +36,7 @@ function formatDate(dtString) {
 // 받은 DestinationScheduleDto 데이터를 detailDate 기준으로 그룹화하여,
 // 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
 function renderScheduleBoxesByDay(boxes) {
+    console.log(boxes);
     // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함
     const $container = $("#schedule-container");
     if (!$container) {
@@ -148,15 +151,14 @@ $(function() {
     }
 
     let scheduleId = null;
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
+    const urlParams = new URLSearchParams(window.location.search);
     const isRecommend = urlParams.get('isRecommend') == "true";
-    
+
     if (!isRecommend) {
         const path = window.location.pathname;
         const pathSegments = path.split('/');
-    
-        scheduleId = Number(getLastElement(pathSegments));
+
+        scheduleId = parseInt(getLastElement(pathSegments));
     }
 
     loadScheduleBoxes(scheduleId, isRecommend);

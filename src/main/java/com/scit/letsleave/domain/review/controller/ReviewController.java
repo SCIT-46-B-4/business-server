@@ -82,6 +82,7 @@ public class ReviewController {
         return "review/reviewEdit";
     }
 
+    // 수정
     @PostMapping("/reviews/{reviewId}/edit")
     public String updateScheduleReview(
             @PathVariable("reviewId") final Long reviewId,
@@ -92,6 +93,7 @@ public class ReviewController {
         return "redirect:/schedules/reviews";
     }
 
+    // 삭제
     @GetMapping("/reviews/{reviewId}/delete")
     public String deleteScheduleReview(
             @AuthenticationPrincipal UserDetails userDetails,

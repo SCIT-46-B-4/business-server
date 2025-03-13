@@ -5,10 +5,14 @@
     <title th:text="'여행 후기 상세보기 - ' + ${reviewDetail.scheduleName}">여행 후기 상세보기</title>
 
     <link rel="stylesheet" th:href="${staticPath + '/css/reviewDetail.css'}" />
-    <script th:src="${staticPath + '/script/reviewComment.js'}"></script>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        let staticPath = "[[${staticPath}]]";
+    </script>
+    <script th:src="${staticPath + '/script/reviewReply.js'}"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" th:attr="data-review-id=${reviewDetail.reviewId}">
         <h1 th:text="${reviewDetail.scheduleName}">여행 일정 이름</h1>
         <p>
             <span th:text="${reviewDetail.getUserNickName()}"></span>
@@ -26,7 +30,6 @@
                         <div class="route">
                             <div class="route-info">
                                 <p>
-                                    <!-- 주문 번호를 2자리 형식으로 표시 -->
                                     <span class="route-order"
                                           th:text="${route.orderNumber < 10 ? '0' + route.orderNumber : route.orderNumber}"
                                           th:classappend="${(route.destinationType == '1') ? ' blue-text' :
@@ -35,13 +38,11 @@
                                                             (route.destinationType == '4') ? ' green-text' : ' gray-text'}">
                                     </span>
                                     <strong th:text="${route.name}">장소 이름</strong>
-                                    <!-- 별점은 소수점 한자리까지 표시. 컨트롤러에서 별점 문자열을 만들어 전달해도 좋습니다. -->
                                     <span class="star-rating" th:text="${'⭐' + #numbers.formatDecimal(route.score, 1, 1)}"></span>
                                 </p>
                                 <p th:text="${route.contents}">세부 내용</p>
                             </div>
                             <div class="route-img">
-                                <!-- 이미지 경로는 필요에 따라 수정 -->
                                 <img th:src="${staticPath} + '/images/destination/' +
                                              ${
                                                  reviewDetail.cityName == '도쿄' ? 'tokyo' :
@@ -71,12 +72,16 @@
             <p th:text="${reviewDetail.reviewContent}">리뷰 내용</p>
         </div>
 
-        <!-- 댓글 영역: REST API로 댓글 데이터를 받아와서 동적으로 렌더링 -->
-        <div class="comment-section">
+        <div class="comment-section" th:attr="data-user-id=${#authentication.name}">
             <h3>댓글 목록</h3>
+
             <div id="commentList">
-                <!-- REST API로 댓글 데이터를 불러올 때까지 이곳에 "댓글이 없습니다" 등의 메시지 또는 로딩 스피너를 표시할 수 있습니다. -->
                 <p>댓글을 불러오는 중입니다...</p>
+            </div>
+
+            <div id="commentForm">
+                <textarea id="commentContent" rows="3" style="width:100%;" placeholder="댓글을 입력하세요"></textarea>
+                <button id="btnPostComment">댓글 작성</button>
             </div>
         </div>
     </div>

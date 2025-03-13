@@ -1,3 +1,4 @@
+/* Container */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -6,6 +7,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Header styles for title and metadata */
 .container h1 {
     font-size: 2rem;
     text-align: center;
@@ -20,6 +22,7 @@
     margin-bottom: 20px;
 }
 
+/* Schedule Details (existing) */
 .schedule-details {
     margin: 20px auto; /* vertical spacing and centered */
     padding: 10px;
@@ -29,24 +32,28 @@
     max-width: 1200px;
 }
 
+/* Individual detail schedule */
 .detail-schedule {
     margin-bottom: 15px;
     padding: 10px;
-    border-left: 3px solid #007bff;
+    /* border-left: 3px solid #007bff; */
     background-color: #fff;
     border-radius: 5px;
 }
 
 .route {
+    margin: 24px 16px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     display: flex;
-    align-items: flex-start;  /* top alignment */
-    gap: 20px;                /* spacing between .route-info and .route-img */
+    /* align-items: flex-start;  top alignment */
+    gap: 15px;                /* spacing between .route-info and .route-img */
     border: 1px solid #ddd;
     padding: 8px;
     margin-top: 8px;
     border-radius: 8px;
 }
 
+/* We'll use absolute positioning for the route order */
 .route-info {
     position: relative;       /* allows absolute-positioned children */
     padding-left: 2.5em;      /* make room for .route-order on the left */
@@ -55,11 +62,12 @@
 }
 
 .route-info p {
-    margin: 0;
+    margin: 10px 5px;
     line-height: 1.5;
     text-align: left;
 }
 
+/* Position the route order absolutely, aligned to the left */
 .route-order {
     position: absolute;
     left: 0;                  /* pinned to the left edge of .route-info */
@@ -68,13 +76,22 @@
     color: #007bff;           /* optional color */
 }
 
+
+
+/* Route image styling */
+.route-img {
+    align-self: center;
+}
+
 .route-img img {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 100%;
+    min-height: 200px;
     object-fit: cover;
     border-radius: 8px;
 }
 
+/* Review section styling */
 .review-section {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -99,6 +116,38 @@
     color: #444;
 }
 
+/* Colors for order numbers (existing) */
+.red-text { color: red; font-weight: bold; }
+.blue-text { color: blue; font-weight: bold; }
+.green-text { color: green; font-weight: bold; }
+.orange-text { color: orange; font-weight: bold; }
+.gray-text { color: gray; font-weight: bold; }
+
+/* Star rating styling */
+.star-rating {
+    font-size: 14px;
+    color: #FFD700; /* golden color for stars */
+    margin-left: 5px;
+}
+
+/* Media Qury for 768 px */
+
+@media all and (max-width:768px) {
+    .route {
+        /* background-color: red; */
+        flex-direction: column-reverse;
+    }
+
+    .route-img img {
+        padding-top: 20p;
+        border-radius: 8px;
+        width: 100%;
+        min-width: 150px;
+        height:300px;
+    }
+}
+
+/* Comment section styling 그대로 유지 */
 .comment-section {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -117,34 +166,148 @@
     color: #28a745;
 }
 
+/* Placeholder text for comment list */
 #commentList p {
     font-size: 1.1rem;
     color: #888;
     text-align: center;
 }
 
+/* 댓글 박스 */
 .comment {
+    /* 기존 스타일 */
+    position: relative;
     background: #fff;
-    padding: 8px;
+    padding: 10px;          /* 조금 여유 있게 */
     border-radius: 6px;
     margin-top: 15px;
     border: 1px solid #ddd;
+
+    /* 새로 적용: Grid 레이아웃 (2행 x 2열) */
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "content tools";
+    grid-template-columns: 1fr auto; /* 왼쪽 넓게, 오른쪽은 auto */
+    grid-row-gap: 8px;              /* 행 간격 */
 }
 
-.comment p {
-    margin: 5px 0;
+/* 첫 번째 <p> : 이름(왼쪽) + 작성일(오른쪽) */
+.comment p:first-child {
+    grid-area: header;  /* 1행 전체를 차지 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;          /* 기본 여백 제거 */
+    padding: 0;
     font-size: 1rem;
     color: #555;
 }
 
-.red-text { color: red; font-weight: bold; }
-.blue-text { color: blue; font-weight: bold; }
-.green-text { color: green; font-weight: bold; }
-.orange-text { color: orange; font-weight: bold; }
-.gray-text { color: gray; font-weight: bold; }
+/* 이름(왼쪽) - strong */
+.comment p:first-child strong {
+    font-weight: bold;
+    color: #333;
+}
 
-.star-rating {
-    font-size: 14px;
-    color: #FFD700;
+/* 작성일(오른쪽) - span */
+.comment p:first-child span {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+/* 버튼 영역 : (오른쪽 아래) */
+.comment .comment-tools {
+    grid-area: tools;
+    text-align: right;
+
+    /* 기존 코드 유지(마우스 오버 시 표시) */
+    display: none;
+    /* float: right; <- 그리드 사용 시 불필요하므로 제거 */
+    /* margin-top: -26px; <- 그리드 사용 시 불필요하므로 제거 */
+}
+
+/* 댓글에 마우스 올렸을 때 버튼 표시 */
+.comment:hover .comment-tools {
+    display: inline-block;
+}
+
+/* 버튼 스타일(여유 간격 등) */
+.comment-tools button {
     margin-left: 5px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.reply-form, .edit-form, #commentForm{
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+#commentForm {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    padding: 10px;
+
+    /* 폭 계산 시 패딩과 보더 포함 */
+    box-sizing: border-box;
+}
+
+#commentForm textarea {
+    display: block;          /* 블록 레벨로 확실히 지정 (기본적으로 대부분 블록이지만 명시) */
+    width: 100%;
+    box-sizing: border-box;  /* 패딩과 보더 포함하여 100% 폭 계산 */
+    min-height: 60px;
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+/* 폼 내의 텍스트 영역 스타일 */
+.reply-form textarea,
+.edit-form textarea,
+#commentForm textarea{
+    width: 100%;
+    min-height: 60px;      /* 적당한 높이 */
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;      /* 드래그로 세로 길이 조정 가능 (원하면 none) */
+}
+
+/* 폼 내의 버튼 (등록, 수정하기) */
+.reply-form button,
+.edit-form button,
+#commentForm button,
+.replyBtn,
+.editBtn,
+.deleteBtn{
+    margin-top: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    /* 녹색 계열 배경 */
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.reply-form button:hover,
+.edit-form button:hover,
+#commentForm button:hover,
+.replyBtn:hover,
+.editBtn:hover,
+.deleteBtn:hover{
+    background-color: #218838; /* 좀 더 진한 녹색 */
 }

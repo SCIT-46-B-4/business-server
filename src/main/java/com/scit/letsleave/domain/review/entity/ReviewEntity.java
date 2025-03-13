@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,9 +30,10 @@ public class ReviewEntity {
     @JoinColumn(name = "schedule_id", nullable = false, unique = true)
     private ScheduleEntity schedule;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn
-    private List<ReviewCommentEntity> reviewCommentEntities;
+    // ReviewReplyEntity에서 review 필드를 mappedBy로 사용
+    // 리뷰가 삭제되면 댓글도 삭제
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ReviewReplyEntity> reviewCommentEntities = new ArrayList<>();
 
     @Column(nullable = false, length = 64)
     private String title;

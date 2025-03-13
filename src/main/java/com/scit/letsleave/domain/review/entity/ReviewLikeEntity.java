@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "schedule_reviews_likes")
 public class ReviewLikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

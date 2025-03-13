@@ -72,20 +72,6 @@ public class DestinationService {
         return DestinationDto.toDTO(entity);
     }
 
-    // // 근처 추천 장소 찾기
-    // public Map<String, List<DestinationDto>> getNearbyDestinationsByType(Long destinationId, double radiusMeters) {
-    //     DestinationEntity currentDestination = destinationRepository.findById(destinationId)
-    //             .orElseThrow(() -> new RuntimeException("Destination not found"));
-    
-    //     Point currentPoint = currentDestination.getCoordinate();
-    //     List<DestinationEntity> nearbyDestinations = destinationRepository.findNearbyDestinations(currentPoint, radiusMeters, destinationId);
-    
-    //     // 타입별로 그룹화하여 반환
-    //     return nearbyDestinations.stream()
-    //             .map(DestinationDto::toDTO)
-    //             .collect(Collectors.groupingBy(destination -> destination.getType().getDescription()));
-    // }
-
     // 두 좌표 간 거리 계산 (Haversine 공식)
     private double calculateDistance(Point point1, Point point2) {
         double lat1 = Math.toRadians(point1.getY());
@@ -105,7 +91,7 @@ public class DestinationService {
     }
 
     // 근처 추천 장소를 타입별로 그룹화
-    public Map<String, List<DestinationDto>> getNearbyDestinationsByType(Long destinationId, double radiusMeters) {
+    public Map<String, List<DestinationDto>> getNearbyDestinationsByType(Long destinationId, double radiusMeters, int limit) {
         DestinationEntity currentDestination = destinationRepository.findById(destinationId)
                 .orElseThrow(() -> new RuntimeException("Destination not found"));
     
@@ -131,6 +117,7 @@ public class DestinationService {
                                 Collectors.toList(),
                                 list -> list.stream()
                                         .sorted((d1, d2) -> Double.compare(d2.getScore(), d1.getScore())) // 별점 내림차순 정렬
+                                        .limit(limit)
                                         .collect(Collectors.toList())
                         )
                 ));

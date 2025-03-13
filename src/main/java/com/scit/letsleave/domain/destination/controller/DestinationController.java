@@ -21,13 +21,13 @@ public class DestinationController {
 
     private final DestinationService destinationService;
 
-    @GetMapping("/detail/{destinationId}")
+    @GetMapping("/{destinationId}")
     public String getDestinationDetailPage(@PathVariable("destinationId") Long destinationId, Model model) {
         // 현재 여행지 정보
         DestinationDto destination = destinationService.getDestinationById(destinationId);
 
         // 1000m 이내의 추천 장소 (타입별 그룹화)
-        Map<String, List<DestinationDto>> nearbyDestinations = destinationService.getNearbyDestinationsByType(destinationId, 1000);
+        Map<String, List<DestinationDto>> nearbyDestinations = destinationService.getNearbyDestinationsByType(destinationId, 1000, 4);
 
         // 디버깅 로그 추가
         System.out.println("Destination: " + destination);

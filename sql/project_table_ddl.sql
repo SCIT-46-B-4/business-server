@@ -516,3 +516,7 @@ ALTER TABLE schedule_review_replies
     ADD COLUMN reply_depth INT NOT NULL DEFAULT 0 AFTER parent_reply;
 ALTER TABLE schedule_review_replies
     ADD COLUMN reply_order INT NOT NULL DEFAULT 0 AFTER reply_depth;
+
+-- schedule review 표지 이미지 추가
+ALTER TABLE schedule_reviews
+    ADD COLUMN title_img VARCHAR(512);

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title th:text="'여행 후기 작성 - ' + ${reviewDetail.scheduleName}"></title>
+    <title th:text="'여행 후기 수정 - ' + ${reviewDetail.scheduleName}"></title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
         let staticPath = "[[${staticPath}]]"; // 환경 변수
@@ -64,17 +64,14 @@
     <div class="review-section">
         <form th:action="${staticPath + '/schedules/reviews/' + reviewDetail.reviewId + '/edit'}" method="post">
             <input type="hidden" name="userId" th:value="${reviewDetail.userId}">
-            <div class="form-group">
-                <label for="reviewTitle">리뷰 제목</label>
+            <h3 for="reviewTitle">리뷰 제목</h3>
+            <div class="review-form">
                 <input type="text" id="reviewTitle" name="reviewTitle" th:placeholder="${reviewDetail.reviewTitle}" required />
             </div>
-            <div class="form-group">
-                <label for="reviewContent">리뷰 내용</label>
+            <h3 for="reviewContent">리뷰 내용</h3>
+            <div class="review-form">
                 <textarea id="reviewContent" name="reviewContent" rows="5" th:placeholder="${reviewDetail.reviewContent}" required></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit">리뷰 작성</button>
-            </div>
+                <button type="submit">리뷰 수정</button>
         </form>
     </div>
 </div>

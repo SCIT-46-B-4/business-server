@@ -1,13 +1,11 @@
-/* 기본 스타일 */
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
     background: #f9f9f9;
 }
 
-/* 중앙 정렬 및 최대 너비를 위한 컨테이너 */
 .container {
-    max-width: 1200px;  /* 최대 너비를 제한 */
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -16,14 +14,12 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* 상단 필터 영역 */
 .filter-bar {
     display: flex;
     align-items: center;
     margin-bottom: 16px;
 }
 
-/* 🏷필터 선택 스타일 */
 .filter-bar select {
     border: 1px solid #ddd;
     padding: 8px;
@@ -31,7 +27,6 @@ h1 {
     width: auto;
 }
 
-/* 오른쪽 검색 키워드와 버튼 */
 .filter-bar input[type="text"] {
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -53,26 +48,22 @@ h1 {
     cursor: pointer;
 }
 
-/* 검색 입력은 오른쪽 정렬 및 길이 조정 */
 .filter-bar input[type="text"] {
     margin-left: auto;
-    width: 30ch;  /* 약 30자 입력 가능 */
+    width: 30ch; /* 숫자 입력칸 변경은 여기 */
 }
 
-/* 검색 버튼 추가 여백 */
 .filter-bar button {
     margin-left: 8px;
 }
 
-/* 리뷰 리스트 영역: CSS Grid를 사용하여 왼쪽에서 오른쪽 순서대로 배치 */
 #reviewList {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));  /* 최소 300px 크기의 열을 가능한 만큼 만듭니다. */
-    gap: 16px;  /* 카드 간 간격 */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
     padding: 16px;
 }
 
-/* 개별 리뷰 카드 스타일 */
 .review-item {
     display: inline-block;
     width: 100%;
@@ -90,7 +81,6 @@ h1 {
     transform: translateY(-5px);
 }
 
-/* 카드 내부 텍스트 및 요소 스타일 */
 .review-item .num {
     font-weight: bold;
     margin-bottom: 8px;
@@ -121,7 +111,6 @@ h1 {
     font-size: 13px;
 }
 
-/* 더 보기 버튼 */
 #loadMore {
     text-align: center;
     margin: 15px 0;
@@ -136,7 +125,6 @@ h1 {
     cursor: pointer;
 }
 
-/* 반응형 조정: 화면 크기에 따라 열의 개수를 조정 */
 @media (max-width: 768px) {
     #reviewList {
         column-count: 2;

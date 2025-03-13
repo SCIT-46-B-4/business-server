@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>추가 정보 입력</title>
+    <!-- jQuery -->
+    <script th:src="@{/script/jQuery.js}" src="../static/script/jQuery.js"></script>
+    <!-- JavaScript -->
+    <script defer th:src="@{/script/additionalInfo.js}" src="../static/script/additionalInfo.js"></script>
+    <!-- CSS -->
+    <style>
+        button {
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>추가 정보 입력</h1>
+    <form id="additionalInfoForm">
+        <!-- 이름 -->
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name">
+        <div id="nameError" class="error"></div>
+
+        <!-- 닉네임 -->
+        <label for="nickname">닉네임:</label>
+        <input type="text" id="nickname" name="nickname">
+        <div id="nicknameError" class="error"></div>
+
+        <!-- 전화번호 -->
+        <label for="phone">전화번호:</label>
+        <input type="text" id="phone" name="phone" maxlength="11">
+        <div id="phoneError" class="error"></div>
+
+        <!-- 동의 여부 -->
+        <div>
+            <input type="checkbox" id="isAgreeLoc" name="isAgreeLoc">
+            위치 정보 제공에 동의합니다.<br>
+
+            <input type="checkbox" id="isAgreeNewsNoti" name="isAgreeNewsNoti">
+            뉴스 알림 수신에 동의합니다.<br>
+
+            <input type="checkbox" id="isAgreeMarketingNoti" name="isAgreeMarketingNoti">
+            마케팅 알림 수신에 동의합니다.<br>
+        </div>
+
+        <!-- 제출 버튼 -->
+        <button type="submit">저장</button>
+    </form>
+</body>
+</html>

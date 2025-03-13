@@ -47,6 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @throws UsernameNotFoundException ID에 해당하는 사용자가 없을 경우 예외 발생
      */
     public UserDetails loadUserById(Long id) throws UsernameNotFoundException {
+
         // ID를 기반으로 사용자 정보를 데이터베이스에서 조회
         UserEntity user = userRepository.findById(id)
             .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + id));

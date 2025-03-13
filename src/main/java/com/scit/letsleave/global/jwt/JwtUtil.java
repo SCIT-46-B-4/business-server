@@ -16,11 +16,16 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class JwtUtil {
 
+<<<<<<< HEAD
     @Value("${JWT_SECRET_KEY}")
     private String SECRET_KEY;
     @Value("${JWT_Algorithm}")
     private String JWT_Algorithm;
     private final long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 1000; // 1시간
+=======
+    private static final String SECRET_KEY = "your-256-bit-secret-your-256-bit-secret";
+    private static final long ACCESS_TOKEN_EXPIRATION = 24 * 60 * 60 * 1000L; // 24시간 = 86,400,000 밀리초
+>>>>>>> main
     // private static final long REFRESH_TOKEN_EXPIRATION = 7 * 24 * 60 * 60 * 1000; // 7일
 
     private Key key;

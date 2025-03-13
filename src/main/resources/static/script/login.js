@@ -14,7 +14,7 @@ $(document).ready(function () {
 
         // 로그인 요청
         $.ajax({
-            url: "/users/auth/login",
+            url: "/api/users/auth/login",
             method: "POST",
             contentType: "application/json", // JSON 형식으로 전송
             data: JSON.stringify({ email, password }), // JSON 데이터로 변환

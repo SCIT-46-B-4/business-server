@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.scit.letsleave.domain.destination.entity.CityEntity;
 import com.scit.letsleave.domain.destination.entity.CountryEntity;
 import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
@@ -27,7 +26,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -17,22 +17,22 @@ function init() {
 
 function renderSchedules(data) {
     const $scheduleContainer = $("#scheduleContainer");
-    let insertHtml = "";
-
-    if (data.length) {
-        data.forEach((schedule) => {
-            insertHtml += `
-                <div id="tripHistory" class="trip-history" data-id="${schedule["id"]}">
-                    <img src="/images/user/circle.png" alt="plus-image" class="sample-photo"/>
-                    <div class="trip-info">
-                        <h4>${schedule["name"]}</h4>
-                        <span class="tripName">${schedule["countryName"]}・${schedule["cityName"]}</span>
-                        <span class="tripPeriod">${schedule["startDate"]} ~ ${schedule["endDate"]}</span>
-                    </div>
-                </div>
-            `;
-        });
+    if (!data || !data.length) {
+        $scheduleContainer.empty();
+        return;
     }
+
+    const insertHtml = data.map(schedule => `
+        <div class="trip-history" data-id="${schedule.id}">
+            <img src="/images/user/circle.png" alt="plus-image" class="sample-photo"/>
+            <div class="trip-info">
+                <h4>${schedule.name}</h4>
+                <span class="tripName">${schedule.countryName}・${schedule.cityName}</span>
+                <span class="tripPeriod">${schedule.startDate} ~ ${schedule.endDate}</span>
+            </div>
+        </div>
+    `).join("");
+    
     $scheduleContainer.html(insertHtml);
 }
 

@@ -69,6 +69,14 @@ public class ReviewEntity {
                 .toList();
     }
 
+    public int increaseLike() {
+        return ++likeCount;
+    }
+
+    public int decreaseLike() {
+        return --likeCount;
+    }
+
     @Builder
     public ReviewEntity(Long userId, ScheduleEntity schedule, String title, String content) {
         this.userId = userId;

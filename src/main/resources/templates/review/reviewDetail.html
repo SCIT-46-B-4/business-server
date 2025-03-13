@@ -10,6 +10,7 @@
         let staticPath = "[[${staticPath}]]";
     </script>
     <script th:src="${staticPath + '/script/reviewReply.js'}"></script>
+    <script th:src="${staticPath} + '/script/reviewLike.js'"></script>
 </head>
 <body>
     <div class="container" th:attr="data-review-id=${reviewDetail.reviewId}">
@@ -19,7 +20,9 @@
             <span th:text="${#temporals.format(reviewDetail.reviewCreatedAt, 'yyyy-MM-dd')}">작성일</span>
         </p>
         <p>
-            <span th:text="'❤️ ' + ${#numbers.formatInteger(reviewDetail.likeCount, 0)}">좋아요</span>
+            <span id="likeSpan">
+                ❤️ 0
+            </span>
         </p>
         <div class="schedule-details">
             <h3>일정 상세</h3>

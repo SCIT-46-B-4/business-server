@@ -76,7 +76,7 @@ $(document).ready(() => {
     let loading = false;
     let isLast = false;
 
-    // 검색 버튼 클릭 시, 페이지 전체를 /schedules/reviews 엔드포인트로 새로 로드 (국가 값 포함)
+    // 검색 버튼 클릭 시, 페이지 전체를 /schedules/reviews 엔드포인트로 새로 로드
     $searchBtn.on("click", () => {
         const selectedCountry = $countrySelect.val() || '';
         const selectedCity = $citySelect.val() || '';
@@ -110,12 +110,10 @@ $(document).ready(() => {
             );
     };
 
-    // AJAX 호출하여 리뷰 데이터 요청
     const loadReviews = () => {
         if (loading || isLast) return;
         loading = true;
 
-        // 최신 검색 조건 값 읽기 (데이터 속성 또는 URL 파라미터)
         cityId = $reviewList.data("cityId") || cityParam;
         title = $reviewList.data("title") || titleParam;
         orderType = $reviewList.data("orderType") || orderParam;

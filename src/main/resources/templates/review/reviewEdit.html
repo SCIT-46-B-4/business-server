@@ -5,7 +5,7 @@
     <title th:text="'여행 후기 작성 - ' + ${reviewDetail.scheduleName}"></title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        let staticPath = "[[${staticPath}]]"; // Thymeleaf 변수를 JS에서 사용 가능하게 설정
+        let staticPath = "[[${staticPath}]]"; // 환경 변수
     </script>
 
     <link rel="stylesheet" th:href="${staticPath + '/css/reviewCreate.css'}" />
@@ -23,7 +23,6 @@
                     <div class="route">
                         <div class="route-info">
                             <p>
-                                <!-- 주문 번호를 2자리 형식으로 표시 -->
                                 <span class="route-order"
                                       th:text="${route.orderNumber < 10 ? '0' + route.orderNumber : route.orderNumber}"
                                       th:classappend="${(route.destinationType == '1') ? ' blue-text' :
@@ -32,13 +31,11 @@
                                                             (route.destinationType == '4') ? ' green-text' : ' gray-text'}">
                                     </span>
                                 <strong th:text="${route.name}">장소 이름</strong>
-                                <!-- 별점은 소수점 한자리까지 표시. 컨트롤러에서 별점 문자열을 만들어 전달해도 좋습니다. -->
                                 <span class="star-rating" th:text="${'⭐' + #numbers.formatDecimal(route.score, 1, 1)}"></span>
                             </p>
                             <p th:text="${route.contents}">세부 내용</p>
                         </div>
                         <div class="route-img">
-                            <!-- 이미지 경로는 필요에 따라 수정 -->
                             <img th:src="${staticPath} + '/images/destination/' +
                                              ${
                                                  reviewDetail.cityName == '도쿄' ? 'tokyo' :

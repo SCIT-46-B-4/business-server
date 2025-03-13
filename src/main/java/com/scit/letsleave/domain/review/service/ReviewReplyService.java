@@ -41,6 +41,7 @@ public class ReviewReplyService {
                 .toList();
     }
 
+    // 리뷰 저장
     @Transactional
     public void saveReply(Long reviewId, UserDetails userDetails, ReviewReplyCreateRequestDTO requestDTO) {
         Long parentReplyId = requestDTO.getParentReplyId();
@@ -80,6 +81,7 @@ public class ReviewReplyService {
         reviewReplyRepository.save(newReply);
     }
 
+    // 수정
     @Transactional
     public boolean updateReply(Long replyId, String newContent) {
         ReviewReplyEntity reply = reviewReplyRepository.findById(replyId)
@@ -90,6 +92,7 @@ public class ReviewReplyService {
         return true;
     }
 
+    // 삭제
     @Transactional
     public boolean deleteReply(Long replyId) {
         ReviewReplyEntity reply = reviewReplyRepository.findById(replyId)

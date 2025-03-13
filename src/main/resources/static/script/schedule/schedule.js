@@ -1,5 +1,5 @@
 import { AjaxAPI } from "../global/ajax.js";
-import { moveToFocus, drawMapWithMarkers } from "./map.js";
+import { moveToFocus, drawMapWithMarkers, filterMarkersByDate } from "./map.js";
 
 
 // 날짜 형식 변환 함수 (YYYY-MM-DD)
@@ -18,7 +18,7 @@ function renderScheduleBoxByDay(schedule) {
     const detailScheduleDtos = schedule["detailScheduleDtos"];
     
     $("#textTag").text(cityName + " 여행");
-    $("#schduleName").text(scheduleName);
+    $("#scheduleName").text(scheduleName);
     
     // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함
     const $container = $("#schedule-container");
@@ -29,7 +29,8 @@ function renderScheduleBoxByDay(schedule) {
         const $dayAnchor = $("<div>", {
             id: `day_${index+1}_anchor`,
             class: "day-anchor",
-            css: { marginBottom: "20px" }
+            css: { marginBottom: "20px" },
+            "data-date": detailSchedule.date
         });
 
         // 그룹 헤더 생성 (예: "day1")
@@ -38,67 +39,103 @@ function renderScheduleBoxByDay(schedule) {
             css: {
                 fontSize: "20px",
                 fontWeight: "bold",
-                marginBottom: "10px"
-            }
+                marginBottom: "10px",
+            },
+            text: `day${index + 1}`
         });
-        $dayHeader.text = `day${index + 1}`;
         $dayAnchor.append($dayHeader);
 
+        const routes = detailSchedule["routes"]
+        drawMapWithMarkers(routes, detailSchedule.date)
         // 각 그룹에 속한 스케줄 박스 생성
-        groups[day].forEach(box => {
+        routes.forEach(route => {
+            const destination = route.destination;
+
             // 상위 박스 생성: scheduleBox
-            const scheduleBox = document.createElement("div");
-            scheduleBox.classList.add("container_schedule", "scheduleBox");
-            scheduleBox.style.marginTop = "10px";
-
+            const $scheduleBox = $("<div>", {
+                class: "container_schedule scheduleBox",
+                css : {marginTop: "10px"}
+            });
             // 내부 Flex 박스 생성 (flexItem)
-            const flexItem = document.createElement("div");
-            flexItem.classList.add("container_schedule", "flex-box", "flexItem");
-
+            const $flexItem = $("<div>", {
+                class: "container_schedule flex-box flexItem"
+            });
             // 텍스트 영역 생성
-            const textContainer = document.createElement("div");
-            textContainer.classList.add("container_schedule", "text");
-
+            const $textContainer = $("<div>", {
+                class: "container_schedule text"
+            });
             // 첫 번째 줄: 장소명와 편집 버튼 영역
-            const attractionName = document.createElement("div");
-            attractionName.classList.add("container_schedule", "attraction-name");
-            attractionName.style.fontSize = "24px";
-
+            const $attractionName = $("<div>", {
+                class: "container_schedule attraction-name",
+                css: {fontSize: "24px"}
+            });
             // 장소명 정보를 감싸는 링크 생성
-            const guideLink = document.createElement("a");
-            guideLink.href = `/destination/guide/${box.id}`; // 예: 가이드 페이지 URL 구성
-            guideLink.style.textDecoration = "none";
-            guideLink.style.color = "inherit";
-            guideLink.textContent = box.krName; // 예: "도톤보리"
-            attractionName.appendChild(guideLink);
+            const $destinationLink = $("<a>", {
+                href: `/destination/${destination.id}`, // 예: Destination detail page로 이동
+                css: {
+                    textDecoration: "none",
+                    color: "inherit",
+                },
+                text: destination.krName
+            });
+            $attractionName.append($destinationLink);
 
             // 두 번째 줄: 유형과 지역명 (작은 글씨, 회색)
-            const innerFlex = document.createElement("div");
-            innerFlex.classList.add("container_schedule", "flex-box");
-            const infoText = document.createElement("div");
-            infoText.classList.add("text");
-            infoText.style.fontSize = "13px";
-            infoText.style.color = "gray";
-            const typeSpan = document.createElement("span");
-            typeSpan.textContent = box.type;
-            infoText.appendChild(typeSpan);
-            const locSpan = document.createElement("span");
-            locSpan.textContent = ` ::before ${box.cityKrName}`;
-            infoText.appendChild(locSpan);
-            innerFlex.appendChild(infoText);
+            const $innerFlex = $("<div>", {
+                class: "container_schedule flex-box"
+            });
+            const $infoText = $("<div>", {
+                class: "text",
+                css: {
+                    fontSize: "13px",
+                    color: "gray"
+                }
+            });
+            const $typeSpan = $("<span>", {
+                text: destination.type
+            });
+            $infoText.append($typeSpan);
+            
+            const $locSpan = $("<span>", {
+                class: "city-name",
+                text: destination.city.krName
+            });
 
-            // 조립: 텍스트 컨테이너 구성
-            textContainer.appendChild(attractionName);
-            textContainer.appendChild(innerFlex);
-
-            // 기존에 <a> 태그를 사용하지 않고, 클릭 시 별도의 페이지 이동 없이 현재 페이지 내에서 상세 정보를 보여주도록 처리 (여기서는 그냥 textContainer 사용)
-            flexItem.appendChild(textContainer);
-            scheduleBox.appendChild(flexItem);
-            dayAnchor.appendChild(scheduleBox);
+            $infoText.append($locSpan);
+            $innerFlex.append($infoText);
+            $textContainer.append($attractionName);
+            $textContainer.append($innerFlex);
+            $flexItem.append($textContainer);
+            $scheduleBox.append($flexItem);
+            $dayAnchor.append($scheduleBox);
         });
+        $container.append($dayAnchor);
+    });
 
-        // 최종적으로 상위 컨테이너에 각 날짜별 anchor 컨테이너 추가
-        $container.appendChild(dayAnchor);
+    // Day 클릭 이벤트
+    $(".day-anchor").on("click", function() {
+        const selectedDate = $(this).attr("data-date");
+        filterMarkersByDate(selectedDate);
+    });
+
+    // Day 스크롤 이벤트
+    const scrollRoot = $("#scroll-root")[0];
+    const observerOptions = {
+        root: scrollRoot,
+        threshold: 0,
+        rootMargin: "0px 0px -80% 0px"
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const selectedDate = $(entry.target).attr("data-date");
+                filterMarkersByDate(selectedDate);
+            }
+        });
+    }, observerOptions);
+    $(".day-anchor").each(function() {
+        observer.observe(this);
     });
 }
 
@@ -121,6 +158,7 @@ function getScheduleData(scheduleId, isRecommend) {
 
     ajaxCall
     .done((schedule) => {
+        console.log(schedule);
         renderScheduleBoxByDay(schedule);
     })
     .fail((xhr, _, errorThrown) => {
@@ -148,6 +186,7 @@ $(function() {
         const lastSlashIndex = path.lastIndexOf('/');
         scheduleId = parseInt(path.substring(lastSlashIndex + 1), 10);
     }
+    console.log(scheduleId, isRecommend);
     getScheduleData(scheduleId, isRecommend);
 });
 

@@ -19,7 +19,7 @@ public class RouteDto {
     // Request & Response
     private Long id;
     private Integer orderNumber;
-    private DestinationDto destinationDto;
+    private DestinationDto destination;
 
     // Request Only
     private LocalDateTime createdAt;
@@ -29,7 +29,7 @@ public class RouteDto {
         return RouteDto.builder()
             .id(entity.getId())
             .orderNumber(entity.getOrderNumber())
-            .destinationDto(DestinationDto.toDto(entity.getDestination()))
+            .destination(DestinationDto.toDto(entity.getDestination()))
             .build();
     }
 }

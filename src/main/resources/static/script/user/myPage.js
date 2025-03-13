@@ -40,4 +40,3 @@ $(document).on("click", ".trip-history", function () {
     const id = $(this).attr("data-id");
     location.href = `/schedules/${id}`;
 });
-

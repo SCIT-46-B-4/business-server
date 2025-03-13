@@ -41,8 +41,12 @@ public class RestScheduleController {
     // 일정 상세 조회를 위한 api
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleDto> getSchedule(@PathVariable(name="id") Long id) {
-
-        return ResponseEntity.ok(scheduleService.getScheduleById(id));
+        ScheduleDto dto = scheduleService.getScheduleById(id);
+        log.info("====dto: {}", dto);
+        log.info("====detail dto: {}", dto.getDetailScheduleDtos());
+        log.info("====routes in detail dto: {}", dto.getDetailScheduleDtos().get(0));
+        log.info("====destination: {}", dto.getDetailScheduleDtos().get(0).getRoutes().get(0).getDestination());
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/recommend")

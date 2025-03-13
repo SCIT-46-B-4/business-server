@@ -1,5 +1,10 @@
 @import url(../global/reset.css);
 
+
+.city-name::before {
+    content: ":: ";
+}
+
 .total-container {
     display: flex;
     justify-content: flex-end;

@@ -1,27 +1,37 @@
 let map;
+let markers = [];
 
 // 지도에 마커와 Polyline을 그리는 함수
-function drawMapWithMarkers(routes) {
+async function drawMapWithMarkers(routes, date) {
+    markers.forEach(marker => marker.setMap(null));
+    markers = [];
+
     const bounds = new google.maps.LatLngBounds();
     const infoWindow = new google.maps.InfoWindow();
 
-    routes.forEach(route => {
-        const dest = route["destination"]
-        const lat = parseFloat(dest.latitude);
-        const lng = parseFloat(dest.longitude);
+    await Promise.all(
+        routes.map(route => 
+            new Promise(resolve => {
+                const dest = route["destination"]
+                const lat = parseFloat(dest.latitude);
+                const lng = parseFloat(dest.longitude);
 
-        const marker = new google.maps.Marker({
-            position: { lat, lng },
-            map,
-            title: dest.krName,
-        });
-        marker.addListener("click", () => {
-            map.panTo(marker.position)
-            infoWindow.setContent(dest.krName);
-            infoWindow.open({ anchor: marker, map });
-        });
-        bounds.extend(marker.position);
-    });
+                const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map,
+                    title: dest.krName,
+                });
+                marker.routeDate = date;
+                marker.addListener("click", () => {
+                    map.panTo(marker.position)
+                    infoWindow.setContent(dest.krName);
+                    infoWindow.open({ anchor: marker, map });
+                });
+                bounds.extend(marker.position);
+                resolve(marker)
+            })
+        )
+    );
 
     const pathLine = new google.maps.Polyline({
         path: routes.map(route => ({
@@ -42,6 +52,17 @@ function drawMapWithMarkers(routes) {
     map.fitBounds(bounds);
 }
 
+// 해당 날자의 마커만 보여주는 함수
+function filterMarkersByDate(targetDate) {
+    markers.forEach(marker => {
+        if (marker.routeDate === targetDate) {
+            marker.setMap(map);
+        } else {
+            marker.setMap(null);
+        }
+    });
+}
+
 // Forcus On 함수
 function moveToFocus(lat, lng) {
     if (map) {
@@ -58,7 +79,6 @@ function initMap() {
     });
 };
 
-
 window.initMap = initMap
 
-export {moveToFocus, drawMapWithMarkers};
+export {moveToFocus, drawMapWithMarkers, filterMarkersByDate};

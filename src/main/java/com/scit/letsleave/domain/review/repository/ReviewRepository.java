@@ -2,9 +2,11 @@ package com.scit.letsleave.domain.review.repository;
 
 import com.scit.letsleave.domain.review.entity.ReviewEntity;
 import com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -58,7 +60,7 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
 
     /**
      * @param reviewId 수정하려는 reviewId
-     * @param userId 현재 접속중인 userId
+     * @param userId   현재 접속중인 userId
      * @return 상기 두 아이디가 일치하는 데이터를 리턴
      */
     @Query("""
@@ -87,4 +89,13 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
     Optional<ReviewEntity> findByIdAndUserId(Long id, Long userId);
 
     void deleteByIdAndUserId(Long id, Long userId);
+
+    /**
+     * PESSIMISTIC_WRITE LOCK
+     * @param reviewId
+     * @return
+     */
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT r FROM ReviewEntity r WHERE r.id = :reviewId")
+    Optional<ReviewEntity> findByIdWithLock(@Param("reviewId") Long reviewId);
 }

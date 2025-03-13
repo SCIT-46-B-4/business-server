@@ -1,5 +1,5 @@
 $(document).ready(function () {
-        const reviewId = $(".container").data("review-id"); // 이미 container에 data-review-id가 있다고 했음
+        const reviewId = $(".container").data("review-id");
         if (!reviewId) {
             console.error("잘못된 접근: reviewId가 없음.");
             return;
@@ -45,7 +45,7 @@ $(document).ready(function () {
         }
 
         function updateLikeUI(isLiked) {
-            const heartIcon = isLiked ? "❤️" : "🤍";
+            const heartIcon = isLiked ? "❤️" : "🤍"; // 이미 좋아요면 빨강 아니면 하양
             $("#likeSpan").text(`${heartIcon} ${likeCount}`);
         }
     }

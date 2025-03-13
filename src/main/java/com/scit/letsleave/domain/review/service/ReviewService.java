@@ -78,7 +78,6 @@ public class ReviewService {
      * @param reviewId 리뷰 아이디
      * @return 상세 리뷰 DTO
      */
-    // TODO : 후에 ReviewComment 와 통합
     @Transactional(readOnly = true)
     public DetailReviewResponseDTO getReviewDetailForEdit(Long reviewId) {
         List<DetailReviewResponseProjection> projections = reviewRepository.findReviewWithScheduleAndUserAndDetailsAndRoutes(reviewId);
@@ -190,11 +189,9 @@ public class ReviewService {
 
 
     /**
-     * @param userDetails
+     * @param userDetails 현재 로그인 유저 정보
      * @param scheduleId  스케줄 ID
      * @param requestDTO  userId, title, content
-     * @return 리뷰 생성 결과 BOOLEAN
-     * TODO : Exception 으로 처리하기
      */
     @Transactional
     public void createReview(UserDetails userDetails, Long scheduleId, ReviewRequestDTO requestDTO) {

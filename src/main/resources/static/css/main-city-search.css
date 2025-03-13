@@ -1,4 +1,4 @@
-/* 기본 스타일 */
+기본 스타일
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
@@ -17,12 +17,15 @@ body {
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-    margin-top: 20px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
 }
 
 /* 🔹 검색 바 스타일 */
 .search-container {
-    display: flex;
+    display: flex;    
     align-items: center;
     background: #fff;
     border-radius: 50px;
@@ -55,6 +58,8 @@ body {
     background: #0056b3;
 }
 
+
+
 /* 🔹 탭 메뉴 */
 .tab-menu {
     display: flex;
@@ -84,13 +89,30 @@ body {
 
 /* 🔹 검색 결과 리스트 */
 .city-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 15px;
     padding-top: 10px;
 }
-
+.city-list .city-card {
+    width: calc(100% * 6 / 7);
+    margin: 0 auto;
+}
 /* 🔹 도시 카드 */
+.country-card {
+    background: white;
+    margin:  0 auto ;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    width: calc(100% * 6  / 7 );
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .city-card {
     background: white;
     padding: 15px;
@@ -99,6 +121,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.3s;
+    width: 100%;
 }
 
 .city-card:hover {
@@ -118,7 +141,9 @@ body {
     font-size: 14px;
     font-weight: bold;
 }
-
+ .city-card.cityName {
+    width: calc(90%);
+}
 /* 🔹 검색 결과 없을 때 */
 .no-results {
     text-align: center;
@@ -129,7 +154,7 @@ body {
 
 /* 🔹 숨김 클래스 */
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 /* 🔹 반응형 스타일 */
@@ -149,8 +174,7 @@ body {
         /* 🔹 동적 검색 결과 스타일 */
         #searchResults {
             position: absolute;
-            top: calc(100% + 5px);
-            /* 검색창 아래로 자연스럽게 배치 */
+            top: calc(100% + 5px); /* 검색창 아래로 자연스럽게 배치 */
             left: 0;
             width: 100%;
             background: white;
@@ -161,14 +185,14 @@ body {
             overflow-y: auto;
             /* 검색 결과가 많으면 스크롤 가능 */
             z-index: 1000;
-            display: none;
             /* 기본적으로 숨김 */
+            display: none;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
     
         /* 🔹 검색 결과가 있을 때만 나타나는 효과 */
-        #searchResults.show {
+        .show {
             display: block;
             opacity: 1;
         }

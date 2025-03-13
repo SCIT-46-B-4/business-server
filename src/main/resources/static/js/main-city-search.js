@@ -1,4 +1,3 @@
-
 // 동적검색
 
 $(document).ready(function () {
@@ -73,7 +72,7 @@ $(document).ready(function () {
 
     // ✅ 검색 결과 숨김 (탭 전환 시)
 
-    $("#searchResults").hide();
+    $("#searchResults").html("");
 
     // 모든 버튼에서 active 제거 후 클릭한 버튼에 active 추가
 
@@ -90,7 +89,7 @@ $(document).ready(function () {
 
   // 🔹 해외 도시 탭에서 나라 클릭 시 해당 나라 안에 도시 리스트 추가
 
-  $(document).on("click", ".city-card", function () {
+  $(document).on("click", ".country-card", function () {
     let country = $(this).attr("data-country-id");
 
     let countryElement = $(this);
@@ -171,7 +170,7 @@ $(document).ready(function () {
 
   function displaySearchResults(data) {
     var resultContainer = $("#searchResults");
-
+    console.log(data.length);
     resultContainer.empty(); // 기존 결과 초기화
 
     if (data.length === 0) {

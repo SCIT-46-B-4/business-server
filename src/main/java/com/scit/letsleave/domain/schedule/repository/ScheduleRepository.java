@@ -11,13 +11,11 @@ import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
 
 
 public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> {
-
     @Query(
-        "select new com.example.dto.ScheduleDto(s.id, s.name, s.createdAt) " +
+        "select new com.scit.letsleave.domain.schedule.dto.ScheduleDto(s.id, s.name, s.countryName, s.cityName, s.startDate, s.endDate) " +
         "from ScheduleEntity s " +
         "where s.user.id = :userId " +
         "order by s.createdAt desc"
     )
     List<ScheduleDto> findSchedulesByUserId(@Param("userId") Long userId);
-
 }

@@ -18,6 +18,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class ScheduleDto {
+    // Constructor For JPA Query
+    public ScheduleDto(Long id, String name, String countryName, String cityName, LocalDate startDate, LocalDate endDate) {
+        this.id = id;
+        this.name = name;
+        this.countryName = countryName;
+        this.cityName = cityName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     // Request & Response
     private Long id;

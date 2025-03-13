@@ -37,7 +37,7 @@ public class SecurityConfig {
     }
 
    @Bean
-   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        http.csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성화
             .authorizeHttpRequests(auth -> auth

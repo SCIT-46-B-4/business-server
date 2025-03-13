@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tabButtons = document.querySelectorAll(".tab-button");
     const placeLists = document.querySelectorAll(".places-list");
+    const saveButton = document.querySelector(".save-button");
 
     // 첫 번째 탭과 리스트를 기본 활성화 상태로 설정
     if (tabButtons.length > 0 && placeLists.length > 0) {
@@ -21,5 +22,21 @@ document.addEventListener("DOMContentLoaded", () => {
             const activeList = document.querySelector(`.places-list[data-type="${type}"]`);
             if (activeList) activeList.classList.add("active");
         });
+    });
+
+    // 저장 버튼 클릭 이벤트
+    saveButton.addEventListener("click", () => {
+        const heartIcon = saveButton.querySelector(".heart-icon");
+        
+        // 하트 아이콘 변경
+        if (saveButton.classList.contains("saved")) {
+            saveButton.classList.remove("saved");
+            heartIcon.classList.remove("fa-solid");
+            heartIcon.classList.add("fa-regular"); // 비어있는 하트로 변경
+        } else {
+            saveButton.classList.add("saved");
+            heartIcon.classList.remove("fa-regular");
+            heartIcon.classList.add("fa-solid"); // 빨간색 하트로 변경
+        }
     });
 });

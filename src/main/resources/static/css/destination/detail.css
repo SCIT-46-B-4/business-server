@@ -23,26 +23,10 @@ body {
     font-size: 16px;
     color: gray;
 }
-.stars {
-    display: flex;
-    font-size: 20px;
-}
-.stars span {
-    color: lightgray;
-}
-.stars .filled {
-    color: gold;
-}
-.stats {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-}
 .location {
     font-size: 14px;
     color: gray;
+    margin: 10px 0px;
 }
 .destination-image {
     width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
@@ -63,20 +47,32 @@ body {
 }
 .actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around; /* 버튼 간 간격을 넓게 배치 */
     margin: 20px 0;
+    padding: 0 10px; /* 양쪽 여백 설정 (양 끝 버튼이 너무 붙지 않도록) */
 }
-.actions button {
-    flex: 1;
-    margin: 5px;
+
+.action-button {
+    display: flex;
+    flex-direction: column; /* 아이콘 아래에 텍스트 배치 */
+    align-items: center; /* 가운데 정렬 */
+    justify-content: center; /* 세로 중앙 정렬 */
     padding: 10px;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    font-size: 14px; /* 텍스트 크기 */
+}
+/* 아이콘과 텍스트 간격 */
+.action-button .text {
+    margin-top: 10px; /* 아이콘과 텍스트 간격 (기존 5px → 10px으로 증가) */
+}
+/* 아이콘 스타일 */
+.action-button i {
+    font-size: 18px; /* 아이콘 크기 */
+}
+.save-button.saved .heart-icon {
+    color: red; /* 클릭 후 빨간색 하트 */
 }
 .divider {
     height: 1px;
@@ -116,9 +112,8 @@ body {
 *******************/
 .star-ratings {
     position: relative;
-    unicode-bidi: bidi-override;
-    width: max-content;
-    color: #aaa9a9; /* 기본 별 색상 */
+    display: inline-block;
+    font-size: 0; /* 아이콘 간 간격 제거 */
 }
 
 .star-ratings-fill {
@@ -127,10 +122,17 @@ body {
     top: 0;
     left: 0;
     overflow: hidden; /* 채워진 부분만 표시 */
+    white-space: nowrap; /* 아이콘이 한 줄로 유지되도록 설정 */
 }
 
 .star-ratings-base {
     color: #aaa9a9; /* 기본 별 색상 */
+}
+
+.star-ratings-fill i,
+.star-ratings-base i {
+    font-size: 16px; /* 별 크기 */
+    margin-right: 2px; /* 별 간격 */
 }
 
 .star-heart-container {
@@ -144,15 +146,15 @@ body {
     align-items: center;
 }
 
-.star .review-count {
-    margin-left: 10px; /* 별점과 리뷰 개수 사이 간격 */
+.star .star-score {
+    margin-left: 8px; /* 별과 점수 사이 간격 */
     font-size: 14px;
     color: #555;
 }
 
 .heart {
-    font-size: 20px; /* 하트 크기 */
-    color: pink; /* 하트 색상 */
+    color: rgb(250, 35, 68); /* 하트 색상 */
+    margin-left: 8px;
 }
 /************************
 근처의 추천장소
@@ -246,7 +248,6 @@ a.place-card {
     align-items: center;
     gap: 10px; /* 이미지와 텍스트 간격 */
 }
-/* 호버 시 스타일 추가 (필요 시) */
 a.place-card:hover {
     background-color: #f5f5f5; /* 마우스 오버 시 배경색 변경 */
     border-radius: 8px; /* 카드 모서리 둥글게 */

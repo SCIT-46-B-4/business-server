@@ -10,37 +10,39 @@ function formatDate(dtString) {
 
 // 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
 function renderScheduleBoxByDay(schedule) {
-    console.log(schedule);
-    // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함
-    const $container = $("#schedule-container");
-    if (!$container) {
-        console.error("Schedule container not found.");
-        return;
-    }
-    $container.empty();
     const scheduleName = schedule["name"];
     const cityName =  schedule["cityName"];
     const countryName =  schedule["countryName"];
     const endDate = schedule["endDate"];
     const startDate = schedule["startDate"];
     const detailScheduleDtos = schedule["detailScheduleDtos"];
-
+    
+    $("#textTag").text(cityName + " 여행");
+    $("#schduleName").text(scheduleName);
+    
+    // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함
+    const $container = $("#schedule-container");
+    $container.empty();
     // 각 날짜 그룹마다 별도의 anchor 컨테이너 생성
-    sortedDates.forEach((day, index) => {
+    detailScheduleDtos.forEach((detailSchedule, index) => {
         // 새로운 anchor 컨테이너 생성
-        const dayAnchor = document.createElement("div");
-        dayAnchor.id = `day_${index + 1}_anchor`;
-        dayAnchor.classList.add("day-anchor");
-        dayAnchor.style.marginBottom = "20px";
+        const $dayAnchor = $("<div>", {
+            id: `day_${index+1}_anchor`,
+            class: "day-anchor",
+            css: { marginBottom: "20px" }
+        });
 
         // 그룹 헤더 생성 (예: "day1")
-        const dayHeader = document.createElement("div");
-        dayHeader.classList.add("day-header");
-        dayHeader.style.fontSize = "20px";
-        dayHeader.style.fontWeight = "bold";
-        dayHeader.style.marginBottom = "10px";
-        dayHeader.textContent = `day${index + 1}`;
-        dayAnchor.appendChild(dayHeader);
+        const $dayHeader = $("<div>", {
+            class: "day-header",
+            css: {
+                fontSize: "20px",
+                fontWeight: "bold",
+                marginBottom: "10px"
+            }
+        });
+        $dayHeader.text = `day${index + 1}`;
+        $dayAnchor.append($dayHeader);
 
         // 각 그룹에 속한 스케줄 박스 생성
         groups[day].forEach(box => {
@@ -96,7 +98,7 @@ function renderScheduleBoxByDay(schedule) {
         });
 
         // 최종적으로 상위 컨테이너에 각 날짜별 anchor 컨테이너 추가
-        container.appendChild(dayAnchor);
+        $container.appendChild(dayAnchor);
     });
 }
 
@@ -124,7 +126,7 @@ function getScheduleData(scheduleId, isRecommend) {
     .fail((xhr, _, errorThrown) => {
         console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule schedule:", errorThrown);
-        // location.href = "/";
+        location.href = "/";
     })
 }
 

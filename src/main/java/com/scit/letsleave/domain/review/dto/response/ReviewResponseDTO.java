@@ -41,7 +41,7 @@ public class ReviewResponseDTO {
                 .userId(entity.getUserId())
                 .scheduleId(entity.getSchedule().getId())
                 .title(entity.getTitle())
-                .country(entity.getSchedule().getCountryName()) // TODO : 한글? 영어?
+                .country(entity.getSchedule().getCountryName())
                 .city(entity.getSchedule().getCityName())
                 .likeCount(entity.getLikeCount())
                 .content(entity.getContent())

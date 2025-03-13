@@ -53,6 +53,7 @@ public class ReviewReplyService {
         ReviewEntity review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰 없음"));
 
+        // 순서는 최대값 +1
         Integer maxOrder = reviewReplyRepository.findMaxOrderByReviewId(reviewId);
         int newOrder = (maxOrder == null) ? 1 : (maxOrder + 1);
 

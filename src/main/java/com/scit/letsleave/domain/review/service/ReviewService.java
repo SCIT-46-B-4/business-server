@@ -29,7 +29,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final DetailScheduleRepository detailScheduleRepository;
     private final ScheduleRepository scheduleRepository;
 
     /**

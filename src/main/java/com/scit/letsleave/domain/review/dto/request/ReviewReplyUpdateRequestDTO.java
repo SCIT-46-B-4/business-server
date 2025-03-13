@@ -1,12 +1,9 @@
 package com.scit.letsleave.domain.review.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class ReviewReplyUpdateRequestDTO {
     private String newContent;
 }

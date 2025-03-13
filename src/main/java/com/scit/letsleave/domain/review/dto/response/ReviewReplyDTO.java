@@ -1,24 +1,31 @@
 package com.scit.letsleave.domain.review.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class ReviewReplyDTO {
-    private Long replyId;
-    private Long userId;
-    private String userName;
-    private String content;
-    private int replyOrder;
-    private int replyDepth;
-    private LocalDateTime createdAt;
-    private Long parentReplyId;
-    private Boolean isDeleted;
+    private final Long replyId;
+    private final Long userId;
+    private final String userName;
+    private final String content;
+    private final int replyOrder;
+    private final int replyDepth;
+    private final LocalDateTime createdAt;
+    private final Long parentReplyId;
+    private final Boolean isDeleted;
+
+    @Builder
+    public ReviewReplyDTO(Long replyId, Long userId, String userName, String content, int replyOrder, int replyDepth, LocalDateTime createdAt, Long parentReplyId, Boolean isDeleted) {
+        this.replyId = replyId;
+        this.userId = userId;
+        this.userName = userName;
+        this.content = content;
+        this.replyOrder = replyOrder;
+        this.replyDepth = replyDepth;
+        this.createdAt = createdAt;
+        this.parentReplyId = parentReplyId;
+        this.isDeleted = isDeleted;
+    }
 }

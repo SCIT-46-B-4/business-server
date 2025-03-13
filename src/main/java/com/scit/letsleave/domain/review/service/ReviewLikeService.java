@@ -60,7 +60,9 @@ public class ReviewLikeService {
     @Transactional
     public ReviewLikeResponseDTO changeLike(UserDetails userDetails, Long reviewId) {
         long userId = Long.parseLong(userDetails.getUsername());
-        ReviewEntity reviewEntity = reviewRepository.findById(reviewId)
+
+        // PESSIMISTIC_WRITE
+        ReviewEntity reviewEntity = reviewRepository.findByIdWithLock(reviewId)
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 리뷰입니다.")
                 );

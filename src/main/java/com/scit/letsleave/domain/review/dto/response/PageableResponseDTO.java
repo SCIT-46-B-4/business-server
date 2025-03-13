@@ -7,11 +7,11 @@ import java.util.List;
 
 @Getter
 public class PageableResponseDTO<T> {
-    private List<T> content;
-    private int currentPage;
-    private boolean firstPage;
-    private boolean lastPage;
-    private boolean hasNext;
+    private final List<T> content;
+    private final int currentPage;
+    private final boolean firstPage;
+    private final boolean lastPage;
+    private final boolean hasNext;
 
     @Builder
     public PageableResponseDTO(List<T> content, int currentPage, boolean firstPage, boolean lastPage, boolean hasNext) {

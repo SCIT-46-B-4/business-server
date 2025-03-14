@@ -42,10 +42,7 @@ public class RestScheduleController {
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleDto> getSchedule(@PathVariable(name="id") Long id) {
         ScheduleDto dto = scheduleService.getScheduleById(id);
-        log.info("====dto: {}", dto);
-        log.info("====detail dto: {}", dto.getDetailScheduleDtos());
-        log.info("====routes in detail dto: {}", dto.getDetailScheduleDtos().get(0));
-        log.info("====destination: {}", dto.getDetailScheduleDtos().get(0).getRoutes().get(0).getDestination());
+
         return ResponseEntity.ok(dto);
     }
 

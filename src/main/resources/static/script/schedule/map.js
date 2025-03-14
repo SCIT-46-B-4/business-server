@@ -16,18 +16,21 @@ async function drawMapWithMarkers(routes, date) {
                 const lat = parseFloat(dest.latitude);
                 const lng = parseFloat(dest.longitude);
 
+                // google.maps.marker는 error issue로 deprecated
                 const marker = new google.maps.Marker({
                     position: { lat, lng },
                     map,
                     title: dest.krName,
                 });
                 marker.routeDate = date;
+
                 marker.addListener("click", () => {
                     map.panTo(marker.position)
                     infoWindow.setContent(dest.krName);
                     infoWindow.open({ anchor: marker, map });
                 });
                 bounds.extend(marker.position);
+                markers.push(marker);
                 resolve(marker)
             })
         )

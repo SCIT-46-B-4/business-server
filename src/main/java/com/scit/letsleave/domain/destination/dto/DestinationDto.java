@@ -40,15 +40,13 @@ public class DestinationDto {
     private CityDto city;
 
     public static DestinationDto toDto(DestinationEntity entity) {
-        return DestinationDto.builder()
+        DestinationDto dto = DestinationDto.builder()
             .id(entity.getId())
             .type(entity.getType())
             .krName(entity.getKrName())
             .locName(entity.getLocName())
             .title(entity.getTitle())
             .content(entity.getContent())
-            .latitude(entity.getLatitude())
-            .longitude(entity.getLongitude())
             .address(entity.getAddress())
             .contact(entity.getContact())
             .homepage(entity.getHomepage())
@@ -64,5 +62,10 @@ public class DestinationDto {
                 CityDto.toDto(entity.getCity())
             )
             .build();
+        if (entity.getCoordinate() != null) {
+            dto.setLatitude(BigDecimal.valueOf(entity.getCoordinate().getY()));
+            dto.setLongitude(BigDecimal.valueOf(entity.getCoordinate().getX()));
+        }
+        return dto;
     }
 }

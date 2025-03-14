@@ -30,18 +30,19 @@ function renderScheduleBoxByDay(schedule) {
             id: `day_${index+1}_anchor`,
             class: "day-anchor",
             css: { marginBottom: "20px" },
-            "data-date": detailSchedule.date
         });
 
         // 그룹 헤더 생성 (예: "day1")
         const $dayHeader = $("<div>", {
+            id: "dayHeader",
             class: "day-header",
             css: {
                 fontSize: "20px",
                 fontWeight: "bold",
                 marginBottom: "10px",
             },
-            text: `day${index + 1}`
+            text: `day${index + 1}`,
+            "data-date": detailSchedule.date
         });
         $dayAnchor.append($dayHeader);
 
@@ -113,7 +114,7 @@ function renderScheduleBoxByDay(schedule) {
     });
 
     // Day 클릭 이벤트
-    $(".day-anchor").on("click", function() {
+    $("#schedule-container").on("click", ".day-header", function() {
         const selectedDate = $(this).attr("data-date");
         filterMarkersByDate(selectedDate);
     });
@@ -122,19 +123,21 @@ function renderScheduleBoxByDay(schedule) {
     const scrollRoot = $("#scroll-root")[0];
     const observerOptions = {
         root: scrollRoot,
-        threshold: 0,
-        rootMargin: "0px 0px -80% 0px"
+        threshold: 0.05,
+        rootMargin: "0px 0px -60px 0px"
     };
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            console.log("관찰 중:", entry.target, "교차율: ", entry.intersectionRatio)
             if (entry.isIntersecting) {
                 const selectedDate = $(entry.target).attr("data-date");
+                console.log("날짜: ", selectedDate);
                 filterMarkersByDate(selectedDate);
             }
         });
     }, observerOptions);
-    $(".day-anchor").each(function() {
+    $(".day-header").each(function() {
         observer.observe(this);
     });
 }
@@ -158,7 +161,6 @@ function getScheduleData(scheduleId, isRecommend) {
 
     ajaxCall
     .done((schedule) => {
-        console.log(schedule);
         renderScheduleBoxByDay(schedule);
     })
     .fail((xhr, _, errorThrown) => {
@@ -186,7 +188,6 @@ $(function() {
         const lastSlashIndex = path.lastIndexOf('/');
         scheduleId = parseInt(path.substring(lastSlashIndex + 1), 10);
     }
-    console.log(scheduleId, isRecommend);
     getScheduleData(scheduleId, isRecommend);
 });
 

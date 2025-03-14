@@ -93,7 +93,7 @@ function loadComments(reviewId) {
     const currentUserId = $(".comment-section").data("userId");
 
     $.ajax({
-        url: `${apiURL}/api/schedules/reviews/${reviewId}/replies`,
+        url: `/api/schedules/reviews/${reviewId}/replies`,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -132,7 +132,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: `${apiURL}/api/schedules/reviews/${reviewId}/replies`,
+            url: `/api/schedules/reviews/${reviewId}/replies`,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -174,7 +174,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: `${apiURL}/api/schedules/reviews/${reviewId}/replies?parentReplyId=${parentId}`,
+            url: `/api/schedules/reviews/${reviewId}/replies?parentReplyId=${parentId}`,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -217,7 +217,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: `${apiURL}/api/schedules/reviews/${reviewId}/replies/${replyId}`,
+            url: `/api/schedules/reviews/${reviewId}/replies/${replyId}`,
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify({ newContent: newContent }),
@@ -238,7 +238,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: `${apiURL}/api/schedules/reviews/${reviewId}/replies/${replyId}`,
+            url: `/api/schedules/reviews/${reviewId}/replies/${replyId}`,
             type: 'DELETE',
             success: () => {
                 loadComments(reviewId);

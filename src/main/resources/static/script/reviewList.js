@@ -135,7 +135,7 @@ $(document).ready(() => {
         title = $reviewList.data("title") || titleParam;
         orderType = $reviewList.data("orderType") || orderParam;
 
-        let url = apiURL + "/api/schedules/reviews?page=" + currentPage;
+        let url = "/api/schedules/reviews?page=" + currentPage;
         if (cityId) {
             url += "&cityId=" + cityId;
         }
@@ -160,7 +160,7 @@ $(document).ready(() => {
                         const cityName = $(this).attr("data-city");
 
                         // 새 창으로 상세 페이지 열기 (reviewDetail.html)
-                        const detailUrl = apiURL + `/schedules/reviews/${reviewId}?country=${encodeURIComponent(countryName)}&city=${encodeURIComponent(cityName)}`;
+                        const detailUrl = `/schedules/reviews/${reviewId}?country=${encodeURIComponent(countryName)}&city=${encodeURIComponent(cityName)}`;
                         window.open(detailUrl, '_blank');
                     });
                     $reviewList.append($reviewItem);

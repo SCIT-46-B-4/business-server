@@ -20,7 +20,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: apiURL + `/api/schedules/${scheduleId}/reviews/new`,
+            url: `/api/schedules/${scheduleId}/reviews/new`,
             type: "POST",
             data: formData,
             contentType: false,

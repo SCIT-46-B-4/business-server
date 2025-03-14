@@ -24,9 +24,6 @@ public class GlobalControllerAdvice {
     @Value("${app.static-resource-base}")
     private String staticResourceBase;
 
-    @Value("${app.api-resource-base}")
-    private String apiResourceBase;
-
     @Value("${app.review-image-file.upload-dir}")
     private String reviewImgUploadDir;
 
@@ -42,12 +39,6 @@ public class GlobalControllerAdvice {
     public String addStaticPath() {
         return staticResourceBase;
     }
-
-    /**
-     * @return api URL
-     */
-    @ModelAttribute("baseApiURL")
-    public String addApiPath() {return apiResourceBase;}
 
     @ModelAttribute("isLoggedIn")
     public boolean addIsLoggedInAttribute() {

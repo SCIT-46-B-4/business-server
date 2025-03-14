@@ -2,30 +2,31 @@ $(document).ready(function() {
     const $form = $("#reviewForm");
 
     $form.on("submit", function(event) {
-        event.preventDefault(); // 기본 폼 제출 막기
+        event.preventDefault();
 
-        // data 속성에서 scheduleId 가져오기
         const scheduleId = $form.data("schedule-id");
-        const userId = $form.data("user-id");
+        const formData = new FormData(); // 파일추가 폼 데이터
 
-        // 입력 값 가져오기
-        const reviewTitle = $("#reviewTitle").val().trim();
-        const reviewContent = $("#reviewContent").val().trim();
-
-        // POST 요청할 데이터 생성
-        const requestBody = {
-            userId: userId,
-            reviewTitle: reviewTitle,
-            reviewContent: reviewContent
+        const reviewData = {
+            userId: $("#userId").val().trim(),
+            reviewTitle: $("#reviewTitle").val().trim(),
+            reviewContent: $("#reviewContent").val().trim()
         };
+        formData.append("reviewData", new Blob([JSON.stringify(reviewData)], {type: "application/json"}));
+
+        const fileInput = $("#file")[0];
+        if(fileInput.files.length > 0) {
+            formData.append("file", fileInput.files[0]);
+        }
 
         $.ajax({
-            url: staticPath + `/api/schedules/${scheduleId}/reviews/new`,
+            url: apiURL + `/api/schedules/${scheduleId}/reviews/new`,
             type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(requestBody),
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function (response) {
-                window.location = staticPath + "/schedules/reviews";
+                console.log("업로드 성공", response);
             },
             error: function(xhr, status, error) {
                 console.error("Review creation failed", xhr);

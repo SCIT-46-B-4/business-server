@@ -4,26 +4,46 @@
     <meta charset="UTF-8" />
     <title th:text="'여행 후기 상세보기 - ' + ${reviewDetail.scheduleName}">여행 후기 상세보기</title>
 
-    <link rel="stylesheet" th:href="${staticPath + '/css/reviewDetail.css'}" />
+    <link rel="stylesheet" th:href="${baseStaticURL + '/css/reviewDetail.css'}" />
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        let staticPath = "[[${staticPath}]]";
+        let staticURL = "[[${baseStaticURL}]]";
+        let apiURL = "[[${baseApiURL}]]"
     </script>
-    <script th:src="${staticPath + '/script/reviewReply.js'}"></script>
-    <script th:src="${staticPath} + '/script/reviewLike.js'"></script>
+    <script th:src="${baseStaticURL + '/script/reviewReply.js'}"></script>
+    <script th:src="${baseStaticURL + '/script/reviewLike.js'}"></script>
+    <script th:src="${baseStaticURL + '/script/reviewDetail.js'}"></script>
 </head>
 <body>
     <div class="container" th:attr="data-review-id=${reviewDetail.reviewId}">
-        <h1 th:text="${reviewDetail.scheduleName}">여행 일정 이름</h1>
-        <p>
-            <span th:text="${reviewDetail.getUserNickName()}"></span>
-            <span th:text="${#temporals.format(reviewDetail.reviewCreatedAt, 'yyyy-MM-dd')}">작성일</span>
-        </p>
-        <p>
-            <span id="likeSpan">
-                ❤️ 0
-            </span>
-        </p>
+        <div class="review-header"
+             th:style="${'background-image: url('
+                + (reviewDetail.reviewTitleImg != null
+                    ? (baseStaticURL + reviewImgUploadDir + '/' + reviewDetail.reviewTitleImg)
+                    : (baseStaticURL + reviewImgUploadDir + '/' +
+                        (reviewDetail.cityName == '도쿄' ? 'tokyo' :
+                         reviewDetail.cityName == '오사카' ? 'osaka' :
+                         reviewDetail.cityName == '후쿠오카' ? 'fukuoka' :
+                         reviewDetail.cityName == '사포로' ? 'sapporo' : 'none')
+                         + '.jpg'))
+                + '); background-size: cover; background-position: center;'
+                }">
+
+            <!-- 삭제 및 수정 버튼, 로그인 사용자 == 리뷰 소유자 아이디가 같을때 -->
+            <div class="button-group" th:if="${#authentication.name == reviewDetail.userId + ''}">
+                <button id="btnEditReview">수정</button>
+                <button id="btnDeleteReview">삭제</button>
+            </div>
+
+            <h1 th:text="${reviewDetail.scheduleName}">여행 일정 이름</h1>
+            <p>
+                <span th:text="${reviewDetail.getUserNickName()}">작성자</span>
+                <span th:text="${#temporals.format(reviewDetail.reviewCreatedAt, 'yyyy-MM-dd')}">작성일</span>
+            </p>
+            <p>
+                <span id="likeSpan">❤️ 0</span>
+            </p>
+        </div>
         <div class="schedule-details">
             <h3>일정 상세</h3>
             <div th:each="detail : ${reviewDetail.detailSchedules}">
@@ -46,7 +66,7 @@
                                 <p th:text="${route.contents}">세부 내용</p>
                             </div>
                             <div class="route-img">
-                                <img th:src="${staticPath} + '/images/destination/' +
+                                <img th:src="${baseStaticURL} + '/images/destination/' +
                                              ${
                                                  reviewDetail.cityName == '도쿄' ? 'tokyo' :
                                                  reviewDetail.cityName == '오사카' ? 'osaka' :

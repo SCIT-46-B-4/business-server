@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestReviewLikeController {
     private final ReviewLikeService reviewLikeService;
 
-
     @GetMapping("/{reviewId}/like")
     public ResponseEntity<ReviewLikeResponseDTO> getLike(
             @AuthenticationPrincipal UserDetails userDetails,

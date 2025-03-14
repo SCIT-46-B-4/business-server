@@ -19,15 +19,35 @@ public class GlobalControllerAdvice {
     private final UserService userService;
 
     /**
-     * Product/Develop 환경 정적 파일 url
+     * Product/Develop 환경 api/static URL
      */
     @Value("${app.static-resource-base}")
     private String staticResourceBase;
 
-    @ModelAttribute("staticPath")
+    @Value("${app.api-resource-base}")
+    private String apiResourceBase;
+
+    @Value("${app.review-image-file.upload-dir}")
+    private String reviewImgUploadDir;
+
+    @ModelAttribute("reviewImgUploadDir")
+    public String getReviewImgUploadDir() {
+        return reviewImgUploadDir;
+    }
+
+    /**
+     * @return 정적 파일 URL
+     */
+    @ModelAttribute("baseStaticURL")
     public String addStaticPath() {
         return staticResourceBase;
     }
+
+    /**
+     * @return api URL
+     */
+    @ModelAttribute("baseApiURL")
+    public String addApiPath() {return apiResourceBase;}
 
     @ModelAttribute("isLoggedIn")
     public boolean addIsLoggedInAttribute() {

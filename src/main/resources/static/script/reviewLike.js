@@ -15,7 +15,7 @@ $(document).ready(function () {
 
         function loadLikeInfo(reviewId) {
             $.ajax({
-                url: `/api/schedules/reviews/${reviewId}/like`,
+                url: apiURL + `/api/schedules/reviews/${reviewId}/like`,
                 type: 'GET',
                 dataType: 'json',
                 success: function (resp) {
@@ -31,7 +31,7 @@ $(document).ready(function () {
         // 좋아요 바꾸기
         function changeLike(reviewId) {
             $.ajax({
-                url: `/api/schedules/reviews/${reviewId}/changeLike`,
+                url: apiURL + `/api/schedules/reviews/${reviewId}/changeLike`,
                 type: 'GET',
                 dataType: 'json',
                 success: function (resp) {

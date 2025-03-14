@@ -6,11 +6,13 @@
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <script>
-        let staticPath = "[[${staticPath}]]";
+        let staticURL = "[[${baseStaticURL}]]";
+        let apiURL = "[[${baseApiURL}]]"
+        let reviewImgUploadDir = `[[${reviewImgUploadDir}]]`
     </script>
 
-    <script th:src="${staticPath + '/script/reviewList.js'}"></script>
-    <link th:href="${staticPath + '/css/reviewList.css'}" rel="stylesheet" />
+    <script th:src="${baseStaticURL + '/script/reviewList.js'}"></script>
+    <link th:href="${baseStaticURL + '/css/reviewList.css'}" rel="stylesheet" />
 </head>
 <body>
     <div class="container">

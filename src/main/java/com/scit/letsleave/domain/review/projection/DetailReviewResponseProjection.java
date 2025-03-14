@@ -15,6 +15,7 @@ public class DetailReviewResponseProjection {
     private String reviewTitle;
     private String reviewContent;
     private int likeCount;
+    private String reviewTitleImg;
     private LocalDateTime reviewCreatedAt;
 
     // schedule

@@ -37,6 +37,7 @@ public class ReviewController {
         return "review/reviewList";
     }
 
+    // 리뷰 디테일 페이지
     @GetMapping("/reviews/{reviewId}")
     public String getScheduleReviewDetailPage(
             Model model,
@@ -80,26 +81,5 @@ public class ReviewController {
                 )
         );
         return "review/reviewEdit";
-    }
-
-    // 수정
-    @PostMapping("/reviews/{reviewId}/edit")
-    public String updateScheduleReview(
-            @PathVariable("reviewId") final Long reviewId,
-            @AuthenticationPrincipal UserDetails userDetails,
-            @ModelAttribute ReviewRequestDTO requestDTO
-    ) {
-        reviewService.updateReview(userDetails, reviewId, requestDTO);
-        return "redirect:/schedules/reviews";
-    }
-
-    // 삭제
-    @GetMapping("/reviews/{reviewId}/delete")
-    public String deleteScheduleReview(
-            @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable("reviewId") final Long reviewId
-    ) {
-        reviewService.deleteReview(userDetails, reviewId);
-        return "redirect:review/reviewList";
     }
 }

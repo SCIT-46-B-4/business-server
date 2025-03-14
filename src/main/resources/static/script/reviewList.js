@@ -11,15 +11,15 @@ $(document).ready(() => {
     // 국가별 도시 설정
     const countryCities = {
         "1": [
-            { id: 1, name: "도쿄" },
-            { id: 2, name: "오사카" },
-            { id: 3, name: "후쿠오카" },
-            { id: 4, name: "삿포로" }
+            {id: 1, name: "도쿄"},
+            {id: 2, name: "오사카"},
+            {id: 3, name: "후쿠오카"},
+            {id: 4, name: "삿포로"}
         ]
     };
 
     // 국가 선택 변경 시 도시 업데이트
-    $countrySelect.on("change", function() {
+    $countrySelect.on("change", function () {
         const selectedCountry = $(this).val();
         $citySelect.html('<option value="">도시 선택</option>');
         if (selectedCountry && countryCities[selectedCountry]) {
@@ -83,16 +83,33 @@ $(document).ready(() => {
         const searchTitle = $searchInput.val() || '';
         const selectedOrder = $orderSelect.val() || 'LATEST';
         let queryStr = '?';
-        if (selectedCountry) { queryStr += 'country=' + selectedCountry + '&'; }
-        if (selectedCity) { queryStr += 'cityId=' + selectedCity + '&'; }
-        if (searchTitle) { queryStr += 'title=' + encodeURIComponent(searchTitle) + '&'; }
-        if (selectedOrder) { queryStr += 'orderType=' + selectedOrder + '&'; }
+        if (selectedCountry) {
+            queryStr += 'country=' + selectedCountry + '&';
+        }
+        if (selectedCity) {
+            queryStr += 'cityId=' + selectedCity + '&';
+        }
+        if (searchTitle) {
+            queryStr += 'title=' + encodeURIComponent(searchTitle) + '&';
+        }
+        if (selectedOrder) {
+            queryStr += 'orderType=' + selectedOrder + '&';
+        }
         queryStr += 'page=0';
         window.location.href = "/schedules/reviews" + queryStr;
     });
 
     // 리뷰 아이템 생성 함수
     const createReviewItem = (review) => {
+        const cityImage = review.titleImg
+            ? `${staticURL}${reviewImgUploadDir}/${review.titleImg}`
+            : `${staticURL}${reviewImgUploadDir}/${
+                    review.city === '도쿄' ? 'tokyo' :
+                    review.city === '오사카' ? 'osaka' :
+                    review.city === '후쿠오카' ? 'fukuoka' :
+                    review.city === '삿포로' ? 'sapporo' : 'default'
+            }.jpg`;
+
         return $("<div>")
             .addClass("review-item")
             .attr("data-review-id", review.id)
@@ -104,8 +121,8 @@ $(document).ready(() => {
                 '<span class="country">' + review.country + '</span>' +
                 '<span class="city">' + review.city + '</span>' +
                 '</div>' +
-                '<div class="review-title">' + review.title + '</div>' +
-                '<div class="like-count">❤️ ' + review.likeCount + '</div>' +
+                `<img src="${cityImage}" alt="이미지"/>` +
+                '<div class="review-title">' + review.title + '<span class="review-like">' + '  ❤️' + review.likeCount + '</span>' + '</div>' +
                 '<div class="created-at">' + new Date(review.createdAt).toLocaleDateString() + '</div>'
             );
     };
@@ -118,10 +135,16 @@ $(document).ready(() => {
         title = $reviewList.data("title") || titleParam;
         orderType = $reviewList.data("orderType") || orderParam;
 
-        let url = "/api/schedules/reviews?page=" + currentPage;
-        if (cityId) { url += "&cityId=" + cityId; }
-        if (title) { url += "&title=" + encodeURIComponent(title); }
-        if (orderType) { url += "&orderType=" + orderType; }
+        let url = apiURL + "/api/schedules/reviews?page=" + currentPage;
+        if (cityId) {
+            url += "&cityId=" + cityId;
+        }
+        if (title) {
+            url += "&title=" + encodeURIComponent(title);
+        }
+        if (orderType) {
+            url += "&orderType=" + orderType;
+        }
 
         $.ajax({
             url: url,
@@ -131,12 +154,13 @@ $(document).ready(() => {
                 $.each(data.content, (index, review) => {
                     const $reviewItem = createReviewItem(review);
                     // 클릭 이벤트를 새 창 열기로 처리
-                    $reviewItem.on("click", function() {
+                    $reviewItem.on("click", function () {
                         const reviewId = $(this).attr("data-review-id");
                         const countryName = $(this).attr("data-country");
                         const cityName = $(this).attr("data-city");
+
                         // 새 창으로 상세 페이지 열기 (reviewDetail.html)
-                        const detailUrl = `/schedules/reviews/${reviewId}?country=${encodeURIComponent(countryName)}&city=${encodeURIComponent(cityName)}`;
+                        const detailUrl = apiURL + `/schedules/reviews/${reviewId}?country=${encodeURIComponent(countryName)}&city=${encodeURIComponent(cityName)}`;
                         window.open(detailUrl, '_blank');
                     });
                     $reviewList.append($reviewItem);

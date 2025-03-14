@@ -44,15 +44,15 @@ public class ReviewEntity {
     @Column(name = "like_count")
     private int likeCount;
 
+    @Column(name = "title_img")
+    private String titleImg;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @Column
-    private String title_img;
 
     public void modifyTitle(String title) {
         this.title = title;
@@ -75,6 +75,10 @@ public class ReviewEntity {
 
     public int decreaseLike() {
         return --likeCount;
+    }
+
+    public void changeTitleImg(String titleImg) {
+        this.titleImg = titleImg;
     }
 
     @Builder

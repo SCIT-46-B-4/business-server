@@ -5,11 +5,12 @@
     <title th:text="'여행 후기 수정 - ' + ${reviewDetail.scheduleName}"></title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        let staticPath = "[[${staticPath}]]"; // 환경 변수
+        let staticURL = "[[${baseStaticURL}]]";
+        let apiURL = "[[${baseApiURL}]]"
     </script>
 
-    <link rel="stylesheet" th:href="${staticPath + '/css/reviewCreate.css'}" />
-    <script th:src="${staticPath + '/script/reviewCreate.js'}"></script>
+    <link rel="stylesheet" th:href="${baseStaticURL + '/css/reviewCreate.css'}" />
+    <script th:src="${baseStaticURL + '/script/reviewEdit.js'}"></script>
 </head>
 <body>
 <div class="container">
@@ -36,7 +37,7 @@
                             <p th:text="${route.contents}">세부 내용</p>
                         </div>
                         <div class="route-img">
-                            <img th:src="${staticPath} + '/images/destination/' +
+                            <img th:src="${baseStaticURL} + '/images/destination/' +
                                              ${
                                                  reviewDetail.cityName == '도쿄' ? 'tokyo' :
                                                  reviewDetail.cityName == '오사카' ? 'osaka' :
@@ -61,17 +62,20 @@
     </div>
 
     <!-- 리뷰 작성 폼 -->
+
     <div class="review-section">
-        <form th:action="${staticPath + '/schedules/reviews/' + reviewDetail.reviewId + '/edit'}" method="post">
-            <input type="hidden" name="userId" th:value="${reviewDetail.userId}">
-            <h3 for="reviewTitle">리뷰 제목</h3>
+        <form id="reviewForm" enctype="multipart/form-data" th:attr="data-review-id=${reviewDetail.reviewId}">
+            <input hidden="hidden" name="userId" id="userId" th:value="${reviewDetail.userId}">
+            <h3 for="reviewTitle">리뷰 제목, 메인 이미지</h3>
             <div class="review-form">
-                <input type="text" id="reviewTitle" name="reviewTitle" th:placeholder="${reviewDetail.reviewTitle}" required />
+                <input type="text" id="reviewTitle" name="reviewTitle" placeholder="제목을 입력하세요" required/>
+                <input type="file" id="file" name="file" accept="image/*">
             </div>
             <h3 for="reviewContent">리뷰 내용</h3>
             <div class="review-form">
-                <textarea id="reviewContent" name="reviewContent" rows="5" th:placeholder="${reviewDetail.reviewContent}" required></textarea>
-                <button type="submit">리뷰 수정</button>
+                <textarea id="reviewContent" name="reviewContent" rows="5" placeholder="내용을 입력하세요" required></textarea>
+                <button type="submit">리뷰 작성</button>
+            </div>
         </form>
     </div>
 </div>

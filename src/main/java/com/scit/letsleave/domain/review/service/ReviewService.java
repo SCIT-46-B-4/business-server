@@ -9,10 +9,10 @@ import com.scit.letsleave.domain.review.entity.ReviewEntity;
 import com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection;
 import com.scit.letsleave.domain.review.repository.ReviewRepository;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
-import com.scit.letsleave.domain.schedule.repository.DetailScheduleRepository;
 import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.*;
 
 @Slf4j
@@ -30,6 +32,8 @@ import java.util.*;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ScheduleRepository scheduleRepository;
+    private final FileService fileService;
+
 
     /**
      * @param requestDTO 여행기 검색 조건 DTO
@@ -120,6 +124,7 @@ public class ReviewService {
                 first.getReviewTitle(),
                 first.getReviewContent(),
                 first.getLikeCount(),
+                first.getReviewTitleImg(),
                 first.getReviewCreatedAt(),
                 first.getScheduleId(),
                 first.getScheduleName(),
@@ -175,6 +180,7 @@ public class ReviewService {
                 first.getReviewTitle(),
                 first.getReviewContent(),
                 first.getLikeCount(),
+                first.getReviewTitleImg(),
                 first.getReviewCreatedAt(),
                 first.getScheduleId(),
                 first.getScheduleName(),
@@ -191,9 +197,10 @@ public class ReviewService {
      * @param userDetails 현재 로그인 유저 정보
      * @param scheduleId  스케줄 ID
      * @param requestDTO  userId, title, content
+     * @param file
      */
     @Transactional
-    public void createReview(UserDetails userDetails, Long scheduleId, ReviewRequestDTO requestDTO) {
+    public void createReview(UserDetails userDetails, Long scheduleId, ReviewRequestDTO requestDTO, MultipartFile file) {
         long userId = Long.parseLong(userDetails.getUsername());
         Optional<ScheduleEntity> scheduleOpt = scheduleRepository.findByIdAndUser_id(scheduleId, userId);
         if(scheduleOpt.isEmpty()) {
@@ -209,6 +216,13 @@ public class ReviewService {
                 .schedule(scheduleEntity)
                 .build();
 
+        String titleImg = "";
+        // 파일 업로드
+        if(isValidFile(file)) {
+            titleImg = fileService.upload(file);
+            review.changeTitleImg(titleImg);
+        }
+
         reviewRepository.save(review);
     }
 
@@ -216,7 +230,7 @@ public class ReviewService {
      * 리뷰 업데이트
      */
     @Transactional
-    public void updateReview(UserDetails userDetails, Long reviewId, ReviewRequestDTO requestDTO) {
+    public void updateReview(UserDetails userDetails, Long reviewId, ReviewRequestDTO requestDTO, MultipartFile file) {
         long userId = Long.parseLong(userDetails.getUsername());
         Optional<ReviewEntity> reviewOpt = reviewRepository.findByIdAndUserId(reviewId, userId);
         if(reviewOpt.isEmpty()) {
@@ -225,8 +239,24 @@ public class ReviewService {
         }
         ReviewEntity review = reviewOpt.get();
 
+        if(isValidFile(file)) {
+            // 파일 변경
+            if (review.getTitleImg() != null) {
+                fileService.overWrite(file, review.getTitleImg());
+            }
+            // 없다면 업로드
+            else {
+                String uploadedImg = fileService.upload(file);
+                review.changeTitleImg(uploadedImg);
+            }
+        }
+
         review.modifyContent(requestDTO.getReviewContent());
         review.modifyTitle(requestDTO.getReviewTitle());
+    }
+
+    private boolean isValidFile(MultipartFile file) {
+        return file != null && !file.isEmpty();
     }
 
     /**
@@ -235,6 +265,8 @@ public class ReviewService {
     @Transactional
     public void deleteReview(UserDetails userDetails, Long reviewId) {
         long userId = Long.parseLong(userDetails.getUsername());
-        reviewRepository.deleteByIdAndUserId(reviewId, userId);
+        if (reviewRepository.deleteByIdAndUserId(reviewId, userId) < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제에 실패했습니다.");
+        }
     }
 }

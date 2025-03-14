@@ -18,11 +18,12 @@ public class ReviewResponseDTO {
     private final String title;
     private final String content;
     private final int likeCount;
+    private final String titleImg;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
     @Builder
-    public ReviewResponseDTO(Long id, Long userId, Long scheduleId, String country, String city, String title, String content, int likeCount, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ReviewResponseDTO(Long id, Long userId, Long scheduleId, String country, String city, String title, String content, int likeCount, String titleImg, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.userId = userId;
         this.scheduleId = scheduleId;
@@ -31,6 +32,7 @@ public class ReviewResponseDTO {
         this.title = title;
         this.content = content;
         this.likeCount = likeCount;
+        this.titleImg = titleImg;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -45,16 +47,13 @@ public class ReviewResponseDTO {
                 .city(entity.getSchedule().getCityName())
                 .likeCount(entity.getLikeCount())
                 .content(entity.getContent())
+                .titleImg(entity.getTitleImg())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
     }
 
     public static List<ReviewResponseDTO> fromEntities(List<ReviewEntity> entities) {
-        return entities.stream().map(ReviewResponseDTO::fromEntity).toList();
-    }
-
-    public static List<ReviewResponseDTO> fromEntitiesPage(Page<ReviewEntity> entities) {
         return entities.stream().map(ReviewResponseDTO::fromEntity).toList();
     }
 }

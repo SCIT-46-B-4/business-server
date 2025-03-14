@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -63,6 +62,7 @@ public class ReviewReplyService {
         if (parentReplyId != null) {
             parentReply = reviewReplyRepository.findById(parentReplyId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "부모 댓글 없음"));
+            // 삭제된 경우도 부모 댓글 없음
             if (Boolean.TRUE.equals(parentReply.getIsDeleted())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "부모 댓글 없음");
             }

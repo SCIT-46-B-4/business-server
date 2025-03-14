@@ -26,7 +26,7 @@ public class ReviewLikeService {
     private final UserRepository userRepository;
 
     // reviewLike 조회
-    @Transactional
+    @Transactional(readOnly = true)
     public ReviewLikeResponseDTO getLike(UserDetails userDetails, Long reviewId) {
         long userId = Long.parseLong(userDetails.getUsername());
         ReviewEntity reviewEntity = reviewRepository.findById(reviewId)

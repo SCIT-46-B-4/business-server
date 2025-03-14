@@ -2,14 +2,15 @@ package com.scit.letsleave.domain.destination.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.scit.letsleave.domain.destination.entity.CityEntity;
 import com.scit.letsleave.domain.destination.entity.CountryEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,9 +29,9 @@ public class CountryDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<CityEntity> cities;
+    private List<CityDto> cities;
 
-    public static CountryDto toDTO(CountryEntity entity) {
+    public static CountryDto toDto(CountryEntity entity) {
         return CountryDto.builder()
             .id(entity.getId())
             .krName(entity.getKrName())
@@ -42,7 +43,7 @@ public class CountryDto {
             .currencyCode(entity.getCurrencyCode())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
-            .cities(entity.getCities())
+            .cities(entity.getCities().stream().map(CityDto::toDto).collect(Collectors.toList()))
             .build();
     }
 }

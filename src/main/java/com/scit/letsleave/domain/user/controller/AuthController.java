@@ -30,6 +30,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+
 @RestController
 @RequestMapping("/api/users/auth")
 @RequiredArgsConstructor
@@ -54,9 +55,9 @@ public class AuthController {
     // 중복 확인 (이메일, 전화번호)
     @GetMapping("/check")
     public ResponseEntity<Map<String, Object>> duplicationCheck(
-            @RequestParam String type,
-            @RequestParam String val) {
-
+        @RequestParam(name="type") String type,
+        @RequestParam(name="val") String val
+    ) {
         // 이메일 중복 확인
         if (type.equals("email")) {
             boolean emailExists = userService.isEmailExists(val);
@@ -85,10 +86,10 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         // 사용자 인증
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequestDto.getEmail(),
-                        loginRequestDto.getPassword()
-                )
+            new UsernamePasswordAuthenticationToken(
+                loginRequestDto.getEmail(),
+                loginRequestDto.getPassword()
+            )
         );
 
         // 인증 성공 시 Spring Security의 SecurityContext에 인증 정보 설정
@@ -145,7 +146,7 @@ public class AuthController {
         Boolean isAgreeMarketingNoti = (Boolean) requestData.getOrDefault("isAgreeMarketingNoti", false);
 
         // 사용자 정보 업데이트
-        authService.updateUserInfo(Long.parseLong(userId), name, nickname, phone, isAgreeLoc, isAgreeNewsNoti, isAgreeMarketingNoti);
+        authService.updateUserInfo(Long.valueOf(userId), name, nickname, phone, isAgreeLoc, isAgreeNewsNoti, isAgreeMarketingNoti);
 
         return ResponseEntity.ok(Map.of("message", "추가 정보가 성공적으로 저장되고 로그인되었습니다."));
     }

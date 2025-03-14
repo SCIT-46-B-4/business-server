@@ -1,9 +1,5 @@
-* {
-  box-sizing: border-box;
-  font-family: "Noto Sans", sans-serif;
-  margin: 0;
-  padding: 0;
-}
+@import url(../global/reset.css);
+
 
 .sample-photo {
   width: 80px;
@@ -80,8 +76,8 @@
   height: 6em;
 }
 
-.trip-info h4,
-.trip-info p {
+.trip-info span.tripName,
+.trip-info span.tripPeriod {
   margin-left: 20px;
   margin-bottom: 5px;
 }

@@ -1,4 +1,4 @@
-import { AjaxAPI } from "./ajax.js";
+import { AjaxAPI } from "./global/ajax.js";
 
 /**
  * 수동 슬라이더 생성

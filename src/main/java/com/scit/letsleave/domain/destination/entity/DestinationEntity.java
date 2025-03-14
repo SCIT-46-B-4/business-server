@@ -1,24 +1,36 @@
 package com.scit.letsleave.domain.destination.entity;
 
-import com.scit.letsleave.domain.destination.dto.DestinationDto;
-import com.scit.letsleave.domain.schedule.entity.RouteEntity;
-import com.vladmihalcea.hibernate.type.json.JsonType;
-import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
+import com.scit.letsleave.domain.destination.dto.DestinationDto;
+import com.scit.letsleave.domain.schedule.entity.RouteEntity;
+import com.vladmihalcea.hibernate.type.json.JsonType;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -93,36 +105,36 @@ public class DestinationEntity {
     @JoinColumn(name = "city_id")
     private CityEntity city;
 
-    @OneToMany(mappedBy = "destinationEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     private List<RouteEntity> routes;
 
     public static DestinationEntity toEntity(DestinationDto dto, CityEntity city, List<RouteEntity> routeList) {
         GeometryFactory geometryFactory = new GeometryFactory();
 
         Point point = geometryFactory.createPoint(
-                new Coordinate(dto.getLongitude().doubleValue(), dto.getLatitude().doubleValue())
+            new Coordinate(dto.getLongitude().doubleValue(), dto.getLatitude().doubleValue())
         );
         return DestinationEntity.builder()
-                .id(dto.getId())
-                .type(dto.getType())
-                .krName(dto.getKrName())
-                .locName(dto.getLocName())
-                .title(dto.getTitle())
-                .content(dto.getContent())
-                .latitude(dto.getLatitude())
-                .longitude(dto.getLongitude())
-                .address(dto.getAddress())
-                .contact(dto.getContact())
-                .homepage(dto.getHomepage())
-                .howToGo(dto.getHowToGo())
-                .availableTime(dto.getAvailableTime())
-                .feature(dto.getFeature())
-                .score(dto.getScore())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .coordinate(point)
-                .city(city)
-                .routes(routeList)
-                .build();
+            .id(dto.getId())
+            .type(dto.getType())
+            .krName(dto.getKrName())
+            .locName(dto.getLocName())
+            .title(dto.getTitle())
+            .content(dto.getContent())
+            .latitude(dto.getLatitude())
+            .longitude(dto.getLongitude())
+            .address(dto.getAddress())
+            .contact(dto.getContact())
+            .homepage(dto.getHomepage())
+            .howToGo(dto.getHowToGo())
+            .availableTime(dto.getAvailableTime())
+            .feature(dto.getFeature())
+            .score(dto.getScore())
+            .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
+            .coordinate(point)
+            .city(city)
+            .routes(routeList)
+            .build();
         }
 }

@@ -12,6 +12,7 @@ import com.scit.letsleave.domain.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalControllerAdvice {
@@ -43,8 +44,11 @@ public class GlobalControllerAdvice {
     @ModelAttribute("isLoggedIn")
     public boolean addIsLoggedInAttribute() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null && authentication.isAuthenticated() &&
-                !authentication.getPrincipal().equals("anonymousUser");
+        return (
+            authentication != null &&
+            authentication.isAuthenticated() &&
+            !authentication.getPrincipal().equals("anonymousUser")
+        );
     }
 
     /**
@@ -57,7 +61,7 @@ public class GlobalControllerAdvice {
         if (authentication != null && authentication.isAuthenticated()) {
             try {
                 String userId = authentication.getName(); // Access Token의 Subject (사용자 ID)
-                UserEntity user = userService.findById(Long.parseLong(userId));
+                UserEntity user = userService.findById(Long.valueOf(userId));
                 if (user != null) {
                     return UserDto.toDto(user); // UserEntity -> UserDto 변환 후 반환
                 }

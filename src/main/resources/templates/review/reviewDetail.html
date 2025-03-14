@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <title th:text="'여행 후기 상세보기 - ' + ${reviewDetail.scheduleName}">여행 후기 상세보기</title>
-
-    <link rel="stylesheet" th:href="${baseStaticURL + '/css/reviewDetail.css'}" />
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
     <script>
         let staticURL = "[[${baseStaticURL}]]";
     </script>
-    <script th:src="${baseStaticURL + '/script/reviewReply.js'}"></script>
-    <script th:src="${baseStaticURL + '/script/reviewLike.js'}"></script>
-    <script th:src="${baseStaticURL + '/script/reviewDetail.js'}"></script>
+
+    <script th:src="@{|${baseStaticURL}/script/review/reviewReply.js|}"></script>
+    <script th:src="@{|${baseStaticURL}/script/review/reviewLike.js|}"></script>
+    <script th:src="@{|${baseStaticURL}/script/review/reviewDetail.js|}"></script>
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/review/reviewDetail.css|}" />
 </head>
 <body>
     <div class="container" th:attr="data-review-id=${reviewDetail.reviewId}">

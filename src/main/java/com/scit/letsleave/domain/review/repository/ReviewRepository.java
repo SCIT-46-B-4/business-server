@@ -51,10 +51,10 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
                 )
                 FROM ReviewEntity r
                 JOIN r.schedule s
-                JOIN UserEntity u ON s.user_id = u.id
+                JOIN UserEntity u ON s.user.id = u.id
                 LEFT JOIN s.detailScheduleEntities d
                 LEFT JOIN d.routes ro
-                LEFT JOIN ro.destinationEntity de
+                LEFT JOIN ro.destination de
                 WHERE r.id = :reviewId
                 ORDER BY d.date ASC, ro.orderNumber ASC
             """)
@@ -76,10 +76,10 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
                 )
                 FROM ReviewEntity r
                 JOIN r.schedule s
-                JOIN UserEntity u ON s.user_id = u.id
+                JOIN UserEntity u ON s.user.id = u.id
                 LEFT JOIN s.detailScheduleEntities d
                 LEFT JOIN d.routes ro
-                LEFT JOIN ro.destinationEntity de
+                LEFT JOIN ro.destination de
                 WHERE r.id = :reviewId and r.userId = :userId
                 ORDER BY d.date ASC, ro.orderNumber ASC
             """)
@@ -102,4 +102,6 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT r FROM ReviewEntity r WHERE r.id = :reviewId")
     Optional<ReviewEntity> findByIdWithLock(@Param("reviewId") Long reviewId);
+
+    Boolean existsBySchedule_Id(Long scheduleId);
 }

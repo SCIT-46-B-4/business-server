@@ -30,13 +30,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // 이메일을 기반으로 사용자 정보를 데이터베이스에서 조회
         UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + email));
+            .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + email));
 
         // 조회된 사용자 정보를 Spring Security의 User 객체로 변환하여 반환
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), // 이메일을 username으로 사용
-                user.getPassword(), // 암호화된 비밀번호
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")) // 기본 권한 설정
+            user.getEmail(), // 이메일을 username으로 사용
+            user.getPassword(), // 암호화된 비밀번호
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")) // 기본 권한 설정
         );
     }
 
@@ -50,13 +50,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // ID를 기반으로 사용자 정보를 데이터베이스에서 조회
         UserEntity user = userRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + id));
+            .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + id));
 
         // 조회된 사용자 정보를 Spring Security의 User 객체로 변환하여 반환
         return new org.springframework.security.core.userdetails.User(
-                String.valueOf(user.getId()), // ID를 username으로 사용
-                user.getPassword(), // 암호화된 비밀번호
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")) // 기본 권한 설정
+            String.valueOf(user.getId()), // ID를 username으로 사용
+            user.getPassword(), // 암호화된 비밀번호
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")) // 기본 권한 설정
         );
     }
 }

@@ -76,8 +76,10 @@ $(document).ready(function () {
     function checkEmail() {
         const email = $("#email").val().trim(); // 앞뒤 공백 제거
 
-        if (!validateField("email", "emailError", "이메일을 입력하세요.") ||
-            !isValidEmail(email)) {
+        if (
+            !validateField("email", "emailError", "이메일을 입력하세요.") ||
+            !isValidEmail(email)
+        ) {
             $("#emailError")
                 .text("올바른 이메일 형식이 아닙니다.")
                 .removeClass("success")

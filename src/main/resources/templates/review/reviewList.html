@@ -10,8 +10,8 @@
         let reviewImgUploadDir = `[[${reviewImgUploadDir}]]`
     </script>
 
-    <script th:src="${baseStaticURL + '/script/reviewList.js'}"></script>
-    <link th:href="${baseStaticURL + '/css/reviewList.css'}" rel="stylesheet" />
+    <script th:src="@{|${baseStaticURL}/script/review/reviewList.js|}"></script>
+    <link th:href="@{|${baseStaticURL}/css/review/reviewList.css|}" rel="stylesheet"/>
 </head>
 <body>
     <div class="container">

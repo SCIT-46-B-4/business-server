@@ -34,7 +34,6 @@ public class ReviewService {
     private final ScheduleRepository scheduleRepository;
     private final FileService fileService;
 
-
     /**
      * @param requestDTO 여행기 검색 조건 DTO
      * @return 여행기 리뷰 페이징 DTO
@@ -209,6 +208,11 @@ public class ReviewService {
         }
         ScheduleEntity scheduleEntity = scheduleOpt.get();
 
+        if (reviewRepository.existsBySchedule_Id(scheduleEntity.getId())) {
+            log.info("id {} schedule 이미 존재.", scheduleId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 리뷰를 작성한 스케줄 입니다.");
+        }
+
         ReviewEntity review = ReviewEntity.builder()
                 .userId(requestDTO.getUserId())
                 .title(requestDTO.getReviewTitle())
@@ -240,15 +244,7 @@ public class ReviewService {
         ReviewEntity review = reviewOpt.get();
 
         if(isValidFile(file)) {
-            // 파일 변경
-            if (review.getTitleImg() != null) {
-                fileService.overWrite(file, review.getTitleImg());
-            }
-            // 없다면 업로드
-            else {
-                String uploadedImg = fileService.upload(file);
-                review.changeTitleImg(uploadedImg);
-            }
+            callFileService(file, review);
         }
 
         review.modifyContent(requestDTO.getReviewContent());
@@ -257,6 +253,18 @@ public class ReviewService {
 
     private boolean isValidFile(MultipartFile file) {
         return file != null && !file.isEmpty();
+    }
+
+    private void callFileService(MultipartFile file, ReviewEntity review) {
+        // 파일 변경
+        if (review.getTitleImg() != null) {
+            fileService.overWrite(file, review.getTitleImg());
+        }
+        // 없다면 업로드
+        else {
+            String uploadedImg = fileService.upload(file);
+            review.changeTitleImg(uploadedImg);
+        }
     }
 
     /**

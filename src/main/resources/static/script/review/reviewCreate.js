@@ -27,6 +27,7 @@ $(document).ready(function() {
             processData: false,
             success: function (response) {
                 console.log("업로드 성공", response);
+                window.location.href = "/schedules/reviews"; // 목록 페이지로 이동
             },
             error: function(xhr, status, error) {
                 console.error("Review creation failed", xhr);

@@ -10,13 +10,10 @@
       href="../../static/css/main-city.css"
       th:href="@{/css/main-city.css}"
     />
-    <!-- js -->
-    <!-- <script src="../js/main-city.js" th:src=""></script> -->
   </head>
 
   <body>
     <div class="container">
-      <!-- 검색창 -->
       <div class="search">
         <a th:href="@{/guides/main-city-search}" class="search-box">
           <span class="icon">🔍</span> 어디든지
@@ -24,7 +21,6 @@
       </div>
 
       <div>
-        <!-- HOT 방문지 목록 -->
         <h2>
           <span th:if="${cityId == 0}">지금 가장 HOT🔥한 방문지 TOP 10</span>
           <span
@@ -53,34 +49,9 @@
         </div>
       </div>
 
-      <!-- <div class="pagination">
-        <nav class="pagination">
-          <ul>
-            페이지네이션에서 currentPage 값 사용 
-            <li th:if="${currentPage > 1}">
-              <a th:href="@{/guides/main-city(page=${currentPage - 1})}"
-                >&lsaquo;</a
-              >
-            </li>
-            <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-              <a
-                th:href="@{/guides/main-city(page=${i})}"
-                th:text="${i + 1}"
-              ></a>
-            </li>
-            <li th:if="${currentPage < totalPages - 1}">
-              <a th:href="@{/guides/main-city(page=${currentPage + 1})}">
-                &rsaquo;</a
-              >
-            </li>
-          </ul>
-        </nav>
-      </div> -->
-
       <div class="pagination">
         <nav class="pagination">
           <ul>
-            <!-- 이전 페이지 -->
             <li th:if="${currentPage > 0}">
               <a
                 th:href="@{/guides/main-city(page=${currentPage - 1}, cityId=${cityId})}"
@@ -88,7 +59,6 @@
               >
             </li>
 
-            <!-- 페이지 번호 (1부터 시작) -->
             <li th:each="i : ${#numbers.sequence(1, totalPages)}">
               <a
                 th:href="@{/guides/main-city(page=${i - 1}, cityId=${cityId})}"
@@ -98,7 +68,6 @@
               </a>
             </li>
 
-            <!-- 다음 페이지 -->
             <li th:if="${currentPage < totalPages - 1}">
               <a
                 th:href="@{/guides/main-city(page=${currentPage + 1}, cityId=${cityId})}"

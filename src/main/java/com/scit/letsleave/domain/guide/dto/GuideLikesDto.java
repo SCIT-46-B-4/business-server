@@ -29,8 +29,8 @@ public class GuideLikesDto {
    public static GuideLikesDto toDto(GuideLikesEntity entity) {
         return GuideLikesDto.builder()
             .id(entity.getId())
-            .userId(entity.getUserEntity().getId())
-            .guideId(entity.getGuideEntity().getId())
+            .userId(entity.getUser().getId())
+            .guideId(entity.getGuide().getId())
             .createdAt(entity.getCreatedAt())
             .build();
     }

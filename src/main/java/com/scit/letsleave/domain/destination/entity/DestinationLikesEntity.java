@@ -37,11 +37,11 @@ public class DestinationLikesEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false)
-    private DestinationEntity destinationEntity;
+    private DestinationEntity destination;
 
     @Column(name = "created_at", nullable = false,  columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
@@ -49,8 +49,8 @@ public class DestinationLikesEntity {
     public static DestinationLikesEntity toEntity(DestinationLikesDto dto){
             return DestinationLikesEntity.builder()
             .id(dto.getId())
-            .userEntity(UserEntity.builder().id(dto.getUserId()).build())
-            .destinationEntity(DestinationEntity.builder().id(dto.getDestinationId()).build())
+            .user(UserEntity.builder().id(dto.getUserId()).build())
+            .destination(DestinationEntity.builder().id(dto.getDestinationId()).build())
             .createdAt(dto.getCreatedAt())
            .build();
     }

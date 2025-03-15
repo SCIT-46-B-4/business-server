@@ -29,8 +29,8 @@ public class DestinationLikesDto {
     public static DestinationLikesDto toDto(DestinationLikesEntity entity) {
         return DestinationLikesDto.builder()
             .id(entity.getId())
-            .userId(entity.getUserEntity().getId())
-            .destinationId(entity.getDestinationEntity().getId())
+            .userId(entity.getUser().getId())
+            .destinationId(entity.getDestination().getId())
             .createdAt(entity.getCreatedAt())
             .build();
     }

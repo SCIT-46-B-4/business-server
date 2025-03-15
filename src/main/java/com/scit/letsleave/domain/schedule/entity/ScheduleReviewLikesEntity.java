@@ -37,11 +37,11 @@ public class ScheduleReviewLikesEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "schedule_review_id", nullable = false)
-    private ScheduleEntity scheduleReviewEntity;
+    private ScheduleEntity scheduleReview;
 
     @Column(name = "created_at", nullable = false,  columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
@@ -49,8 +49,8 @@ public class ScheduleReviewLikesEntity {
   public static ScheduleReviewLikesEntity toEntity(ScheduleReviewLikesDto dto) {
         return ScheduleReviewLikesEntity.builder()
             .id(dto.getId())
-            .userEntity(UserEntity.builder().id(dto.getUserId()).build())
-            .scheduleReviewEntity(ScheduleEntity.builder().id(dto.getScheduleReviewId()).build())
+            .user(UserEntity.builder().id(dto.getUserId()).build())
+            .scheduleReview(ScheduleEntity.builder().id(dto.getScheduleReviewId()).build())
             .createdAt(dto.getCreatedAt())
             .build();
     }

@@ -29,8 +29,8 @@ public class ScheduleReviewLikesDto {
     public static ScheduleReviewLikesDto toDto(ScheduleReviewLikesEntity entity){
         return ScheduleReviewLikesDto.builder()
            .id(entity.getId())
-           .userId(entity.getUserEntity().getId())
-           .scheduleReviewId(entity.getScheduleReviewEntity().getId())
+           .userId(entity.getUser().getId())
+           .scheduleReviewId(entity.getScheduleReview().getId())
            .createdAt(entity.getCreatedAt())
         .build();
     }

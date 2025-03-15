@@ -52,8 +52,8 @@ public class LikeService {
            return;
         }
         DestinationLikesEntity dLike = new DestinationLikesEntity();
-        dLike.setUserEntity(userEntity);
-        dLike.setDestinationEntity(destinationEntity);
+        dLike.setUser(userEntity);
+        dLike.setDestination(destinationEntity);
         dLike.setCreatedAt(LocalDateTime.now());
         destinationLikes.save(dLike);
     }
@@ -72,8 +72,8 @@ public class LikeService {
                 return;
         }
         GuideLikesEntity gLike = new GuideLikesEntity();
-        gLike.setUserEntity(userEntity);
-        gLike.setGuideEntity(guideEntity);
+        gLike.setUser(userEntity);
+        gLike.setGuide(guideEntity);
         gLike.setCreatedAt(LocalDateTime.now());
         guideLikes.save(gLike);    
     }
@@ -92,8 +92,8 @@ public class LikeService {
                 return;
         }
         ScheduleReviewLikesEntity srLike = new ScheduleReviewLikesEntity();
-        srLike.setUserEntity(userEntity);
-        srLike.setScheduleReviewEntity(scheduleEntity);
+        srLike.setUser(userEntity);
+        srLike.setScheduleReview(scheduleEntity);
         srLike.setCreatedAt(LocalDateTime.now());
         scheduleReviewLikes.save(srLike);
     }
@@ -107,11 +107,11 @@ public class LikeService {
         for(DestinationLikesEntity dt : dLikes){
             LikeDto dto = new LikeDto();
             dto.setUserId(userId);
-            dto.setEntityId(dt.getDestinationEntity().getId());
+            dto.setEntityId(dt.getDestination().getId());
             dto.setLikeType("destination");
             dto.setCreatedAt(dt.getCreatedAt());
-            dto.setTitle(dt.getDestinationEntity().getTitle());
-            dto.setTitleImg(dt.getDestinationEntity().getTitleImg());
+            dto.setTitle(dt.getDestination().getTitle());
+            dto.setTitleImg(dt.getDestination().getTitleImg());
             LikeDtoList.add(dto);
         }
             
@@ -120,11 +120,11 @@ public class LikeService {
         for(GuideLikesEntity gd : gLikes){
             LikeDto dto = new LikeDto();
             dto.setUserId(userId);
-            dto.setEntityId(gd.getGuideEntity().getId());
+            dto.setEntityId(gd.getGuide().getId());
             dto.setLikeType("guide");
             dto.setCreatedAt(gd.getCreatedAt());
-            dto.setTitle(gd.getGuideEntity().getTitle());
-            dto.setTitleImg(gd.getGuideEntity().getTitleImg());
+            dto.setTitle(gd.getGuide().getTitle());
+            dto.setTitleImg(gd.getGuide().getTitleImg());
             LikeDtoList.add(dto);
         }
 
@@ -133,10 +133,10 @@ public class LikeService {
         for(ScheduleReviewLikesEntity sr : srLikes){
             LikeDto dto = new LikeDto();
             dto.setUserId(userId);
-            dto.setEntityId(sr.getScheduleReviewEntity().getId());
+            dto.setEntityId(sr.getScheduleReview().getId());
             dto.setLikeType("schedule_review");
             dto.setCreatedAt(sr.getCreatedAt());
-            dto.setTitle(sr.getScheduleReviewEntity().getTitle());
+            dto.setTitle(sr.getScheduleReview().getTitle());
             LikeDtoList.add(dto);
         }
 

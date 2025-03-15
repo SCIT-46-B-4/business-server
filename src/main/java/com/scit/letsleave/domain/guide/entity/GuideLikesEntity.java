@@ -36,11 +36,11 @@ public class GuideLikesEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "guide_id", nullable = false)
-    private GuideEntity guideEntity;
+    private GuideEntity guide;
 
     @Column(name = "created_at", nullable = false,  columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
@@ -48,8 +48,8 @@ public class GuideLikesEntity {
      public static GuideLikesEntity toEntity(GuideLikesDto dto) {
         return GuideLikesEntity.builder()
             .id(dto.getId())
-            .userEntity(UserEntity.builder().id(dto.getUserId()).build())
-            .guideEntity(GuideEntity.builder().id(dto.getGuideId()).build())
+            .user(UserEntity.builder().id(dto.getUserId()).build())
+            .guide(GuideEntity.builder().id(dto.getGuideId()).build())
             .createdAt(dto.getCreatedAt())
             .build();
     }

@@ -52,16 +52,15 @@ public class RouteEntity {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    public static RouteEntity toEntity(
-        RouteDto dto,
-        DetailScheduleEntity detailScheduleEntity,
-        DestinationEntity destinationEntity
-    ) {
-        return RouteEntity.builder()
+    public static RouteEntity toEntity(RouteDto dto) {
+
+        dto.getDestination().getId();
+        RouteEntity routeEntity = RouteEntity.builder()
             .orderNumber(dto.getOrderNumber())
             .updatedAt(dto.getUpdatedAt())
-            .detailSchedule(detailScheduleEntity)
-            .destination(destinationEntity)
+            // .destination(DestinationEntity.toEntity(dto, city))
             .build();
+
+        return routeEntity;
     }
 }

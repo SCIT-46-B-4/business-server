@@ -43,17 +43,18 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
             .requestMatchers(
                 "/",
-                "/api/users/auth/**",
-                "/users/signup",
-                "/users/login",
-                "/script/**",
-                "/css/**",
-                "/images/**",
-                "/guides/**",
-                "/schedules/**").permitAll()
-            .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
+                 "/api/users/auth/**",
+                 "/users/signup",
+                 "/users/login",
+                 "/script/**",
+                 "/css/**",
+                 "/images/**",
+                 "/guides/**",
+                 "/schedules/**",
+                 "/destinations/**").permitAll()
+               .anyRequest().authenticated()
+           )
+           .formLogin(form -> form
                 .loginPage("/users/login") // 로그인 페이지 경로 설정
                 .permitAll() // 로그인 페이지는 누구나 접근 가능
             )
@@ -72,7 +73,7 @@ public class SecurityConfig {
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/users/login")) // 인증되지 않은 사용자 처리
             )
            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // JWT 관련
-
+     
         return http.build();
     }
 }

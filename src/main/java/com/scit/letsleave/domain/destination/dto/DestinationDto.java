@@ -9,12 +9,14 @@ import com.scit.letsleave.domain.destination.entity.DestinationType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 @Builder
 public class DestinationDto {
 
@@ -36,10 +38,13 @@ public class DestinationDto {
     private Double score;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String titleImg;
 
     private CityDto city;
 
-    public static DestinationDto toDto(DestinationEntity entity) {
+    private Integer distance; // 거리 (미터 단위)
+
+    public static DestinationDto toDTO(DestinationEntity entity) {
         DestinationDto dto = DestinationDto.builder()
             .id(entity.getId())
             .type(entity.getType())
@@ -56,11 +61,8 @@ public class DestinationDto {
             .score(entity.getScore())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
-            .city(
-                entity.getCity() == null ?
-                null :
-                CityDto.toDto(entity.getCity())
-            )
+            .titleImg(entity.getTitleImg())
+            .city(CityDto.toDto(entity.getCity()))
             .build();
         if (entity.getCoordinate() != null) {
             dto.setLatitude(BigDecimal.valueOf(entity.getCoordinate().getY()));

@@ -18,15 +18,23 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.scit.letsleave.domain.schedule.dto.RouteDTO;
+
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
-@Entity
+@AllArgsConstructor
 @Builder
-@Table(name="routes")
+@Entity
+@Table(name = "routes")
 public class RouteEntity {
 
     @Id
@@ -34,10 +42,12 @@ public class RouteEntity {
     @Column(name="id")
     private Long id;
 
+    @JsonBackReference // 순환 참조 방지 (부모 관계)
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="detail_schedule_id", nullable=false)
     private DetailScheduleEntity detailSchedule;
-
+    
+    @JsonManagedReference // 순환 참조 방지 (자식 관계)
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="destination_id", nullable=false)
     private DestinationEntity destination;

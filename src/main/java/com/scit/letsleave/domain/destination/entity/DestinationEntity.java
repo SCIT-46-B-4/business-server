@@ -2,6 +2,7 @@ package com.scit.letsleave.domain.destination.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.scit.letsleave.domain.destination.dto.DestinationDto;
 import com.scit.letsleave.domain.schedule.entity.RouteEntity;
 import com.vladmihalcea.hibernate.type.json.JsonType;
@@ -29,13 +31,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"city", "routes"}) // 직렬화에서 제외할 필드 명시
 @Entity
 @Table(name = "destinations")
 public class DestinationEntity {
@@ -83,12 +88,9 @@ public class DestinationEntity {
     @Column(name = "available_time")
     private String availableTime;
 
-    @Column(name = "title_img")
-    private String titleImg;
-
     @Type(JsonType.class)
     @Column(name = "feature", columnDefinition = "json")
-    private Map<String, Object> feature;
+    private Map<String, Object> feature = new HashMap<>();
 
     @Column(name = "score", nullable = false)
     @Builder.Default
@@ -104,40 +106,43 @@ public class DestinationEntity {
     @Column(name = "coordinate", columnDefinition = "geometry(POINT, 4326)", nullable = false)
     private Point coordinate;
 
+    @Column(name = "title_img", length = 512)
+    private String titleImg;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private CityEntity city;
 
-    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "destinationEntity", cascade = CascadeType.ALL)
     private List<RouteEntity> routes;
 
     public static DestinationEntity toEntity(DestinationDto dto, CityEntity city, List<RouteEntity> routeList) {
         GeometryFactory geometryFactory = new GeometryFactory();
 
         Point point = geometryFactory.createPoint(
-            new Coordinate(dto.getLongitude().doubleValue(), dto.getLatitude().doubleValue())
+                new Coordinate(dto.getLongitude().doubleValue(), dto.getLatitude().doubleValue())
         );
         return DestinationEntity.builder()
-            .id(dto.getId())
-            .type(dto.getType())
-            .krName(dto.getKrName())
-            .locName(dto.getLocName())
-            .title(dto.getTitle())
-            .content(dto.getContent())
-            .latitude(dto.getLatitude())
-            .longitude(dto.getLongitude())
-            .address(dto.getAddress())
-            .contact(dto.getContact())
-            .homepage(dto.getHomepage())
-            .howToGo(dto.getHowToGo())
-            .availableTime(dto.getAvailableTime())
-            .feature(dto.getFeature())
-            .score(dto.getScore())
-            .createdAt(dto.getCreatedAt())
-            .updatedAt(dto.getUpdatedAt())
-            .coordinate(point)
-            .city(city)
-            .routes(routeList)
-            .build();
+                .id(dto.getId())
+                .type(dto.getType())
+                .krName(dto.getKrName())
+                .locName(dto.getLocName())
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .latitude(dto.getLatitude())
+                .longitude(dto.getLongitude())
+                .address(dto.getAddress())
+                .contact(dto.getContact())
+                .homepage(dto.getHomepage())
+                .howToGo(dto.getHowToGo())
+                .availableTime(dto.getAvailableTime())
+                .feature(dto.getFeature())
+                .score(dto.getScore())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .titleImg(dto.getTitleImg()) 
+                .coordinate(point)
+                .city(city)
+                .build();
         }
 }

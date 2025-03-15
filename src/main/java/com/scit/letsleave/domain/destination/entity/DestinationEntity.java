@@ -83,6 +83,9 @@ public class DestinationEntity {
     @Column(name = "available_time")
     private String availableTime;
 
+    @Column(name = "title_img")
+    private String titleImg;
+
     @Type(JsonType.class)
     @Column(name = "feature", columnDefinition = "json")
     private Map<String, Object> feature;

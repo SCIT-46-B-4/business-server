@@ -36,6 +36,7 @@ public class DetailScheduleDto {
                 Collections.emptyList() :
                 entity.getRoutes().stream().map(RouteDto::toDto).collect(Collectors.toList())
             )
+            .updatedAt(entity.getUpdatedAt())
             .build();
     }
 }

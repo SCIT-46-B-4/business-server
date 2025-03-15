@@ -30,6 +30,13 @@ public class RestScheduleController {
     private final ScheduleService scheduleService;
     private final RecommendService recommendService;
 
+    @PostMapping({"/", ""})
+    public ScheduleDto saveSchedule(@ModelAttribute ScheduleDto dto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ScheduleDto savedDto = scheduleService.saveSchedule(dto, Long.valueOf(authentication.getName()));
+
+        return savedDto;
+    }
     @GetMapping({"/", ""})
     public ResponseEntity<List<ScheduleDto>> userSchedules() {
         // ToDo: 매번 SecurityContextHolder를 호출할 필요 없이 간단하게 유저 정보를 조회할 수 있는지 확인

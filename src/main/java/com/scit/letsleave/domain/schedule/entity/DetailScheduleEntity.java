@@ -2,7 +2,9 @@ package com.scit.letsleave.domain.schedule.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -53,12 +55,28 @@ public class DetailScheduleEntity {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="detailSchedule", cascade=CascadeType.ALL)
     private List<RouteEntity> routes;
 
-    public static DetailScheduleEntity toEntity(DetailScheduleDto dto, ScheduleEntity scheduleEntity) {
-        return DetailScheduleEntity.builder()
+    public static DetailScheduleEntity toEntity(DetailScheduleDto dto) {
+
+        if (dto.getRoutes() == null || dto.getRoutes().isEmpty()) {
+            throw new IllegalArgumentException("Route list cannot be empty.");
+        }
+        DetailScheduleEntity detailEntity = DetailScheduleEntity.builder()
             .id(dto.getId())
             .date(dto.getDate())
             .updatedAt(dto.getUpdatedAt())
-            .scheduleEntity(scheduleEntity)
             .build();
+
+        List<RouteEntity> routeEntites = dto.getRoutes().stream().map(
+            route -> {
+                RouteEntity routeEntity = RouteEntity.toEntity(route);
+                routeEntity.setDetailSchedule(detailEntity);
+
+                return routeEntity;
+            }
+        ).collect(Collectors.toList());
+
+        detailEntity.setRoutes(routeEntites);
+
+        return detailEntity;
     }
 }

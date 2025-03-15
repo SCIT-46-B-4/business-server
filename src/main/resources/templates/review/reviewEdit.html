@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'여행 후기 수정 - ' + ${reviewDetail.scheduleName}"></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        let staticURL = "[[${baseStaticURL}]]";
+    </script>
+
+    <script th:src="@{|${baseStaticURL}/script/review/reviewEdit.js|}"></script>
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/review/reviewCreate.css|}" />
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${reviewDetail.scheduleName}">여행 일정 이름</h1>
+    <div class="schedule-details">
+        <h3>일정 상세</h3>
+        <div th:each="detail : ${reviewDetail.detailSchedules}">
+            <div class="detail-schedule">
+                <h4 th:text="${#temporals.format(detail.date, 'yyyy-MM-dd')}">날짜</h4>
+                <div th:each="route : ${detail.routes}">
+                    <div class="route">
+                        <div class="route-info">
+                            <p>
+                                <span class="route-order"
+                                      th:text="${route.orderNumber < 10 ? '0' + route.orderNumber : route.orderNumber}"
+                                      th:classappend="${(route.destinationType == '1') ? ' blue-text' :
+                                                            (route.destinationType == '2') ? ' red-text' :
+                                                            (route.destinationType == '3') ? ' orange-text' :
+                                                            (route.destinationType == '4') ? ' green-text' : ' gray-text'}">
+                                    </span>
+                                <strong th:text="${route.name}">장소 이름</strong>
+                                <span class="star-rating" th:text="${'⭐' + #numbers.formatDecimal(route.score, 1, 1)}"></span>
+                            </p>
+                            <p th:text="${route.contents}">세부 내용</p>
+                        </div>
+                        <div class="route-img">
+                            <img th:src="${baseStaticURL} + '/images/destination/' +
+                                             ${
+                                                 reviewDetail.cityName == '도쿄' ? 'tokyo' :
+                                                 reviewDetail.cityName == '오사카' ? 'osaka' :
+                                                 reviewDetail.cityName == '후쿠오카' ? 'fukuoka' :
+                                                 reviewDetail.cityName == '사포로' ? 'sapporo' : 'none'
+                                             } +
+                                             '/' +
+                                             ${
+                                                 route.destinationType == '1' ? 'sightseeing' :
+                                                 route.destinationType == '2' ? 'restaurant' :
+                                                 route.destinationType == '3' ? 'shopping' :
+                                                 route.destinationType == '4' ? 'accommodation' : 'transport'
+                                             } +
+                                             '/' +
+                                             ${route.titleImg}"
+                                 alt="이미지" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 리뷰 작성 폼 -->
+
+    <div class="review-section">
+        <form id="reviewForm" enctype="multipart/form-data" th:attr="data-review-id=${reviewDetail.reviewId}">
+            <input hidden="hidden" name="userId" id="userId" th:value="${reviewDetail.userId}">
+            <h3 for="reviewTitle">리뷰 제목, 메인 이미지</h3>
+            <div class="review-form">
+                <input type="text" id="reviewTitle" name="reviewTitle" placeholder="제목을 입력하세요" required/>
+                <input type="file" id="file" name="file" accept="image/*">
+            </div>
+            <h3 for="reviewContent">리뷰 내용</h3>
+            <div class="review-form">
+                <textarea id="reviewContent" name="reviewContent" rows="5" placeholder="내용을 입력하세요" required></textarea>
+                <button type="submit">리뷰 작성</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

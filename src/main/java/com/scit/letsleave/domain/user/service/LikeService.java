@@ -12,7 +12,9 @@ import com.scit.letsleave.domain.destination.entity.DestinationLikesEntity;
 import com.scit.letsleave.domain.destination.repository.DestinationLikesRepository;
 import com.scit.letsleave.domain.destination.repository.DestinationRepository;
 import com.scit.letsleave.domain.guide.entity.GuideLikesEntity;
+import com.scit.letsleave.domain.guide.entity.GuideEntity;
 import com.scit.letsleave.domain.guide.repository.GuideLikesRepository;
+import com.scit.letsleave.domain.guide.repository.GuideRepository;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
 import com.scit.letsleave.domain.schedule.entity.ScheduleReviewLikesEntity;
 import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
@@ -61,8 +63,7 @@ public class LikeService {
 
         UserEntity userEntity = userRepository.findById(userId)
         .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다!"));
-
-        GuideEntity guideEntity = guideRepository.findById(guideId)
+         GuideEntity guideEntity = guideRepository.findById(guideId)
         .orElseThrow(() -> new RuntimeException("가이드를 찾을 수 없습니다!"));
 
         Optional<GuideLikesEntity> existing = guideLikes.findByUserIdAndGuideId(userId, guideId);

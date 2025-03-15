@@ -1,6 +1,7 @@
 package com.scit.letsleave.domain.user.controller;
 
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,11 +13,12 @@ public class UserController {
      * 개인 페이지
      * @return 
      */
-    @GetMapping("/mypage")
+     @GetMapping("/mypage")
     public String mypage() {
-    return "user/mypage";
-}
-    /**
+     return "user/mypage";
+    }
+
+      /**
      * 프로필 편집 페이지
      * @return 
      */
@@ -41,4 +43,5 @@ public class UserController {
     public String loginPage() {
         return "user/login"; // login.html 반환
     }
+
 }

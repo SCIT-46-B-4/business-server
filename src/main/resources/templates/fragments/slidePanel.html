@@ -1,41 +1,43 @@
 <div th:fragment="slide-panel">
-    <div class="slide-panel" id="slidePanel">
-        <div class="panel-header">
-            <span class="close-btn" id="closeBtn">X</span>
-        </div>
-        <div class="panel-content-container">
-            <div class="panel-box">
-                <span>
-                    <a th:href="@{/users/login}" class="panel-content">로그인</a>
-                    /
-                    <a th:href="@{/users/signin}" class="panel-content">회원가입</a>
-                </span>
-            </div>
-            <div class="panel-box">
-                <span>
-                    <a th:href="@{/users/}" class="panel-content">내 스케줄</a>
-                </span>
-            </div>
-            <div class="panel-box">
-                <span>
-                    <a th:href="@{/guides}" class="panel-content">도시별 여행정보</a>
-                </span>
-            </div>
-            <div class="panel-box">
-                <span>
-                    <a th:href="@{#}" class="panel-content">AI 추천 맞춤 일정</a>
-                </span>
-            </div>
-            <div class="panel-box">
-                <span>
-                    <a th:href="@{#}" class="panel-content">여행 상품 숙소 투어 티켓</a>
-                </span>
-            </div>
-            <div class="panel-box">
-                <span>
-                    <a th:href="@{/schedules/reviews}" class="panel-content">여행기 둘러보기</a>
-                </span>
-            </div>
-        </div>
+  <div class="slide-panel" id="slidePanel">
+    <div class="panel-header">
+      <span class="close-btn" id="closeBtn">X</span>
     </div>
+    <div class="panel-content-container">
+      <div class="panel-box">
+        <span>
+          <a th:href="@{/users/login}" class="panel-content">로그인</a>
+          /
+          <a th:href="@{/users/signup}" class="panel-content">회원가입</a>
+        </span>
+      </div>
+      <div class="panel-box">
+        <span>
+          <a th:href="@{/users/}" class="panel-content">내 스케줄</a>
+        </span>
+      </div>
+      <div class="panel-box">
+        <span>
+          <a th:href="@{/guides}" class="panel-content">도시별 여행정보</a>
+        </span>
+      </div>
+      <div class="panel-box">
+        <span>
+          <a th:href="@{#}" class="panel-content">AI 추천 맞춤 일정</a>
+        </span>
+      </div>
+      <div class="panel-box">
+        <span>
+          <a th:href="@{#}" class="panel-content">여행 상품 숙소 투어 티켓</a>
+        </span>
+      </div>
+      <div class="panel-box">
+        <span>
+          <a th:href="@{/schedules/reviews}" class="panel-content"
+            >여행기 둘러보기</a
+          >
+        </span>
+      </div>
+    </div>
+  </div>
 </div>

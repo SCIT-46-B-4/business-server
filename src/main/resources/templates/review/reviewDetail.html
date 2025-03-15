@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'여행 후기 상세보기 - ' + ${reviewDetail.scheduleName}">여행 후기 상세보기</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        let staticURL = "[[${baseStaticURL}]]";
+    </script>
+
+    <script th:src="@{|${baseStaticURL}/script/review/reviewReply.js|}"></script>
+    <script th:src="@{|${baseStaticURL}/script/review/reviewLike.js|}"></script>
+    <script th:src="@{|${baseStaticURL}/script/review/reviewDetail.js|}"></script>
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/review/reviewDetail.css|}" />
+</head>
+<body>
+    <div class="container" th:attr="data-review-id=${reviewDetail.reviewId}">
+        <div class="review-header"
+             th:style="${'background-image: url('
+                + (reviewDetail.reviewTitleImg != null
+                    ? (baseStaticURL + reviewImgUploadDir + '/' + reviewDetail.reviewTitleImg)
+                    : (baseStaticURL + reviewImgUploadDir + '/' +
+                        (reviewDetail.cityName == '도쿄' ? 'tokyo' :
+                         reviewDetail.cityName == '오사카' ? 'osaka' :
+                         reviewDetail.cityName == '후쿠오카' ? 'fukuoka' :
+                         reviewDetail.cityName == '사포로' ? 'sapporo' : 'none')
+                         + '.jpg'))
+                + '); background-size: cover; background-position: center;'
+                }">
+
+            <!-- 삭제 및 수정 버튼, 로그인 사용자 == 리뷰 소유자 아이디가 같을때 -->
+            <div class="button-group" th:if="${#authentication.name == reviewDetail.userId + ''}">
+                <button id="btnEditReview">수정</button>
+                <button id="btnDeleteReview">삭제</button>
+            </div>
+
+            <h1 th:text="${reviewDetail.scheduleName}">여행 일정 이름</h1>
+            <p>
+                <span th:text="${reviewDetail.getUserNickName()}">작성자</span>
+                <span th:text="${#temporals.format(reviewDetail.reviewCreatedAt, 'yyyy-MM-dd')}">작성일</span>
+            </p>
+            <p>
+                <span id="likeSpan">❤️ 0</span>
+            </p>
+        </div>
+        <div class="schedule-details">
+            <h3>일정 상세</h3>
+            <div th:each="detail : ${reviewDetail.detailSchedules}">
+                <div class="detail-schedule">
+                    <h4 th:text="${#temporals.format(detail.date, 'yyyy-MM-dd')}">날짜</h4>
+                    <div th:each="route : ${detail.routes}">
+                        <div class="route">
+                            <div class="route-info">
+                                <p>
+                                    <span class="route-order"
+                                          th:text="${route.orderNumber < 10 ? '0' + route.orderNumber : route.orderNumber}"
+                                          th:classappend="${(route.destinationType == '1') ? ' blue-text' :
+                                                            (route.destinationType == '2') ? ' red-text' :
+                                                            (route.destinationType == '3') ? ' orange-text' :
+                                                            (route.destinationType == '4') ? ' green-text' : ' gray-text'}">
+                                    </span>
+                                    <strong th:text="${route.name}">장소 이름</strong>
+                                    <span class="star-rating" th:text="${'⭐' + #numbers.formatDecimal(route.score, 1, 1)}"></span>
+                                </p>
+                                <p th:text="${route.contents}">세부 내용</p>
+                            </div>
+                            <div class="route-img">
+                                <img th:src="${baseStaticURL} + '/images/destination/' +
+                                             ${
+                                                 reviewDetail.cityName == '도쿄' ? 'tokyo' :
+                                                 reviewDetail.cityName == '오사카' ? 'osaka' :
+                                                 reviewDetail.cityName == '후쿠오카' ? 'fukuoka' :
+                                                 reviewDetail.cityName == '사포로' ? 'sapporo' : 'none'
+                                             } +
+                                             '/' +
+                                             ${
+                                                 route.destinationType == '1' ? 'sightseeing' :
+                                                 route.destinationType == '2' ? 'restaurant' :
+                                                 route.destinationType == '3' ? 'shopping' :
+                                                 route.destinationType == '4' ? 'accommodation' : 'transport'
+                                             } +
+                                             '/' +
+                                             ${route.titleImg}"
+                                     alt="이미지" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-section">
+            <h3 th:text="${reviewDetail.reviewTitle}">리뷰 제목</h3>
+            <p th:text="${reviewDetail.reviewContent}">리뷰 내용</p>
+        </div>
+
+        <div class="comment-section" th:attr="data-user-id=${#authentication.name}">
+            <h3>댓글 목록</h3>
+
+            <div id="commentList">
+                <p>댓글을 불러오는 중입니다...</p>
+            </div>
+
+            <div id="commentForm">
+                <textarea id="commentContent" rows="3" style="width:100%;" placeholder="댓글을 입력하세요"></textarea>
+                <button id="btnPostComment">댓글 작성</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

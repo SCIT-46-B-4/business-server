@@ -56,7 +56,7 @@ public class RouteEntity {
         RouteEntity routeEntity = RouteEntity.builder()
             .orderNumber(dto.getOrderNumber())
             .updatedAt(dto.getUpdatedAt())
-            .destination(DestinationEntity.toEntity(dto, city))
+            // .destination(DestinationEntity.toEntity(dto, city))
             .build();
 
         return routeEntity;

@@ -1,0 +1,314 @@
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-position: center;
+}
+
+.review-header {
+    position: relative; /* 오버레이 사용 시에도 필요 */
+    min-height: 300px;
+    background-size: cover;
+    background-position: center center;
+    padding: 20px;
+    text-shadow:
+        /* 왼쪽위 */
+            -1px -1px 0 #fff,
+                /* 오른쪽위 */
+            1px -1px 0 #fff,
+                /* 왼쪽아래 */
+            -1px 1px 0 #fff,
+                /* 오른쪽아래 */
+            1px 1px 0 #fff;
+}
+
+.review-header h1 {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.review-header p {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.review-header p span{
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.schedule-details {
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    width: 70%;
+    max-width: 1200px;
+}
+
+.detail-schedule {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.route {
+    margin: 24px 16px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    display: flex;
+    gap: 15px;
+    border: 1px solid #ddd;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 8px;
+}
+
+.route-info {
+    position: relative;
+    padding-left: 2.5em;
+    text-align: left;
+    flex: 1;
+}
+
+.route-info p {
+    margin: 10px 5px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.route-order {
+    position: absolute;
+    left: 0;
+    width: 2em;
+    text-align: right;
+    color: #007bff;
+}
+
+.route-img {
+    align-self: center;
+}
+
+.route-img img {
+    width: 200px;
+    height: 100%;
+    min-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/*
+    장소 타입에 따른 텍스트 색 변경
+ */
+.red-text { color: red; font-weight: bold; }
+.blue-text { color: blue; font-weight: bold; }
+.green-text { color: green; font-weight: bold; }
+.orange-text { color: orange; font-weight: bold; }
+.gray-text { color: gray; font-weight: bold; }
+
+.star-rating {
+    font-size: 14px;
+    color: #FFD700;
+    margin-left: 5px;
+}
+
+@media all and (max-width:768px) {
+    .route {
+        flex-direction: column-reverse;
+    }
+
+    .route-img img {
+        padding-top: 20p;
+        border-radius: 8px;
+        width: 100%;
+        min-width: 150px;
+        height:300px;
+    }
+}
+
+/*
+    리뷰
+ */
+.review-section {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-section h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    font-size: 1.5rem;
+    color: #007bff;
+}
+
+.review-section p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #444;
+}
+
+/*
+    여기부터 댓글 관련
+ */
+.comment-section {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-section h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 5px;
+    font-size: 1.5rem;
+    color: #28a745;
+}
+
+#commentList p {
+    font-size: 1.1rem;
+    color: #888;
+    text-align: center;
+}
+
+.comment {
+    position: relative;
+    background: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "content tools";
+    grid-template-columns: 1fr auto;
+    grid-row-gap: 8px;
+}
+
+.comment p:first-child {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+.comment p:first-child strong {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment p:first-child span {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.comment .comment-tools {
+    grid-area: tools;
+    text-align: right;
+    display: none;
+}
+
+.comment:hover .comment-tools {
+    display: inline-block;
+}
+
+.comment-tools button {
+    margin-left: 5px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+/*
+    댓글 대댓, 수정, 폼
+ */
+.reply-form, .edit-form, #commentForm{
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+#commentForm {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    padding: 10px;
+
+    box-sizing: border-box;
+}
+
+#commentForm textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 60px;
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.reply-form textarea,
+.edit-form textarea,
+#commentForm textarea{
+    width: 100%;
+    min-height: 60px;
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+
+.button-group button,
+.reply-form button,
+.edit-form button,
+#commentForm button,
+.replyBtn,
+.editBtn,
+.deleteBtn{
+    margin-top: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.button-group button:hover,
+.reply-form button:hover,
+.edit-form button:hover,
+#commentForm button:hover,
+.replyBtn:hover,
+.editBtn:hover,
+.deleteBtn:hover{
+    background-color: #218838;
+}

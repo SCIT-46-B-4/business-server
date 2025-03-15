@@ -1,5 +1,6 @@
 package com.scit.letsleave.global;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +18,28 @@ import lombok.RequiredArgsConstructor;
 public class GlobalControllerAdvice {
 
     private final UserService userService;
+
+    /**
+     * Product/Develop 환경 api/static URL
+     */
+    @Value("${app.static-resource-base}")
+    private String staticResourceBase;
+
+    @Value("${app.review-image-file.upload-dir}")
+    private String reviewImgUploadDir;
+
+    @ModelAttribute("reviewImgUploadDir")
+    public String getReviewImgUploadDir() {
+        return reviewImgUploadDir;
+    }
+
+    /**
+     * @return 정적 파일 URL
+     */
+    @ModelAttribute("baseStaticURL")
+    public String addStaticPath() {
+        return staticResourceBase;
+    }
 
     @ModelAttribute("isLoggedIn")
     public boolean addIsLoggedInAttribute() {

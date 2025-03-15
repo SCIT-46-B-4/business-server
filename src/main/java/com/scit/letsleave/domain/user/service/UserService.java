@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
     private final UserRepository repository;
 	
-       /**
+        /**
         * 주어진 사용자 ID에 해당하는 사용자의 프로필 정보를 업데이트
         *
         * @param id   업데이트할 사용자의 고유 식별자 (PK)

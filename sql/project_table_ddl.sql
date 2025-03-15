@@ -491,3 +491,32 @@ ALTER TABLE destinations MODIFY `address` VARCHAR(512) NULL;
 ALTER TABLE destinations MODIFY available_time VARCHAR(512) NULL;
 ALTER TABLE destinations MODIFY title VARCHAR(256) NOT NULL;
 ALTER TABLE users ADD COLUMN password VARCHAR(128) NULL AFTER phone;
+ALTER TABLE schedule_reviews ADD COLUMN like_count INT NOT NULL DEFAULT 0; -- like 기능을 위한 반정규화
+ALTER TABLE detail_schedule_review_likes RENAME TO schedule_review_likes; -- 이름 변경
+ALTER TABLE oauth CHANGE providerId provider_id VARCHAR(256) NOT NULL;
+
+------ 댓글 기능 ------
+-- 테이블 이름 schedule_review_replies 변경
+ALTER TABLE detail_schedule_reviews_replies
+    RENAME TO schedule_review_replies;
+-- is_deleted 컬럼 추가 - 삭제된 경우
+ALTER TABLE schedule_review_replies
+    ADD COLUMN is_deleted TINYINT(1) NOT NULL DEFAULT 0;
+-- parent_reply 컬럼 추가 - 대댓글
+ALTER TABLE schedule_review_replies
+    ADD COLUMN parent_reply BIGINT NULL AFTER schedule_review_id;
+-- parent_reply 에 대한 자기 참조 FK 추가 - 대댓글
+ALTER TABLE schedule_review_replies
+    ADD CONSTRAINT fk_schrevreply_parent
+        FOREIGN KEY (parent_reply)
+            REFERENCES schedule_review_replies (id)
+            ON DELETE CASCADE;
+-- 대댓글 정렬을 위한reply_depth, reply_order
+ALTER TABLE schedule_review_replies
+    ADD COLUMN reply_depth INT NOT NULL DEFAULT 0 AFTER parent_reply;
+ALTER TABLE schedule_review_replies
+    ADD COLUMN reply_order INT NOT NULL DEFAULT 0 AFTER reply_depth;
+
+-- schedule review 표지 이미지 추가
+ALTER TABLE schedule_reviews
+    ADD COLUMN title_img VARCHAR(512);

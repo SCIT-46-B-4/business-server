@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="ko" xmlns:th="http://thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link th:href="@{/css/member.css/mypage.css}" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <script th:src="@{/script/jquery.js}"></script>
-    <script th:src="@{/script/edit.js}"></script>
-    <script th:src="@{/script/updateLikeList.js}"></script>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/global/reset.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" />
+    <link rel="stylesheet" th:href="@{/css/user/mypage.css}" />
+    <!-- Script -->
+    <script th:src="@{/script/global/jquery.js}"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}"></script>
+    <script th:src="@{/script/user/updateLikeList.js}"></script>
+    <script type="module" th:src="@{/script/user/myPage.js}"></script>
+  </head>
   <body>
+    <!-- fragments place -->
+    <div th:insert="~{fragments/header :: top-bar}"></div>
+    <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
+
     <div class="button-container">
       <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
       <p>
@@ -24,36 +30,37 @@
 
     <div class="profile-section">
       <img
-        th:src="@{/img/circle.png}"
+        th:src="@{/images/user/circle.png}"
         alt="profile_photo"
         class="profile-photo"
         id="profilePhoto"
       />
-      <h1 id="name">이름</h1>
+      <h2 id="name" th:value="${userInfo.nickname}">이름</h2>
     </div>
 
     <div class="menu-section">
       <div class="button-section">
-        <button class="menu-btn">내 여행</button>
-        <button class="menu-btn">좋아요</button>
-        <button class="menu-btn">여행기</button>
+        <button id="mySchedule" class="menu-btn">내 여행</button>
+        <button id="myReview" class="menu-btn">좋아요</button>
+        <button id="myScrap" class="menu-btn">여행기</button>
       </div>
     </div>
 
     <div class="trip-record">
-      {% comment %}
-      <div class="trip-history">
-        <img
-          th:src="@{/img/circle.png}"
-          alt="plus-image"
-          class="sample-photo"
-        />
-        <div class="trip-info">
-          <h4></h4>
-          <p></p>
+      <h4 class="former-trip">지난 여행</h4>
+      <div id="scheduleContainer">
+        <div id="tripHistory" class="trip-history">
+          <img
+            th:src="@{/images/user/circle.png}"
+            alt="plus-image"
+            class="sample-photo"
+          />
+          <div class="trip-info">
+            <h4>여행 이름</h4>
+            <p>일정 기간</p>
+          </div>
         </div>
       </div>
-      {% endcomment %}
     </div>
   </body>
 </html>

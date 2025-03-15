@@ -3,21 +3,32 @@ package com.scit.letsleave.global.jwt;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+
 
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "your-256-bit-secret-your-256-bit-secret";
-    private static final long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 1000; // 1시간
+    @Value("${JWT_SECRET_KEY}")
+    private String SECRET_KEY;
+    @Value("${JWT_Algorithm}")
+    private String JWT_Algorithm;
+    private static final long ACCESS_TOKEN_EXPIRATION = 24 * 60 * 60 * 1000L; // 24시간 = 86,400,000 밀리초
     // private static final long REFRESH_TOKEN_EXPIRATION = 7 * 24 * 60 * 60 * 1000; // 7일
 
-    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private Key key;
+    @PostConstruct
+    public void init() {
+        // secretKey가 주입된 후에 key 초기화
+        key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
 
     /**
      * Access 토큰 생성
@@ -26,12 +37,12 @@ public class JwtUtil {
      */
     public String generateAccessToken(String id) {
         return Jwts.builder()
-                .setSubject(id) // 사용자 ID를 Subject로 설정
-                .claim("roles", "ROLE_USER") // 권한 정보 추가
-                .setIssuedAt(new Date()) // 토큰 생성 시간 설정
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION)) // 만료 시간 설정
-                .signWith(key, SignatureAlgorithm.HS256) // HMAC-SHA256 알고리즘으로 서명
-                .compact(); // 토큰 생성 및 반환
+            .setSubject(id) // 사용자 ID를 Subject로 설정
+            .claim("roles", "ROLE_USER") // 권한 정보 추가
+            .setIssuedAt(new Date()) // 토큰 생성 시간 설정
+            .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION)) // 만료 시간 설정
+            .signWith(key, SignatureAlgorithm.valueOf(JWT_Algorithm)) // HMAC-SHA256 알고리즘으로 서명
+            .compact(); // 토큰 생성 및 반환
     }
     
     
@@ -55,9 +66,9 @@ public class JwtUtil {
         try {
             // 토큰을 파싱하여 유효한지 검사 (서명 검증 포함)
             Jwts.parserBuilder()
-                    .setSigningKey(key) // 서명 검증을 위한 키 설정
-                    .build()
-                    .parseClaimsJws(token); // 토큰을 파싱하여 검증
+                .setSigningKey(key) // 서명 검증을 위한 키 설정
+                .build()
+                .parseClaimsJws(token); // 토큰을 파싱하여 검증
             return true; // 검증 성공 시 true 반환
         } catch (JwtException | IllegalArgumentException e) {
             return false; // 토큰이 변조되었거나 유효하지 않은 경우 false 반환
@@ -71,10 +82,10 @@ public class JwtUtil {
      */
     public String extractSubject(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key) // 서명 검증을 위한 키 설정
-                .build()
-                .parseClaimsJws(token) // 토큰 파싱 및 검증
-                .getBody()
-                .getSubject(); // Subject(ID) 추출
+            .setSigningKey(key) // 서명 검증을 위한 키 설정
+            .build()
+            .parseClaimsJws(token) // 토큰 파싱 및 검증
+            .getBody()
+            .getSubject(); // Subject(ID) 추출
     }
 }

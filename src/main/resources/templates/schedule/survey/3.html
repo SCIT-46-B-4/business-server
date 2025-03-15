@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 사전 설문</title>
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/schedule/survey.css}">
+    <!-- Script -->
+    <script th:src="@{/script/global/jquery.js}"></script>
+    <script th:src="@{/script/schedule/survey.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <a
+        href="#"
+        class="back-button"
+        onclick="history.back(); return false;"
+        >←</a
+        >
+        <div class="page-number">3/3</div>
+
+        <!-- 질문 5: 선호하는 이동 방식 -->
+        <div class="question" id="transport">
+            <h3>5. 선호하는 이동 방식은?</h3>
+            <p>다중 선택이 가능해요.</p>
+            <div class="options">
+                <label>
+                    <input type="checkbox" name="transport" value="walk">
+                    <span>도보 위주</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="transport" value="public">
+                    <span>대중교통 위주</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="transport" value="taxi">
+                    <span>택시/차량 위주</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="transport" value="rental">
+                    <span>렌터카 위주</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="transport" value="bike">
+                    <span>자전거/오토바이 위주</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="transport" value="flexible">
+                    <span>상황에 따라 유연</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 질문 6: 선호하는 여행 일정 -->
+        <div class="question" id="schedule_style">
+            <h3>6. 선호하는 여행 일정은?</h3>
+            <p>선택해주신 스타일로 일정을 만들어드려요.</p>
+            <div class="options two-columns">
+                <label>
+                    <input type="radio" name="schedule_style" value="tight">
+                    <span>빽빽한 일정 선호</span>
+                </label>
+                <label>
+                    <input type="radio" name="schedule_style" value="relaxed">
+                    <span>널널한 일정 선호</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- AJAX 요청을 위한 제출 버튼 -->
+        <button type="button" class="submit-button" id="submitSurvey">
+        바로 추천 받기
+        </button>
+    </div>
+</body>
+</html>

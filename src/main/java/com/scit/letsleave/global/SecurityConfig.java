@@ -27,18 +27,18 @@ public class SecurityConfig {
     private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
-   @Bean
-   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       http.csrf(csrf -> csrf.disable())
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성화
             .authorizeHttpRequests(auth -> auth
             .requestMatchers(
@@ -57,12 +57,12 @@ public class SecurityConfig {
            .formLogin(form -> form
                 .loginPage("/users/login") // 로그인 페이지 경로 설정
                 .permitAll() // 로그인 페이지는 누구나 접근 가능
-           )
-           .oauth2Login(oauth -> oauth
+            )
+            .oauth2Login(oauth -> oauth
                 .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                 .successHandler(customOAuth2SuccessHandler)
             )
-           .logout(logout -> logout
+            .logout(logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/users/auth/logout")) // 로그아웃 URL 설정
                 .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
                 .invalidateHttpSession(true) // 세션 무효화

@@ -22,12 +22,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-    private final UserRepository userRepository;
-    private final OAuthRepository oauthRepository;
+        private final UserRepository userRepository;
+        private final OAuthRepository oauthRepository;
 
-    @Transactional
-    @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        @Transactional
+        @Override
+        public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
@@ -45,32 +45,32 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 attributes.getNameAttributeKey(),
                 userEntity.getEmail()
         );
-    }
+        }
 
-    /**
+        /**
      * 사용자 정보를 저장하거나 업데이트하는 메서드.
      * @param attributes 소셜 로그인에서 가져온 사용자 정보
      * @param provider 소셜 로그인 제공자 (ex: google, kakao)
      * @return 저장된 UserEntity
      */
-    private UserEntity saveOrUpdate(OAuthAttributes attributes, String provider) {
+        private UserEntity saveOrUpdate(OAuthAttributes attributes, String provider) {
         Optional<UserEntity> existingUser = userRepository.findByEmail(attributes.getEmail());
 
         if (existingUser.isPresent()) {
-            UserEntity user = existingUser.get();
+                UserEntity user = existingUser.get();
 
             // OAuth 정보가 없는 경우 추가로 저장
-            Optional<OAuthEntity> existingOAuth = oauthRepository.findByProviderAndProviderId(provider,
-                    (String) attributes.getAttributes().get("sub"));
-            if (existingOAuth.isEmpty()) {
+                Optional<OAuthEntity> existingOAuth = oauthRepository.findByProviderAndProviderId(provider,
+                (String) attributes.getAttributes().get("sub"));
+                if (existingOAuth.isEmpty()) {
                 oauthRepository.save(OAuthEntity.builder()
                         .user(user)
                         .provider(provider)
                         .providerId((String) attributes.getAttributes().get("sub"))
                         .build());
-            }
+                }
 
-            return user; // 기존 사용자 반환
+                return user; // 기존 사용자 반환
         }
 
         // 신규 사용자 생성 및 저장
@@ -95,5 +95,5 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .build());
 
         return savedUser; // 신규 사용자 반환
-    }
+        }
 }

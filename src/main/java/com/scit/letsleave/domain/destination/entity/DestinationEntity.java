@@ -143,7 +143,6 @@ public class DestinationEntity {
                 .titleImg(dto.getTitleImg()) 
                 .coordinate(point)
                 .city(city)
-                .routes(routeList)
                 .build();
         }
 }

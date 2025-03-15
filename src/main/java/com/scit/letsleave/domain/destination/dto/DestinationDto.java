@@ -2,13 +2,10 @@ package com.scit.letsleave.domain.destination.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 
-import com.scit.letsleave.domain.destination.entity.CityEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationType;
-import com.scit.letsleave.domain.schedule.entity.RouteEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,27 +33,25 @@ public class DestinationDto {
     private String homepage;
     private String howToGo;
     private String availableTime;
-    private Map<String, Object> feature;    // JsonType
+    // JsonType
+    private Map<String, Object> feature;
     private Double score;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String titleImg;
 
-    private List<RouteEntity> routes;
-    private CityEntity city;
+    private CityDto city;
 
     private Integer distance; // 거리 (미터 단위)
 
     public static DestinationDto toDTO(DestinationEntity entity) {
-        return DestinationDto.builder()
+        DestinationDto dto = DestinationDto.builder()
             .id(entity.getId())
             .type(entity.getType())
             .krName(entity.getKrName())
             .locName(entity.getLocName())
             .title(entity.getTitle())
             .content(entity.getContent())
-            .latitude(entity.getLatitude())
-            .longitude(entity.getLongitude())
             .address(entity.getAddress())
             .contact(entity.getContact())
             .homepage(entity.getHomepage())
@@ -67,8 +62,12 @@ public class DestinationDto {
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
             .titleImg(entity.getTitleImg())
-            .routes(entity.getRoutes())
-            .city(entity.getCity())
+            .city(CityDto.toDto(entity.getCity()))
             .build();
+        if (entity.getCoordinate() != null) {
+            dto.setLatitude(BigDecimal.valueOf(entity.getCoordinate().getY()));
+            dto.setLongitude(BigDecimal.valueOf(entity.getCoordinate().getX()));
+        }
+        return dto;
     }
 }

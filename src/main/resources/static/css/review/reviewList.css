@@ -1,0 +1,150 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.filter-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.filter-bar select {
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 5px;
+    width: auto;
+}
+
+.filter-bar input[type="text"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+
+    box-sizing: border-box;
+    height: 36px;
+    font-size: 14px;
+    padding: 8px;
+    margin: 0;
+}
+
+.filter-bar button {
+    background: #0095f6;
+    color: white;
+    border: none;
+    height: 36px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-bar input[type="text"] {
+    margin-left: auto;
+    width: 30ch; /* 숫자 입력칸 변경은 여기 */
+}
+
+.filter-bar button {
+    margin-left: 8px;
+}
+
+#reviewList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
+.review-item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 16px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 16px;
+    box-sizing: border-box;
+    transition: transform 0.2s;
+}
+
+.review-item img {
+    width: 100%;  /* 부모 요소에 맞게 꽉 채움 */
+    height: 200px; /* 원하는 높이 설정 */
+    object-fit: cover; /* 이미지 비율 유지하면서 꽉 채우기 */
+    border-radius: 8px;
+}
+
+.review-item:hover {
+    transform: translateY(-5px);
+}
+
+.review-item .num {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.review-item .location {
+    margin-bottom: 8px;
+}
+
+.review-item .location .country,
+.review-item .location .city {
+    margin-right: 4px;
+}
+
+.review-item .review-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.review-item .review-title .review-like {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.review-item .like-count {
+    color: #d9534f;
+    margin-bottom: 8px;
+}
+
+.review-item .created-at {
+    color: #888;
+    font-size: 13px;
+}
+
+#loadMore {
+    text-align: center;
+    margin: 15px 0;
+}
+
+#loadMore button {
+    padding: 10px;
+    background: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    #reviewList {
+        column-count: 2;
+    }
+}
+@media (max-width: 480px) {
+    #reviewList {
+        column-count: 1;
+    }
+}

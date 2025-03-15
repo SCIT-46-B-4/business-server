@@ -40,7 +40,7 @@ public class DetailScheduleEntity {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="schedule_id", nullable=false)
-    private ScheduleEntity scheduleEntity;
+    private ScheduleEntity schedule;
 
     @Column(name="date", nullable=false)
     private LocalDate date;

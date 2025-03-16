@@ -16,18 +16,21 @@ import lombok.NoArgsConstructor;
 public class GuideDto {
     private Long id;
     private Long destinationId;
-    private Integer cityId;
+    private Long cityId;
     private String title;
     private String content;
     private String titleImg;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    private String cityName;
+
     public static GuideDto toDto(GuideEntity entity) {
         return GuideDto.builder()
             .id(entity.getId())
             .destinationId(entity.getDestinationId())
-            .cityId(entity.getCityId())
+            .cityId(entity.getCity() != null ? entity.getCity().getId() : null)
+            .cityName(entity.getCity() != null ? entity.getCity().getKrName() : null)
             .title(entity.getTitle())
             .content(entity.getContent())
             .titleImg(entity.getTitleImg())

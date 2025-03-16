@@ -1,13 +1,116 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>가이드</title>
+    <title>가이드 디테일</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        /* 전체 컨테이너 */
+        .container {
+            max-width: 800px; /* 최대 너비 */
+            margin: 0 auto; /* 가운데 정렬 */
+            padding: 20px; /* 좌우 여백 */
+        }
+        /* Breadcrumb 스타일 */
+        .breadcrumb {
+            font-size: 14px;
+            color: gray; /* 기본 텍스트 색상 */
+            margin: 20px 20px 10px;
+        }
+        .breadcrumb a {
+            font-size: 14px;
+            color: gray; /* 기본 텍스트 색상 */
+            text-decoration: none; /* 밑줄 제거 */
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline; /* 마우스를 가져다 댈 때 밑줄 표시 */
+            cursor: pointer; /* 손가락 모양 포인터로 변경 */
+        }
+        .title {
+            font-size: 25px;
+            font-weight: bold;
+            color: #333;
+            margin: 0px 20px 30px;
+        }
+        /* 이미지 컨테이너 */
+        .image-container {
+            width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+            max-width: 800px; /* 최대 너비 제한 */
+            height: 400px; /* 고정된 높이 */
+            margin: 20px auto 40px; /* 상하 여백과 중앙 정렬 */
+            overflow: hidden; /* 넘치는 부분 숨김 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-container img {
+            width: 100%; /* 반응형 너비 */
+            height: 100%; /* 컨테이너 높이에 맞춤 */
+            object-fit: cover; /* 비율 유지하며 컨테이너를 채움 */
+            border-radius: 10px; /* 모서리를 둥글게 */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+        }
+        .guide-block {
+            padding: 20px;
+        }
+        .block-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #4a95d2; 
+            font-weight: bold;
+        }
+        .block-content {
+            font-size: 16px;
+            color: #555;
+        }
+        .guide-image {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .source-link {
+            font-size: 14px;
+            text-align: right;
+            display: block;
+            margin-top: 10px;
+            color: #0078d7; /* 파란색 */
+        }
+        .divider {
+            border-top: 1px solid #ddd; /* 구분선 */
+            margin: 20px 0; /* 상하 여백 */
+        }
+    </style>
 </head>
 <body>
-    <h1 th:text="${guide.title}"></h1>
-    <div class="divider"></div>
-    <div th:utext="${guide.content}"></div>
+    <div class="container">
+        <div class="breadcrumb">
+            <a th:href="@{#}" th:text="${guide.cityName}">도시</a> >
+            <span>가이드</span>
+        </div>
+        <!-- 제목 -->
+        <div class="title" th:text="${guide.title}">삿포로의 밤을 빛내줄 야경 명소 10</div>
+
+        <!-- 이미지 -->
+        <div class="image-container">
+            <img th:src="@{/images/guide/{titleImg}(titleImg=${guide.titleImg})}"></img>
+        </div>
+        <!-- 구분선 -->
+        <div class="divider"></div>
+
+        <div th:utext="${guide.content}"></div>
+
+    </div>
 </body>
 </html>

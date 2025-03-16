@@ -50,7 +50,9 @@ public class SecurityConfig {
                 "/css/**",
                 "/images/**",
                 "/guides/**",
-                "/schedules/**").permitAll()
+                "/schedules/**",
+                "/destinations/**",
+                "/guides/**").permitAll()
             .anyRequest().authenticated()
             )
             .formLogin(form -> form

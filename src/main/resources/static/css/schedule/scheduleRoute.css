@@ -39,7 +39,7 @@
     top: 30px;
 }
 
-.container_schedule.attraction-name {
+.container-schedule.attraction-name {
     display: flex;
     justify-content: space-between; /* 좌우 공간을 분배하여 배치 */
     align-items: center; /* 수직 가운데 정렬 */

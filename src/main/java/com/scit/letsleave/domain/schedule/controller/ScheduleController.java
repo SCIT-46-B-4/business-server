@@ -51,4 +51,10 @@ public class ScheduleController {
 
         return "schedule/scheduleRoute";
     }
+
+    @GetMapping("/updateView")
+    public String scheduleUpdateBiew() {
+
+        return "schedule/updateView";
+    }
 }

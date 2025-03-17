@@ -2,7 +2,6 @@ package com.scit.letsleave.domain.schedule.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,9 +54,7 @@ public class ScheduleDto {
             .countryName(entity.getCountryName())
             .cityName(entity.getCityName())
             .detailScheduleDtos(
-                entity.getDetailScheduleEntities().isEmpty() ?
-                Collections.emptyList() :
-                entity.getDetailScheduleEntities().stream().map(DetailScheduleDto::toDto).collect(Collectors.toList())
+                entity.getDetailSchedules().stream().map(DetailScheduleDto::toDto).collect(Collectors.toList())
             )
             .build();
     }

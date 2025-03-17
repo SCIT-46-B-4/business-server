@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>스케줄 편집</title>
+
+    <script th:src="@{/script/global/jquery.js}" src="../../static/script/global/jquery.js"></script>
+    <script type="module" th:src="@{/script/schedule/update.js}" src="../../static/script/schedule/update.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/schedule/updateView.css}" href="../../static/css/schedule/updateView.css">
+</head>
+<body>
+<div class="container">
+    <!-- 왼쪽 영역: 내용이 많을 경우 스크롤 생김 -->
+    <div class="left">
+        <div id="basicInfo">
+            <span id="locCountryName" class="loc-country">일본 여행</span>
+            <input type="text" name="scheduleName" class="scheduleNameBox" value="날씨의 아이 여행">
+        </div>
+        <div id="scheduleInfo">
+            <div id="dayContent" class="day-content">
+                <div id="dayAnchor1" class="day-anchor">
+                    <div id="dayHeader1" class="day-header">
+                        Day 1
+                    </div>
+                    <div id="destinations" class="flex-item">
+                        <div class="attraction-box">
+                            <button class="delete-btn">-</button>
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">WE ROAD</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">관광 명소</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item">
+                        <div class="attraction-box">
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">도쿄 도청</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">관광 명소</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item">
+                        <div class="attraction-box">
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">식당 1</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">식당</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item">
+                        <div class="attraction-box">
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">신주쿠 쿄엔</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">공원</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item">
+                        <div class="attraction-box">
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">시부야 스카이</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">관광 명소</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="add-btn">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오른쪽 영역: 검색창 배치 -->
+    <div class="right">
+        <div id="searchWrapper" class="search-wrapper">
+            <input type="text" id="searchBox" class="search-box" placeholder="검색어 입력">
+            <span class="search-icon"></span>
+        </div>
+        <div class="result-box">
+            <div class="destination-card">
+                <div class="dest-img">
+                    <img src="your-image-url.jpg" alt="Destination Image">
+                </div>
+                <div class="dest-info">
+                    <div class="dest-line1">
+                        <span class="dest-krName">도쿄 도청</span>
+                        <div class="rating-container">
+                            <span class="star-rating" style="--score-percent: 90%;"></span>
+                            <span class="dest-score">9.0</span>
+                        </div>
+                    </div>
+                    <div class="dest-line2">
+                        <span class="dest-title">도쿄 도청에서 일본의 야경을!</span>
+                    </div>
+                    <div class="dest-line3">
+                        <span class="dest-type">관광 명소</span>
+                    </div>
+                </div>
+                <div class="add-dest-box">
+                    <button class="add-destination-btn">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

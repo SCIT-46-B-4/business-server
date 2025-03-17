@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CountryDto {
 
-    private Long id;
+    private Integer id;
     private String krName;
     private String engName;
     private String iso3;

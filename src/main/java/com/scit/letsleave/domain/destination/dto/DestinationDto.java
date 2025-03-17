@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationType;
+import com.scit.letsleave.domain.destination.dto.CityScheduleResponseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,12 +57,8 @@ public class DestinationDto {
             .score(entity.getScore())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
-            .city(
-                entity.getCity() == null ?
-                null :
-                CityDto.toDto(entity.getCity())
-            )
             .build();
+
         if (entity.getCoordinate() != null) {
             dto.setLatitude(BigDecimal.valueOf(entity.getCoordinate().getY()));
             dto.setLongitude(BigDecimal.valueOf(entity.getCoordinate().getX()));

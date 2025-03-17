@@ -17,7 +17,7 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
         "where s.user.id = :userId " +
         "order by s.createdAt desc"
     )
-    List<ScheduleDto> findSchedulesByUserId(@Param("userId") Long userId);
+    List<ScheduleDto> findByUserIdWithQuery(@Param("userId") Long userId);
 
     /**
      * @param scheduleId 작성하려는 scheduleId
@@ -34,7 +34,7 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
         )
         FROM ScheduleEntity s
         JOIN UserEntity u ON s.user.id = u.id and u.id = :userId
-        LEFT JOIN s.detailScheduleEntities d
+        LEFT JOIN s.detailSchedules d
         LEFT JOIN d.routes ro
         LEFT JOIN ro.destination de
         WHERE s.id = :scheduleId
@@ -50,4 +50,6 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
             @Param("scheduleId") Long scheduleId,
             @Param("userId") Long userId
     );
+
+    Optional<ScheduleEntity> findByIdAndUserId(Long scheduleId, Long userId);
 }

@@ -23,7 +23,7 @@ const AjaxAPI = (() => {
         getScheduleById: (scheduleId) => request({endpoint: `/schedules/${scheduleId}`}),
         getScheduleReviews: () => request({endpoint: "/schedules/reviews"}),
         getUserInfo: () => request({endpoint: "/users/info"}),
-
+        getDestinations: () => request({endpoint: "/destinations", data: query})
         // // POST 예제 - 일정 생성 (새로운 데이터 전송)
         // createSchedule: (scheduleData) => request({ 
         //     endpoint: "/schedules", 

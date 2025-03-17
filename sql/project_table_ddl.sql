@@ -520,3 +520,6 @@ ALTER TABLE schedule_review_replies
 -- schedule review 표지 이미지 추가
 ALTER TABLE schedule_reviews
     ADD COLUMN title_img VARCHAR(512);
+
+-- 25.03.17 추가 사항
+ALTER TABLE destinations ADD FULLTEXT INDEX ft_index (kr_name, loc_name, title)

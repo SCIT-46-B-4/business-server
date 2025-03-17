@@ -56,27 +56,10 @@ public class DetailScheduleEntity {
     private List<RouteEntity> routes;
 
     public static DetailScheduleEntity toEntity(DetailScheduleDto dto) {
-
-        if (dto.getRoutes() == null || dto.getRoutes().isEmpty()) {
-            throw new IllegalArgumentException("Route list cannot be empty.");
-        }
-        DetailScheduleEntity detailEntity = DetailScheduleEntity.builder()
+        return DetailScheduleEntity.builder()
             .id(dto.getId())
             .date(dto.getDate())
             .updatedAt(dto.getUpdatedAt())
             .build();
-
-        List<RouteEntity> routeEntites = dto.getRoutes().stream().map(
-            route -> {
-                RouteEntity routeEntity = RouteEntity.toEntity(route);
-                routeEntity.setDetailSchedule(detailEntity);
-
-                return routeEntity;
-            }
-        ).collect(Collectors.toList());
-
-        detailEntity.setRoutes(routeEntites);
-
-        return detailEntity;
     }
 }

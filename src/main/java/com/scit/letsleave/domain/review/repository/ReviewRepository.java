@@ -52,7 +52,7 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
                 FROM ReviewEntity r
                 JOIN r.schedule s
                 JOIN UserEntity u ON s.user.id = u.id
-                LEFT JOIN s.detailScheduleEntities d
+                LEFT JOIN s.detailSchedules d
                 LEFT JOIN d.routes ro
                 LEFT JOIN ro.destination de
                 WHERE r.id = :reviewId
@@ -77,7 +77,7 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
                 FROM ReviewEntity r
                 JOIN r.schedule s
                 JOIN UserEntity u ON s.user.id = u.id
-                LEFT JOIN s.detailScheduleEntities d
+                LEFT JOIN s.detailSchedules d
                 LEFT JOIN d.routes ro
                 LEFT JOIN ro.destination de
                 WHERE r.id = :reviewId and r.userId = :userId

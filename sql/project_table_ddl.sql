@@ -220,6 +220,7 @@ CREATE TABLE guides (
 		ON DELETE SET NULL
 );
 
+
 -- ================================
 -- 12) 여행기 세부 일정 루트 (route_reviews) 
 --     - detail_schedule_review_id(FK), guide_id(FK)
@@ -491,6 +492,7 @@ ALTER TABLE destinations MODIFY `address` VARCHAR(512) NULL;
 ALTER TABLE destinations MODIFY available_time VARCHAR(512) NULL;
 ALTER TABLE destinations MODIFY title VARCHAR(256) NOT NULL;
 ALTER TABLE users ADD COLUMN password VARCHAR(128) NULL AFTER phone;
+
 ALTER TABLE schedule_reviews ADD COLUMN like_count INT NOT NULL DEFAULT 0; -- like 기능을 위한 반정규화
 ALTER TABLE detail_schedule_review_likes RENAME TO schedule_review_likes; -- 이름 변경
 ALTER TABLE oauth CHANGE providerId provider_id VARCHAR(256) NOT NULL;
@@ -520,3 +522,8 @@ ALTER TABLE schedule_review_replies
 -- schedule review 표지 이미지 추가
 ALTER TABLE schedule_reviews
     ADD COLUMN title_img VARCHAR(512);
+
+-- guides 테이블 destination_id null 허용
+ALTER TABLE guides MODIFY COLUMN destination_id BIGINT NULL;
+-- guides 테이블 content MEDIUMTEXT로 변경
+ALTER TABLE guides MODIFY COLUMN content MEDIUMTEXT NOT NULL;

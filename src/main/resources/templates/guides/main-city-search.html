@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>도시검색</title>
+
+    <link
+      rel="stylesheet"
+      href="/css/main-city-search.css"
+      th:href="@{/css/main-city-search.css}"
+    />
+
+    <script
+      src="/js/jquery-3.7.1.min.js"
+      th:src="@{/js/jquery-3.7.1.min.js}"
+    ></script>
+
+    <script
+      src="/js/main-city-search.js"
+      th:src="@{/js/main-city-search.js}"
+      defer
+    ></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="search-container">
+        <input
+          id="searchInput"
+          placeholder="어느 도시가 궁금하세요?"
+          class="search-bar"
+        />
+
+        <button id="searchButton" class="search-button">검색</button>
+      </div>
+      <div id="searchResults" class="city-list"></div>
+
+      <div class="tab-menu">
+        <button class="tab-button" data-target="popular-cities">
+          인기도시
+        </button>
+
+        <button class="tab-button" data-target="overseas-cities">
+          해외도시
+        </button>
+
+        <button class="tab-button" data-target="domestic-cities">
+          국내도시
+        </button>
+      </div>
+
+      <!-- 🔹 도시 리스트 (인기도시)  -->
+
+      <div id="popular-cities" class="city-list">
+        <th:block th:each="city : ${popularCities}">
+          <div class="city-card cityName" th:data-city-id="${city.id}">
+            <p th:text="${city.krName}"></p>
+          </div>
+        </th:block>
+      </div>
+
+      <!-- 🔹 해외도시: 나라 리스트  -->
+
+      <div id="overseas-cities" class="city-list hidden">
+        <div class="country-card" data-country-id="japan"><p>일본</p></div>
+
+        <div class="country-card" data-country-id="southeast-asia">
+          <p>동남아시아</p>
+        </div>
+
+        <div class="country-card" data-country-id="south-pacific">
+          <p>남태평양</p>
+        </div>
+
+        <div class="country-card" data-country-id="europe"><p>유럽</p></div>
+
+        <div class="country-card" data-country-id="north-america">
+          <p>미주</p>
+        </div>
+
+        <div class="country-card" data-country-id="latin-america">
+          <p>중남미</p>
+        </div>
+
+        <div class="country-card" data-country-id="west-asia">
+          <p>서아시아</p>
+        </div>
+
+        <div class="country-card" data-country-id="china">
+          <p>중화/중국</p>
+        </div>
+      </div>
+
+      <!-- 🔹 국내 도시 리스트  -->
+
+      <div id="domestic-cities" class="city-list hidden">
+        <p>국내 도시 목록 준비 중...</p>
+      </div>
+    </div>
+
+    <!-- 🔹 Thymeleaf 데이터를 JSON 형태로 변환하여 JavaScript에서 사용할 수 있도록 설정  -->
+
+    <script type="application/json" id="countryCitiesData">
+
+      {
+
+        "japan": [
+
+          <th:block th:each="city, cityStat : ${popularCities}">
+
+            { "id": [[${city.id}]], "name": "[[${city.krName}]]" }
+
+            <th:block th:if="${!cityStat.last}">,</th:block>
+
+          </th:block>
+
+        ]
+
+      }
+    </script>
+  </body>
+</html>

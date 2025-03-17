@@ -143,9 +143,9 @@ function getSurveyData() {
     return {
         city: localStorage.getItem("selectedCity"),
         period: localStorage.getItem("selectedPeriod"),
-        companion: Array.isArray(localStorage.getItem("selectedCompanion")),
-        travelStyle: Array.isArray(localStorage.getItem("selectedTravelStyle")),
-        transport: Array.isArray(localStorage.getItem("selectedTransport")),
+        companion: localStorage.getItem("selectedCompanion"),
+        travelStyle: localStorage.getItem("selectedTravelStyle"),
+        transport: localStorage.getItem("selectedTransport"),
         scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
     }
 }

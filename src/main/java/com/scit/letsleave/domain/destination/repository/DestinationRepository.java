@@ -1,8 +1,11 @@
 package com.scit.letsleave.domain.destination.repository;
 
-import com.scit.letsleave.domain.destination.entity.DestinationEntity;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DestinationRepository extends JpaRepository<DestinationEntity, Long> {
+import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 
+public interface DestinationRepository extends JpaRepository<DestinationEntity, Long> {
+    List<DestinationEntity> findAll();
 }

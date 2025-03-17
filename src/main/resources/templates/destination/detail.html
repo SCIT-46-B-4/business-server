@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${destination.krName}">상세 정보</title>
+    <link
+      rel="stylesheet"
+      th:href="@{/css/destination/detail.css}"
+      href="../../static/css/destination/detail.css"
+    />
+    <script
+      th:src="@{/script/global/jquery.js}"
+      src="../../static/script/global/jquery.js"
+    ></script>
+    <script
+      th:src="@{/script/destination/detail.js}"
+      src="../../static/script/destination/detail.js"
+    ></script>
+    <script 
+      src="https://kit.fontawesome.com/def97ee41b.js" 
+      crossorigin="anonymous"
+    ></script>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a th:href="@{#}" 
+               th:text="${destination.city.krName}">도시</a> >
+            <a th:href="@{#}" 
+               th:text="${destination.type.description}">타입</a>
+        </div>
+
+        <!-- 여행지명 -->
+        <h1 class="krName" th:text="${destination.krName}">krName</h1>
+        <p class="locName" th:text="${destination.locName}">locName</p>
+
+        <div class="star-heart-container">
+            <!-- 별점 -->
+            <div class="star">
+                <div class="star-ratings">
+                    <!-- 채워진 별 -->
+                    <div class="star-ratings-fill" th:style="'width: ' + (${destination.score / 5.0 * 100}) + '%'">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <!-- 기본 별 -->
+                    <div class="star-ratings-base">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+                <!-- 별점 -->
+                <span th:text="${destination.score}" class="star-score">4.5</span>
+            </div>
+
+            <!-- 하트(저장) -->
+            <span class="heart">
+                <i class="fa-solid fa-heart"></i>
+            </span>
+            <span>(저장 개수 띄우기)</span>
+        </div>
+
+        <!-- 도시 -->
+        <div class = "location">
+            <i class="fa-solid fa-location-dot"></i>
+            <span th:text="${destination.city.krName}">도쿄</span>
+        </div>
+
+        <!-- 이미지 ... 이게 맞아..? 몰라..-->
+        <div class="destination-image">
+            <img th:src="@{/images/destination/{city}/{type}/{titleImg}(city=${destination.city.engName.toLowerCase()}, type=${destination.type.toString().toLowerCase()}, titleImg=${destination.titleImg})}" 
+                 alt="Destination Image" />
+        </div>
+
+        <div class="actions">
+            <button class="action-button save-button">
+                <i class="fa-regular fa-heart heart-icon"></i> <!-- 기본 비어있는 하트 -->
+                <span class="text">저장</span>
+            </button>
+            <button class="action-button">
+                <i class="fa-regular fa-calendar-check"></i>
+                <span class="text">일정 추가</span>
+            </button>
+            <button class="action-button">
+                <i class="fa-regular fa-pen-to-square"></i>
+                <span class="text">리뷰 쓰기</span>
+            </button>
+            <button class="action-button">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                <span class="text">공유</span>
+            </button>
+        </div>
+
+        <!-- 설명/내용 -->
+        <div class="divider"></div>
+        <p class="title" th:text="${destination.title}">title</p> 
+        <p class="content" th:text="${destination.content}">content</p> 
+        <div class="divider"></div>
+
+        <div class="info">
+            <h3>기본 정보</h3>
+            <div class="map">지도</div>
+            <div class="info-box">
+                <p><strong>주소</strong><span class="address" th:text="${destination.address}"> 성남시 분당구 구미동 어쩌구구</span></p>
+                <p><strong>연락처</strong><span class="contact" th:text="${destination.contact}"> 02-1234-5678</span></p>
+                <p><strong>홈페이지</strong><span class="homepage" th:text="${destination.homepage}"> example.com</span></p>
+            </div>
+        </div>
+
+        <div class="info">
+            <h3>가는 방법</h3>
+            <p class="howToGo" th:text="${destination.howToGo}">지하철 ○○역에서 도보 5분</p>
+        </div>
+
+        <div class="info">
+            <h3>이용 시간</h3>
+            <p class="availableTime" th:text="${destination.availableTime}" style="white-space: pre-wrap;">10:00 AM - 10:00 PM</p>
+        </div>
+
+        <!-- 이용 팁 --> 
+        <div class="tips">
+            <h3>이용 팁</h3>
+            <div th:each="entry : ${destination.feature}">
+                <strong th:text="${entry.key}"></strong>: 
+                <span th:text="${#strings.arrayJoin(entry.value, ', ')}"></span><br>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="nearby">
+            <h3>근처의 추천 장소</h3>
+
+            <!-- 타입별 분류 -->
+            <div class="tabs">
+                <button class="tab-button" th:each="type : ${nearbyDestinations.keySet()}" th:data-type="${type}" th:text="${type}">타입</button>
+            </div>
+
+            <!-- 여행지 목록 -->
+            <div class="places-container">
+                <div th:each="entry : ${nearbyDestinations}" class="places-list" th:data-type="${entry.key}">
+                    <a th:href="@{/destinations/{id}(id=${destination.id})}" class="place-card" th:each="destination : ${entry.value}">
+                        <img th:src="@{/images/destination/{city}/{type}/{titleImg}(city=${destination.city.engName.toLowerCase()}, type=${destination.type.toString().toLowerCase()}, titleImg=${destination.titleImg})}" 
+                             alt="대표 이미지" class="place-image" />
+                        <div class="place-info">
+                            <h4 th:text="${destination.krName}">여행지 이름</h4>
+                            <p th:text="${destination.title}">여행지 설명</p>
+                            <div class="place-meta">
+                                <span class="score" th:text="'★ ' + ${destination.score}">★ 4.5</span>
+                                <span class="distance" th:text="'거리 ' + ${destination.distance} + 'm'">839m</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</body>
+</html>

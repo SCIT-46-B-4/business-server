@@ -29,12 +29,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
 @Table(name = "destinations")
@@ -135,6 +137,7 @@ public class DestinationEntity {
             .score(dto.getScore())
             .createdAt(dto.getCreatedAt())
             .updatedAt(dto.getUpdatedAt())
+            .titleImg(dto.getTitleImg())
             .coordinate(point)
             .city(city)
             .routes(routeList)

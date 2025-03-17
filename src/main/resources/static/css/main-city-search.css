@@ -1,0 +1,254 @@
+기본 스타일
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+
+.search-container {
+    display: flex;    
+    align-items: center;
+    background: #fff;
+    border-radius: 50px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.search-button {
+    background: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background: #0056b3;
+}
+
+
+
+.tab-menu {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    border: none;
+    background: #f8f9fa;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.tab-button:hover,
+.tab-button.active {
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+
+.city-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 10px;
+}
+.city-list .city-card {
+    width: calc(100% * 6 / 7);
+    margin: 0 auto;
+}
+
+.country-card {
+    display: inline-block;
+    background: #f5f5f5;
+   
+    padding: 8px 14px;
+   
+    border-radius: 20px;
+    
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+    margin: 5px;
+    border: none;
+}
+
+
+.country-card.active {
+    background: #007bff;
+   
+    color: white;
+}
+
+.city-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    width: 100%;
+}
+
+.city-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.city-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.city-card p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+ .city-card.cityName {
+    width: calc(90%);
+}
+
+.no-results {
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    margin-top: 10px;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
+
+    .search-bar {
+        font-size: 14px;
+    }
+
+    .city-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+       
+        #searchResults {
+            position: absolute;
+            top: calc(100% + 5px); 
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            
+            overflow-y: auto;
+            
+            z-index: 1000;
+            
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+    
+       
+        .show {
+            display: block;
+            opacity: 1;
+        }
+    
+        
+        .city-card {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #f1f1f1;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+        }
+    
+        .city-card:last-child {
+            border-bottom: none;
+        }
+    
+        .city-card:hover {
+            background: #f8f9fa;
+        }
+    
+  
+        .city-card p {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0;
+            color: #333;
+        }
+    
+       
+        .no-results {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            padding: 12px;
+        }
+    
+        
+        @media (max-width: 768px) {
+            #searchResults {
+                max-height: 250px;
+            }
+    
+            .city-card p {
+                font-size: 14px;
+            }
+        }
+}

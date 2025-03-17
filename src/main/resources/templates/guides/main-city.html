@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>지금 가장 HOT한 방문지</title>
+    <!-- css -->
+    <link
+      rel="stylesheet"
+      href="../../static/css/main-city.css"
+      th:href="@{/css/main-city.css}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="search">
+        <a th:href="@{/guides/main-city-search}" class="search-box">
+          <span class="icon">🔍</span> 어디든지
+        </a>
+      </div>
+
+      <div>
+        <h2>
+          <span th:if="${cityId == 0}">지금 가장 HOT🔥한 방문지 TOP 10</span>
+          <span
+            th:unless="${cityId == 0}"
+            th:text="${cityName} + '에서 가장 HOT🔥한 방문지 TOP 10'"
+          ></span>
+        </h2>
+        <p>지난 일주일 간 평소보다 더 많이 저장된 관광지 & 맛집</p>
+        <div class="places-list">
+          <div th:each="place : ${list}">
+            <a th:href="@{/guides/{id}(id = ${place.id})}" class="tour-item">
+              <div class="tour-info">
+                <h2 th:text="${place.title}"></h2>
+                <p th:text="${place.content}"></p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination">
+        <nav class="pagination">
+          <ul>
+            <li th:if="${currentPage > 0}">
+              <a th:href="@{/guides(page=${currentPage - 1}, cityId=${cityId})}"
+                >&lsaquo;</a
+              >
+            </li>
+
+            <li th:each="i : ${#numbers.sequence(1, totalPages)}">
+              <a
+                th:href="@{/guides(page=${i - 1}, cityId=${cityId})}"
+                th:text="${i}"
+                th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+              >
+              </a>
+            </li>
+
+            <li th:if="${currentPage < totalPages - 1}">
+              <a th:href="@{/guides(page=${currentPage + 1}, cityId=${cityId})}"
+                >&rsaquo;</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </body>
+</html>

@@ -24,8 +24,8 @@ $(function() {
             return $(this).val();
         }).get();
 
-        localStorage.setItem("selectedCompanion", companionValues);
-        localStorage.setItem("selectedTravelStyle", travelStyleValues);
+        localStorage.setItem("selectedCompanion", JSON.stringify(companionValues));
+        localStorage.setItem("selectedTravelStyle", JSON.stringify(travelStyleValues));
 
         window.location.href = "/schedules/survey/3";
     })
@@ -37,7 +37,7 @@ $(function() {
         }).get();
         const scheduleStyle = $('input[name="schedule_style"]:checked').val();
 
-        localStorage.setItem("selectedTransport", transportValues);
+        localStorage.setItem("selectedTransport", JSON.stringify(transportValues));
         localStorage.setItem("selectedScheduleStyle", scheduleStyle);
 
         window.location.href = "/schedules?isRecommend=true"

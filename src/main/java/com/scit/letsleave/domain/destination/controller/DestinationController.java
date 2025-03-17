@@ -23,8 +23,7 @@ public class DestinationController {
     // 특정 Schedule에 들어있는 destination의 정보를 가져옴
     @GetMapping("/{scheduleId}")
     public ResponseEntity<List<DestinationScheduleDto>> getScheduleDestinations(@PathVariable("scheduleId") Long scheduleId) {
-        List<DestinationScheduleDto> destinations = destinationService.getDestinationByScheduleId(scheduleId);
-        log.info("Schedule : {} destinations : {}", scheduleId, destinations);
-        return ResponseEntity.ok(destinations);
+
+        return null;
     }
 }

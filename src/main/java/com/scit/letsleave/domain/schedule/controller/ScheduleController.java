@@ -1,52 +1,54 @@
 package com.scit.letsleave.domain.schedule.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.ui.Model;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Controller
-@RequestMapping("/schedule")
+@RequestMapping("/schedules")
 @Slf4j
 public class ScheduleController {
 
+    @Value("${google.maps.api.key}")
+    private String googleMapsApiKey;
+
     @GetMapping("/survey/1")
     public String survey1() {
-        return "survey/1";
+        return "schedule/survey/1";
     }
 
     @GetMapping("/survey/2")
     public String survey2() {
-        return "survey/2";
+        return "schedule/survey/2";
     }
 
     @GetMapping("/survey/3")
     public String survey3() {
-        return "survey/3";
+        return "schedule/survey/3";
     }
 
-    @PostMapping("/survey/submit")
-    public String submitSurvey(
-            @RequestParam(value = "city") String city,
-            @RequestParam(value = "period") String period,
-            @RequestParam(value = "companion", required = false) String companion,
-            @RequestParam(value = "travel_style", required = false) String travelStyle,
-            @RequestParam(value = "transport", required = false) String transport,
-            @RequestParam(value = "schedule_style") String scheduleStyle) {
+    @GetMapping("")
+    public String recommendScheduleRoute(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend, Model model) {
+        if (isRecommend) {
+            model.addAttribute("googleMapsApiKey", googleMapsApiKey);
 
-        log.info("Survey submitted with: " +
-                "city={}, period={}, companion={}, travelStyle={}, transport={}, scheduleStyle={}",
-                city, period, companion, travelStyle, transport, scheduleStyle);
-
-        return "redirect:/";
+            return "schedule/scheduleRoute";
+        } else {
+            return "redirect:/";
+        }
     }
 
-    @GetMapping("/scheduleRoute")
-    public String scheduleRoute(Model model) {
+    @GetMapping("/{id}")
+    public String scheduleRoute(@PathVariable(name="id") Long id, Model model) {
+        model.addAttribute("googleMapsApiKey", googleMapsApiKey);
+
         return "schedule/scheduleRoute";
     }
 }

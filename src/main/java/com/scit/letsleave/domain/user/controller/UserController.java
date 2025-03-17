@@ -41,4 +41,13 @@ public class UserController {
     public String loginPage() {
         return "user/login"; // login.html 반환
     }
+
+    /**
+     * 추가 정보 입력 페이지 요청 처리
+     * @return additionalInfo.html 반환
+     */
+    @GetMapping("/auth/google/additionalInfo")
+    public String additionalInfoPage() {
+        return "/user/additionalInfo"; // src/main/resources/templates/user/additionalInfo.html
+    }
 }

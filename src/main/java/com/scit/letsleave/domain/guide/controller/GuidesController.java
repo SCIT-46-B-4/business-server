@@ -32,12 +32,7 @@ public class GuidesController {
     private final CityService cityService;
     private int pageLimit = 3;
 
-    @GetMapping({ "/", "" })
-    public String index() {
-        return "index";
-    }
-
-    @GetMapping("/main-city")
+    @GetMapping("")
     public String mainCity(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(name = "cityId", defaultValue = "0") Long cityId,

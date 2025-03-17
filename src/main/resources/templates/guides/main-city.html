@@ -32,17 +32,9 @@
         <div class="places-list">
           <div th:each="place : ${list}">
             <a href="#" class="tour-item">
-              <!-- 이미지 파일명은 실제 데이터에 맞게 수정 필요 -->
-              <!-- <img th:src="@{${place.titleImg}}" alt="Place Image">  -->
               <div class="tour-info">
                 <h2 th:text="${place.title}"></h2>
                 <p th:text="${place.content}"></p>
-
-                <!-- <p class="rating">⭐ <span th:text="${place.score}"></span></p>
-                            <p class="likes">❤️ <span th:text="${place.likes}"></span></p>  좋아요 수는 데이터에서 가져옴 
-                            <p
-                                th:text="${place.type == '1' ? '관광명소' : (place.type == '2' ? '식당' : (place.type == '3' ? '쇼핑센터' : (place.type == '4' ? '숙박업소' : '대중교통')))} + ' - ' + ${place.address}">
-                            </p> -->
               </div>
             </a>
           </div>
@@ -53,15 +45,14 @@
         <nav class="pagination">
           <ul>
             <li th:if="${currentPage > 0}">
-              <a
-                th:href="@{/guides/main-city(page=${currentPage - 1}, cityId=${cityId})}"
+              <a th:href="@{/guides(page=${currentPage - 1}, cityId=${cityId})}"
                 >&lsaquo;</a
               >
             </li>
 
             <li th:each="i : ${#numbers.sequence(1, totalPages)}">
               <a
-                th:href="@{/guides/main-city(page=${i - 1}, cityId=${cityId})}"
+                th:href="@{/guides(page=${i - 1}, cityId=${cityId})}"
                 th:text="${i}"
                 th:classappend="${currentPage == i - 1 ? 'active' : ''}"
               >
@@ -69,8 +60,7 @@
             </li>
 
             <li th:if="${currentPage < totalPages - 1}">
-              <a
-                th:href="@{/guides/main-city(page=${currentPage + 1}, cityId=${cityId})}"
+              <a th:href="@{/guides(page=${currentPage + 1}, cityId=${cityId})}"
                 >&rsaquo;</a
               >
             </li>

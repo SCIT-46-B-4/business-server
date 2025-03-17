@@ -31,12 +31,12 @@ $(document).ready(function () {
 
   $(document).on("click", "#searchResults .city-card", function () {
     let cityId = $(this).attr("data-city-id");
-    window.location.href = "/guides/main-city?cityId=" + cityId + "&page=0";
+    window.location.href = "/guides?cityId=" + cityId + "&page=0";
   });
 
   $(document).on("click", ".city-card.cityName", function () {
     let cityId = $(this).attr("data-city-id");
-    window.location.href = "/guides/main-city?cityId=" + cityId + "&page=0";
+    window.location.href = "/guides?cityId=" + cityId + "&page=0";
   });
 
   $(".tab-button").click(function () {
@@ -82,8 +82,7 @@ $(document).ready(function () {
         // ✅ 클릭 이벤트 추가 (명시적으로 바인딩)
         cityElement.on("click", function () {
           let cityId = $(this).attr("data-city-id");
-          window.location.href =
-            "/guides/main-city?cityId=" + cityId + "&page=0";
+          window.location.href = "/guides?cityId=" + cityId + "&page=0";
         });
 
         $("#popular-cities").append(cityElement);

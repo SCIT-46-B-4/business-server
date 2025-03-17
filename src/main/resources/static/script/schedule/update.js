@@ -35,41 +35,33 @@ $(function() {
     $(document).on("click", ".add-destination-btn", function() {
         const $card = $(this).closest(".destination-card");
 
-        const imgSrc = $card.find("img").attr("src");
+        const imgSrc = $card.find(".dest-img img").attr("src");
         const krName = $card.find(".dest-krName").text();
         const id = $card.find(".dest-id").val();
         const destType = $card.find(".dest-type").text();
         const locCity = $card.find(".loc-city").text();
 
-        const $delBtn = $("<button>", {
-            class: "delete-btn",
-            text: "-"
-        });
-        const $destImgBox = $("<div>", {class: "dest-img" }).append(
-            $("<img>", { src: imgSrc, alt: "대표 이미지" })
+        const $flexItem = $("<div>", {class: "flex-item"}).append(
+            $("<div>", {class: "attraction-box"}).append(
+                $("<button>", {class: "delete-btn", text: "-"}),
+                $("<div>", {class: "dest-img"}).append(
+                    $("<img>", {src: imgSrc, alt: "대표 이미지"})
+                ),
+                $("<div>", {class: "dest-info"}).append(
+                    $("<span>", {class: "dest-name", text: krName}),
+                    $("<input>", {type: "hidden", class: "dest-id", value: id}),
+                    $("<div>", {class: "dest-meta"}).append(
+                        $("<span>", {class: "dest-type", text: destType}),
+                        $("<span>", {class: "separator", text: "·"}),
+                        $("<span>", {class: "loc-city", text: locCity})
+                    )
+                )
+            )
         );
-        const $destInfo = $("<div>", {class: "dest-info"});
-        const $destName = $("<span>", {class: "dest-name", text: krName});
-        const $destId = $("<input>", {
-            type: "hidden",
-            class: "dest-id",
-            value: id,
-        })
-        const $destMeta = $("<div>", {class: "dest-meta"});
-        const $destType = $("<span>", {class: "dest-type", text: destType});
-        const $separator = $("<span>", {class: "separator", text: "·"});
-        const $locCity = $("<span>", {class: "loc-city", text: locCity});
-        $destMeta.append($destType, $separator, $locCity);
-        $destInfo.append($destName, $destId, $destMeta);
-
-        const $attractionBox = $("<div>", {class: "attraction-box"})
-            .append($delBtn, $destImgBox, $destInfo);
-        const $newFlexItem = $("<div>", {class: "flex-item"}).append($attractionBox);
-
         if (currentDayContainer) {
-            currentDayContainer.append($newFlexItem);
+            currentDayContainer.append($flexItem);
         }
-        $(".search-wrapper").fadeOut();
+        $("#searchWrapper").fadeOut();
     });
 });
 
@@ -83,12 +75,23 @@ function init() {
         } catch (e) {
             console.error("Schedule 데이터 파싱 오류:", e);
         }
+    } else {
+        // const $scheduleContainer = $("#scheduleInfo").empty();
+
+        // const $dayContent = $("<div>", {class: "day-content"});
+        // const $dayAnchor = $("<div>", {class: "day-anchor"});
+        // const $dayHeader = $("<div>", {
+        //     class: "day-header",
+        //     text: "Day 1"
+        // });
+
+        // const $addBtn = $("<button>", {class: "add-btn", text: "+"});
+
+        // $dayContent.append($dayHeader, $dayAnchor, $addBtn);
+        // $scheduleContainer.append($dayContent);
     }
 }
 
-/**
- * renderSchedule: localStorage의 schedule 데이터를 사용해 좌측 영역(scheduleInfo)에 스케줄 정보를 렌더링합니다.
- */
 function renderSchedule(schedule) {
     const $scheduleContainer = $("#scheduleInfo");
     $scheduleContainer.empty();
@@ -103,57 +106,32 @@ function renderSchedule(schedule) {
             class: "day-header",
             text: `Day ${detailIndex + 1}`
         });
-        const $destinationContainer = $("<div>", {class: "flex-item"});
 
-        detailSchedule.routes.forEach((route) => {
+        detailSchedule.routes.forEach(route => {
             const dest = route.destination;
 
-            const $delBtn = $("<button>", {
-                class: "delete-btn",
-                text: "-"
-            });
-            const $attractionBox = $("<div>", {class: "attraction-box"});
-
-            const $destImgBox = $("<div>", {class: "dest-img"});
-            const $img = $("<img>", {
-                src: dest.titleImg,
-                alt: "대표 이미지"
-            });
-            $destImgBox.append($img);
-
-            const $destInfo = $("<div>", {class: "dest-info"});
-            const $destName = $("<span>", {
-                class: "dest-name",
-                text: dest.krName
-            });
-
-            const $hiddenDestId = $("<input>", {
-                type: "hidden",
-                class: "dest-id",
-                value: dest.id
-            });
-
-            const $destMeta = $("<div>", {class: "dest-meta"});
-            const $destType = $("<span>", {
-                class: "dest-type",
-                text: dest.type
-            });
-            const $separator = $("<span>", {
-                class: "separator",
-                text: "·"
-            });
-            const $locCity = $("<span>", {
-                class: "loc-city",
-                text: dest.cityName
-            });
-            $destMeta.append($destType, $separator, $locCity);
-            
-            $destInfo.append($destName, $hiddenDestId, $destMeta);
-            $attractionBox.append($delBtn, $destImgBox, $destInfo);
-            $destinationContainer.append($attractionBox);
+            const $flexItem = $("<div>", {class: "flex-item"}).append(
+                $("<div>", {class: "attraction-box"}).append(
+                    $("<button>", {class: "delete-btn", text: "-"}),
+                    $("<div>", {class: "dest-img"}).append(
+                        $("<img>", {src: dest.titleImg || "#", alt: "대표 이미지"})
+                    ),
+                    $("<div>", {class: "dest-info"}).append(
+                        $("<span>", {class: "dest-name", text: dest.krName}),
+                        $("<input>", {type: "hidden", class: "dest-id", value: dest.id}),
+                        $("<div>", {class: "dest-meta"}).append(
+                            $("<span>", {class: "dest-type", text: dest.type}),
+                            $("<span>", {class: "separator", text: "·"}),
+                            $("<span>", {class: "loc-city", text: dest.cityName})
+                        )
+                    )
+                )
+            );
+            $dayAnchor.append($flexItem);
         });
-        $dayAnchor.append($dayHeader, $destinationContainer);
-        $dayContent.append($dayAnchor);
+
+        const $addBtn = $("<button>", {class: "add-btn", text: "+"});
+        $dayContent.append($dayHeader, $dayAnchor, $addBtn);
         $scheduleContainer.append($dayContent);
     });
 }
@@ -186,6 +164,8 @@ function renderDestination(destinations) {
                     </div>
                     <div class="dest-line3">
                         <span class="dest-type">${dest.type}</span>
+                        <span class="separator">·</span>
+                        <span class="loc-city">${dest.cityName}</span>
                     </div>
                 </div>
                 <div class="add-dest-box">

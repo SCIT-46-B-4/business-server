@@ -39,41 +39,37 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성화
-            .authorizeHttpRequests(auth -> auth
-            .requestMatchers(
-                "/",
-                "/api/users/auth/**",
-                "/users/signup",
-                "/users/login",
-                "/script/**",
-                "/css/**",
-                "/images/**",
-                "/guides/**",
-                "/schedules/**",
-                "/destinations/**",
-                "/guides/**").permitAll()
-            .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/users/login") // 로그인 페이지 경로 설정
-                .permitAll() // 로그인 페이지는 누구나 접근 가능
-            )
-            .oauth2Login(oauth -> oauth
-                .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-                .successHandler(customOAuth2SuccessHandler)
-            )
-            .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/users/auth/logout")) // 로그아웃 URL 설정
-                .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
-                .invalidateHttpSession(true) // 세션 무효화
-                .clearAuthentication(true) // 인증 정보 제거
-                .deleteCookies("Authorization") // Authorization 쿠키 삭제
-            )
-            .exceptionHandling(exception -> exception
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/users/login")) // 인증되지 않은 사용자 처리
-            )
-           .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // JWT 관련
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성화
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/",
+                                "/api/users/auth/**",
+                                "/users/signup",
+                                "/users/login",
+                                "/script/**",
+                                "/css/**",
+                                "/images/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/users/login") // 로그인 페이지 경로 설정
+                        .permitAll() // 로그인 페이지는 누구나 접근 가능
+                )
+                .oauth2Login(oauth -> oauth
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .successHandler(customOAuth2SuccessHandler))
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/users/auth/logout")) // 로그아웃 URL 설정
+                        .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL
+                        .invalidateHttpSession(true) // 세션 무효화
+                        .clearAuthentication(true) // 인증 정보 제거
+                        .deleteCookies("Authorization") // Authorization 쿠키 삭제
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/users/login")) // 인증되지 않은 사용자
+                                                                                                        // 처리
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // JWT 관련
 
         return http.build();
     }

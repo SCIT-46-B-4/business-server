@@ -22,6 +22,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -73,6 +74,7 @@ public class UserEntity {
     private String profileImg;
 
     // User와 OAuth 간의 1:N 관계 설정
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OAuthEntity> oauthAccounts = new ArrayList<>();
 

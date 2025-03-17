@@ -61,9 +61,6 @@ public class ScheduleEntity {
     @Column(name="end_date", nullable=false)
     private LocalDate endDate;
 
-    @Column(name = "title", nullable = false)
-    private String title;
-
     @Column(name="country_name", nullable=false)
     private String countryName;
 

@@ -22,9 +22,11 @@
     <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
 
     <div class="button-container">
-      <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
       <p>
-        <a th:href="@{/user/editpage}" class="edit-button">프로필 편집</a>
+        <a th:href="@{/users/auth/logout}" class="logout-button">로그아웃</a>
+      </p>
+      <p>
+        <a th:href="@{/users/editpage}" class="edit-button">프로필 편집</a>
       </p>
     </div>
 
@@ -35,7 +37,7 @@
         class="profile-photo"
         id="profilePhoto"
       />
-      <h2 id="name" th:value="${userInfo.nickname}">이름</h2>
+      <h2 id="name" th:text="${userInfo.nickname}">이름</h2>
     </div>
 
     <div class="menu-section">
@@ -47,7 +49,6 @@
     </div>
 
     <div class="trip-record">
-      <h4 class="former-trip">지난 여행</h4>
       <div id="scheduleContainer">
         <div id="tripHistory" class="trip-history">
           <img

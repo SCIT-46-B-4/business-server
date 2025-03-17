@@ -4,17 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>프로필 편집</title>
-    <link th:href="@{/css/member.css/editpage.css}" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-    <script th:src="@{/script/jquery.js}"></script>
-    <script th:src="@{/script/edit.js}"></script>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/global/reset.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" />
+    <link rel="stylesheet" th:href="@{/css/user/editpage.css}" />
+    <!-- Script -->
+    <script th:src="@{/script/global/jquery.js}"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}"></script>
+    <script th:src="@{/script/user/edit.js}"></script>
   </head>
   <body>
+    <!-- fragments place -->
+    <div th:insert="~{fragments/header :: top-bar}"></div>
+    <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
+
     <div class="button-container">
       <p><a th:href="@{/logout}" class="logout-button">로그아웃</a></p>
       <p><a th:href="@{/user/mypage}" class="back-button">마이페이지</a></p>

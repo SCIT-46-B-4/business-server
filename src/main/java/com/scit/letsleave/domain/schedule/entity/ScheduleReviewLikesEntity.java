@@ -2,6 +2,7 @@ package com.scit.letsleave.domain.schedule.entity;
 
 import java.time.LocalDateTime;
 
+import com.scit.letsleave.domain.review.entity.ReviewEntity;
 import com.scit.letsleave.domain.schedule.dto.ScheduleReviewLikesDto;
 import com.scit.letsleave.domain.user.entity.UserEntity;
 
@@ -41,7 +42,7 @@ public class ScheduleReviewLikesEntity {
 
     @ManyToOne
     @JoinColumn(name = "schedule_review_id", nullable = false)
-    private ScheduleEntity scheduleReview;
+    private ReviewEntity scheduleReview;
 
     @Column(name = "created_at", nullable = false,  columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
@@ -50,7 +51,7 @@ public class ScheduleReviewLikesEntity {
         return ScheduleReviewLikesEntity.builder()
             .id(dto.getId())
             .user(UserEntity.builder().id(dto.getUserId()).build())
-            .scheduleReview(ScheduleEntity.builder().id(dto.getScheduleReviewId()).build())
+            .scheduleReview(ReviewEntity.builder().userId(dto.getScheduleReviewId()).build())
             .createdAt(dto.getCreatedAt())
             .build();
     }

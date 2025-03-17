@@ -2,10 +2,10 @@
 
 .button-container {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 30px;
-  margin-top: 3em;
-  padding-right: 12em;
+  justify-content: center;
+  margin-left: 29.7em;
+  margin-top: 50px;
+  margin-bottom: 40px;
 }
 
 .logout-button,

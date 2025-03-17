@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${guide.title}">가이드 디테일</title>
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/guide/guideDetail.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a th:href="@{#}" th:text="${guide.cityName}">도시</a> >
+            <span>가이드</span>
+        </div>
+        <!-- 제목 -->
+        <div class="title" th:text="${guide.title}">삿포로의 밤을 빛내줄 야경 명소 10</div>
+
+        <!-- 이미지 -->
+        <div class="image-container">
+            <img th:src="@{/images/guide/{titleImg}(titleImg=${guide.titleImg})}"></img>
+        </div>
+
+        <div th:utext="${guide.content}"></div>
+
+    </div>
+</body>
+</html>

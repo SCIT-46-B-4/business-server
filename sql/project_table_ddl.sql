@@ -522,3 +522,8 @@ ALTER TABLE schedule_review_replies
 -- schedule review 표지 이미지 추가
 ALTER TABLE schedule_reviews
     ADD COLUMN title_img VARCHAR(512);
+
+-- guides 테이블 destination_id null 허용
+ALTER TABLE guides MODIFY COLUMN destination_id BIGINT NULL;
+-- guides 테이블 content MEDIUMTEXT로 변경
+ALTER TABLE guides MODIFY COLUMN content MEDIUMTEXT NOT NULL;

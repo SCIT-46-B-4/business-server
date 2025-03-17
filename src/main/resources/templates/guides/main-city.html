@@ -31,7 +31,7 @@
         <p>지난 일주일 간 평소보다 더 많이 저장된 관광지 & 맛집</p>
         <div class="places-list">
           <div th:each="place : ${list}">
-            <a href="#" class="tour-item">
+            <a th:href="@{/guides/{id}(id = ${place.id})}" class="tour-item">
               <div class="tour-info">
                 <h2 th:text="${place.title}"></h2>
                 <p th:text="${place.content}"></p>

@@ -9,13 +9,14 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scit.letsleave.domain.destination.dto.CityDto;
 import com.scit.letsleave.domain.destination.service.CityService;
-import com.scit.letsleave.domain.guide.dto.GuidesDTO;
+import com.scit.letsleave.domain.guide.dto.GuidesDto;
 import com.scit.letsleave.domain.guide.service.GuidesService;
 import com.scit.letsleave.domain.guide.util.PageNavigator;
 
@@ -46,7 +47,7 @@ public class GuidesController {
         }
 
         Pageable validPageable = PageRequest.of(page, pageable.getPageSize());
-        Page<GuidesDTO> list = cityId == 0
+        Page<GuidesDto> list = cityId == 0
                 ? guidesService.selectAll(validPageable)
                 : guidesService.selectPart(validPageable, cityId);
 
@@ -90,5 +91,20 @@ public class GuidesController {
     public List<CityDto> searchCityAjax(@RequestParam("query") String query) {
 
         return cityService.searchCitiesByKrName(query);
+    }
+
+    /**
+     * 가이드 디테일 페이지 요청
+     * @param guideId
+     * @param model
+     * @return
+     */
+    @GetMapping("/{guideId}")
+    public String getGuideDetailPage(@PathVariable("guideId") Long guideId, Model model) {
+        GuidesDto guideDto = guidesService.getGuideById(guideId);
+
+        model.addAttribute("guide",guideDto);
+        
+        return "guide/detail";
     }
 }

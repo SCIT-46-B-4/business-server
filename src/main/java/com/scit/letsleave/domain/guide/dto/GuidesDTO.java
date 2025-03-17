@@ -16,11 +16,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GuidesDTO {
+public class GuidesDto {
 
     private Long id;
     private Long destinationId;
-    private Integer cityId;
+    private Long cityId;
     private String title;
     private String content;
     private String titleImg;
@@ -28,18 +28,20 @@ public class GuidesDTO {
     private LocalDateTime updatedAt;
 
     
-    // Entity > DTO
-    public static GuidesDTO toDTO (GuidesEntity guidesEntity) { 
-        return GuidesDTO.builder()    
-                .id(guidesEntity.getId())
-                .destinationId(guidesEntity.getDestinationId())
-                .cityId(guidesEntity.getCityId())
-                .title(guidesEntity.getTitle())
-                .content(guidesEntity.getContent())
-                .titleImg(guidesEntity.getTitleImg())
-                .createdAt(guidesEntity.getCreatedAt())
-                .updatedAt(guidesEntity.getUpdatedAt())
-                .build();
+    private String cityName;
+
+    public static GuidesDto toDto(GuidesEntity entity) {
+        return GuidesDto.builder()
+            .id(entity.getId())
+            .destinationId(entity.getDestinationId())
+            .cityId(entity.getCity() != null ? entity.getCity().getId() : null)
+            .cityName(entity.getCity() != null ? entity.getCity().getKrName() : null)
+            .title(entity.getTitle())
+            .content(entity.getContent())
+            .titleImg(entity.getTitleImg())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .build();
     }
 }
 

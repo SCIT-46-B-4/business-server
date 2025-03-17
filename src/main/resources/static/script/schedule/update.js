@@ -14,7 +14,7 @@ $(function() {
         });
     });
 
-    $(".add-btn").on("click", function() {
+    $(".add-dest-btn").on("click", function() {
         currentDayContainer = $(this).closest(".day-content").find(".day-anchor");
         $(".search-wrapper").fadeIn();
     });
@@ -75,25 +75,32 @@ function init() {
         } catch (e) {
             console.error("Schedule 데이터 파싱 오류:", e);
         }
-    } else {
-        // const $scheduleContainer = $("#scheduleInfo").empty();
+    }  else {
+        const $scheduleContainer = $(".schedule-info");
+        $scheduleContainer.empty();
 
-        // const $dayContent = $("<div>", {class: "day-content"});
-        // const $dayAnchor = $("<div>", {class: "day-anchor"});
-        // const $dayHeader = $("<div>", {
-        //     class: "day-header",
-        //     text: "Day 1"
-        // });
+        const $dayContent = $("<div>", {class: "day-content"});
+        const $dayAnchor = $("<div>", {class: "day-anchor"});
 
-        // const $addBtn = $("<button>", {class: "add-btn", text: "+"});
+        const $defaultFlexItem = $("<div>", {class: "flex-item"});
+        $dayAnchor.append($defaultFlexItem);
 
-        // $dayContent.append($dayHeader, $dayAnchor, $addBtn);
-        // $scheduleContainer.append($dayContent);
+        const $dayHeader = $("<div>", {
+            class: "day-header",
+            text: "Day 1"
+        });
+
+        const $addBtn = $("<div>", {class: "add-dest-btn-container"}).append($("<button>", {class: "add-dest-btn", text: "+"}));
+        const $DayAddBtn = $("<div>", {class: "add-day-btn-container"})
+            .append($("<button>", {class: "add-day-btn", text: "다음 날 추가하기"}));
+
+        $dayContent.append($dayHeader, $dayAnchor, $addBtn, $DayAddBtn);
+        $scheduleContainer.append($dayContent);
     }
 }
 
 function renderSchedule(schedule) {
-    const $scheduleContainer = $("#scheduleInfo");
+    const $scheduleContainer = $(".schedule-info");
     $scheduleContainer.empty();
 
     $("#locCountryName").text(schedule.countryName + " 여행");
@@ -130,7 +137,7 @@ function renderSchedule(schedule) {
             $dayAnchor.append($flexItem);
         });
 
-        const $addBtn = $("<button>", {class: "add-btn", text: "+"});
+        const $addBtn = $("<div>", {class: "add-dest-btn-container"}).append($("<button>", {class: "add-dest-btn", text: "+"}));
         $dayContent.append($dayHeader, $dayAnchor, $addBtn);
         $scheduleContainer.append($dayContent);
     });

@@ -37,7 +37,7 @@ public class CityService {
     }
 
     // CityService.java (정상 동작 버전)
-    public String getCityNameById(Long cityId) {
+    public String getCityNameById(Integer cityId) {
         return cityRepository.findById(cityId)
                 .map(CityEntity::getKrName)
                 .orElse("지금");

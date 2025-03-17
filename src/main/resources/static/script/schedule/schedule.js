@@ -152,6 +152,7 @@ function getSurveyData() {
 
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
 function getScheduleData(scheduleId, isRecommend) {
+
     let ajaxCall = isRecommend ?
         AjaxAPI.getRecommendSchedule(getSurveyData()) :
         AjaxAPI.getScheduleById(scheduleId);
@@ -167,7 +168,7 @@ function getScheduleData(scheduleId, isRecommend) {
     .fail((xhr, _, errorThrown) => {
         console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule schedule:", errorThrown);
-        location.href = "/";
+        // location.href = "/";
     })
 }
 

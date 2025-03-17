@@ -36,7 +36,7 @@ public class GuidesController {
     @GetMapping("")
     public String mainCity(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(name = "cityId", defaultValue = "0") Long cityId,
+            @RequestParam(name = "cityId", defaultValue = "0") Integer cityId,
             @PageableDefault(page = 0, size = 5) Pageable pageable,
             Model model) {
 

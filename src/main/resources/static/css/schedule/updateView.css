@@ -50,13 +50,17 @@
     border-bottom: 1px solid #999;
     outline: none;
     box-sizing: border-box;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(206, 196, 196, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .scheduleNameBox:focus {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-info {
+    margin-top: 20px;
 }
 
 /* Day 관련 CSS */
@@ -68,7 +72,9 @@
 
 .day-content {
     position: relative;
-    padding-bottom: 10px;
+    margin-top: 0px;
+     /* .add-dest-btn-container 높이를 고려하여 추가 */
+    padding-bottom: 40px;
 }
 
 .day-header {
@@ -84,19 +90,18 @@
     margin-bottom: 15px;
 }
 
-/* day-content 좌측 중앙에 수직선: day-header 하단(20px)부터 시작해 하단(30px 전)까지 */
 .day-content::before {
     content: "";
     position: absolute;
     left: calc(50% - 1px);
     top: 20px;
-    bottom: 30px;
+     /* .add-dest-btn-container 위치에 맞게 조정 */
+    bottom: 100px;
     width: 2px;
     background: linear-gradient(180deg, var(--color-blue), var(--color-green));
     z-index: -1;
 }
 
-/* Attraction 리스트 관련 CSS */
 .flex-item {
     margin-top: 15px;
     position: relative;
@@ -117,8 +122,8 @@
 .delete-btn {
     display: none;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 7px;
+    right: 7px;
     width: 20px;
     height: 20px;
     background-color: var(--color-red);
@@ -135,21 +140,57 @@
     display: block;
 }
 
-.add-btn {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 30px;
+.add-dest-btn-container,
+.add-day-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.add-dest-btn-container {
+    margin-top: 0px;
+}
+
+.add-dest-btn {
+    width: 40px;
+    height: 40px;
     border: none;
     border-radius: 50%;
-    background-color: var(--color-blue);
-    color: #fff;
+    background-color: rgb(66, 133, 244);
+    color: white;
     font-size: 20px;
-    line-height: 30px;
     text-align: center;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.add-day-btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.add-day-btn {
+    width: 80%;
+    height: 35px;
+    background: var(--color-green);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.add-day-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.add-day-btn:active {
+    transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -229,6 +270,11 @@
     margin-bottom: 10px;
     background-color: var(--color-white);
     overflow: hidden;
+}
+
+.flex-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .dest-img {
@@ -317,7 +363,7 @@
     width: 100%;
     border: none;
     border-radius: 50%;
-    background-color: var(--color-blue);
+    background-color: rgb(66, 133, 244);
     color: #fff;
     font-size: 20px;
     cursor: pointer;

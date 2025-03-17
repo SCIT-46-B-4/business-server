@@ -55,7 +55,7 @@ public class RestScheduleController {
 
     @PostMapping("/recommend")
     public ResponseEntity<ScheduleDto> getRecommendedSchedule(@ModelAttribute SurveyDto surveyDto) {
-
+        log.info("=========={}======,", surveyDto);
         return recommendService.getRecommendSchedule(surveyDto);
     }
 }

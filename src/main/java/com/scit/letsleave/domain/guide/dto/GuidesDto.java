@@ -20,14 +20,13 @@ public class GuidesDto {
 
     private Long id;
     private Long destinationId;
-    private Long cityId;
+    private Integer cityId;
     private String title;
     private String content;
     private String titleImg;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    
     private String cityName;
 
     public static GuidesDto toDto(GuidesEntity entity) {

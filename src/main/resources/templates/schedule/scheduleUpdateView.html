@@ -14,13 +14,16 @@
 <div class="container">
     <!-- 왼쪽 영역: 내용이 많을 경우 스크롤 생김 -->
     <div class="left">
+        <!-- 전체 정보 -->
         <div id="basicInfo">
             <span id="locCountryName" class="loc-country">일본 여행</span>
             <input type="text" name="scheduleName" class="scheduleNameBox" value="날씨의 아이 여행">
         </div>
-        <div id="scheduleInfo">
-            <div id="dayContent" class="day-content">
-                <div id="dayAnchor1" class="day-anchor">
+
+        <!-- 날짜 별 스케줄 렌더링 영역 -->
+        <div class="schedule-info">
+            <div class="day-content">
+                <div class="day-anchor">
                     <div id="dayHeader1" class="day-header">
                         Day 1
                     </div>
@@ -101,7 +104,12 @@
                         </div>
                     </div>
                 </div>
-                <button class="add-btn">+</button>
+                <div class="add-dest-btn-container">
+                    <button class="add-dest-btn">+</button>
+                </div>
+                <div class="add-day-btn-container">
+                    <button class="add-day-btn">다음 날 추가</button>
+                </div>
             </div>
         </div>
     </div>
@@ -134,6 +142,9 @@
                 </div>
                 <div class="add-dest-box">
                     <button class="add-destination-btn">+</button>
+                </div>
+                <div class="add-day-btn-container">
+                    <button class="add-day-btn">다음 날 추가하기</button>
                 </div>
             </div>
         </div>

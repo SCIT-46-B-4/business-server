@@ -24,9 +24,16 @@ jobs:
       # Gradle 실행 파일 권한 설정
       - name: Set gradlew permissions
         run: |
-          chmod +x ./gradlew  # 권한 설정
-          dos2unix ./gradlew  # Windows 형식 처리
-          ls -l ./gradlew     # 권한 확인 (디버깅용)
+          # Gradlew 파일 존재 확인 및 권한 설정
+          if [ -f ./gradlew ]; then
+            echo "gradlew found!"
+            chmod +x ./gradlew
+            dos2unix ./gradlew  # Convert Windows line endings to Unix format
+            ls -l ./gradlew  # Display the file's permissions for debugging
+          else
+            echo "gradlew not found!"
+            exit 1  # Exit if gradlew is not found
+          fi
 
       # Docker Buildx 설정
       - name: Set up Docker Buildx

@@ -16,7 +16,13 @@ jobs:
     steps:
       # 소스 코드 체크아웃
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set gradlew permissions
+        run: chmod +x ./gradlew
 
       # Docker Buildx 설정
       - name: Set up Docker Buildx
@@ -39,10 +45,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: ''
-
-      - name: Change gradlew permissions
-        run: chmod +x ./gradlew
+          distribution: 'temurin'
 
       # Spring 애플리케이션 빌드 & Docker Build/Push
       - name: Build and Push Docker Image (Spring)

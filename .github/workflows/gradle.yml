@@ -38,7 +38,7 @@ jobs:
 
       # Docker Buildx 설정
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 #
 #      # ECR 로그인
 #      - name: Log in to Amazon ECR

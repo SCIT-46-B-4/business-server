@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - feat/infra-code-update-for-release
+  workflow_dispatch:   # 수동 실행을 위한 이벤트 추가
 
 jobs:
   build-and-deploy:

@@ -18,6 +18,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 권한
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
       # Java 환경 설정
       - name: Set up Java (For Spring)
         uses: actions/setup-java@v2
@@ -28,7 +32,6 @@ jobs:
       # build project
       - name: build java
         run: |
-          chmod +x ./gradlew
           ./gradlew bootJar
 
       # AWS 자격 증명 설정

@@ -18,6 +18,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set gradlew permissions
+        run: chmod +x ./gradlew
+
       # Docker Buildx 설정
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -49,14 +52,6 @@ jobs:
           REPOSITORY_NAME: "business-service"
           TAG: ${{ secrets.IMAGE_TAG }}
         run: |
-          # 권한
-          if [ -f ./gradlew ]; then
-            chmod +x ./gradlew
-          else
-            echo "gradlew file not found!"
-            exit 1
-          fi
-          
           # Gradle 빌드
           ./gradlew build
 

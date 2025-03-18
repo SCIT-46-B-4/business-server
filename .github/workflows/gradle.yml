@@ -50,7 +50,12 @@ jobs:
           TAG: ${{ secrets.IMAGE_TAG }}
         run: |
           # 권한
-          chmod +x ./gradlew
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+          else
+            echo "gradlew file not found!"
+            exit 1
+          fi
           
           # Gradle 빌드
           ./gradlew build

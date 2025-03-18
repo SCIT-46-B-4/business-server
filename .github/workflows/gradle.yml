@@ -32,14 +32,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Docker Buildx 설정
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       # Gradle 빌드
       - name: Build with Gradle
         run: ./gradlew build
 
+      # Docker Buildx 설정
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+#
 #      # ECR 로그인
 #      - name: Log in to Amazon ECR
 #        uses: aws-actions/amazon-ecr-login@v1

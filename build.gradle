@@ -45,6 +45,8 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JWT JSON 처리
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // Validation Starter
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 구글 소셜 로그인 관련
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.503'
 }
 
 tasks.named('test') {
@@ -52,5 +54,5 @@ tasks.named('test') {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs.add("-parameters")
+	options.compilerArgs.add("-parameters")
 }

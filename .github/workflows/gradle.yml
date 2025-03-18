@@ -21,6 +21,15 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: Check if gradlew exists
+        run: |
+          if [ -f ./gradlew ]; then
+            echo "gradlew exists"
+          else
+            echo "gradlew does not exist"
+            exit 1
+          fi
+
       # Gradle 실행 파일 권한 설정
       - name: Set gradlew permissions
         run: |

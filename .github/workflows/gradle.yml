@@ -32,53 +32,53 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Docker Buildx 설정
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+#      # Docker Buildx 설정
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v2
 
       # Gradle 빌드
       - name: Build with Gradle
         run: ./gradlew build
 
-      # ECR 로그인
-      - name: Log in to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v1
-
-      # AWS 자격 증명 설정
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      # Spring 애플리케이션 빌드 & Docker Build/Push
-      - name: Build and Push Docker Image (Spring)
-        env:
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-          REGION: ${{ secrets.AWS_REGION }}
-          REPOSITORY_NAME: "business-service"
-          TAG: ${{ secrets.IMAGE_TAG }}
-        run: |
-          # ECR 리포지토리 URI 구성
-          REPOSITORY_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY_NAME}:${TAG}"
-
-          # Docker 이미지 빌드 & 푸시
-          docker build -t $REPOSITORY_URI .
-          docker push $REPOSITORY_URI
-
-      # S3 업로드
-      - name: Sync static resources to S3
-        run: |
-          aws s3 sync ./script s3://my-static-bucket/script
-          aws s3 sync ./images s3://my-static-bucket/images
-          aws s3 sync ./css s3://my-static-bucket/css
-
-      # ECS 서비스 업데이트
-      - name: Update ECS Task Definition and Deploy
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ecs-task-definition.json
-          service: business-service       # ECS 서비스 이름
-          cluster: my-ecs-cluster         # ECS 클러스터 이름
-          wait-for-service-stability: true
+#      # ECR 로그인
+#      - name: Log in to Amazon ECR
+#        uses: aws-actions/amazon-ecr-login@v1
+#
+#      # AWS 자격 증명 설정
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: ${{ secrets.AWS_REGION }}
+#
+#      # Spring 애플리케이션 빌드 & Docker Build/Push
+#      - name: Build and Push Docker Image (Spring)
+#        env:
+#          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+#          REGION: ${{ secrets.AWS_REGION }}
+#          REPOSITORY_NAME: "business-service"
+#          TAG: ${{ secrets.IMAGE_TAG }}
+#        run: |
+#          # ECR 리포지토리 URI 구성
+#          REPOSITORY_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY_NAME}:${TAG}"
+#
+#          # Docker 이미지 빌드 & 푸시
+#          docker build -t $REPOSITORY_URI .
+#          docker push $REPOSITORY_URI
+#
+#      # S3 업로드
+#      - name: Sync static resources to S3
+#        run: |
+#          aws s3 sync ./script s3://my-static-bucket/script
+#          aws s3 sync ./images s3://my-static-bucket/images
+#          aws s3 sync ./css s3://my-static-bucket/css
+#
+#      # ECS 서비스 업데이트
+#      - name: Update ECS Task Definition and Deploy
+#        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+#        with:
+#          task-definition: ecs-task-definition.json
+#          service: business-service       # ECS 서비스 이름
+#          cluster: my-ecs-cluster         # ECS 클러스터 이름
+#          wait-for-service-stability: true

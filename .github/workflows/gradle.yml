@@ -21,21 +21,12 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: Check if gradlew exists
-        run: |
-          if [ -f ./gradlew ]; then
-            echo "gradlew exists"
-          else
-            echo "gradlew does not exist"
-            exit 1
-          fi
-
       # Gradle 실행 파일 권한 설정
       - name: Set gradlew permissions
         run: |
-          chmod +x ./gradlew
-          # 만약 Windows에서 체크아웃 된 파일이라면, dos2unix로 변환
-          dos2unix ./gradlew
+          chmod +x ./gradlew  # 권한 설정
+          dos2unix ./gradlew  # Windows 형식 처리
+          ls -l ./gradlew     # 권한 확인 (디버깅용)
 
       # Docker Buildx 설정
       - name: Set up Docker Buildx

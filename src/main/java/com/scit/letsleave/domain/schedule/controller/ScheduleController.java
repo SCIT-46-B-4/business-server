@@ -34,6 +34,11 @@ public class ScheduleController {
         return "schedule/survey/3";
     }
 
+    @GetMapping("/survey/calendar")
+    public String calendar() {
+        return "schedule/calendar";
+    }
+
     @GetMapping("")
     public String recommendScheduleRoute(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend, Model model) {
         if (isRecommend) {

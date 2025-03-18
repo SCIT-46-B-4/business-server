@@ -123,7 +123,7 @@ input[type="checkbox"] {
 /* 달력 컨테이너 */
 .calendar-container {
     width: 700px;
-    margin: 20px auto;
+    margin: 50px auto;
 }
 /* jQuery UI Datepicker 기본 스타일 커스터마이징 */
 /* 폰트 크기와 내부 여백을 키워서 달력 전체 크기를 확대 */

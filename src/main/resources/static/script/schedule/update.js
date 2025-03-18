@@ -32,6 +32,16 @@ $(function() {
             .done((data) => renderDestination(data));
     });
 
+    $(document).on("click", ".delete-day-btn", function() {
+        const $dayContent = $(this).parents(".day-content");
+        $dayContent.remove();
+
+        const currentDayCount = $(".schedule-info .day-content").length;
+        if (currentDayCount < 6) {
+
+        }
+    });
+
     $(document).on("click", ".add-destination-btn", function() {
         const $card = $(this).closest(".destination-card");
 
@@ -69,13 +79,15 @@ $(function() {
         const newDayNumber = currentDayCount + 1;
 
         const $newDayContent = $("<div>", { class: "day-content" });
-        const $dayHeader = $("<div>", {
-            class: "day-header",
-            text: `Day ${newDayNumber}`
-        });
+        const $dayHeader = $("<div>", {class: "day-header"});
+        const $daySpan = $("<span>", {text: `Day ${newDayNumber}`});
+        const $deleteDayBtn = $("<button>", {class: "delete-day-btn", text: "-"})
+        $dayHeader.append($daySpan, $deleteDayBtn);
+
         const $dayAnchor = $("<div>", { class: "day-anchor" });
         const $defaultFlexItem = $("<div>", { class: "flex-item" });
         $dayAnchor.append($defaultFlexItem);
+
         const $addDestBtnContainer = $("<div>", { class: "add-dest-btn-container" })
             .append($("<button>", { class: "add-dest-btn", text: "+" }));
 

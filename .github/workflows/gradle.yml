@@ -21,8 +21,12 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      # Gradle 실행 파일 권한 설정
       - name: Set gradlew permissions
-        run: chmod +x ./gradlew
+        run: |
+          chmod +x ./gradlew
+          # 만약 Windows에서 체크아웃 된 파일이라면, dos2unix로 변환
+          dos2unix ./gradlew
 
       # Docker Buildx 설정
       - name: Set up Docker Buildx

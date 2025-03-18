@@ -32,7 +32,7 @@ public class ScheduleDto {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private List<DetailScheduleDto> detailScheduleDtos;
+    private List<DetailScheduleDto> detailSchedules;
 
     // Response Only
     private String countryName;
@@ -53,7 +53,7 @@ public class ScheduleDto {
             .endDate(entity.getEndDate())
             .countryName(entity.getCountryName())
             .cityName(entity.getCityName())
-            .detailScheduleDtos(
+            .detailSchedules(
                 entity.getDetailSchedules().stream().map(DetailScheduleDto::toDto).collect(Collectors.toList())
             )
             .build();

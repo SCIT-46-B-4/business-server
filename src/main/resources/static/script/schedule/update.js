@@ -14,12 +14,12 @@ $(function() {
         });
     });
 
-    $(".add-dest-btn").on("click", function() {
+    $(document).on("click", ".add-dest-btn", function() {
         currentDayContainer = $(this).closest(".day-content").find(".day-anchor");
         $(".search-wrapper").fadeIn();
     });
 
-    $(".attraction-box").on("click", ".delete-btn", function(e) {
+    $(document).on("click", ".delete-btn", function(e) {
         e.stopPropagation();
         $(this).closest(".flex-item").fadeOut(300, function() {
             $(this).remove();
@@ -63,6 +63,32 @@ $(function() {
         }
         $("#searchWrapper").fadeOut();
     });
+
+    $(document).on("click", ".add-day-btn", function() {
+        const currentDayCount = $(".schedule-info .day-content").length;
+        const newDayNumber = currentDayCount + 1;
+
+        const $newDayContent = $("<div>", { class: "day-content" });
+        const $dayHeader = $("<div>", {
+            class: "day-header",
+            text: `Day ${newDayNumber}`
+        });
+        const $dayAnchor = $("<div>", { class: "day-anchor" });
+        const $defaultFlexItem = $("<div>", { class: "flex-item" });
+        $dayAnchor.append($defaultFlexItem);
+        const $addDestBtnContainer = $("<div>", { class: "add-dest-btn-container" })
+            .append($("<button>", { class: "add-dest-btn", text: "+" }));
+
+        if (newDayNumber < 6) {
+            const $addDayBtnContainer = $(this).closest(".add-day-btn-container").detach();
+            $newDayContent.append($dayHeader, $dayAnchor, $addDestBtnContainer, $addDayBtnContainer);
+        } else {
+            $(this).closest(".add-day-btn-container").remove();
+            $newDayContent.append($dayHeader, $dayAnchor, $addDestBtnContainer);
+        }
+
+        $(".schedule-info").append($newDayContent);
+    });
 });
 
 function init() {
@@ -82,13 +108,16 @@ function init() {
         const $dayContent = $("<div>", {class: "day-content"});
         const $dayAnchor = $("<div>", {class: "day-anchor"});
 
+        
+        const $dayHeader = $("<div>", {class: "day-header"});
+        const $dayTitle = $("<span>", {text: "Day 1"});
+        const $deleteDayBtn = $("<button>", {class: "delete-day-btn", text: "-"})
         const $defaultFlexItem = $("<div>", {class: "flex-item"});
+        $dayHeader.append($dayTitle);
+        $dayHeader.append($deleteDayBtn);
+        
+        $dayAnchor.append($dayHeader);
         $dayAnchor.append($defaultFlexItem);
-
-        const $dayHeader = $("<div>", {
-            class: "day-header",
-            text: "Day 1"
-        });
 
         const $addBtn = $("<div>", {class: "add-dest-btn-container"}).append($("<button>", {class: "add-dest-btn", text: "+"}));
         const $DayAddBtn = $("<div>", {class: "add-day-btn-container"})
@@ -106,7 +135,7 @@ function renderSchedule(schedule) {
     $("#locCountryName").text(schedule.countryName + " 여행");
     $("input[name=scheduleName]").val(schedule.name);
 
-    schedule.detailScheduleDtos.forEach((detailSchedule, detailIndex) => {
+    schedule.detailSchedules.forEach((detailSchedule, detailIndex) => {
         const $dayContent = $("<div>", {class: "day-content"});
         const $dayAnchor = $("<div>", {class: "day-anchor"});
         const $dayHeader = $("<div>", {

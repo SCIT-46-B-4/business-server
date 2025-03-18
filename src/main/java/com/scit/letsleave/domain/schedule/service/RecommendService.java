@@ -25,7 +25,6 @@ public class RecommendService {
     private String recommend_server_path;
 
     public ResponseEntity<ScheduleDto> getRecommendSchedule(SurveyDto surveyDto) {
-        log.info("====={}====", surveyDto);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         URI uri = UriComponentsBuilder
             .fromUriString(recommend_server_uri)

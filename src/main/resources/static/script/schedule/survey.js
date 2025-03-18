@@ -1,5 +1,4 @@
 $(function() {
-    // 페이지 1: 도시와 여행 기간 선택 후 다음 페이지로 이동
     $("#saveAndGoToNextPage").on("click", () => {
         const $selectedCity = $('input[name="city"]:checked');
         const $selectedPeriod = $('input[name="period"]:checked');
@@ -13,9 +12,8 @@ $(function() {
         localStorage.setItem("selectedPeriod", $selectedPeriod.val());
 
         window.location.href = "/schedules/survey/2";
-    })
+    });
 
-    // 페이지 2: 동행인 및 여행 스타일 선택 후 다음 페이지로 이동
     $("#savePage2AndGoToNext").on("click", () => {
         const companionValues = $('input[name="companion"]:checked').map(function () {
             return $(this).val();
@@ -28,10 +26,9 @@ $(function() {
         localStorage.setItem("selectedTravelStyle", JSON.stringify(travelStyleValues));
 
         window.location.href = "/schedules/survey/3";
-    })
+    });
 
-    // 페이지 3: 이동 방식 및 여행 일정 선택 후 AJAX로 설문 결과 제출
-    $("#submitSurvey").on("click", () => {
+    $("#savePage3AndGoToNext").on("click", () => {
         const transportValues = $('input[name="transport"]:checked').map(function () {
             return $(this).val();
         }).get();
@@ -39,7 +36,42 @@ $(function() {
 
         localStorage.setItem("selectedTransport", JSON.stringify(transportValues));
         localStorage.setItem("selectedScheduleStyle", scheduleStyle);
-
-        window.location.href = "/schedules?isRecommend=true"
     })
-})
+
+    const dateFormat = "yy-mm-dd";
+    let startDate = null;
+    let endDate = null;
+
+    function highlightRange(date) {
+        if (startDate && endDate) {
+            if (date >= startDate && date <= endDate) {
+                return [true, "range-highlight", "선택된 범위"];
+            }
+        }
+        return [true, "", ""];
+    }
+
+    $("#start_date_calendar").datepicker({
+        dateFormat: dateFormat,
+        changeMonth: true,
+        changeYear: true,
+        beforeShowDay: highlightRange,
+        onSelect: function(selectedDate) {
+            startDate = $.datepicker.parseDate(dateFormat, selectedDate);
+            let periodStr = localStorage.getItem("selectedPeriod") || "1n2d";
+            let match = periodStr.match(/(\d+)d/);
+            let daysToAdd = match ? parseInt(match[1], 10) : 0;
+
+            endDate = new Date(startDate.getTime());
+            endDate.setDate(endDate.getDate() + daysToAdd);
+
+            $("#start_date_calendar").datepicker("refresh");
+            localStorage.setItem("startDate", $.datepicker.formatDate(dateFormat, startDate).toISOString());
+            localStorage.setItem("endDate", $.datepicker.formatDate(dateFormat, endDate).toISOString());
+        }
+    });
+
+    $("#submitSurvey").on("click", () => {
+        window.location.href = "/schedules?isRecommend=true";
+    });
+});

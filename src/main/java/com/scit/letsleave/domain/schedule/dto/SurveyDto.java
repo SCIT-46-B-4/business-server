@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.schedule.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -19,4 +20,6 @@ public class SurveyDto {
     private List<String> travelStyle;
     private List<String> transport;
     private String scheduleStyle;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }

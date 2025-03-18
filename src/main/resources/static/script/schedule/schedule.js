@@ -2,12 +2,6 @@ import { AjaxAPI } from "../global/ajax.js";
 import { drawMapWithMarkers, filterMarkersByDate } from "./map.js";
 
 
-// 날짜 형식 변환 함수 (YYYY-MM-DD)
-function formatDate(dtString) {
-    const dt = new Date(dtString);
-    return dt.toISOString().split('T')[0];
-}
-
 // 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
 function renderScheduleBoxByDay(schedule) {
     const scheduleName = schedule["name"];
@@ -15,16 +9,15 @@ function renderScheduleBoxByDay(schedule) {
     const countryName =  schedule["countryName"];
     const endDate = schedule["endDate"];
     const startDate = schedule["startDate"];
-    const detailScheduleDtos = schedule["detailScheduleDtos"];
-    
+    const detailSchedules = schedule["detailSchedules"];
+
     $("#textTag").text(cityName + " 여행");
     $("#scheduleName").text(scheduleName);
-    
-    // 상위 컨테이너: HTML에 <div id="schedule-container" class="container-schedule scheduleContainer"></div>가 있어야 함
+
     const $container = $("#schedule-container");
     $container.empty();
     // 각 날짜 그룹마다 별도의 anchor 컨테이너 생성
-    detailScheduleDtos.forEach((detailSchedule, index) => {
+    detailSchedules.forEach((detailSchedule, index) => {
         // 새로운 anchor 컨테이너 생성
         const $dayAnchor = $("<div>", {
             id: `day_${index+1}_anchor`,
@@ -147,6 +140,8 @@ function getSurveyData() {
         travelStyle: JSON.parse(localStorage.getItem("selectedTravelStyle")),
         transport: JSON.parse(localStorage.getItem("selectedTransport")),
         scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
+        startDate: new Date(localStorage.getItem("startDate")),
+        endDate: new Date(localStorage.getItem("endDate")),
     }
 }
 
@@ -160,7 +155,8 @@ function getScheduleData(scheduleId, isRecommend) {
     ajaxCall
     .done((schedule) => {
         localStorage.setItem("schedule", schedule);
-        localStorage.setItem("isRecommend", isRecommend);
+        console.log(schedule);
+
         setTimeout(() => {
             renderScheduleBoxByDay(schedule);
         }, 0);

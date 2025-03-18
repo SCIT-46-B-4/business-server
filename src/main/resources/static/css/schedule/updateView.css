@@ -78,6 +78,7 @@
 }
 
 .day-header {
+    position: relative;
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -88,6 +89,27 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
+}
+
+.delete-day-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;  /* 기본 배경은 투명하게 */
+    border: none;
+    font-size: 16px;
+    color: var(--color-red);
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.delete-day-btn:hover {
+    background-color: rgba(234, 67, 53, 0.1);
+    border-radius: 50%;
+    transform: translateY(-50%) scale(1.1);
 }
 
 .day-content::before {

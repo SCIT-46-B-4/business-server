@@ -67,8 +67,8 @@ public class ScheduleService {
         return scheduleRepository.findByUserIdWithQuery(userId);
     }
 
-    private void saveDetailAndRoute(ScheduleEntity schedule, List<DetailScheduleDto> detailScheduleDtos) {
-        detailScheduleDtos.forEach(detailScheduleDto -> {
+    private void saveDetailAndRoute(ScheduleEntity schedule, List<DetailScheduleDto> detailSchedules) {
+        detailSchedules.forEach(detailScheduleDto -> {
             DetailScheduleEntity detailScheduleEntity = DetailScheduleEntity.toEntity(detailScheduleDto);
             detailScheduleEntity.setSchedule(schedule);
             DetailScheduleEntity savedDetailSchedule = detailScheduleRepository.save(detailScheduleEntity);
@@ -97,7 +97,7 @@ public class ScheduleService {
 
         ScheduleEntity savedSchedule = scheduleRepository.save(ScheduleEntity.toEntity(dto, user, country, city));
 
-        saveDetailAndRoute(savedSchedule, dto.getDetailScheduleDtos());
+        saveDetailAndRoute(savedSchedule, dto.getDetailSchedules());
 
         return scheduleRepository.findById(savedSchedule.getId()).map(ScheduleDto::toDto)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "저장된 스케줄을 찾을 수 없습니다."));
@@ -122,7 +122,7 @@ public class ScheduleService {
         originSchedule.setUpdatedAt(LocalDateTime.now());
 
         detailScheduleRepository.deleteAll(originSchedule.getDetailSchedules());
-        saveDetailAndRoute(originSchedule, dto.getDetailScheduleDtos());
+        saveDetailAndRoute(originSchedule, dto.getDetailSchedules());
 
         return scheduleRepository.findById(originSchedule.getId()).map(ScheduleDto::toDto)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수정된 스케줄을 찾을 수 없습니다."));

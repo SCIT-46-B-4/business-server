@@ -17,9 +17,6 @@ jobs:
       # 소스 코드 체크아웃
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          fetch-depth: 0
 
       # 권한
       - name: Grant execute permission for gradlew
@@ -32,10 +29,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Gradle 빌드
-      - name: Build with Gradle
-        run: ./gradlew build
-
+      # build project
+      - name: build java
+        run: |
+          ./gradlew bootJar
 
       # AWS 자격 증명 설정
       - name: Configure AWS credentials
@@ -48,6 +45,11 @@ jobs:
       # ECR 로그인
       - name: Log in to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
+
+      # set docker buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
 
 #
 #      # Spring 애플리케이션 빌드 & Docker Build/Push

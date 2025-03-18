@@ -21,20 +21,6 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      # Gradle 실행 파일 권한 설정
-      - name: Set gradlew permissions
-        run: |
-          # Gradlew 파일 존재 확인 및 권한 설정
-          if [ -f ./gradlew ]; then
-            echo "gradlew found!"
-            chmod +x ./gradlew
-            dos2unix ./gradlew  # Convert Windows line endings to Unix format
-            ls -l ./gradlew  # Display the file's permissions for debugging
-          else
-            echo "gradlew not found!"
-            exit 1  # Exit if gradlew is not found
-          fi
-
       # Docker Buildx 설정
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -66,6 +52,16 @@ jobs:
           REPOSITORY_NAME: "business-service"
           TAG: ${{ secrets.IMAGE_TAG }}
         run: |
+          if [ -f ./gradlew ]; then
+            echo "gradlew found!"
+            chmod +x ./gradlew
+            dos2unix ./gradlew  # Convert Windows line endings to Unix format
+            ls -l ./gradlew  # Display the file's permissions for debugging
+          else
+            echo "gradlew not found!"
+            exit 1  # Exit if gradlew is not found
+          fi
+          
           # Gradle 빌드
           ./gradlew build
 

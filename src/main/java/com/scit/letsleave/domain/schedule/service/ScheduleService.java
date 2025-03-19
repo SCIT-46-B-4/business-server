@@ -51,11 +51,8 @@ public class ScheduleService {
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
 
-    public boolean scheduleExists(Long scheduleId) {
-        return scheduleRepository.existsById(scheduleId);
-    }
-
     public ScheduleDto findById(Long scheduleId) {
+
         return scheduleRepository.findById(scheduleId).map(ScheduleDto::toDto)
         .orElseThrow(() -> new RuntimeException("Schedule with id: " + scheduleId + " not found"));
         // ToDo: RuntimeException말고 Error Exception customizing 필요. NotFoundException:404 등

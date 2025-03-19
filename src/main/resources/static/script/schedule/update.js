@@ -46,7 +46,7 @@ class ScheduleManager {
             .on("click", ".add-day-btn", this.addNewDay.bind(this))
             .on("click", ".delete-day-btn", this.deleteDay.bind(this))
             .on("click", ".append-destination-btn", this.appendDestination.bind(this))
-            .on("click", ".save-schedule-btn", this.saveSchedule.bind(this));
+            .on("click", ".save-schedule-btn", this.createOrUpdateSchedle.bind(this));
 
         $(".search-icon").on("click", () => {
             this.searchDestinations();
@@ -119,15 +119,16 @@ class ScheduleManager {
     renderSchedule(schedule) {
         this.$scheduleInfo.empty();
         $("#locCountryName").text(`${schedule.countryName} 여행`);
-        $("input[name=scheduleName]").val(schedule.name);
+        $(".schedule-name").val(schedule.name);
         $("#countryId").text(schedule.countryId);
         $("#cityId").text(schedule.cityId);
-        console.log(schedule.countryId);
-        console.log(schedule.cityId);
+        $("#id").text(schedule.id);
+        $("#scheduleStartDate").text(schedule.startDate);
+        $("#scheduleEndDate").text(schedule.endDate);
 
         schedule.detailSchedules.forEach((detailSchedule, detailIndex) => {
-            const $dayContent = $("<div>", { class: "day-content" });
-            const $dayAnchor = $("<div>", { class: "day-anchor" });
+            const $dayContent = $("<div>", {class: "day-content"});
+            const $dayAnchor = $("<div>", {class: "day-anchor"});
             const $dayHeader = $("<div>", {
                 class: "day-header",
                 text: `Day ${detailIndex + 1}`
@@ -135,27 +136,27 @@ class ScheduleManager {
 
             detailSchedule.routes.forEach(route => {
                 const dest = route.destination;
-                const $flexItem = $("<div>", { class: "flex-item" }).append(
-                    $("<div>", { class: "attraction-box" }).append(
-                        $("<button>", { class: "delete-dest-btn", text: "-" }),
-                        $("<div>", { class: "dest-img" }).append(
-                            $("<img>", { src: dest.titleImg || "#", alt: "대표 이미지" })
+                const $flexItem = $("<div>", {class: "flex-item"}).append(
+                    $("<div>", {class: "attraction-box"}).append(
+                        $("<button>", {class: "delete-dest-btn", text: "-"}),
+                        $("<div>", {class: "dest-img"}).append(
+                            $("<img>", {src: dest.titleImg || "#", alt: "대표 이미지"})
                         ),
-                        $("<div>", { class: "dest-info" }).append(
-                            $("<span>", { class: "dest-name", text: dest.krName }),
-                            $("<input>", { type: "hidden", class: "dest-id", value: dest.id }),
-                            $("<div>", { class: "dest-meta" }).append(
-                                $("<span>", { class: "dest-type", text: dest.type }),
-                                $("<span>", { class: "separator", text: "·" }),
-                                $("<span>", { class: "loc-city", text: dest.cityName })
+                        $("<div>", {class: "dest-info"}).append(
+                            $("<span>", {class: "dest-name", text: dest.krName}),
+                            $("<input>", {type: "hidden", class: "dest-id", value: dest.id}),
+                            $("<div>", {class: "dest-meta"}).append(
+                                $("<span>", {class: "dest-type", text: dest.type}),
+                                $("<span>", {class: "separator", text: "·"}),
+                                $("<span>", {class: "loc-city", text: dest.cityName})
                             )
                         )
                     )
                 );
                 $dayAnchor.append($flexItem);
-            });
+        });
 
-            const $addDestBtnContainer = $("<div>", { class: "add-dest-btn-container" }).append(
+            const $addDestBtnContainer = $("<div>", { class: "add-dest-btn-container"}).append(
                 $("<button>", { class: "add-dest-btn", text: "+" })
             );
 
@@ -262,9 +263,8 @@ class ScheduleManager {
     // 목적지 검색 실행: Ajax를 통해 목적지를 검색합니다.
     searchDestinations() {
         const searchWord = this.$searchBox.val().trim();
-        const cityId = $("#cityId").text();
-        console.log("cityId")
-        console.log(cityId)
+        const cityId = parseInt($("#cityId").text(), 10);
+
         AjaxAPI.getDestinations({query: searchWord, cityId: cityId})
         .done((data) => this.renderSearchDestination(data));
     }
@@ -307,28 +307,6 @@ class ScheduleManager {
         );
     }
 
-    // 일정 저장: 현재 스케줄을 로컬스토리지에 저장합니다.
-    saveSchedule() {
-        const scheduleData = {
-            countryName: $("#countryName").text(),
-            scheduleName: $("input[name=scheduleName]").val(),
-            days: []
-        };
-
-        this.$scheduleInfo.find(".day-content").each(function (index) {
-            const dayData = { day: index + 1, destinations: [] };
-            $(this).find(".flex-item").each(function () {
-                const destName = $(this).find(".dest-name").text();
-                const destId = $(this).find(".dest-id").val();
-                dayData.destinations.push({ id: destId, name: destName });
-            });
-            scheduleData.days.push(dayData);
-        });
-
-        localStorage.setItem("savedSchedule", JSON.stringify(scheduleData));
-        alert("일정이 저장되었습니다!");
-    }
-
     // 검색 결과 렌더링: 검색된 목적지 정보를 DOM에 표시합니다.
     renderSearchDestination(destinations) {
         this.$resultBox.empty();
@@ -354,9 +332,55 @@ class ScheduleManager {
             this.$resultBox.append(cardHtml);
         });
     }
-    createOrUpdateSchedle(schedule) {
+
+    createOrUpdateSchedle() {
+        const cityEnum = {
+            1: "도쿄",
+            2: "오사카",
+            3: "후쿠오카",
+            4: "삿포로",
+        }
+        const scheduleStartDate = new Date($("#scheduleStartDate").text());
+        let schedule = {
+            id: Number($("#id").text()),
+            name: $("#scheduleName").val(),
+            startDate: scheduleStartDate,
+            endDate: new Date($("#scheduleEndDate").text()),
+            countryName: $("#countryName").text().trim().split(" ")[0],
+            cityName: cityEnum[cityId],
+            countryId: parseInt($("#countryId").text(), 10),
+            cityId: parseInt($("#cityId").text(), 10),
+        };
+
+        const detailschedulesDOM = $(".day-content").children(".day-anchor");
+        let detailSchedules = [];
+        detailschedulesDOM.each((anchor) => {
+            let dayOffset = Number($(anchor).closest(".date-order").text().split(" ")[1]) - 1;
+            let detailScheduleDate = new Date(scheduleStartDate);
+            detailScheduleDate.setDate(detailScheduleDate.getDate() + dayOffset);
+            let detailScheduleId = parseInt($(anchor).find(".detail-schedule-id").text(), 10);
+            let route = []
+            const routes = anchor.children(".flex-item");
+            routes.each((orderNumber, item) => {
+                let routeObj = {
+                    "id": parseInt($(item).find(".route-id").text(), 10),
+                    "destination": {
+                        "id": parseInt($(item).find(".dest-id").text(), 10)
+                    },
+                    "orderNumber": orderNumber + 1
+                };
+                route.push(routeObj);
+            })
+            detailSchedules.push({
+                "id": detailScheduleId,
+                "date": detailScheduleDate,
+                "routes": route
+            });
+        })
+        schedule["detailSchedules"] = detailSchedules;
+
         AjaxAPI.createOrUpdateSchedle(schedule)
-        .done((data) => this.renderSchedule(schedule));
+        .done((data) => this.renderSchedule(data));
     }
 }
 

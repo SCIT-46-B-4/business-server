@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>스케줄 편집</title>
-
     <!-- 기본 -->
     <script th:src="@{/script/global/jquery.js}" src="../../static/script/global/jquery.js"></script>
     <link rel="stylesheet" th:href="@{/css/schedule/update.css}" href="../../static/css/schedule/update.css">
     
     <!-- 드래그 앤 드랍 -->
     <script type="module" th:src="@{/script/schedule/update.js}" src="../../static/script/schedule/update.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script th:src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js" src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
     <!-- 달력 -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
-    <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+    <script th:src="https://cdn.jsdelivr.net/npm/flatpickr" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script th:src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js" src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    <script th:src="https://npmcdn.com/flatpickr/dist/l10n/ko.js" src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
@@ -29,13 +29,14 @@
                 <div class="schedule-info-left">
                     <div class="schedule-country-name-container">
                         <span id="countryName" class="country-name">일본 여행</span>
+                        <span id="id" hidden></span>
                         <span id="countryId" hidden></span>
                         <span id="cityId" hidden></span>
                     </div>
                     <div class="schedule-duration-container">
-                        <span class="schedule-start-date">2024-11-30</span>
+                        <span id="scheduleStartDate" class="schedule-start-date">2024-11-30</span>
                         <span class="schedule-date-seperator">~</span>
-                        <span class="schedule-end-date">2025-01-02</span>
+                        <span id="scheduleEndDate" class="schedule-end-date">2025-01-02</span>
                     </div>
                 </div>
                 <!-- 오른쪽 요소 (저장하기 버튼) -->
@@ -45,7 +46,7 @@
             </div>
             <!-- 기존의 일정 이름 입력 박스 -->
             <div class="schedule-name-container">
-                <input type="text" name="scheduleName" class="schedule-name" value="날씨의 아이 여행">
+                <input type="text" id="scheduleName" class="schedule-name" value="날씨의 아이 여행">
             </div>
         </div>
         
@@ -58,17 +59,20 @@
                 <div class="day-anchor">
                     <!-- 스케줄 헤더 정보 -->
                     <div id="dayHeader1" class="day-header">
+                        <span class="detail-schedule-id" hidden></span>
                         <span class="date-order">Day 1</span>
                         <button class="delete-day-btn">-</button>
                     </div>
                     <!-- 관광지 목록 -->
                     <div class="flex-item">
+                        <div class="route-id" hidden></div>
                         <div class="attraction-box">
                             <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
                                 <img src="#" alt="대표 이미지">
                             </div>
                             <div class="dest-info">
+                                <span class="dest-id" hidden>1</span>
                                 <span class="dest-name">WE ROAD</span>
                                 <div class="dest-meta">
                                     <span class="dest-type">관광 명소</span>
@@ -79,6 +83,7 @@
                         </div>
                     </div>
                     <div class="flex-item">
+                        <div class="route-id" hidden></div>
                         <div class="attraction-box">
                             <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
@@ -95,6 +100,7 @@
                         </div>
                     </div>
                     <div class="flex-item">
+                        <div class="route-id" hidden></div>
                         <div class="attraction-box">
                             <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
@@ -111,6 +117,7 @@
                         </div>
                     </div>
                     <div class="flex-item">
+                        <div class="route-id" hidden></div>
                         <div class="attraction-box">
                             <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
@@ -127,6 +134,7 @@
                         </div>
                     </div>
                     <div class="flex-item">
+                        <div class="route-id" hidden></div>
                         <div class="attraction-box">
                             <button class="delete-dest-btn">-</button>
                             <div class="dest-img">

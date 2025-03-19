@@ -148,63 +148,66 @@
 <!------------------------------------------------------------------------>
         <div id="fullscreen-map" class="mapContainer">
             <div id="map"></div>
-            <div class="mapContainer footer">
-                <div class="mapContainer top-footer buttonBox">
-                    <div class="mapContainer top-footer flex-box buttonBox">
-                        <div class="buttonBox top-footer">
-                            <button class="top-footer-button"></button>
-                        </div>
-                    </div>
-                    <div role="tablist" aria-orientation="horizontal" class="buttonBox top-footer flex-box"
-                        style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
-                        <!-- 동적인 버튼 생성 자리 button : day1, day2 ,,, -->
-                    </div>
-                </div>
-
-                <!-- End .top-footer -->
-                <div class="mapContainer bottom-footer">
-                    <div class="mapContainer bottom-footer flex-box">
-                        <div class="bottom-footer flex-box left-button" >
-                            <!-- 좌측 사이드 버튼 -->
-                            <div class="side-button">
-                                <button class="bottom-footer-button">Left</button>
+<!--지도 밑에 footer 주석처리 해두라고 하셨는데 걍 hidden으로 숨겨놨어요! css 맨 위에!-->
+            <div class="hidden">
+                <div class="mapContainer footer">
+                    <div class="mapContainer top-footer buttonBox">
+                        <div class="mapContainer top-footer flex-box buttonBox">
+                            <div class="buttonBox top-footer">
+                                <button class="top-footer-button"></button>
                             </div>
                         </div>
-                        <div class="flicking-viewport" style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
-                            <div class="flicking-camera">
-                                <div class="flicking-panel flex-box guideBox">
-                                    <div class="guideBox flex-box" style="display: flex; flex-direction: row; align-items: center;">
-                                        <a class="route-guided-link" href="#" style="display: flex; flex-direction: row; align-items: center;">
-                                            <!-- 왼쪽 이미지 영역 -->
-                                            <div class="guideBox guide-image" style="flex-shrink: 0;">
-                                                <img src="https://via.placeholder.com/150" alt="우라 난바 이미지" style="width:150px; height:auto;">
-                                            </div>
-                                            <!-- 오른쪽 텍스트 영역 -->
-                                            <div class="guideBox guide-text" style="display: flex; flex-direction: column; margin-left: 10px;">
-                                                <!-- 제목 -->
-                                                <div style="font-size: 16px; font-weight: bold;">우라 난바</div>
-                                                <!-- 상세 설명 -->
-                                                <div style="font-size: 13px; margin-top: 4px;">일본 특유의 분위기를 물씬 풍기는 이자카야 골목</div>
-                                                <!-- 카테고리 정보 -->
-                                                <div style="font-size: 13px; color: gray; margin-top: 4px;">
-                                                    <span>관광 명소</span>
-                                                    <span>::before 난바</span>
+                        <div role="tablist" aria-orientation="horizontal" class="buttonBox top-footer flex-box"
+                            style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
+                            <!-- 동적인 버튼 생성 자리 button : day1, day2 ,,, -->
+                        </div>
+                    </div>
+
+                    <!-- End .top-footer -->
+                    <div class="mapContainer bottom-footer">
+                        <div class="mapContainer bottom-footer flex-box">
+                            <div class="bottom-footer flex-box left-button" >
+                                <!-- 좌측 사이드 버튼 -->
+                                <div class="side-button">
+                                    <button class="bottom-footer-button">Left</button>
+                                </div>
+                            </div>
+                            <div class="flicking-viewport" style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
+                                <div class="flicking-camera">
+                                    <div class="flicking-panel flex-box guideBox">
+                                        <div class="guideBox flex-box" style="display: flex; flex-direction: row; align-items: center;">
+                                            <a class="route-guided-link" href="#" style="display: flex; flex-direction: row; align-items: center;">
+                                                <!-- 왼쪽 이미지 영역 -->
+                                                <div class="guideBox guide-image" style="flex-shrink: 0;">
+                                                    <img src="https://via.placeholder.com/150" alt="우라 난바 이미지" style="width:150px; height:auto;">
                                                 </div>
-                                                <!-- 별점 및 리뷰 -->
-                                                <div style="font-size: 13px; color: gray; margin-top: 4px;">
-                                                    <span><!-- 별점 표시 --></span>
-                                                    <span>(리뷰 2)</span>
+                                                <!-- 오른쪽 텍스트 영역 -->
+                                                <div class="guideBox guide-text" style="display: flex; flex-direction: column; margin-left: 10px;">
+                                                    <!-- 제목 -->
+                                                    <div style="font-size: 16px; font-weight: bold;">우라 난바</div>
+                                                    <!-- 상세 설명 -->
+                                                    <div style="font-size: 13px; margin-top: 4px;">일본 특유의 분위기를 물씬 풍기는 이자카야 골목</div>
+                                                    <!-- 카테고리 정보 -->
+                                                    <div style="font-size: 13px; color: gray; margin-top: 4px;">
+                                                        <span>관광 명소</span>
+                                                        <span>::before 난바</span>
+                                                    </div>
+                                                    <!-- 별점 및 리뷰 -->
+                                                    <div style="font-size: 13px; color: gray; margin-top: 4px;">
+                                                        <span><!-- 별점 표시 --></span>
+                                                        <span>(리뷰 2)</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </a>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="bottom-footer flex-box right-button">
-                            <!-- 우측 사이드 버튼 -->
-                            <div class="side-button">
-                                <button class="bottom-footer-button">Right</button>
+                            <div class="bottom-footer flex-box right-button">
+                                <!-- 우측 사이드 버튼 -->
+                                <div class="side-button">
+                                    <button class="bottom-footer-button">Right</button>
+                                </div>
                             </div>
                         </div>
                     </div>

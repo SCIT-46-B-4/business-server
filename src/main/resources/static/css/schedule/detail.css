@@ -1,5 +1,10 @@
 @import url(../global/reset.css);
 
+/* 지도 footer 주석처리가 안돼서 숨겨놨어요!!!!! */
+.hidden {
+    display: none;
+}
+
 a:link{text-decoration:none;}
 a:visited,a:active{color:black}
 
@@ -44,6 +49,10 @@ a:visited,a:active{color:black}
     width: 65%;
     position: relative;
     height: 100vh;
+}
+
+.text_tag{
+    margin: 0 0 5px 0;
 }
 
 .titleContainer {

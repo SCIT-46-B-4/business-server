@@ -4,6 +4,7 @@ import com.scit.letsleave.domain.review.dto.request.ReviewListRequestDTO;
 import com.scit.letsleave.domain.review.dto.request.ReviewRequestDTO;
 import com.scit.letsleave.domain.review.dto.response.PageableResponseDTO;
 import com.scit.letsleave.domain.review.dto.response.ReviewResponseDTO;
+import com.scit.letsleave.domain.review.dto.response.ReviewWithUserCountDto;
 import com.scit.letsleave.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -13,11 +14,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/schedules")
 @RequiredArgsConstructor
 public class RestReviewController {
     private final ReviewService reviewService;
+
+    @GetMapping("/reviews/list")
+    public ResponseEntity<List<ReviewWithUserCountDto>> getReviewList() {
+        return ResponseEntity.ok(
+                reviewService.getDefaultReviewList()
+        );
+    }
 
     @GetMapping("/reviews")
     public ResponseEntity<PageableResponseDTO<ReviewResponseDTO>> getReviewList(

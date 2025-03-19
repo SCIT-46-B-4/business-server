@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>추가 정보 입력</title>
     <!-- jQuery -->
-    <script th:src="@{/script/global/jquery.js}" src="../static/script/global/jquery.js"></script>
+    <script th:src="@{|${baseStaticURL}/script/global/jquery.js|}" th:src="@{|${baseStaticURL}/static/script/global/jquery.js|}"></script>
     <!-- JavaScript -->
-    <script defer th:src="@{/script/user/additionalInfo.js}" src="../static/script/user/additionalInfo.js"></script>
+    <script defer th:src="@{|${baseStaticURL}/script/user/additionalInfo.js|}" th:src="@{|${baseStaticURL}/static/script/user/additionalInfo.js|}"></script>
     <!-- CSS -->
     <style>
         button {

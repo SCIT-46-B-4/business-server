@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Script -->
-    <script th:src="@{/script/global/jquery.js}"></script>
-    <script type="module" th:src="@{/script/index.js}"></script>
+    <script th:src="@{|${baseStaticURL}/script/global/jquery.js|}"></script>
+  <script type="module" th:src="@{|${baseStaticURL}/script/index.js|}"></script>
     <!-- src="../static/script/index.js"> -->
-    <script th:src="@{/script/fragments/slidePanel.js}"></script>
+    <script th:src="@{|${baseStaticURL}/script/fragments/slidePanel.js|}"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" th:href="@{/css/index.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/index.css|}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/fragments/header.css|}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/fragments/slidePanel.css|}">
     <title>떠나조</title>
   </head>
   <body>
@@ -20,64 +20,17 @@
     <div th:insert="~{fragments/header :: top-bar}"></div>
     <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
 
-    <!-- Manual slide Guide Section -->
+    <!-- 가이드 -->
     <div id="mainContentsContainer">
       <div class="guide-container" id="guideContainer">
         <button class="arrow-btn" id="prevBtn">&lt;</button>
-        <div class="slides-area">
+        <div class="slides-area" th:attr="data-cdn-url=${baseStaticURL}">
           <div class="guide-wrapper" id="guideWrapper">
-            <div class="guide-slide">
-              <div class="guide-box">
-                <div class="guide-image">
-                  <img
-                    th:src="@{/images/test_images/tokyo.jpg}"
-                    src="../static/images/test_images/tokyo.jpg"
-                    alt="이미지"
-                  />
-                </div>
-                <div class="guide-contents">
-                  <div class="contents-header">
-                    <span class="seq">1</span>
-                    <span class="title">도쿄 어디까지 가봤니?</span>
-                  </div>
-                  <div class="contents-description">
-                    색다른 도쿄 여행 떠나는 방법!
-                  </div>
-                  <div class="rating-like">
-                    <span class="star">★</span>
-                    <span class="score">4.8</span>
-                    <span class="review-count">(5)</span>
-                    <span class="heart">♥</span>
-                    <span class="like-count">1225</span>
-                  </div>
-                  <div class="metadata">
-                    <div class="country">일본</div>
-                    <div class="dot">·</div>
-                    <div class="city">도쿄</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="guide-box">2</div>
-              <div class="guide-box">3</div>
-              <div class="guide-box">4</div>
-            </div>
-            <div class="guide-slide">
-              <div class="guide-box">11</div>
-              <div class="guide-box">12</div>
-              <div class="guide-box">13</div>
-              <div class="guide-box">14</div>
-            </div>
-            <div class="guide-slide">
-              <div class="guide-box">21</div>
-              <div class="guide-box">22</div>
-              <div class="guide-box">23</div>
-              <div class="guide-box">24</div>
-            </div>
           </div>
         </div>
         <button class="arrow-btn" id="nextBtn">&gt;</button>
       </div>
+    </div>
 
       <!-- Auto slide City Section -->
       <div class="city-container" id="cityContainer">
@@ -139,7 +92,7 @@
                 이렇게 긴 글은 말이죠 어떻게 줄이냐면<br />
                 이렇게 더보기를 추가하고 말이죠
               </p>
-              <span class="detail-review-more-btn">더보기</span>
+              <span class="detail-review-more-btn">더보기</span> <- 이거 클릭시 <div class="slides-area" th:attr="data-cdn-url=${baseStaticURL}"> 이거 를 사용해서 baseStaticURL + /
             </div>
             <div class="review-images">
               <div class="top-row">
@@ -148,37 +101,6 @@
                     th:src="@{/images/test_images/hukuoka.jpg}"
                     src="../static/images/test_images/hukuoka.jpg"
                     alt="이미지1"
-                  />
-                </div>
-                <div class="img-box">
-                  <img
-                    th:src="@{/images/test_images/tokyo.jpg}"
-                    src="../static/images/test_images/tokyo.jpg"
-                    alt="이미지2"
-                  />
-                </div>
-              </div>
-              <!-- 아래 행: 3장 -->
-              <div class="bottom-row">
-                <div class="img-box">
-                  <img
-                    th:src="@{/images/test_images/sapporo.png}"
-                    src="../static/images/test_images/sapporo.png"
-                    alt="이미지3"
-                  />
-                </div>
-                <div class="img-box">
-                  <img
-                    th:src="@{/images/test_images/osaka.png}"
-                    src="../static/images/test_images/osaka.png"
-                    alt="이미지4"
-                  />
-                </div>
-                <div class="img-box">
-                  <img
-                    th:src="@{/images/test_images/hukuoka.jpg}"
-                    src="../static/images/test_images/hukuoka.jpg"
-                    alt="이미지5"
                   />
                 </div>
               </div>

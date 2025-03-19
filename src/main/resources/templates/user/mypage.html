@@ -6,14 +6,14 @@
     <title>Document</title>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <!-- CSS -->
-    <link rel="stylesheet" th:href="@{/css/global/reset.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}">
-    <link rel="stylesheet" th:href="@{/css/user/mypage.css}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/global/reset.css|}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/fragments/header.css|}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/fragments/slidePanel.css|}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/user/mypage.css|}">
     <!-- Script -->
-    <script th:src="@{/script/global/jquery.js}"></script>
-    <script th:src="@{/script/fragments/slidePanel.js}"></script>
-    <script type="module" th:src="@{/script/user/myPage.js}"></script>
+    <script th:src="@{|${baseStaticURL}/script/global/jquery.js|}"></script>
+    <script th:src="@{|${baseStaticURL}/script/fragments/slidePanel.js|}"></script>
+    <script th:src="@{|${baseStaticURL}/script/user/myPage.js|}"></script>
   </head>
   <body>
     <!-- fragments place -->

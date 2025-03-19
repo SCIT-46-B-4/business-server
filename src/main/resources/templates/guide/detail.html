@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${guide.title}">가이드 디테일</title>
     <!-- CSS -->
-    <link rel="stylesheet" th:href="@{/css/guide/guideDetail.css}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/guide/guideDetail.css|}">
 </head>
 <body>
     <div class="container">
@@ -18,7 +18,7 @@
 
         <!-- 이미지 -->
         <div class="image-container">
-            <img th:src="@{/images/guide/{titleImg}(titleImg=${guide.titleImg})}"></img>
+            <img th:src="@{|${baseStaticURL}/images/guide/{titleImg}(titleImg=${guide.titleImg})|}"></img>
         </div>
 
         <div th:utext="${guide.content}"></div>

@@ -18,13 +18,13 @@
         document.addEventListener("DOMContentLoaded", loadGoogleMapsApi);
     </script>
     <!-- script -->
-    <script type="module" th:src="@{/script/schedule/schedule.js}"></script>
-    <script th:src="@{/script/fragments/slidePanel.js}"></script>
+    <script type="module" th:src="@{|${baseStaticURL}/script/schedule/schedule.js|}"></script>
+    <script th:src="@{|${baseStaticURL}/script/fragments/slidePanel.js|}"></script>
 
     <!-- css -->
-    <link rel="stylesheet" th:href="@{/css/schedule/scheduleRoute.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/schedule/scheduleRoute.css|}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/fragments/header.css|}">
+    <link rel="stylesheet" th:href="@{|${baseStaticURL}/css/fragments/slidePanel.css|}">
 </head>
 <body>
 <!-- fragments place -->

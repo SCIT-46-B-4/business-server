@@ -25,8 +25,13 @@ $(document).ready(function () {
                 window.location.href = "/";
             },
             error: function (xhr) {
-                alert("로그인 실패: " + xhr.responseText);
+                const errorMessage = xhr.responseJSON?.message || "아이디 또는 비밀번호가 잘못되었습니다.";
+                alert(errorMessage); // 실패 메시지 표시
                 console.error(xhr.responseText);
+
+                // 입력 필드 초기화
+                $("#email").val(""); // 이메일 필드 초기화
+                $("#password").val(""); // 비밀번호 필드 초기화
             }
         });
     });

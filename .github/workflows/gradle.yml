@@ -1,67 +1,78 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
-name: Java CI with Gradle
+name: Build, Push, and Deploy to ECS
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - feat/infra-code-update-for-release
+  workflow_dispatch:   # 수동 실행을 위한 이벤트 추가
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      # 소스 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
-    # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      - name: Grant execute permission for gradlew
+        run: chmod 777 ./gradlew
 
-    - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      # AWS 자격 증명 설정
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-    # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
-    # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
-    #
-    # - name: Setup Gradle
-    #   uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
-    #   with:
-    #     gradle-version: '8.9'
-    #
-    # - name: Build with Gradle 8.9
-    #   run: gradle build
+      # Docker Buildx 설정
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-  dependency-submission:
+      # ECR 로그인
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
 
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+      # Java 환경 설정
+      - name: Set up Java (For Spring)
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: ''
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
-    # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
-    - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      # Spring 애플리케이션 빌드 & Docker Build/Push
+      - name: Build and Push Docker Image (Spring)
+        env:
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          REGION: ${{ secrets.AWS_REGION }}
+          REPOSITORY_NAME: "business-service"
+          TAG: ${{ secrets.IMAGE_TAG }}
+        run: |
+          
+          # Gradle 빌드
+          ./gradlew build
+          # ECR 리포지토리 URI 구성
+          REPOSITORY_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY_NAME}:${TAG}"
+          # Docker 이미지 빌드 & 푸시
+          docker build -t $REPOSITORY_URI .
+          docker push $REPOSITORY_URI
+      # S3 업로드
+      - name: Sync static resources to S3
+        run: |
+          
+          aws s3 sync ./script s3://my-static-bucket/script
+          aws s3 sync ./images s3://my-static-bucket/images
+          aws s3 sync ./css s3://my-static-bucket/css
+          
+      # ECS 서비스 업데이트
+      - name: Update ECS Task Definition and Deploy
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ecs-task-definition.json
+          service: business-service       # ECS 서비스 이름
+          cluster: my-ecs-cluster         # ECS 클러스터 이름
+          wait-for-service-stability: true

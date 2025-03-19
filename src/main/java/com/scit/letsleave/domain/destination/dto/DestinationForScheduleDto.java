@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationType;
-import com.scit.letsleave.domain.destination.dto.CityForScheduleDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,12 +48,3 @@ public class DestinationForScheduleDto {
         return dto;
     }
 }
-
-    @java.lang.SuppressWarnings(value = "all")
-    @lombok.Generated
-    public static class DestinationForScheduleDtoBuilder {
-
-        private DestinationForScheduleDto titleCityForScheduleDtoeImg() {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-    }

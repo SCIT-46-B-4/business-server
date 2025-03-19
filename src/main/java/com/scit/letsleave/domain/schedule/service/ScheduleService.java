@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.scit.letsleave.domain.destination.dto.DestinationDto;
+import com.scit.letsleave.domain.destination.dto.DestinationForScheduleDto;
 import com.scit.letsleave.domain.destination.entity.CityEntity;
 import com.scit.letsleave.domain.destination.entity.CountryEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
@@ -23,17 +23,16 @@ import com.scit.letsleave.domain.destination.repository.DestinationRepository;
 import com.scit.letsleave.domain.schedule.dto.DetailScheduleDto;
 import com.scit.letsleave.domain.schedule.dto.RouteDto;
 import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
+import com.scit.letsleave.domain.schedule.dto.ScheduleWithDetailInfoResponseDTO;
 import com.scit.letsleave.domain.schedule.entity.DetailScheduleEntity;
 import com.scit.letsleave.domain.schedule.entity.RouteEntity;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
-import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
-import com.scit.letsleave.domain.user.entity.UserEntity;
-import com.scit.letsleave.domain.user.repository.OAuthRepository;
-import com.scit.letsleave.domain.user.repository.UserRepository;
-import com.scit.letsleave.domain.schedule.dto.ScheduleWithDetailInfoResponseDTO;
 import com.scit.letsleave.domain.schedule.projectioon.ScheduleWithDetailInfoResponseProjection;
 import com.scit.letsleave.domain.schedule.repository.DetailScheduleRepository;
 import com.scit.letsleave.domain.schedule.repository.RouteRepository;
+import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
+import com.scit.letsleave.domain.user.entity.UserEntity;
+import com.scit.letsleave.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +74,7 @@ public class ScheduleService {
 
             List<RouteDto> routeDtos = detailScheduleDto.getRoutes();
             routeDtos.forEach(routeDto -> {
-                DestinationDto destDto = routeDto.getDestination();
+                DestinationForScheduleDto destDto = routeDto.getDestination();
                 DestinationEntity destEntity = destinationRepository.findById(destDto.getId()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 목적지입니다.")
                 );

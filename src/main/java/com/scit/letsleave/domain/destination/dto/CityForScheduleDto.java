@@ -16,7 +16,7 @@ public class CityForScheduleDto {
     private Integer id;
     private String krName;
 
-    CityForScheduleDto toDto(CityEntity entity) {
+    public static CityForScheduleDto toDto(CityEntity entity) {
         return CityForScheduleDto.builder()
             .id(entity.getId())
             .krName(entity.getKrName())

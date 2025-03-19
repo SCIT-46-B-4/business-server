@@ -16,7 +16,7 @@ $(function() {
     });
 
     $(document).on("click", ".add-dest-btn", function() {
-        currentDayContainer = $(this).closest(".day-content").find(".day-anchor");
+        currentDayContainer = $(this).closest(".day-content");
         $(".search-wrapper").fadeIn();
     });
 
@@ -85,7 +85,7 @@ $(function() {
     $(document).on("click", ".append-destination-btn", function() {
         const $card = $(this).closest(".destination-card");
         const $dayAnchor = $(this).closest(".day-anchor");
-        const $addDestBtnContainer = $(this).closest(".add-dest-btn-container").detach()
+        const $addDestBtnContainer = $(this).closest(".add-dest-btn-container");
 
         const imgSrc = $card.find(".dest-img img").attr("src");
         const krName = $card.find(".dest-krName").text();
@@ -112,8 +112,8 @@ $(function() {
         );
 
         if (currentDayContainer) {
-            currentDayContainer.append($flexItem);
-            $dayAnchor.append($addDestBtnContainer)
+            currentDayContainer.find(".day-anchor").append($flexItem);
+            currentDayContainer.find(".day-anchor").append($addDestBtnContainer)
         }
         $("#searchWrapper").fadeOut();
     });

@@ -52,7 +52,7 @@ public class DestinationService {
     }
 
     // 근처 추천 장소를 타입별로 그룹화
-    public Map<String, List<DestinationDto>> getNearbyDestinationsByType(Long destinationId, double radiusMeters, int limit) {
+     public Map<String, List<DestinationDto>> getNearbyDestinationsByType(Long destinationId, double radiusMeters, int limit) {
         DestinationEntity currentDestination = destinationRepository.findById(destinationId)
                 .orElseThrow(() -> new RuntimeException("Destination not found"));
 

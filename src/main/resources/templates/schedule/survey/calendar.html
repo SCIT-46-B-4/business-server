@@ -5,10 +5,10 @@
     <title>여행 사전 설문</title>
     
     <script th:src="@{/script/global/jquery.js}"></script>
-    <script th:src="@{/script/jquery-ui.js}"></script>
-    <script type="module" th:src="@{/script/schedule/survey.js}"></script>
+    <script th:src="@{/script/global/jquery-ui.js}"></script>
+    <script th:src="@{/script/schedule/survey.js}"></script>
     <script th:src="@{/script/schedule/calendar.js}"></script>
-    <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" th:href="@{/schedule/survey.css}">
 </head>
 <body>
@@ -16,7 +16,7 @@
         <a href="#" class="back-button" onclick="history.back(); return false;"
         >←</a>
         <div class="calendar-container">
-            <div id="start_date_calendar"></div>
+            <div id="startDateCalendar"></div>
         </div>
         <div class="submit-button-container">
             <button type="button" class="submit-button" id="submitSurvey">

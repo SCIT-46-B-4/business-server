@@ -12,7 +12,7 @@ $(function() {
         return [true, "", ""];
     }
 
-    $("#start_date_calendar").datepicker({
+    $("#startDateCalendar").datepicker({
         dateFormat: dateFormat,
         changeMonth: true,
         changeYear: true,
@@ -26,7 +26,7 @@ $(function() {
             endDate = new Date(startDate.getTime());
             endDate.setDate(endDate.getDate() + daysToAdd);
 
-            $("#start_date_calendar").datepicker("refresh");
+            $("#startDateCalendar").datepicker("refresh");
             localStorage.setItem("startDate", $.datepicker.formatDate(dateFormat, startDate).toISOString());
             localStorage.setItem("endDate", $.datepicker.formatDate(dateFormat, endDate).toISOString());
         }

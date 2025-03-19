@@ -34,29 +34,63 @@
 }
 
 /* 구성 목록 CSS */
-.loc-country {
-    font-size: 14px;
-    /* var(--color-gray) 가 정의되어 있지 않다면 var(--color-light-gray) 또는 lightgray로 대체 */
-    color: var(--color-gray, lightgray);
-    display: block;
+.basic-info {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+  /* 국가명 영역 */
+.schedule-country-name-container {
     margin-bottom: 10px;
 }
 
-.scheduleNameBox {
-    width: 100%;
-    font-size: 15px;
-    padding: 10px;
-    border: none;
-    border-bottom: 1px solid #999;
-    outline: none;
-    box-sizing: border-box;
-    box-shadow: 0 4px 8px rgba(206, 196, 196, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.country-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
 }
 
-.scheduleNameBox:focus {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  /* 일정 기간 영역 */
+.schedule-duration-container {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.schedule-start-date,
+.schedule-date-seperator,
+.schedule-end-date {
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.schedule-date-seperator {
+    margin: 0 8px;
+}
+
+  /* 일정 이름 영역 */
+.schedule-name-container {
+    margin-top: 10px;
+}
+
+.schedule-name {
+    width: 100%;
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.schedule-name:focus {
+    outline: none;
+    border-color: #007BFF;
 }
 
 .schedule-info {
@@ -74,7 +108,7 @@
     position: relative;
     margin-top: 0px;
      /* .add-dest-btn-container 높이를 고려하여 추가 */
-    padding-bottom: 40px;
+    padding-bottom: 10px;
 }
 
 .day-header {
@@ -96,10 +130,10 @@
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: transparent;  /* 기본 배경은 투명하게 */
+    background-color: var(--color-white);
     border: none;
     font-size: 16px;
-    color: var(--color-red);
+    color: var(--color-white);
     padding: 6px 10px;
     border-radius: 4px;
     cursor: pointer;
@@ -109,7 +143,8 @@
 .delete-day-btn:hover {
     background-color: rgba(234, 67, 53, 0.1);
     border-radius: 50%;
-    transform: translateY(-50%) scale(1.1);
+    transform: translateY(-50%);
+    color: var(--color-red);
 }
 
 .day-content::before {
@@ -118,9 +153,9 @@
     left: calc(50% - 1px);
     top: 20px;
      /* .add-dest-btn-container 위치에 맞게 조정 */
-    bottom: 100px;
+    bottom: 20px;
     width: 2px;
-    background: linear-gradient(180deg, var(--color-blue), var(--color-green));
+    background: linear-gradient(135deg, var(--color-blue), var(--color-green));
     z-index: -1;
 }
 
@@ -141,14 +176,13 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.delete-btn {
-    display: none;
+.delete-dest-btn {
+    display: block;
     position: absolute;
-    top: 7px;
     right: 7px;
     width: 20px;
     height: 20px;
-    background-color: var(--color-red);
+    background-color: var(--color-white);
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -158,8 +192,9 @@
     font-size: 14px;
 }
 
-.flex-item:hover .delete-btn {
+.flex-item:hover .delete-dest-btn {
     display: block;
+    background-color: var(--color-red)
 }
 
 .add-dest-btn-container,
@@ -185,6 +220,11 @@
     text-align: center;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.add-dest-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .add-day-btn-container {
@@ -285,13 +325,12 @@
 
 .destination-card {
     display: flex;
-    align-items: stretch;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: var(--color-white);
     overflow: hidden;
+    background-color: #fff;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .flex-item:hover {
@@ -300,63 +339,56 @@
 }
 
 .dest-img {
-    flex: 0 0 30%
+    width: 30%;
+    overflow: hidden;
 }
 
 .dest-img img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 4px;
 }
 
 .dest-info {
-    flex: 0 0 55%;
-    margin: 0 10px;
+    flex: 1;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
 }
-
-.dest-line1,
-.dest-line2,
-.dest-line3 {
+.dest-info {
+    flex: 1;
+    padding: 10px;
     display: flex;
-    align-items: center;
-    margin-bottom: 4px;
-}
-
-.dest-line1 {
+    flex-direction: column;
     justify-content: space-between;
 }
 
-.dest-line1 span {
-    font-size: 12px;
-    margin-right: 5px;
+.dest-line1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dest-krName {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
 }
 
 .rating-container {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    margin-left: 15px;
-}
-.dest-line2 {
-    font-weight: bold;
-    font-size: 16px;
 }
 
-.dest-line3 {
-    font-size: 10px;
-    color: #777;
-}
-
-/* 별 모양 스타일 */
 .star-rating {
+    font-size: 14px;
     position: relative;
-    display: inline-block;
-    color: var(--color-gray);
-    margin: 0 5px;
+    color: #ccc; /* 빈 별 색 */
+    margin-right: 5px;
 }
+
 
 .star-rating::before {
     content: "★★★★★";
@@ -368,25 +400,43 @@
     top: 0;
     left: 0;
     width: var(--score-percent, 0%);
-    color: var(--color-yellow);
     overflow: hidden;
+    color: gold;
 }
 
-.add-dest-box {
-    flex: 0 0 10%;
-    align-self: flex-end;
+.dest-score {
+    font-size: 14px;
+    color: #333;
+}
+
+.dest-line2 {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.dest-line3 {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #888;
+}
+
+
+.append-destination-container {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 30px;
+    background-color: var(--color-blue);
+    border-radius: 50%;
+    height: 100%;
     margin: auto;
 }
 
-.add-destination-btn {
-    width: 100%;
+.append-destination-btn {
+    background: none;
     border: none;
-    border-radius: 50%;
-    background-color: rgb(66, 133, 244);
-    color: #fff;
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
+    color: #333;
 }

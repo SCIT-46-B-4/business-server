@@ -16,6 +16,7 @@ import com.scit.letsleave.domain.schedule.dto.SurveyDto;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Service
 @Slf4j
 public class RecommendService {

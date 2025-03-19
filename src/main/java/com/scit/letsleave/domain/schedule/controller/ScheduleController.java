@@ -40,21 +40,21 @@ public class ScheduleController {
     }
 
     @GetMapping("")
-    public String recommendScheduleRoute(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend, Model model) {
+    public String recommendSchedule(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend, Model model) {
         if (isRecommend) {
             model.addAttribute("googleMapsApiKey", googleMapsApiKey);
 
-            return "schedule/scheduleRoute";
+            return "schedule/scheduleView";
         } else {
             return "redirect:/";
         }
     }
 
     @GetMapping("/{id}")
-    public String scheduleRoute(@PathVariable(name="id") Long id, Model model) {
+    public String detailSchedule(@PathVariable(name="id") Long id, Model model) {
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
 
-        return "schedule/scheduleRoute";
+        return "schedule/scheduleView";
     }
 
     @GetMapping("/updateView")

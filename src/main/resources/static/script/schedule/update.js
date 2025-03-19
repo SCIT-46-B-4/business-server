@@ -2,6 +2,7 @@ import { AjaxAPI } from "../global/ajax.js"
 
 
 let currentDayContainer = null;
+let $globalAddDayBtnContainer = $(".schedule-info .add-day-btn-container");
 
 $(function() {
     init();
@@ -19,31 +20,72 @@ $(function() {
         $(".search-wrapper").fadeIn();
     });
 
-    $(document).on("click", ".delete-btn", function(e) {
+    $(document).on("click", ".delete-dest-btn", function(e) {
         e.stopPropagation();
         $(this).closest(".flex-item").fadeOut(300, function() {
             $(this).remove();
         });
     });
 
-    $(".search-icon").on("click", () => {
-        const searchWord = $("#searchBox").val();
-        AjaxAPI.getDestinations({ name: searchWord })
-            .done((data) => renderDestination(data));
-    });
-
-    $(document).on("click", ".delete-day-btn", function() {
-        const $dayContent = $(this).parents(".day-content");
-        $dayContent.remove();
-
+    $(document).on("click", ".add-day-btn", function() {
         const currentDayCount = $(".schedule-info .day-content").length;
-        if (currentDayCount < 6) {
+        const newDayNumber = currentDayCount + 1;
 
+        const $dayHeader = $("<div>", {class: "day-header"});
+        const $dateOrder = $("<span>", {class: "date-order", text: `Day ${newDayNumber}`});
+        const $deleteDayBtn = $("<button>", {class: "delete-day-btn", text: "-"})
+        
+        const $addDestBtnContainer = $("<div>", {class: "add-dest-btn-container"});
+        const $addDestBtn = $("<button>", {class: "add-dest-btn", text: "+"})
+        
+        const $dayAnchor = $("<div>", {class: "day-anchor"});
+        
+        const $dayContent = $("<div>", {class: "day-content"});
+
+        const $addDayBtnContainer = $globalAddDayBtnContainer.detach();
+
+        $dayHeader.append($dateOrder, $deleteDayBtn);
+        $addDestBtnContainer.append($addDestBtn)
+        $dayAnchor.append($dayHeader, $addDestBtnContainer);
+        $dayContent.append($dayAnchor);
+        $(".schedule-info").append($dayContent);
+
+        if (newDayNumber == 6) {
+            $addDayBtnContainer.hide()
+        } else {
+            $(".schedule-info").append($addDayBtnContainer)
         }
     });
 
-    $(document).on("click", ".add-destination-btn", function() {
+    $(document).on("click", ".delete-day-btn", function() {
+        const $dayContents = $(".schedule-info .day-content");
+
+        if ($dayContents.length === 1) {
+            const $dayContent = $dayContents.eq(0);
+            $dayContent.find(".day-anchor .flex-item").empty();
+            $(".schedule-name-box").val("");
+        } else {
+            $(this).closest(".day-content").remove();
+        }
+
+        if ($(".schedule-info .day-content").length <= 5) {
+            if ($(".schedule-info .add-day-btn-container").length === 0) {
+                $(".schedule-info").append($globalAddDayBtnContainer);
+            }
+            $globalAddDayBtnContainer.show();
+        }
+    });
+
+    $(".search-icon").on("click", () => {
+        const searchWord = $("#searchBox").val();
+        AjaxAPI.getDestinations({ name: searchWord })
+            .done((data) => renderSearchDestination(data));
+    });
+
+    $(document).on("click", ".append-destination-btn", function() {
         const $card = $(this).closest(".destination-card");
+        const $dayAnchor = $(this).closest(".day-anchor");
+        const $addDestBtnContainer = $(this).closest(".add-dest-btn-container").detach()
 
         const imgSrc = $card.find(".dest-img img").attr("src");
         const krName = $card.find(".dest-krName").text();
@@ -53,7 +95,7 @@ $(function() {
 
         const $flexItem = $("<div>", {class: "flex-item"}).append(
             $("<div>", {class: "attraction-box"}).append(
-                $("<button>", {class: "delete-btn", text: "-"}),
+                $("<button>", {class: "delete-dest-btn", text: "-"}),
                 $("<div>", {class: "dest-img"}).append(
                     $("<img>", {src: imgSrc, alt: "대표 이미지"})
                 ),
@@ -68,43 +110,18 @@ $(function() {
                 )
             )
         );
+
         if (currentDayContainer) {
             currentDayContainer.append($flexItem);
+            $dayAnchor.append($addDestBtnContainer)
         }
         $("#searchWrapper").fadeOut();
-    });
-
-    $(document).on("click", ".add-day-btn", function() {
-        const currentDayCount = $(".schedule-info .day-content").length;
-        const newDayNumber = currentDayCount + 1;
-
-        const $newDayContent = $("<div>", { class: "day-content" });
-        const $dayHeader = $("<div>", {class: "day-header"});
-        const $daySpan = $("<span>", {text: `Day ${newDayNumber}`});
-        const $deleteDayBtn = $("<button>", {class: "delete-day-btn", text: "-"})
-        $dayHeader.append($daySpan, $deleteDayBtn);
-
-        const $dayAnchor = $("<div>", { class: "day-anchor" });
-        const $defaultFlexItem = $("<div>", { class: "flex-item" });
-        $dayAnchor.append($defaultFlexItem);
-
-        const $addDestBtnContainer = $("<div>", { class: "add-dest-btn-container" })
-            .append($("<button>", { class: "add-dest-btn", text: "+" }));
-
-        if (newDayNumber < 6) {
-            const $addDayBtnContainer = $(this).closest(".add-day-btn-container").detach();
-            $newDayContent.append($dayHeader, $dayAnchor, $addDestBtnContainer, $addDayBtnContainer);
-        } else {
-            $(this).closest(".add-day-btn-container").remove();
-            $newDayContent.append($dayHeader, $dayAnchor, $addDestBtnContainer);
-        }
-
-        $(".schedule-info").append($newDayContent);
     });
 });
 
 function init() {
     $("#searchWrapper").hide();
+
     const scheduleStr = localStorage.getItem("schedule");
     if (scheduleStr) {
         try {
@@ -117,26 +134,25 @@ function init() {
         const $scheduleContainer = $(".schedule-info");
         $scheduleContainer.empty();
 
-        const $dayContent = $("<div>", {class: "day-content"});
-        const $dayAnchor = $("<div>", {class: "day-anchor"});
-
-        
         const $dayHeader = $("<div>", {class: "day-header"});
-        const $dayTitle = $("<span>", {text: "Day 1"});
-        const $deleteDayBtn = $("<button>", {class: "delete-day-btn", text: "-"})
-        const $defaultFlexItem = $("<div>", {class: "flex-item"});
-        $dayHeader.append($dayTitle);
-        $dayHeader.append($deleteDayBtn);
-        
-        $dayAnchor.append($dayHeader);
-        $dayAnchor.append($defaultFlexItem);
+        const $dateOrder = $("<span>", {class: "date-order", text: "Day 1"});
+        $dayHeader.append($dateOrder);
 
-        const $addBtn = $("<div>", {class: "add-dest-btn-container"}).append($("<button>", {class: "add-dest-btn", text: "+"}));
-        const $DayAddBtn = $("<div>", {class: "add-day-btn-container"})
-            .append($("<button>", {class: "add-day-btn", text: "다음 날 추가하기"}));
+        const $addDestBtnContainer = $("<div>", {class: "add-dest-btn-container"});
+        const $addDestBtn = $("<button>", {class: "add-dest-btn", text: "+"})
+        $addDestBtnContainer.append($addDestBtn)
 
-        $dayContent.append($dayHeader, $dayAnchor, $addBtn, $DayAddBtn);
-        $scheduleContainer.append($dayContent);
+        const $dayAnchor = $("<div>", {class: "day-anchor"});
+        $dayAnchor.append($dayHeader, $addDestBtnContainer);
+
+        const $dayContent = $("<div>", {class: "day-content"});
+        $dayContent.append($dayAnchor);
+
+        const $addDayBtnContainer = $("<div>", {class: "add-day-btn-container"})
+        const $addDayBtn = $("<button>", {class: "add-day-btn", text: "다음 날 추가"})
+        $addDayBtnContainer.append($addDayBtn)
+
+        $scheduleContainer.append($dayContent, $addDayBtnContainer);
     }
 }
 
@@ -160,7 +176,7 @@ function renderSchedule(schedule) {
 
             const $flexItem = $("<div>", {class: "flex-item"}).append(
                 $("<div>", {class: "attraction-box"}).append(
-                    $("<button>", {class: "delete-btn", text: "-"}),
+                    $("<button>", {class: "delete-dest-btn", text: "-"}),
                     $("<div>", {class: "dest-img"}).append(
                         $("<img>", {src: dest.titleImg || "#", alt: "대표 이미지"})
                     ),
@@ -185,9 +201,9 @@ function renderSchedule(schedule) {
 }
 
 /**
- * renderDestination: 우측 검색 결과 영역(.result-box)에 destination 카드들을 렌더링합니다.
+ * renderSearchDestination: 우측 검색 결과 영역(.result-box)에 destination 카드들을 렌더링합니다.
  */
-function renderDestination(destinations) {
+function renderSearchDestination(destinations) {
     const $resultBox = $(".result-box");
     $resultBox.empty();
 
@@ -200,8 +216,8 @@ function renderDestination(destinations) {
                 </div>
                 <div class="dest-info">
                     <div class="dest-line1">
+                        <span type="hidden" id="destId" data-id="${dest.id}"></span>
                         <span class="dest-krName">${dest.krName}</span>
-                        <input type="hidden" class="dest-id" value="${dest.id}">
                         <div class="rating-container">
                             <span class="star-rating" style="--score-percent: ${scorePercent};"></span>
                             <span class="dest-score">${dest.score.toFixed(1)}</span>
@@ -216,8 +232,8 @@ function renderDestination(destinations) {
                         <span class="loc-city">${dest.cityName}</span>
                     </div>
                 </div>
-                <div class="add-dest-box">
-                    <button class="add-destination-btn">+</button>
+                <div class="append-destination-container">
+                    <button class="append-destination-btn">+</button>
                 </div>
             </div>
         `;

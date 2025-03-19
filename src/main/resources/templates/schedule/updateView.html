@@ -8,16 +8,25 @@
     <script type="module" th:src="@{/script/schedule/update.js}" src="../../static/script/schedule/update.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
-    <link rel="stylesheet" th:href="@{/css/schedule/updateView.css}" href="../../static/css/schedule/updateView.css">
+    <link rel="stylesheet" th:href="@{/css/schedule/update.css}" href="../../static/css/schedule/update.css">
 </head>
 <body>
 <div class="container">
     <!-- 왼쪽 영역: 내용이 많을 경우 스크롤 생김 -->
     <div class="left">
         <!-- 전체 정보 -->
-        <div id="basicInfo">
-            <span id="locCountryName" class="loc-country">일본 여행</span>
-            <input type="text" name="scheduleName" class="scheduleNameBox" value="날씨의 아이 여행">
+        <div id="basicInfo" class="basic-info">
+            <div class="schedule-country-name-container">
+                <span id="countryName" class="country-name">일본 여행</span>
+            </div>
+            <div class="schedule-duration-container">
+                <span class="schedule-start-date">2024-11-30</span>
+                <span class="schedule-date-seperator">~</span>
+                <span class="schedule-end-date">2025-01-02</span>
+            </div>
+            <div class="schedule-name-container">
+                <input type="text" name="scheduleName" class="schedule-name" value="날씨의 아이 여행">
+            </div>
         </div>
 
         <!-- 날짜 별 스케줄 렌더링 영역 -->
@@ -25,12 +34,13 @@
             <div class="day-content">
                 <div class="day-anchor">
                     <div id="dayHeader1" class="day-header">
-                        <span>Day 1</span>
+                        <span class="date-order">Day 1</span>
                         <button class="delete-day-btn">-</button>
                     </div>
-                    <div id="destinations" class="flex-item">
+                    <div class="flex-item">
                         <div class="attraction-box">
-                            <button class="delete-btn">-</button>
+                            <button class="delete-dest-btn">-</button>
+                            <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
                                 <img src="#" alt="대표 이미지">
                             </div>
@@ -46,6 +56,7 @@
                     </div>
                     <div class="flex-item">
                         <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
                                 <img src="#" alt="대표 이미지">
                             </div>
@@ -61,6 +72,7 @@
                     </div>
                     <div class="flex-item">
                         <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
                                 <img src="#" alt="대표 이미지">
                             </div>
@@ -76,6 +88,7 @@
                     </div>
                     <div class="flex-item">
                         <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
                                 <img src="#" alt="대표 이미지">
                             </div>
@@ -91,6 +104,7 @@
                     </div>
                     <div class="flex-item">
                         <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
                             <div class="dest-img">
                                 <img src="#" alt="대표 이미지">
                             </div>
@@ -141,11 +155,8 @@
                         <span class="dest-type">관광 명소</span>
                     </div>
                 </div>
-                <div class="add-dest-box">
-                    <button class="add-destination-btn">+</button>
-                </div>
-                <div class="add-day-btn-container">
-                    <button class="add-day-btn">다음 날 추가하기</button>
+                <div class="append-destination-container">
+                    <button class="append-destination-btn">+</button>
                 </div>
             </div>
         </div>

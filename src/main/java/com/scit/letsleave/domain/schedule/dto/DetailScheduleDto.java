@@ -31,11 +31,7 @@ public class DetailScheduleDto {
         return DetailScheduleDto.builder()
             .id(entity.getId())
             .date(entity.getDate())
-            .routes(
-                entity.getRoutes().isEmpty() ?
-                Collections.emptyList() :
-                entity.getRoutes().stream().map(RouteDto::toDto).collect(Collectors.toList())
-            )
+            .routes(entity.getRoutes().stream().map(RouteDto::toDto).collect(Collectors.toList()))
             .updatedAt(entity.getUpdatedAt())
             .build();
     }

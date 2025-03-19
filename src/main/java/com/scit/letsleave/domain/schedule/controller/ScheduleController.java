@@ -44,7 +44,7 @@ public class ScheduleController {
         if (isRecommend) {
             model.addAttribute("googleMapsApiKey", googleMapsApiKey);
 
-            return "schedule/scheduleView";
+            return "schedule/detailView";
         } else {
             return "redirect:/";
         }
@@ -54,7 +54,7 @@ public class ScheduleController {
     public String detailSchedule(@PathVariable(name="id") Long id, Model model) {
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
 
-        return "schedule/scheduleView";
+        return "schedule/detailView";
     }
 
     @GetMapping("/updateView")

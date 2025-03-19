@@ -36,7 +36,7 @@ public class ScheduleController {
 
     @GetMapping("/survey/calendar")
     public String calendar() {
-        return "schedule/calendar";
+        return "schedule/survey/calendar";
     }
 
     @GetMapping("")

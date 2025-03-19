@@ -84,7 +84,7 @@ $(function() {
 
     $(document).on("click", ".append-destination-btn", function() {
         const $card = $(this).closest(".destination-card");
-        const $dayAnchor = $(this).closest(".day-anchor");
+
         const $addDestBtnContainer = $(this).closest(".add-dest-btn-container");
 
         const imgSrc = $card.find(".dest-img img").attr("src");
@@ -112,8 +112,9 @@ $(function() {
         );
 
         if (currentDayContainer) {
+            $addDestBtnContainer.detach();
             currentDayContainer.find(".day-anchor").append($flexItem);
-            currentDayContainer.find(".day-anchor").append($addDestBtnContainer)
+            currentDayContainer.find(".day-anchor").append($addDestBtnContainer);
         }
         $("#searchWrapper").fadeOut();
     });

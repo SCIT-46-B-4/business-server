@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -83,7 +84,8 @@ public class AuthController {
      * @return 로그인 성공 또는 실패 메시지 반환
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    try {
         // 사용자 인증
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -98,7 +100,7 @@ public class AuthController {
         // 이메일을 기반으로 사용자 정보를 데이터베이스에서 조회
         UserEntity user = userService.findByEmail(loginRequestDto.getEmail());
         if (user == null) {
-            return ResponseEntity.badRequest().body(Map.of("message", "사용자를 찾을 수 없습니다."));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "아이디 또는 비밀번호가 잘못되었습니다."));
         }
 
         // JWT(AccessToken) 생성 (ID 기반)
@@ -112,9 +114,12 @@ public class AuthController {
         cookie.setMaxAge(24 * 60 * 60); // 24시간 = 86400초
         response.addCookie(cookie); // 응답에 쿠키 추가
 
-        //로그인 성공시 메인 페이지로 리다이렉트
         return ResponseEntity.ok(Map.of("message", "로그인 성공"));
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "아이디 또는 비밀번호가 잘못되었습니다."));
     }
+}
+
 
     /**
      * 추가 정보 저장 및 회원가입 처리

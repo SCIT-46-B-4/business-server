@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>일정 보기</title>
-    <script th:src="@{/script/global/jquery.js}"></script>
+    <script th:src="@{/script/global/jquery.js}" src="../../static/script/global/jquery.js"></script>
     <!-- google map api script -->
     <script th:inline="javascript">
         function loadGoogleMapsApi() {
@@ -18,13 +18,13 @@
         document.addEventListener("DOMContentLoaded", loadGoogleMapsApi);
     </script>
     <!-- script -->
-    <script type="module" th:src="@{/script/schedule/detail.js}"></script>
-    <script th:src="@{/script/fragments/slidePanel.js}"></script>
+    <script type="module" th:src="@{/script/schedule/detail.js}" src="../../static/script/schedule/detail.js"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}" src="../../static/script/fragments/slidePanel.js"></script>
 
     <!-- css -->
-    <link rel="stylesheet" th:href="@{/css/schedule/detail.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}">
+    <link rel="stylesheet" th:href="@{/css/schedule/detail.css}" href="../../static//css/schedule/detail.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../../static//css/fragments/header.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../../static//css/fragments/slidePanel.css">
 </head>
 <body>
 <!-- fragments place -->
@@ -34,9 +34,8 @@
     <!-- total-container -->
     <div class="total-container">
         <div id="scroll-root">
-            <div class="container_schedule">
                 <!-- 제목 입력 구간 -->
-                <div>
+                <div class="container_title">
                     <!-- 제목 Tag 입력 구간 -->
                     <div class="container_title title_tag tagContainer">
                         <div class="container_title title_tag tagName">
@@ -53,13 +52,56 @@
                     <div id="updateBtnContainer">
                         <button id="updateBtn">수정하기</button>
                     </div>
+                </div> <!--제목 컨테이너(제목tag/제목)-->
             <!-- Schedule Box -->
             <div class="container_schedule scheduleContainer">
                 <div id="schedule-container" class="container_schedule">
                     <div class="container_schedule scheduleBox">
                         <!-- 반복문을 돌려서 뽑아낼 데이터 및 일정자리 -->
-                        <div>
-                            <br>
+                        <div class="detail-schedule"><!--day-->
+                            <div class="day">Day 1</div>
+                            <!-- id자리에는 증가시켜서 값을 넣을 idx / count값으로 대체 -->
+                            <div id="component" class="scheduleBox flex-box"><!--destination-->
+                                <div class="scheduleBox flex-box flexItem">
+                                    <a class="route-guide-link" href="" target="_blank">
+                                        <div class="scheduleBox text">
+                                            <div class="scheduleBox attraction-name" style="font-size: 24px">
+                                                도톤보리
+                                                <button class="removeBtn">-</button>
+                                            </div>
+                                            <div class="scheduleBox flex-box">
+                                                <div class="text" style="font-size: 13px; color: gray">
+                                                    <span>관광명소</span>
+                                                    <span>"난바"</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!------------------------------------------->
+                            <div id="component" class="scheduleBox flex-box">
+                                <div class="scheduleBox flex-box flexItem">
+                                    <a class="route-guide-link" href="" target="_blank">
+                                        <div class="scheduleBox text">
+                                            <div class="scheduleBox attraction-name" style="font-size: 24px">
+                                                djelsrk
+                                                <button class="removeBtn">-</button>
+                                            </div>
+                                            <div class="scheduleBox flex-box">
+                                                <div class="text" style="font-size: 13px; color: gray">
+                                                    <span>관광명소</span>
+                                                    <span>"난바"</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-schedule">
+                            <div class="day">Day 2</div>
                             <!-- id자리에는 증가시켜서 값을 넣을 idx / count값으로 대체 -->
                             <div id="component" class="scheduleBox flex-box">
                                 <div class="scheduleBox flex-box flexItem">
@@ -72,22 +114,38 @@
                                             <div class="scheduleBox flex-box">
                                                 <div class="text" style="font-size: 13px; color: gray">
                                                     <span>관광명소</span>
-                                                    <span>
-                                                            ::before
-                                                            "난바"
-                                                        </span>
+                                                    <span>"난바"</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
                             </div>
+                            <div id="component" class="scheduleBox flex-box">
+                                <div class="scheduleBox flex-box flexItem">
+                                    <a class="route-guide-link" href="" target="_blank">
+                                        <div class="scheduleBox text">
+                                            <div class="scheduleBox attraction-name" style="font-size: 24px">
+                                                djelsrk
+                                                <button class="removeBtn">-</button>
+                                            </div>
+                                            <div class="scheduleBox flex-box">
+                                                <div class="text" style="font-size: 13px; color: gray">
+                                                    <span>관광명소</span>
+                                                    <span>"난바"</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
             </div> <!-- end .scheduleContainer -->
         </div> <!-- end #scroll-root -->
-
+<!------------------------------------------------------------------------>
         <div id="fullscreen-map" class="mapContainer">
             <div id="map"></div>
             <div class="mapContainer footer">

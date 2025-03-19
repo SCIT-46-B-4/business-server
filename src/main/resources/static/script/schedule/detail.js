@@ -133,8 +133,16 @@ function renderScheduleBoxByDay(schedule) {
 }
 
 function getSurveyData() {
-    return {
-        city: localStorage.getItem("selectedCity"),
+    const cityEnum = {
+        "tokyo": 1,
+        "osaka": 2,
+        "fukuoka": 3,
+        "sapporo": 4,
+    }
+    const city_name = localStorage.getItem("selectedCity");
+    const survey =  {
+        city: city_name,
+        cityId: cityEnum[city_name],
         period: localStorage.getItem("selectedPeriod"),
         companion: JSON.parse(localStorage.getItem("selectedCompanion")),
         travelStyle: JSON.parse(localStorage.getItem("selectedTravelStyle")),
@@ -143,6 +151,8 @@ function getSurveyData() {
         startDate: new Date(localStorage.getItem("startDate")),
         endDate: new Date(localStorage.getItem("endDate")),
     }
+    localStorage.setItem(survey);
+    return survey
 }
 
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수

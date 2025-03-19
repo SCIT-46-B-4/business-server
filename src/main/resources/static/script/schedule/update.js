@@ -209,17 +209,17 @@ class ScheduleManager {
         const currentDayCount = this.$scheduleInfo.find(".day-content").length;
         const newDayNumber = currentDayCount + 1;
 
-        const $dayHeader = $("<div>", { class: "day-header" }).append(
-            $("<span>", { class: "date-order", text: `Day ${newDayNumber}` }),
-            $("<button>", { class: "delete-day-btn", text: "-" })
+        const $dayHeader = $("<div>", {class: "day-header"}).append(
+            $("<span>", {class: "date-order", text: `Day ${newDayNumber}`}),
+            $("<button>", {class: "delete-day-btn", text: "-"})
         );
 
-        const $addDestBtnContainer = $("<div>", { class: "add-dest-btn-container" }).append(
-            $("<button>", { class: "add-dest-btn", text: "+" })
+        const $addDestBtnContainer = $("<div>", {class: "add-dest-btn-container"}).append(
+            $("<button>", {class: "add-dest-btn", text: "+"})
         );
 
-        const $dayAnchor = $("<div>", { class: "day-anchor" }).append($dayHeader, $addDestBtnContainer);
-        const $dayContent = $("<div>", { class: "day-content" }).append($dayAnchor);
+        const $dayAnchor = $("<div>", {class: "day-anchor"}).append($dayHeader, $addDestBtnContainer);
+        const $dayContent = $("<div>", {class: "day-content"}).append($dayAnchor);
 
         const $addDayBtnContainer = this.$globalAddDayBtnContainer.detach();
         this.$scheduleInfo.append($dayContent);
@@ -257,7 +257,7 @@ class ScheduleManager {
     updateDayHeaders() {
         this.$scheduleInfo.find(".day-content").each(function (index) {
             $(this).find(".day-header .date-order").text(`Day ${index + 1}`);
-        });
+    });
     }
 
     // 목적지 검색 실행: Ajax를 통해 목적지를 검색합니다.
@@ -288,19 +288,19 @@ class ScheduleManager {
 
     // 새로운 목적지 요소 생성: DOM 요소를 생성하여 반환합니다.
     createDestinationElement(imgSrc, krName, id, destType, locCity) {
-        return $("<div>", { class: "flex-item" }).append(
-            $("<div>", { class: "attraction-box" }).append(
-                $("<button>", { class: "delete-dest-btn", text: "-" }),
-                $("<div>", { class: "dest-img" }).append(
-                    $("<img>", { src: imgSrc, alt: "대표 이미지" })
+        return $("<div>", {class: "flex-item"}).append(
+            $("<div>", {class: "attraction-box"}).append(
+                $("<button>", {class: "delete-dest-btn", text: "-"}),
+                $("<div>", {class: "dest-img"}).append(
+                    $("<img>", {src: imgSrc, alt: "대표 이미지"})
                 ),
-                $("<div>", { class: "dest-info" }).append(
-                    $("<span>", { class: "dest-name", text: krName }),
-                    $("<input>", { type: "hidden", class: "dest-id", value: id }),
-                    $("<div>", { class: "dest-meta" }).append(
-                        $("<span>", { class: "dest-type", text: destType }),
-                        $("<span>", { class: "separator", text: "·" }),
-                        $("<span>", { class: "loc-city", text: locCity })
+                $("<div>", {class: "dest-info"}).append(
+                    $("<span>", {class: "dest-name", text: krName}),
+                    $("<input>", {type: "hidden", class: "dest-id", value: id}),
+                    $("<div>", {class: "dest-meta"}).append(
+                        $("<span>", {class: "dest-type", text: destType}),
+                        $("<span>", {class: "separator", text: "·"}),
+                        $("<span>", {class: "loc-city", text: locCity})
                     )
                 )
             )

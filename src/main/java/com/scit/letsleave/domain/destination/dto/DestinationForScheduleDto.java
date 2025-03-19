@@ -5,22 +5,19 @@ import java.math.BigDecimal;
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 import com.scit.letsleave.domain.destination.entity.DestinationType;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Builder
 public class DestinationForScheduleDto {
     
     private Long id;
-    private DestinationType type;
+    private String type;
     private String krName;
     private String title;
     private BigDecimal latitude;
@@ -33,7 +30,7 @@ public class DestinationForScheduleDto {
     public static DestinationForScheduleDto toDto(DestinationEntity entity) {
         DestinationForScheduleDto dto = DestinationForScheduleDto.builder()
             .id(entity.getId())
-            .type(entity.getType())
+            .type(entity.getType().getCode())
             .krName(entity.getKrName())
             .title(entity.getTitle())
             .score(entity.getScore())

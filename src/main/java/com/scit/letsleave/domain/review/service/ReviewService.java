@@ -5,8 +5,10 @@ import com.scit.letsleave.domain.review.dto.response.DetailReviewResponseDTO;
 import com.scit.letsleave.domain.review.dto.response.PageableResponseDTO;
 import com.scit.letsleave.domain.review.dto.response.ReviewResponseDTO;
 import com.scit.letsleave.domain.review.dto.request.ReviewListRequestDTO;
+import com.scit.letsleave.domain.review.dto.response.ReviewWithUserCountDto;
 import com.scit.letsleave.domain.review.entity.ReviewEntity;
 import com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection;
+import com.scit.letsleave.domain.review.projection.ReviewWithUserCountProjection;
 import com.scit.letsleave.domain.review.repository.ReviewRepository;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
 import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
@@ -33,6 +35,12 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ScheduleRepository scheduleRepository;
     private final FileService fileService;
+
+    public List<ReviewWithUserCountDto> getDefaultReviewList() {
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        List<ReviewWithUserCountProjection> reviewsWithUserCount = reviewRepository.findTopReviewsWithUserCount();
+        return reviewsWithUserCount.stream().map(ReviewWithUserCountProjection::toDto).toList();
+    }
 
     /**
      * @param requestDTO 여행기 검색 조건 DTO

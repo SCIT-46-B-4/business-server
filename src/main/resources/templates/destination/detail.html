@@ -6,15 +6,15 @@
     <title th:text="${destination.krName}">상세 정보</title>
     <link
       rel="stylesheet"
-      th:href="@{/css/destination/detail.css}"
+      th:href="@{|${baseStaticURL}/css/destination/detail.css|}"
       href="../../static/css/destination/detail.css"
     />
     <script
-      th:src="@{/script/global/jquery.js}"
+      th:src="@{|${baseStaticURL}/script/global/jquery.js|}"
       src="../../static/script/global/jquery.js"
     ></script>
     <script
-      th:src="@{/script/destination/detail.js}"
+      th:src="@{|${baseStaticURL}/script/destination/detail.js|}"
       src="../../static/script/destination/detail.js"
     ></script>
     <script 

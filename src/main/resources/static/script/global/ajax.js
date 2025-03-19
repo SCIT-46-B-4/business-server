@@ -17,11 +17,11 @@ const AjaxAPI = (() => {
 
     return {
         getCities: () => request({endpoint: "/destinations/cities"}),
-        getGuides: () => request({endpoint: "/guides"}),
+        getGuides: () => request({endpoint: "/guides/list", method: "GET"}),
         getRecommendSchedule: (surveyData) => request({endpoint: "/schedules/recommend", method: "POST", data: surveyData}),
         getSchedule: () => request({endpoint: "/schedules"}),
         getScheduleById: (scheduleId) => request({endpoint: `/schedules/${scheduleId}`}),
-        getScheduleReviews: () => request({endpoint: "/schedules/reviews"}),
+        getScheduleReviews: () => request({endpoint: "/schedules/reviews/list"}),
         getUserInfo: () => request({endpoint: "/users/info"}),
 
         // // POST 예제 - 일정 생성 (새로운 데이터 전송)

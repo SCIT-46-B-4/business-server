@@ -2,6 +2,7 @@ package com.scit.letsleave.domain.review.repository;
 
 import com.scit.letsleave.domain.review.entity.ReviewEntity;
 import com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection;
+import com.scit.letsleave.domain.review.projection.ReviewWithUserCountProjection;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
+
+    @Query("SELECT new com.scit.letsleave.domain.review.projection.ReviewWithUserCountProjection(" +
+            "r, u.nickname, COUNT(r2), s.cityName) " +
+            "FROM ReviewEntity r " +
+            "JOIN UserEntity u ON r.userId = u.id " +
+            "JOIN ReviewEntity r2 ON r2.userId = r.userId " +
+            "JOIN ScheduleEntity s ON s.id = r.schedule.id " +
+            "GROUP BY r.id, u.nickname " +
+            "ORDER BY r.likeCount DESC")
+    List<ReviewWithUserCountProjection> findTopReviewsWithUserCount();
 
     @Query("SELECT r FROM ReviewEntity r JOIN FETCH r.schedule s " +
             "WHERE s.city.id = :cityId " +

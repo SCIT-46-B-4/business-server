@@ -1,7 +1,7 @@
 <div th:fragment="top-bar">
     <div class="top-bar">
         <div class="logo-box">
-            <a th:href="@{/}"><img th:src="@{/images/logo.png}" src="../../static/images/logo.png" alt="logo.png" class="project-icon"></a>
+            <a th:href="@{/}"><img th:src="@{|${baseStaticURL}/images/logo.png|}" src="../../static/images/logo.png" alt="logo.png" class="project-icon"></a>
         </div>
         <div class="top-bar-center">
             <h1 class="project-name">떠나조</h1>

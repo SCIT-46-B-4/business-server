@@ -3,12 +3,11 @@ package com.scit.letsleave.domain.destination.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 
 import com.scit.letsleave.domain.destination.dto.DestinationDto;
 import com.scit.letsleave.domain.destination.service.DestinationService;
@@ -22,12 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class DestinationController {
 
     private final DestinationService destinationService;
-
-    @GetMapping("")
-    public List<DestinationDto> getDestinations(@RequestParam(name="query") String query) {
-
-        return destinationService.findByQuery(query);
-    }
 
     @GetMapping("/{destinationId}")
     public String getDestinationDetailPage(@PathVariable("destinationId") Long destinationId, Model model) {

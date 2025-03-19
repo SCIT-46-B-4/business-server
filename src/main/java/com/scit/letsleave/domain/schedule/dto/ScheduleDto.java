@@ -53,6 +53,8 @@ public class ScheduleDto {
             .endDate(entity.getEndDate())
             .countryName(entity.getCountryName())
             .cityName(entity.getCityName())
+            .cityId(entity.getCity().getId())
+            .countryId(entity.getCountry().getId())
             .detailSchedules(entity.getDetailSchedules().stream().map(DetailScheduleDto::toDto).collect(Collectors.toList()))
             .build();
     }

@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <title>스케줄 편집</title>
 
+    <!-- 기본 -->
     <script th:src="@{/script/global/jquery.js}" src="../../static/script/global/jquery.js"></script>
+    <link rel="stylesheet" th:href="@{/css/schedule/update.css}" href="../../static/css/schedule/update.css">
+    
+    <!-- 드래그 앤 드랍 -->
     <script type="module" th:src="@{/script/schedule/update.js}" src="../../static/script/schedule/update.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-
-    <link rel="stylesheet" th:href="@{/css/schedule/update.css}" href="../../static/css/schedule/update.css">
+    <!-- 달력 -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
 <div class="container">
@@ -16,27 +23,45 @@
     <div class="left">
         <!-- 전체 정보 -->
         <div id="basicInfo" class="basic-info">
-            <div class="schedule-country-name-container">
-                <span id="countryName" class="country-name">일본 여행</span>
+            <!-- 새로운 컨테이너 추가 -->
+            <div class="schedule-header-container">
+                <!-- 왼쪽 요소 (국가명 & 일정 기간) -->
+                <div class="schedule-info-left">
+                    <div class="schedule-country-name-container">
+                        <span id="countryName" class="country-name">일본 여행</span>
+                        <span id="countryId" hidden></span>
+                        <span id="cityId" hidden></span>
+                    </div>
+                    <div class="schedule-duration-container">
+                        <span class="schedule-start-date">2024-11-30</span>
+                        <span class="schedule-date-seperator">~</span>
+                        <span class="schedule-end-date">2025-01-02</span>
+                    </div>
+                </div>
+                <!-- 오른쪽 요소 (저장하기 버튼) -->
+                <div class="schedule-info-right">
+                    <button class="save-schedule-btn">저장하기</button>
+                </div>
             </div>
-            <div class="schedule-duration-container">
-                <span class="schedule-start-date">2024-11-30</span>
-                <span class="schedule-date-seperator">~</span>
-                <span class="schedule-end-date">2025-01-02</span>
-            </div>
+            <!-- 기존의 일정 이름 입력 박스 -->
             <div class="schedule-name-container">
                 <input type="text" name="scheduleName" class="schedule-name" value="날씨의 아이 여행">
             </div>
         </div>
+        
 
         <!-- 날짜 별 스케줄 렌더링 영역 -->
         <div class="schedule-info">
+            <!-- 전체 스케줄 컨테이너 -->
             <div class="day-content">
+                <!-- 일 별 스케줄 컨테이너 -->
                 <div class="day-anchor">
+                    <!-- 스케줄 헤더 정보 -->
                     <div id="dayHeader1" class="day-header">
                         <span class="date-order">Day 1</span>
                         <button class="delete-day-btn">-</button>
                     </div>
+                    <!-- 관광지 목록 -->
                     <div class="flex-item">
                         <div class="attraction-box">
                             <button class="delete-dest-btn">-</button>
@@ -128,12 +153,21 @@
         </div>
     </div>
 
-    <!-- 오른쪽 영역: 검색창 배치 -->
+    <!-- 오른쪽 영역 -->
     <div class="right">
+        
+        <!-- 검색창 배치 -->
         <div id="searchWrapper" class="search-wrapper">
             <input type="text" id="searchBox" class="search-box" placeholder="검색어 입력">
             <span class="search-icon"></span>
         </div>
+
+        <!-- 달력 컨테이너 -->
+        <div id="calendarContainer" class="calendar-container">
+            <input type="text" id="dateRangePicker" class="date-picker-input" placeholder="날짜 선택">
+        </div>
+
+        <!-- 검색 결과 컨테이너 -->
         <div class="result-box">
             <div class="destination-card">
                 <div class="dest-img">
@@ -159,6 +193,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 </body>

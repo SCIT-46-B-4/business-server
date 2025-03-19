@@ -68,7 +68,7 @@ function renderScheduleBoxByDay(schedule) {
             });
             // 장소명 정보를 감싸는 링크 생성
             const $destinationLink = $("<a>", {
-                href: `/destination/${destination.id}`, // 예: Destination detail page로 이동
+                href: `/destination/${destination.id}`,
                 css: {
                     textDecoration: "none",
                     color: "inherit",
@@ -154,8 +154,8 @@ function getScheduleData(scheduleId, isRecommend) {
 
     ajaxCall
     .done((schedule) => {
-        localStorage.setItem("schedule", schedule);
-        console.log(schedule);
+        $("#loading").show();
+        localStorage.setItem("schedule", JSON.stringify(schedule));
 
         setTimeout(() => {
             renderScheduleBoxByDay(schedule);
@@ -164,11 +164,18 @@ function getScheduleData(scheduleId, isRecommend) {
     .fail((xhr, _, errorThrown) => {
         console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule schedule:", errorThrown);
-        // location.href = "/";
+        location.href = "/users/mypage";
+    })
+    .always(() => {
+        $("#loading").fadeOut();
     })
 }
 
 $(function() {
+    $("#loadingContainer").load("../../../templates/loading.html", function () {
+        $("#loading").hide();
+    });
+
     $("#updateBtnContainer").on("click", () => {
         location.href = "/schedules/updateView";
     });

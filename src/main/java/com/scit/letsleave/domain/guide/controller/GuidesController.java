@@ -71,7 +71,7 @@ public class GuidesController {
         model.addAttribute("cityId", cityId);
         model.addAttribute("startintItemNum", (pageLimit * page));
 
-        return "guides/main-city";
+        return "guide/main-city";
     }
 
     @GetMapping("/main-city-search")
@@ -83,7 +83,7 @@ public class GuidesController {
         } else {
             model.addAttribute("popularCities", cityService.getPopularCities(1L));
         }
-        return "guides/main-city-search";
+        return "guide/main-city-search";
     }
 
     @GetMapping("/search")

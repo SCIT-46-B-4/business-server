@@ -21,9 +21,9 @@ public class DestinationService {
     private final DestinationRepository destinationRepository;
     private static final double EARTH_RADIUS_KM = 6371.01; // 지구 반지름 (킬로미터)
 
-    public List<DestinationDto> findByQuery(String query) {
+    public List<DestinationDto> findByQuery(String query, Integer cityId) {
 
-        return destinationRepository.searchByFullText(query).stream().map(DestinationDto::toDto).collect(Collectors.toList());
+        return destinationRepository.searchByFullText(query, cityId).stream().map(DestinationDto::toDto).collect(Collectors.toList());
     }
 
     // 특정 여행지의 상세 정보를 가져오는 메서드

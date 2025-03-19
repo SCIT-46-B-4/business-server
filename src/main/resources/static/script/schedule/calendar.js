@@ -21,14 +21,14 @@ $(function() {
             startDate = $.datepicker.parseDate(dateFormat, selectedDate);
             let periodStr = localStorage.getItem("selectedPeriod") || "1n2d";
             let match = periodStr.match(/(\d+)d/);
-            let daysToAdd = match ? parseInt(match[1], 10) : 0;
+            let daysToAdd = match ? parseInt(match[1], 10) -1 : 0;
 
             endDate = new Date(startDate.getTime());
             endDate.setDate(endDate.getDate() + daysToAdd);
 
             $("#startDateCalendar").datepicker("refresh");
-            localStorage.setItem("startDate", $.datepicker.formatDate(dateFormat, startDate).toISOString());
-            localStorage.setItem("endDate", $.datepicker.formatDate(dateFormat, endDate).toISOString());
+            localStorage.setItem("startDate", startDate.toISOString());
+            localStorage.setItem("endDate", endDate.toISOString());
         }
     });
 })

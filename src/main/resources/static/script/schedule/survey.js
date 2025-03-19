@@ -20,7 +20,7 @@ $(function() {
         }).get();
         const travelStyleValues = $('input[name="travel_style"]:checked').map(function () {
             return $(this).val();
-        }).get();
+        }).get();BigDecimal
 
         localStorage.setItem("selectedCompanion", JSON.stringify(companionValues));
         localStorage.setItem("selectedTravelStyle", JSON.stringify(travelStyleValues));

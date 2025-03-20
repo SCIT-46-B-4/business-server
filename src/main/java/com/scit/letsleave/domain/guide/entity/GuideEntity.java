@@ -3,7 +3,8 @@ package com.scit.letsleave.domain.guide.entity;
 import java.time.LocalDateTime;
 
 import com.scit.letsleave.domain.destination.entity.CityEntity;
-import com.scit.letsleave.domain.guide.dto.GuidesDto;
+import com.scit.letsleave.domain.destination.entity.DestinationEntity;
+import com.scit.letsleave.domain.guide.dto.GuideDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,56 +22,54 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @Entity
-@Table(name = "guides")
+@Table(name="guides")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GuidesEntity {
+public class GuideEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
 
-    @Column(name = "destination_id")
-    private Long destinationId;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="destination_id", referencedColumnName="id", nullable=true)
+    private DestinationEntity destination;
 
-    @ManyToOne(fetch = FetchType.LAZY) // 지연 로딩 설정
-    @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = true) // 외래 키 매핑
-    private CityEntity city; // cities 테이블과 연관
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
+    private CityEntity city;
 
-    @Column(name = "title", nullable = false, length = 32)
+    @Column(name="title", nullable=false, length=32)
     private String title;
 
-    @Column(name = "content", nullable = false, columnDefinition = "MEDIUMTEXT")
+    @Column(name="content", nullable=false, columnDefinition="MEDIUMTEXT")
     private String content;
 
-    @Column(name = "title_img", length = 512)
+    @Column(name="title_img", length=512)
     private String titleImg;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name="created_at", nullable=false, updatable=false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-
-
-    // DTO >Entity
-    public static GuidesEntity toEntity (GuidesDto guidesDTO) { 
-        return GuidesEntity.builder()    
+    public static GuideEntity toEntity (GuideDto guidesDTO, DestinationEntity destination, CityEntity city) { 
+        return GuideEntity.builder()    
                 .id(guidesDTO.getId())
-                .destinationId(guidesDTO.getDestinationId())
-                // .cityId(guidesDTO.getCityId())
                 .title(guidesDTO.getTitle())
                 .content(guidesDTO.getContent())
                 .titleImg(guidesDTO.getTitleImg())
                 .updatedAt(guidesDTO.getUpdatedAt())
+                .destination(destination)
+                .city(city)
                 .build();
     }
 }
-   

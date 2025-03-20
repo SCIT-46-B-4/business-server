@@ -68,7 +68,7 @@ function renderScheduleBoxByDay(schedule) {
             });
             // 장소명 정보를 감싸는 링크 생성
             const $destinationLink = $("<a>", {
-                href: `/destination/${destination.id}`,
+                href: `/destinations/${destination.id}`,
                 css: {
                     textDecoration: "none",
                     color: "inherit",

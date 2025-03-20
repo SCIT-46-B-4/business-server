@@ -19,11 +19,7 @@ public class CityService {
 
     private final CityRepository cityRepository;
 
-    // public List<CityEntity> getPopularCities() {
-    // return cityRepository.findTop10ByOrderByIdDesc();
-    // }
-
-    public List<CityDto> getPopularCities(Long countryId) {
+    public List<CityDto> getPopularCities(Integer countryId) {
         List<CityEntity> entities = cityRepository.findTop10ByOrderByIdDesc(countryId);
         return entities.stream()
                 .map(CityDto::toDto)

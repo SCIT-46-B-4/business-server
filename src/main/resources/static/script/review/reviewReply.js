@@ -103,7 +103,6 @@ function loadComments(reviewId) {
             }
 
             const rootReplies = buildReplyTree(data);
-            console.log(rootReplies)
             const commentHtml = buildCommentsHTML(rootReplies, currentUserId, 0);
             // 3) #commentList에 삽입
             $('#commentList').html(commentHtml);

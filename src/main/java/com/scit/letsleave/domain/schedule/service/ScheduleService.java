@@ -135,7 +135,7 @@ public class ScheduleService {
         Long userId = Long.valueOf(userDetails.getUsername());
         List<ScheduleWithDetailInfoResponseProjection> projections = scheduleRepository.findScheduleAndUserAndDetailsAndRoutes(scheduleId, userId);
         if (projections.isEmpty()) {
-            log.info("scheduleId {}, userId {} 인 스케줄이 존재하지 않습니다. ", scheduleId, userId);
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "작성하려는 스케줄이 존재하지 않습니다.");
         }
 

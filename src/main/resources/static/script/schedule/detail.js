@@ -119,10 +119,8 @@ function renderScheduleBoxByDay(schedule) {
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            console.log("관찰 중:", entry.target, "교차율: ", entry.intersectionRatio)
             if (entry.isIntersecting) {
                 const selectedDate = $(entry.target).attr("data-date");
-                console.log("날짜: ", selectedDate);
                 filterMarkersByDate(selectedDate);
             }
         });
@@ -140,8 +138,7 @@ function getSurveyData() {
         "sapporo": 4,
     }
     const city_name = localStorage.getItem("selectedCity");
-    console.log(city_name)
-    console.log(cityEnum[city_name])
+
     const survey =  {
         city: city_name,
         cityId: cityEnum[city_name],

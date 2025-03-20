@@ -40,7 +40,6 @@ public class GuidesController {
             @PageableDefault(page = 0, size = 5) Pageable pageable,
             Model model) {
 
-        log.info("cityId:{}", cityId);
 
         if (page < 0) {
             page = 0;
@@ -61,7 +60,6 @@ public class GuidesController {
 
         String cityName = cityService.getCityNameById(cityId);
 
-        log.info("현재 페이지: {}, 전체 페이지 수: {}", page, totalPages);
 
         model.addAttribute("cityName", cityName);
         model.addAttribute("list", list);

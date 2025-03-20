@@ -84,7 +84,7 @@ public class ReviewService {
     public DetailReviewResponseDTO getReviewDetailForEdit(Long reviewId) {
         List<DetailReviewResponseProjection> projections = reviewRepository.findReviewWithScheduleAndUserAndDetailsAndRoutes(reviewId);
         if (projections.isEmpty()) {
-            log.info("리뷰 상세 조회를 위한 id {} 리뷰가 존재하지 않음.", reviewId);
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않음.");
         }
 
@@ -140,7 +140,7 @@ public class ReviewService {
         long userId = Long.parseLong(userDetails.getUsername());
         List<DetailReviewResponseProjection> projections = reviewRepository.findReviewIdAndUserIdWithScheduleAndUserAndDetailsAndRoutes(reviewId, userId);
         if (projections.isEmpty()) {
-            log.info("리뷰 상세 조회를 위한 id {} 리뷰가 존재하지 않음.", reviewId);
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않음.");
         }
 
@@ -203,13 +203,13 @@ public class ReviewService {
         long userId = Long.parseLong(userDetails.getUsername());
         Optional<ScheduleEntity> scheduleOpt = scheduleRepository.findByIdAndUser_id(scheduleId, userId);
         if(scheduleOpt.isEmpty()) {
-            log.info("리뷰 생성을 위한 id {} 스케쥴이 존재하지 않음.", scheduleId);
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않음.");
         }
         ScheduleEntity scheduleEntity = scheduleOpt.get();
 
         if (reviewRepository.existsBySchedule_Id(scheduleEntity.getId())) {
-            log.info("id {} schedule 이미 존재.", scheduleId);
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 리뷰를 작성한 스케줄 입니다.");
         }
 
@@ -238,7 +238,7 @@ public class ReviewService {
         long userId = Long.parseLong(userDetails.getUsername());
         Optional<ReviewEntity> reviewOpt = reviewRepository.findByIdAndUserId(reviewId, userId);
         if(reviewOpt.isEmpty()) {
-            log.info("업데이트 하기 위한 id {} 리뷰가 존재하지 않음.", reviewId);
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않음.");
         }
         ReviewEntity review = reviewOpt.get();

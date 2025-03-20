@@ -62,7 +62,7 @@ public class RestScheduleController {
 
     @PostMapping("/recommendation/{cityId}")
     public ScheduleDto getRecommendedSchedule(@PathVariable(name="cityId") Integer cityId, @RequestBody SurveyDto surveyDto) {
-        System.out.println(cityId);
+
         return recommendService.getRecommendSchedule(surveyDto);
     }
 }

@@ -524,7 +524,7 @@ ALTER TABLE schedule_reviews
     ADD COLUMN title_img VARCHAR(512);
 
 -- 25.03.17 추가 사항
-ALTER TABLE destinations ADD FULLTEXT INDEX ft_index (kr_name, loc_name, title)
+ALTER TABLE destinations ADD FULLTEXT INDEX ft_index (kr_name, loc_name, title);
 -- guides 테이블 destination_id null 허용
 ALTER TABLE guides MODIFY COLUMN destination_id BIGINT NULL;
 -- guides 테이블 content MEDIUMTEXT로 변경

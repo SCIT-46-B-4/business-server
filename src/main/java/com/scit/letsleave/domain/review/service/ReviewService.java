@@ -72,7 +72,7 @@ public class ReviewService {
     private Pageable toPageable(ReviewListRequestDTO requestDTO) {
         return PageRequest.of(
                 requestDTO.getPage(),
-                requestDTO.getPageSize()
+                6 // requestDTO.getPageSize()
         );
     }
 

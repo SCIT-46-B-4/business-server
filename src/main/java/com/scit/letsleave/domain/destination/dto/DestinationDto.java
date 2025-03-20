@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -68,6 +69,7 @@ public class DestinationDto {
                 CityDto.toDto(entity.getCity())
             )
             .build();
+
         if (entity.getCoordinate() != null) {
             dto.setLatitude(BigDecimal.valueOf(entity.getCoordinate().getY()));
             dto.setLongitude(BigDecimal.valueOf(entity.getCoordinate().getX()));

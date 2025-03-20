@@ -40,7 +40,7 @@ public class GuidesService {
         return temp.map(GuidesDto::toDto);
     }
 
-    public Page<GuidesDto> selectPart(Pageable pageable, Long cityId) {
+    public Page<GuidesDto> selectPart(Pageable pageable, Integer cityId) {
         int pageNumber = pageable.getPageNumber();
         PageRequest pageRequest = PageRequest.of(pageNumber, pageLimit, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<GuidesEntity> temp = guidesRepository.findByCityId(cityId, pageRequest);

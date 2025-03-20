@@ -27,6 +27,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -74,8 +75,8 @@ public class ScheduleEntity {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="scheduleEntity", cascade=CascadeType.ALL)
-    private List<DetailScheduleEntity> detailScheduleEntities;
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="schedule", cascade=CascadeType.ALL)
+    private List<DetailScheduleEntity> detailSchedules;
 
     public static ScheduleEntity toEntity(ScheduleDto dto, UserEntity user, CountryEntity country, CityEntity city) {
         return ScheduleEntity.builder()

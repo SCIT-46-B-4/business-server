@@ -36,11 +36,10 @@ public class GuidesController {
     @GetMapping("")
     public String mainCity(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(name = "cityId", defaultValue = "0") Long cityId,
+            @RequestParam(name = "cityId", defaultValue = "0") Integer cityId,
             @PageableDefault(page = 0, size = 5) Pageable pageable,
             Model model) {
 
-        log.info("cityId:{}", cityId);
 
         if (page < 0) {
             page = 0;
@@ -61,7 +60,6 @@ public class GuidesController {
 
         String cityName = cityService.getCityNameById(cityId);
 
-        log.info("현재 페이지: {}, 전체 페이지 수: {}", page, totalPages);
 
         model.addAttribute("cityName", cityName);
         model.addAttribute("list", list);
@@ -71,7 +69,7 @@ public class GuidesController {
         model.addAttribute("cityId", cityId);
         model.addAttribute("startintItemNum", (pageLimit * page));
 
-        return "guides/main-city";
+        return "guide/main-city";
     }
 
     @GetMapping("/main-city-search")
@@ -83,7 +81,7 @@ public class GuidesController {
         } else {
             model.addAttribute("popularCities", cityService.getPopularCities(1L));
         }
-        return "guides/main-city-search";
+        return "guide/main-city-search";
     }
 
     @GetMapping("/search")

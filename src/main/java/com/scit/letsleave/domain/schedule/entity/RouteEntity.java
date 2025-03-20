@@ -54,16 +54,11 @@ public class RouteEntity {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    public static RouteEntity toEntity(
-        RouteDto dto,
-        DetailScheduleEntity detailScheduleEntity,
-        DestinationEntity destinationEntity
-    ) {
+    public static RouteEntity toEntity(RouteDto dto, DestinationEntity dest) {
         return RouteEntity.builder()
             .orderNumber(dto.getOrderNumber())
             .updatedAt(dto.getUpdatedAt())
-            .detailSchedule(detailScheduleEntity)
-            .destination(destinationEntity)
+            .destination(dest)
             .build();
     }
 }

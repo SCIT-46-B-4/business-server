@@ -1,12 +1,6 @@
 import { AjaxAPI } from "../global/ajax.js";
-import { moveToFocus, drawMapWithMarkers, filterMarkersByDate } from "./map.js";
+import { drawMapWithMarkers, filterMarkersByDate } from "./map.js";
 
-
-// 날짜 형식 변환 함수 (YYYY-MM-DD)
-function formatDate(dtString) {
-    const dt = new Date(dtString);
-    return dt.toISOString().split('T')[0];
-}
 
 // 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
 function renderScheduleBoxByDay(schedule) {
@@ -15,16 +9,15 @@ function renderScheduleBoxByDay(schedule) {
     const countryName =  schedule["countryName"];
     const endDate = schedule["endDate"];
     const startDate = schedule["startDate"];
-    const detailScheduleDtos = schedule["detailScheduleDtos"];
-    
+    const detailSchedules = schedule["detailSchedules"];
+
     $("#textTag").text(cityName + " 여행");
     $("#scheduleName").text(scheduleName);
-    
-    // 상위 컨테이너: HTML에 <div id="schedule-container" class="container_schedule scheduleContainer"></div>가 있어야 함
+
     const $container = $("#schedule-container");
     $container.empty();
     // 각 날짜 그룹마다 별도의 anchor 컨테이너 생성
-    detailScheduleDtos.forEach((detailSchedule, index) => {
+    detailSchedules.forEach((detailSchedule, index) => {
         // 새로운 anchor 컨테이너 생성
         const $dayAnchor = $("<div>", {
             id: `day_${index+1}_anchor`,
@@ -34,15 +27,18 @@ function renderScheduleBoxByDay(schedule) {
 
         // 그룹 헤더 생성 (예: "day1")
         const $dayHeader = $("<div>", {
-            id: "dayHeader",
+            id: `dayHeader${index + 1}`,
             class: "day-header",
             css: {
                 fontSize: "20px",
                 fontWeight: "bold",
                 marginBottom: "10px",
             },
-            text: `day${index + 1}`,
+            text: `Day ${index + 1}`,
             "data-date": detailSchedule.date
+        }).on("click", function() {
+            const selectedDate = $(this).attr("data-date");
+            filterMarkersByDate(selectedDate);
         });
         $dayAnchor.append($dayHeader);
 
@@ -54,25 +50,25 @@ function renderScheduleBoxByDay(schedule) {
 
             // 상위 박스 생성: scheduleBox
             const $scheduleBox = $("<div>", {
-                class: "container_schedule scheduleBox",
+                class: "container-schedule scheduleBox",
                 css : {marginTop: "10px"}
             });
             // 내부 Flex 박스 생성 (flexItem)
             const $flexItem = $("<div>", {
-                class: "container_schedule flex-box flexItem"
+                class: "container-schedule flex-box flexItem"
             });
             // 텍스트 영역 생성
             const $textContainer = $("<div>", {
-                class: "container_schedule text"
+                class: "container-schedule text"
             });
             // 첫 번째 줄: 장소명와 편집 버튼 영역
             const $attractionName = $("<div>", {
-                class: "container_schedule attraction-name",
+                class: "container-schedule attraction-name",
                 css: {fontSize: "24px"}
             });
             // 장소명 정보를 감싸는 링크 생성
             const $destinationLink = $("<a>", {
-                href: `/destination/${destination.id}`, // 예: Destination detail page로 이동
+                href: `/destination/${destination.id}`,
                 css: {
                     textDecoration: "none",
                     color: "inherit",
@@ -83,7 +79,7 @@ function renderScheduleBoxByDay(schedule) {
 
             // 두 번째 줄: 유형과 지역명 (작은 글씨, 회색)
             const $innerFlex = $("<div>", {
-                class: "container_schedule flex-box"
+                class: "container-schedule flex-box"
             });
             const $infoText = $("<div>", {
                 class: "text",
@@ -113,12 +109,6 @@ function renderScheduleBoxByDay(schedule) {
         $container.append($dayAnchor);
     });
 
-    // Day 클릭 이벤트
-    $("#schedule-container").on("click", ".day-header", function() {
-        const selectedDate = $(this).attr("data-date");
-        filterMarkersByDate(selectedDate);
-    });
-
     // Day 스크롤 이벤트
     const scrollRoot = $("#scroll-root")[0];
     const observerOptions = {
@@ -129,10 +119,8 @@ function renderScheduleBoxByDay(schedule) {
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            console.log("관찰 중:", entry.target, "교차율: ", entry.intersectionRatio)
             if (entry.isIntersecting) {
                 const selectedDate = $(entry.target).attr("data-date");
-                console.log("날짜: ", selectedDate);
                 filterMarkersByDate(selectedDate);
             }
         });
@@ -143,46 +131,74 @@ function renderScheduleBoxByDay(schedule) {
 }
 
 function getSurveyData() {
-    return {
-        city: localStorage.getItem("selectedCity"),
-        period: localStorage.getItem("selectedPeriod"),
-        companion: localStorage.getItem("selectedCompanion"),
-        travelStyle: localStorage.getItem("selectedTravelStyle"),
-        transport: localStorage.getItem("selectedTransport"),
-        scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
+    const cityEnum = {
+        "tokyo": 1,
+        "osaka": 2,
+        "fukuoka": 3,
+        "sapporo": 4,
     }
+    const city_name = localStorage.getItem("selectedCity");
+
+    const survey =  {
+        city: city_name,
+        cityId: cityEnum[city_name],
+        period: localStorage.getItem("selectedPeriod"),
+        companion: JSON.parse(localStorage.getItem("selectedCompanion")),
+        travelStyle: JSON.parse(localStorage.getItem("selectedTravelStyle")),
+        transport: JSON.parse(localStorage.getItem("selectedTransport")),
+        scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
+        startDate: new Date(localStorage.getItem("startDate")).toISOString().split("T")[0],
+        endDate: new Date(localStorage.getItem("endDate")).toISOString().split("T")[0],
+    }
+    return survey
 }
 
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
 function getScheduleData(scheduleId, isRecommend) {
+    const survey = getSurveyData();
     let ajaxCall = isRecommend ?
-        AjaxAPI.getRecommendSchedule(getSurveyData()) :
+        AjaxAPI.getRecommendSchedule(survey, survey["cityId"]) :
         AjaxAPI.getScheduleById(scheduleId);
 
     ajaxCall
     .done((schedule) => {
-        renderScheduleBoxByDay(schedule);
+        $("#loading").show();
+        localStorage.setItem("schedule", JSON.stringify(schedule));
+
+        setTimeout(() => {
+            renderScheduleBoxByDay(schedule);
+        }, 0);
     })
     .fail((xhr, _, errorThrown) => {
         console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule schedule:", errorThrown);
-        location.href = "/";
+        // location.href = "/users/mypage";
+    })
+    .always(() => {
+        $("#loading").fadeOut();
     })
 }
 
 $(function() {
+    $("#loadingContainer").load("../../../templates/loading.html", function () {
+        $("#loading").hide();
+    });
+
+    $("#updateBtnContainer").on("click", () => {
+        location.href = "/schedules/updateView";
+    });
     if ($("#schedule-container").length === 0) {
         let $parentDiv = $("<div>", {
             id: "schedule-container",
-            class: "container_schedule scheduleContainer"
+            class: "container-schedule scheduleContainer"
         });
         $("#scroll-root").append($parentDiv);
     }
-
+    
     let scheduleId = null;
     const urlParams = new URLSearchParams(window.location.search);
     const isRecommend = urlParams.get('isRecommend') === "true";
-
+    
     if (!isRecommend) {
         const path = window.location.pathname;
         const lastSlashIndex = path.lastIndexOf('/');

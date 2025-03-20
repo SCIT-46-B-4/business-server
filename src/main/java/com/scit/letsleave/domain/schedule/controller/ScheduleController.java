@@ -34,21 +34,32 @@ public class ScheduleController {
         return "schedule/survey/3";
     }
 
+    @GetMapping("/survey/calendar")
+    public String calendar() {
+        return "schedule/survey/calendar";
+    }
+
     @GetMapping("")
-    public String recommendScheduleRoute(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend, Model model) {
+    public String recommendSchedule(@RequestParam(name="isRecommend", defaultValue="false") Boolean isRecommend, Model model) {
         if (isRecommend) {
             model.addAttribute("googleMapsApiKey", googleMapsApiKey);
 
-            return "schedule/scheduleRoute";
+            return "schedule/detailView";
         } else {
             return "redirect:/";
         }
     }
 
     @GetMapping("/{id}")
-    public String scheduleRoute(@PathVariable(name="id") Long id, Model model) {
+    public String detailSchedule(@PathVariable(name="id") Long id, Model model) {
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
 
-        return "schedule/scheduleRoute";
+        return "schedule/detailView";
+    }
+
+    @GetMapping("/updateView")
+    public String scheduleUpdateBiew() {
+
+        return "schedule/updateView";
     }
 }

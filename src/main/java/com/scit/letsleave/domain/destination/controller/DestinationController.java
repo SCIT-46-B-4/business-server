@@ -14,10 +14,12 @@ import com.scit.letsleave.domain.destination.service.DestinationService;
 
 import lombok.RequiredArgsConstructor;
 
+
 @Controller
 @RequestMapping("/destinations")
 @RequiredArgsConstructor
 public class DestinationController {
+
     private final DestinationService destinationService;
 
     @GetMapping("/{destinationId}")
@@ -34,7 +36,7 @@ public class DestinationController {
 
         model.addAttribute("destination", destination);
         model.addAttribute("nearbyDestinations", nearbyDestinations);
-        
+
         return "destination/detail"; // detail.html 반환
     }
     

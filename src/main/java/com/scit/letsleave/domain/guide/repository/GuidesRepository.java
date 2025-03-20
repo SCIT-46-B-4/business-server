@@ -15,5 +15,4 @@ public interface GuidesRepository extends JpaRepository<GuidesEntity, Long> {
     Page<GuidesEntity> findByTitleContaining(String query, Pageable pageable);
 
     Page<GuidesEntity> findByCityId(Long cityId, Pageable pageable);
-
 }

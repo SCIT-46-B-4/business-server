@@ -25,6 +25,7 @@ import com.scit.letsleave.domain.user.dto.LikeDto;
 import com.scit.letsleave.domain.user.entity.UserEntity;
 import com.scit.letsleave.domain.user.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -60,7 +61,14 @@ public class LikeService {
         destinationLikes.save(dLike);
     }
 
+      @Transactional
+        public void removeDestinationLike(Long destinationId, Long userId) {
+        Optional<DestinationLikesEntity> existing = destinationLikes.findByUserIdAndDestinationId(userId, destinationId);
+        existing.ifPresent(like -> destinationLikes.delete(like));
+    }
+    
     //  가이드 좋아요 추가
+    @Transactional
     public void addGuideLike (Long guideId, Long userId) {
 
         UserEntity userEntity = userRepository.findById(userId)
@@ -78,6 +86,12 @@ public class LikeService {
         gLike.setGuide(guideEntity);
         gLike.setCreatedAt(LocalDateTime.now());
         guideLikes.save(gLike);    
+    }
+
+     @Transactional
+     public void removeGuideLike(Long guideId, Long userId) {
+        Optional<GuideLikesEntity> existing = guideLikes.findByUserIdAndGuideId(userId, guideId);
+        existing.ifPresent(like -> guideLikes.delete(like));
     }
 
     // 일정 리뷰 좋아요 추가
@@ -102,7 +116,7 @@ public class LikeService {
 
     // 사용자별 좋아요 조회
     public List<LikeDto> getLikesFromUser(Long userId){
-        List<LikeDto> LikeDtoList = new ArrayList<>();
+        List<LikeDto> likeDtoList = new ArrayList<>();
         
         // 여행지 좋아요 조회
         List<DestinationLikesEntity> dLikes = destinationLikes.findByUserIdOrderByCreatedAtDesc(userId);
@@ -114,7 +128,7 @@ public class LikeService {
             dto.setCreatedAt(dt.getCreatedAt());
             dto.setTitle(dt.getDestination().getTitle());
             dto.setTitleImg(dt.getDestination().getTitleImg());
-            LikeDtoList.add(dto);
+            likeDtoList.add(dto);
         }
             
         //  가이드 좋아요 조회
@@ -127,7 +141,7 @@ public class LikeService {
             dto.setCreatedAt(gd.getCreatedAt());
             dto.setTitle(gd.getGuide().getTitle());
             dto.setTitleImg(gd.getGuide().getTitleImg());
-            LikeDtoList.add(dto);
+            likeDtoList.add(dto);
         }
 
         // 일정 리뷰 좋아요 조회
@@ -139,10 +153,10 @@ public class LikeService {
             dto.setLikeType("schedule_review");
             dto.setCreatedAt(sr.getCreatedAt());
             dto.setTitle(sr.getScheduleReview().getTitle());
-            LikeDtoList.add(dto);
+            likeDtoList.add(dto);
         }
 
-        LikeDtoList.sort((l1,l2) -> l2.getCreatedAt().compareTo(l1.getCreatedAt()));
-        return LikeDtoList;
+        likeDtoList.sort((l1,l2) -> l2.getCreatedAt().compareTo(l1.getCreatedAt()));
+        return likeDtoList;
     }
 }

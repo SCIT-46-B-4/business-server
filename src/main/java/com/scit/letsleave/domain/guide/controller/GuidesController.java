@@ -39,13 +39,13 @@ public class GuidesController {
             @RequestParam(name = "cityId", defaultValue = "0") Long cityId,
             @PageableDefault(page = 0, size = 5) Pageable pageable,
             Model model) {
-
+        
         log.info("cityId:{}", cityId);
 
         if (page < 0) {
             page = 0;
         }
-
+        
         Pageable validPageable = PageRequest.of(page, pageable.getPageSize());
         Page<GuidesDto> list = cityId == 0
                 ? guidesService.selectAll(validPageable)

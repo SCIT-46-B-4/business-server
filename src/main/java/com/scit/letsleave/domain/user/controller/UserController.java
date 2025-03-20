@@ -1,14 +1,23 @@
 package com.scit.letsleave.domain.user.controller;
 
-import org.springframework.stereotype.Controller;
+import java.security.Principal;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.scit.letsleave.domain.user.entity.UserEntity;
+import com.scit.letsleave.domain.user.service.UserService;
+
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
+    private final UserService userService;
     /**
      * 개인 페이지
      * @return 
@@ -22,8 +31,16 @@ public class UserController {
      * 프로필 편집 페이지
      * @return 
      */
+//     @GetMapping("/editpage")
+//     public String edipage() {
+//     return "user/editpage";
+// }
     @GetMapping("/editpage")
-    public String edipage() {
+    public String editpage(Model model, Principal principal) {
+    // principal.getName()을 통해 현재 인증된 사용자 ID를 얻는다고 가정합니다.
+    Long userId = Long.valueOf(principal.getName());
+    UserEntity user = userService.findById(userId);
+    model.addAttribute("user", user); // 모델에 user 객체를 추가
     return "user/editpage";
 }
     /**

@@ -32,7 +32,7 @@
 
     <div class="profile-section">
       <img
-        th:src="@{/images/user/circle.png}"
+        th:src="@{${userInfo.profileImg} != null ? ${userInfo.profileImg} : '/images/user/profile_default.jpg'}"
         alt="profile_photo"
         class="profile-photo"
         id="profilePhoto"
@@ -48,17 +48,19 @@
       </div>
     </div>
 
-    <div class="trip-record">
-      <div id="scheduleContainer">
-        <div id="tripHistory" class="trip-history">
-          <img
-            th:src="@{/images/user/circle.png}"
-            alt="plus-image"
-            class="sample-photo"
-          />
-          <div class="trip-info">
-            <h4>여행 이름</h4>
-            <p>일정 기간</p>
+    <div id="likeItems">
+      <div class="trip-record">
+        <div id="scheduleContainer">
+          <div id="tripHistory" class="trip-history">
+            <img
+              th:src="@{/images/user/profile_default.jpg}"
+              alt="plus-image"
+              class="sample-photo"
+            />
+            <div class="trip-info">
+              <h4>여행 이름</h4>
+              <p>일정 기간</p>
+            </div>
           </div>
         </div>
       </div>

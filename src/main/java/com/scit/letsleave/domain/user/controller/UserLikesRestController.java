@@ -30,7 +30,7 @@ public class UserLikesRestController {
         likeService.addDestinationLike(destinationId, userId);
         return ResponseEntity.ok().build();
     }
-
+    
     @PostMapping("/guides/{guideId}/likes")
     public ResponseEntity<?> addGuideLike(@PathVariable Long guideId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -47,12 +47,11 @@ public class UserLikesRestController {
         return ResponseEntity.ok().build();
         }
     
-    @GetMapping("/users/{userId}/likes")
-    public ResponseEntity<List<LikeDto>> getUserLikes(){
-         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/users/likes")
+    public ResponseEntity<List<LikeDto>> getCurrentUserLikes(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = Long.valueOf(authentication.getName());
         List<LikeDto> likeList = likeService.getLikesFromUser(userId);
         return ResponseEntity.ok(likeList);
-        }
-        
+    } 
 }

@@ -1,257 +1,269 @@
 @import url("../global/reset.css");
 
 .container {
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
 }
 .breadcrumb {
-    font-size: 14px;
-    color: gray;
+  font-size: 14px;
+  color: gray;
 }
 .breadcrumb a {
-    color: inherit; /* 부모 요소의 색상을 상속받아 기본 색상을 유지 */
-    text-decoration: none; /* 기본 밑줄 제거 */
+  color: inherit; /* 부모 요소의 색상을 상속받아 기본 색상을 유지 */
+  text-decoration: none; /* 기본 밑줄 제거 */
 }
 .breadcrumb a:hover {
-    text-decoration: underline; /* 마우스 오버 시 밑줄 표시 */
+  text-decoration: underline; /* 마우스 오버 시 밑줄 표시 */
 }
 .krName {
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 .locName {
-    font-size: 16px;
-    color: gray;
+  font-size: 16px;
+  color: gray;
 }
 .location {
-    font-size: 14px;
-    color: gray;
-    margin: 10px 0px;
+  font-size: 14px;
+  color: gray;
+  margin: 10px 0px;
 }
 .destination-image {
-    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
-    max-width: 800px; /* 최대 너비 제한 */
-    height: 400px; /* 고정된 높이 */
-    margin: 20px auto; /* 상하 여백과 중앙 정렬 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* 컨테이너를 벗어나는 부분 숨김 */
+  width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+  max-width: 800px; /* 최대 너비 제한 */
+  height: 400px; /* 고정된 높이 */
+  margin: 20px auto; /* 상하 여백과 중앙 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* 컨테이너를 벗어나는 부분 숨김 */
 }
 .destination-image img {
-    width: 100%; /* 반응형 너비 */
-    height: 100%; /* 컨테이너 높이에 맞춤 */
-    object-fit: cover; /* 비율 유지하며 컨테이너를 채움 */
-    border-radius: 10px; /* 모서리를 둥글게 */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+  width: 100%; /* 반응형 너비 */
+  height: 100%; /* 컨테이너 높이에 맞춤 */
+  object-fit: cover; /* 비율 유지하며 컨테이너를 채움 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
 }
 .actions {
-    display: flex;
-    justify-content: space-around; /* 버튼 간 간격을 넓게 배치 */
-    margin: 20px 0;
-    padding: 0 10px; /* 양쪽 여백 설정 (양 끝 버튼이 너무 붙지 않도록) */
+  display: flex;
+  justify-content: space-around; /* 버튼 간 간격을 넓게 배치 */
+  margin: 20px 0;
+  padding: 0 10px; /* 양쪽 여백 설정 (양 끝 버튼이 너무 붙지 않도록) */
 }
 
 .action-button {
-    display: flex;
-    flex-direction: column; /* 아이콘 아래에 텍스트 배치 */
-    align-items: center; /* 가운데 정렬 */
-    justify-content: center; /* 세로 중앙 정렬 */
-    padding: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 14px; /* 텍스트 크기 */
+  display: flex;
+  flex-direction: column; /* 아이콘 아래에 텍스트 배치 */
+  align-items: center; /* 가운데 정렬 */
+  justify-content: center; /* 세로 중앙 정렬 */
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px; /* 텍스트 크기 */
 }
 /* 아이콘과 텍스트 간격 */
 .action-button .text {
-    margin-top: 10px; /* 아이콘과 텍스트 간격 (기존 5px → 10px으로 증가) */
+  margin-top: 10px; /* 아이콘과 텍스트 간격 (기존 5px → 10px으로 증가) */
 }
 /* 아이콘 스타일 */
 .action-button i {
-    font-size: 18px; /* 아이콘 크기 */
+  font-size: 18px; /* 아이콘 크기 */
 }
 .save-button.saved .heart-icon {
-    color: red; /* 클릭 후 빨간색 하트 */
+  color: red; /* 클릭 후 빨간색 하트 */
 }
 .divider {
-    height: 1px;
-    background: #ddd;
-    margin: 20px 0;
+  height: 1px;
+  background: #ddd;
+  margin: 20px 0;
 }
-.info p, .tips p {
-    display: none;
+.info p,
+.tips p {
+  display: none;
 }
-.info p:not(:empty), .tips p:not(:empty) {
-    display: block;
+.info p:not(:empty),
+.tips p:not(:empty) {
+  display: block;
 }
 .map {
-    width: 100%;
-    height: 200px;
-    background: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+  width: 100%;
+  height: 200px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
 }
 .info-box {
-    background-color: #f5f5f5; /* 연한 회색 */
-    padding: 10px 30px;
-    border-radius: 5px;
-    margin: 30px 0;
+  background-color: #f5f5f5; /* 연한 회색 */
+  padding: 10px 30px;
+  border-radius: 5px;
+  margin: 30px 0;
 }
 .info-box span {
-    display: inline; /* 인라인 요소 유지 */
-    margin-left: 5px; /* 텍스트와 간격 추가 */
+  display: inline; /* 인라인 요소 유지 */
+  margin-left: 5px; /* 텍스트와 간격 추가 */
 }
 .info-box strong {
-    margin-right: 5px; /* 레이블과 텍스트 간격 추가 */
+  margin-right: 5px; /* 레이블과 텍스트 간격 추가 */
 }
 /******************
 |   별점
 *******************/
 .star-ratings {
-    position: relative;
-    display: inline-block;
-    font-size: 0; /* 아이콘 간 간격 제거 */
+  position: relative;
+  display: inline-block;
+  font-size: 0; /* 아이콘 간 간격 제거 */
 }
 
 .star-ratings-fill {
-    color: gold; /* 채워진 별 색상 */
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden; /* 채워진 부분만 표시 */
-    white-space: nowrap; /* 아이콘이 한 줄로 유지되도록 설정 */
+  color: gold; /* 채워진 별 색상 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden; /* 채워진 부분만 표시 */
+  white-space: nowrap; /* 아이콘이 한 줄로 유지되도록 설정 */
 }
 
 .star-ratings-base {
-    color: #aaa9a9; /* 기본 별 색상 */
+  color: #aaa9a9; /* 기본 별 색상 */
 }
 
 .star-ratings-fill i,
 .star-ratings-base i {
-    font-size: 16px; /* 별 크기 */
-    margin-right: 2px; /* 별 간격 */
+  font-size: 16px; /* 별 크기 */
+  margin-right: 2px; /* 별 간격 */
 }
 
 .star-heart-container {
-    display: flex; /* 가로 정렬 */
-    align-items: center; /* 세로 정렬 */
-    gap: 10px; /* 요소 간 간격 */
+  display: flex; /* 가로 정렬 */
+  align-items: center; /* 세로 정렬 */
+  gap: 10px; /* 요소 간 간격 */
 }
 
 .star {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .star .star-score {
-    margin-left: 8px; /* 별과 점수 사이 간격 */
-    font-size: 14px;
-    color: #555;
+  margin-left: 8px; /* 별과 점수 사이 간격 */
+  font-size: 14px;
+  color: #555;
 }
 
 .heart {
-    color: rgb(250, 35, 68); /* 하트 색상 */
-    margin-left: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: gray; /* 기본 색상 */
 }
+
+.heart:hover,
+.heart:active {
+  color: rgb(250, 35, 68); /* 하트 색상 */
+  margin-left: 8px;
+}
+
 /************************
 근처의 추천장소
 *************************/
 .nearby {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .nearby h3 {
-    font-size: 22px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .tab-button {
-    padding: 10px 20px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    cursor: pointer;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  cursor: pointer;
 }
 
 .tab-button.active {
-    background-color: #007bff;
-    color: white;
+  background-color: #007bff;
+  color: white;
 }
 
 .places-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .places-list {
-    display: none; /* 기본적으로 숨김 */
+  display: none; /* 기본적으로 숨김 */
 }
 
 .places-list.active {
-    display: block; /* 활성화된 리스트만 표시 */
+  display: block; /* 활성화된 리스트만 표시 */
 }
 
 .place-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
 }
 
 .place-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
 }
 
 .place-info {
-    flex-grow: 1;
-    margin-left: 15px;
+  flex-grow: 1;
+  margin-left: 15px;
 }
 
 .place-info h4 {
-    font-size: 16px;
-    font-weight: bold;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .place-info p {
-    font-size: 14px;
-    color: gray;
+  font-size: 14px;
+  color: gray;
 }
 
 .place-meta {
-    font-size: 12px;
-    color: gray;
+  font-size: 12px;
+  color: gray;
 }
 
 .heart-button {
-    background-color: transparent;
-    border: none;
-    font-size: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
 }
 /* 기본 링크 스타일 제거 */
 a.place-card {
-    text-decoration: none; /* 밑줄 제거 */
-    color: inherit; /* 부모 요소의 색상 상속 */
-    display: flex; /* 기존 카드 레이아웃 유지 */
-    align-items: center;
-    gap: 10px; /* 이미지와 텍스트 간격 */
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 부모 요소의 색상 상속 */
+  display: flex; /* 기존 카드 레이아웃 유지 */
+  align-items: center;
+  gap: 10px; /* 이미지와 텍스트 간격 */
 }
 a.place-card:hover {
-    background-color: #f5f5f5; /* 마우스 오버 시 배경색 변경 */
-    border-radius: 8px; /* 카드 모서리 둥글게 */
+  background-color: #f5f5f5; /* 마우스 오버 시 배경색 변경 */
+  border-radius: 8px; /* 카드 모서리 둥글게 */
 }

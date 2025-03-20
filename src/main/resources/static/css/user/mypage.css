@@ -1,15 +1,13 @@
 @import url(../global/reset.css);
 
-.sample-photo {
-  width: 100px;
-  height: 100px;
-  margin-right: 6em;
-}
 .profile-photo {
   margin-bottom: 15px;
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   margin-top: 0px;
+  object-fit: cover;
+  border-radius: 100px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .profile-section {
   display: flex;
@@ -59,27 +57,6 @@
 .menu-btn.active {
   color: #007bff;
 }
-.trip-history {
-  display: flex;
-}
-
-#scheduleContainer {
-  display: flex;
-  justify-content: center;
-  height: 130px;
-  padding-top: 25px;
-}
-.trip-record {
-  display: flex;
-  justify-content: center;
-}
-#scheduleContainer:hover {
-  background-color: whitesmoke;
-  transition: ease-in-out 0.3s;
-  border-radius: 10px;
-  padding: 0 11.7em;
-  padding-top: 25px;
-}
 .button-container {
   display: flex;
   justify-content: center;
@@ -101,10 +78,46 @@
   border-bottom: solid #007bff 1px;
   transition: ease-in 0.2s;
 }
-.former-trip {
-  margin: 0;
+/* 전체 아이템 목록 영역 */
+#likeItems {
+  /* 목록 간 간격을 주거나 배경을 적용하고 싶다면 여기서 지정 */
+  margin: 0 auto;
+  max-width: 600px; /* 예시로 중앙 정렬 및 너비 제한 */
 }
-.trip-info h4,
+
+/* 이미지와 텍스트를 가로로 배치 */
+.trip-history {
+  margin-left: 25px;
+  display: flex;
+  align-items: center; /* 수직 정렬 */
+  gap: 16px; /* 이미지와 텍스트 사이 간격 */
+}
+
+/* 이미지 크기 통일 */
+.sample-photo {
+  width: 80px; /* 고정 너비 */
+  height: 80px; /* 고정 높이 */
+  object-fit: cover; /* 이미지를 잘라서라도 정사각형에 맞춤 */
+  border-radius: 8px; /* 모서리를 둥글게 (옵션) */
+}
+
+/* 텍스트 영역 */
+.trip-info {
+  margin-left: 25px;
+}
+.trip-info h3 {
+  margin: 0; /* 기본 여백 제거 */
+  font-size: 1.1rem; /* 제목 크기 */
+  font-weight: bold; /* 볼드체 */
+}
+
 .trip-info p {
-  height: 12px;
+  margin: 4px 0 0; /* 제목과 간격을 조금 둠 */
+  font-size: 0.9rem;
+  color: #666;
+}
+.noLike {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }

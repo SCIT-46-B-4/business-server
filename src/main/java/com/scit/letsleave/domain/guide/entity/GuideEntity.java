@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "guide")
+@Table(name = "guides")
 @Data
 @Builder
 public class GuideEntity {

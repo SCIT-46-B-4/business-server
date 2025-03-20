@@ -55,10 +55,17 @@ tasks.withType(JavaCompile).configureEach {
     options.compilerArgs.add("-parameters")
 }
 
-sourceSets {
-	main {
-		resources {
-			exclude "static/images/destination/**"
-		}
-	}
+bootJar {
+	// Exclude the specific directory from the build
+	exclude 'static/images/destination/**'
+}
+
+jar {
+	// Also exclude from regular jar if needed
+	exclude 'static/images/destination/**'
+}
+
+processResources {
+	// Exclude during resource processing
+	exclude 'static/images/destination/**'
 }

@@ -140,6 +140,8 @@ function getSurveyData() {
         "sapporo": 4,
     }
     const city_name = localStorage.getItem("selectedCity");
+    console.log(city_name)
+    console.log(cityEnum[city_name])
     const survey =  {
         city: city_name,
         cityId: cityEnum[city_name],
@@ -148,10 +150,9 @@ function getSurveyData() {
         travelStyle: JSON.parse(localStorage.getItem("selectedTravelStyle")),
         transport: JSON.parse(localStorage.getItem("selectedTransport")),
         scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
-        startDate: new Date(localStorage.getItem("startDate")),
-        endDate: new Date(localStorage.getItem("endDate")),
+        startDate: new Date(localStorage.getItem("startDate")).toISOString().split("T")[0],
+        endDate: new Date(localStorage.getItem("endDate")).toISOString().split("T")[0],
     }
-    localStorage.setItem(survey);
     return survey
 }
 
@@ -159,7 +160,7 @@ function getSurveyData() {
 function getScheduleData(scheduleId, isRecommend) {
 
     let ajaxCall = isRecommend ?
-        AjaxAPI.getRecommendSchedule(getSurveyData()) :
+        AjaxAPI.getRecommendSchedule(getSurveyData(), isRecommend) :
         AjaxAPI.getScheduleById(scheduleId);
 
     ajaxCall
@@ -174,7 +175,7 @@ function getScheduleData(scheduleId, isRecommend) {
     .fail((xhr, _, errorThrown) => {
         console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
         console.log("Error fetching schedule schedule:", errorThrown);
-        location.href = "/users/mypage";
+        // location.href = "/users/mypage";
     })
     .always(() => {
         $("#loading").fadeOut();

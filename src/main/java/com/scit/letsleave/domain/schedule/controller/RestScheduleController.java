@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
@@ -60,8 +61,11 @@ public class RestScheduleController {
         return ResponseEntity.ok(scheduleService.findById(id));
     }
 
-    @PostMapping("/recommend")
-    public ResponseEntity<ScheduleDto> getRecommendedSchedule(@RequestBody SurveyDto surveyDto) {
+    @PostMapping("")
+    public ResponseEntity<ScheduleDto> getRecommendedSchedule(
+        @RequestParam(name="isRecommend") Boolean isRecommend,
+        @RequestBody SurveyDto surveyDto
+    ) {
 
         return recommendService.getRecommendSchedule(surveyDto);
     }

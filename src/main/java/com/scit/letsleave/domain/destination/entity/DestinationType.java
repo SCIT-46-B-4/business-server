@@ -53,7 +53,7 @@ public enum DestinationType {
         if (value instanceof String) {
             String str = (String) value;
             try {
-                // 만약 문자열이 숫자라면, 코드로 처리
+
                 Integer.parseInt(str);
                 return fromCode(str);
             } catch (NumberFormatException e) {

@@ -18,7 +18,7 @@ const AjaxAPI = (() => {
     return {
         getCities: () => request({endpoint: "/destinations/cities"}),
         getGuides: () => request({endpoint: "/guides"}),
-        getRecommendSchedule: (surveyData) => request({endpoint: "/schedules/recommend", method: "POST", data: surveyData}),
+        getRecommendSchedule: (surveyData, isRecommend) => request({endpoint: `/schedules?isRecommend=${isRecommend}`, method: "POST", data: surveyData}),
         getSchedule: () => request({endpoint: "/schedules"}),
         getScheduleById: (scheduleId) => request({endpoint: `/schedules/${scheduleId}`}),
         getScheduleReviews: () => request({endpoint: "/schedules/reviews"}),

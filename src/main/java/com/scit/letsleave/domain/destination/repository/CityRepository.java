@@ -13,7 +13,7 @@ public interface CityRepository extends JpaRepository<CityEntity, Integer> {
 
     // 추가된 메서드
     @Query("SELECT c FROM CityEntity c WHERE c.country.id = :countryId ORDER BY c.id DESC")
-    List<CityEntity> findTop10ByOrderByIdDesc(@Param("countryId") Long countryId);
+    List<CityEntity> findTop10ByOrderByIdDesc(@Param("countryId") Integer countryId);
 
     List<CityEntity> findByKrNameContaining(String krName);
 }

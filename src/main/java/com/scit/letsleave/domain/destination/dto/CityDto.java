@@ -2,7 +2,6 @@ package com.scit.letsleave.domain.destination.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.scit.letsleave.domain.destination.entity.CityEntity;
 
@@ -35,7 +34,7 @@ public class CityDto {
             .cityCode(entity.getCityCode())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
-            .destinations(entity.getDestinations().stream().map(DestinationDto::toDto).collect(Collectors.toList()))
+            // .destinations(entity.getDestinations().stream().map(DestinationDto::toDto).collect(Collectors.toList()))
             .build();
     }
 }

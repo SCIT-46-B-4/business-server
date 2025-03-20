@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scit.letsleave.domain.destination.dto.CityDto;
 import com.scit.letsleave.domain.destination.service.CityService;
-import com.scit.letsleave.domain.guide.dto.GuidesDto;
-import com.scit.letsleave.domain.guide.service.GuidesService;
+import com.scit.letsleave.domain.guide.dto.GuideDto;
+import com.scit.letsleave.domain.guide.service.GuideService;
 import com.scit.letsleave.domain.guide.util.PageNavigator;
 
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/guides")
 @RequiredArgsConstructor
 @Slf4j
-public class GuidesController {
+public class GuideController {
 
-    private final GuidesService guidesService;
+    private final GuideService guidesService;
     private final CityService cityService;
-    private int pageLimit = 3;
+    private final int pageLimit = 3;
 
     @GetMapping("")
     public String mainCity(
@@ -46,7 +46,7 @@ public class GuidesController {
         }
 
         Pageable validPageable = PageRequest.of(page, pageable.getPageSize());
-        Page<GuidesDto> list = cityId == 0
+        Page<GuideDto> list = cityId == 0
                 ? guidesService.selectAll(validPageable)
                 : guidesService.selectPart(validPageable, cityId);
 
@@ -73,14 +73,10 @@ public class GuidesController {
     }
 
     @GetMapping("/main-city-search")
-    public String mainCitySearch(
-            Model model,
-            @RequestParam(name = "countryId", required = false) Long countryId) {
-        if (countryId != null) {
-            model.addAttribute("popularCities", cityService.getPopularCities(countryId));
-        } else {
-            model.addAttribute("popularCities", cityService.getPopularCities(1L));
-        }
+    public String mainCitySearch(Model model, @RequestParam(name = "countryId", required = false, defaultValue="1") Integer countryId) {
+
+        model.addAttribute("popularCities", cityService.getPopularCities(countryId));
+
         return "guide/main-city-search";
     }
 
@@ -99,9 +95,9 @@ public class GuidesController {
      */
     @GetMapping("/{guideId}")
     public String getGuideDetailPage(@PathVariable("guideId") Long guideId, Model model) {
-        GuidesDto guideDto = guidesService.getGuideById(guideId);
+        GuideDto guideDto = guidesService.getGuideById(guideId);
 
-        model.addAttribute("guide",guideDto);
+        model.addAttribute("guide", guideDto);
         
         return "guide/detail";
     }

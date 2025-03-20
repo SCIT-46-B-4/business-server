@@ -1,7 +1,6 @@
 package com.scit.letsleave.domain.review.service;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -30,20 +29,21 @@ public class S3FileService implements FileService {
     @Override
     public String upload(MultipartFile file) {
         String uuidFileName = generateUniqueFileName(file.getOriginalFilename());
-        String s3Key = uploadDir + "/" + uuidFileName;
+        // 맨 앞의 슬래시 제거
+        String dirPath = uploadDir.startsWith("/") ? uploadDir.substring(1) : uploadDir;
+        String s3Key = dirPath + "/" + uuidFileName;
 
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
 
-            // S3에 파일 업로드
+            // S3에 파일 업로드 (ACL 설정 제거)
             amazonS3.putObject(new PutObjectRequest(
                     bucketName,
                     s3Key,
                     file.getInputStream(),
-                    metadata)
-                    .withCannedAcl(CannedAccessControlList.PublicRead));
+                    metadata));
 
             // 파일의 접근 URL 반환
             return uuidFileName;
@@ -55,20 +55,21 @@ public class S3FileService implements FileService {
 
     @Override
     public void overWrite(MultipartFile file, String imgName) {
-        String s3Key = uploadDir + "/" + imgName;
+        // 맨 앞의 슬래시 제거
+        String dirPath = uploadDir.startsWith("/") ? uploadDir.substring(1) : uploadDir;
+        String s3Key = dirPath + "/" + imgName;
 
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
 
-            // 기존 파일 덮어쓰기
+            // 기존 파일 덮어쓰기 (ACL 설정 제거)
             amazonS3.putObject(new PutObjectRequest(
                     bucketName,
                     s3Key,
                     file.getInputStream(),
-                    metadata)
-                    .withCannedAcl(CannedAccessControlList.PublicRead));
+                    metadata));
 
         } catch (IOException e) {
             throw new RuntimeException("파일 덮어쓰기 실패: " + e.getMessage(), e);
@@ -77,7 +78,9 @@ public class S3FileService implements FileService {
 
     @Override
     public void delete(String uuidFileName) {
-        String s3Key = uploadDir + "/" + uuidFileName;
+        // 맨 앞의 슬래시 제거
+        String dirPath = uploadDir.startsWith("/") ? uploadDir.substring(1) : uploadDir;
+        String s3Key = dirPath + "/" + uuidFileName;
 
         // S3에서 파일 삭제
         amazonS3.deleteObject(new DeleteObjectRequest(bucketName, s3Key));
@@ -90,6 +93,8 @@ public class S3FileService implements FileService {
 
     // 파일의 S3 URL 가져오기
     public String getFileUrl(String fileName) {
-        return amazonS3.getUrl(bucketName, uploadDir + "/" + fileName).toString();
+        // 맨 앞의 슬래시 제거
+        String dirPath = uploadDir.startsWith("/") ? uploadDir.substring(1) : uploadDir;
+        return amazonS3.getUrl(bucketName, dirPath + "/" + fileName).toString();
     }
 }

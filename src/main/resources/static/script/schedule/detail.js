@@ -158,9 +158,9 @@ function getSurveyData() {
 
 // 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
 function getScheduleData(scheduleId, isRecommend) {
-
+    const survey = getSurveyData();
     let ajaxCall = isRecommend ?
-        AjaxAPI.getRecommendSchedule(getSurveyData(), isRecommend) :
+        AjaxAPI.getRecommendSchedule(survey, survey["cityId"]) :
         AjaxAPI.getScheduleById(scheduleId);
 
     ajaxCall

@@ -25,7 +25,7 @@ public class RecommendService {
     @Value("${RECOMMEND_SERVER_PATH}")
     private String recommend_server_path;
 
-    public ResponseEntity<ScheduleDto> getRecommendSchedule(SurveyDto surveyDto) {
+    public ScheduleDto getRecommendSchedule(SurveyDto surveyDto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         URI uri = UriComponentsBuilder
@@ -36,9 +36,11 @@ public class RecommendService {
             .build()
             .toUri();
         RequestEntity<SurveyDto> requestEntity = RequestEntity.post(uri).body(surveyDto);
+        System.out.println(requestEntity);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ScheduleDto> responseEntity = restTemplate.exchange(requestEntity, ScheduleDto.class);
+        ScheduleDto responseBody = responseEntity.getBody();
 
-        return responseEntity;
+        return responseBody;
     }
 }

@@ -17,11 +17,11 @@ const AjaxAPI = (() => {
 
     return {
         getCities: () => request({endpoint: "/destinations/cities"}),
-        getGuides: () => request({endpoint: "/guides"}),
+        getGuides: () => request({endpoint: "/guides/list", method: "GET"}),
         getRecommendSchedule: (surveyData, cityId) => request({endpoint: `/schedules/recommendation/${cityId}`, method: "POST", data: surveyData}),
         getSchedule: () => request({endpoint: "/schedules"}),
         getScheduleById: (scheduleId) => request({endpoint: `/schedules/${scheduleId}`}),
-        getScheduleReviews: () => request({endpoint: "/schedules/reviews"}),
+        getScheduleReviews: () => request({endpoint: "/schedules/reviews/list"}),
         getUserInfo: () => request({endpoint: "/users/info"}),
         getDestinations: (query, cityId) => request({endpoint: "/destinations", data: {query, cityId}}),
         createOrUpdateSchedle: (schedule) => request({endpoint: "/schedules", data: schedule})

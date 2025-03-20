@@ -55,6 +55,10 @@ tasks.withType(JavaCompile).configureEach {
     options.compilerArgs.add("-parameters")
 }
 
-bootJar {
-	exclude("static/images/destination/**")
+sourceSets {
+	main {
+		resources {
+			exclude "static/images/destination/**"
+		}
+	}
 }

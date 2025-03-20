@@ -2,7 +2,9 @@ package com.scit.letsleave.domain.schedule.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -38,7 +40,7 @@ public class DetailScheduleEntity {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="schedule_id", nullable=false)
-    private ScheduleEntity scheduleEntity;
+    private ScheduleEntity schedule;
 
     @Column(name="date", nullable=false)
     private LocalDate date;
@@ -53,12 +55,11 @@ public class DetailScheduleEntity {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="detailSchedule", cascade=CascadeType.ALL)
     private List<RouteEntity> routes;
 
-    public static DetailScheduleEntity toEntity(DetailScheduleDto dto, ScheduleEntity scheduleEntity) {
+    public static DetailScheduleEntity toEntity(DetailScheduleDto dto) {
         return DetailScheduleEntity.builder()
             .id(dto.getId())
             .date(dto.getDate())
             .updatedAt(dto.getUpdatedAt())
-            .scheduleEntity(scheduleEntity)
             .build();
     }
 }

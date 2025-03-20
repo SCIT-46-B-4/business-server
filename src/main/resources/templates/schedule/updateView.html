@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>스케줄 편집</title>
+    <!-- 기본 -->
+    <script th:src="@{/script/global/jquery.js}" src="../../static/script/global/jquery.js"></script>
+    <link rel="stylesheet" th:href="@{/css/schedule/update.css}" href="../../static/css/schedule/update.css">
+    
+    <!-- 드래그 앤 드랍 -->
+    <script type="module" th:src="@{/script/schedule/update.js}" src="../../static/script/schedule/update.js"></script>
+    <script th:src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js" src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <!-- 달력 -->
+    <script th:src="https://cdn.jsdelivr.net/npm/flatpickr" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script th:src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js" src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    <script th:src="https://npmcdn.com/flatpickr/dist/l10n/ko.js" src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+<div th:insert="~{fragments/header :: top-bar}"></div>
+<div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
+
+<div class="container">
+    <!-- 왼쪽 영역: 내용이 많을 경우 스크롤 생김 -->
+    <div class="left">
+        <!-- 전체 정보 -->
+        <div id="basicInfo" class="basic-info">
+            <!-- 새로운 컨테이너 추가 -->
+            <div class="schedule-header-container">
+                <!-- 왼쪽 요소 (국가명 & 일정 기간) -->
+                <div class="schedule-info-left">
+                    <div class="schedule-country-name-container">
+                        <span id="countryName" class="country-name">일본 여행</span>
+                        <span id="id" hidden></span>
+                        <span id="countryId" hidden></span>
+                        <span id="cityId" hidden></span>
+                    </div>
+                    <div class="schedule-duration-container">
+                        <span id="scheduleStartDate" class="schedule-start-date">2024-11-30</span>
+                        <span class="schedule-date-seperator">~</span>
+                        <span id="scheduleEndDate" class="schedule-end-date">2025-01-02</span>
+                    </div>
+                </div>
+                <!-- 오른쪽 요소 (저장하기 버튼) -->
+                <div class="schedule-info-right">
+                    <button class="save-schedule-btn">저장하기</button>
+                </div>
+            </div>
+            <!-- 기존의 일정 이름 입력 박스 -->
+            <div class="schedule-name-container">
+                <input type="text" id="scheduleName" class="schedule-name" value="날씨의 아이 여행">
+            </div>
+        </div>
+        
+
+        <!-- 날짜 별 스케줄 렌더링 영역 -->
+        <div class="schedule-info">
+            <!-- 전체 스케줄 컨테이너 -->
+            <div class="day-content">
+                <!-- 일 별 스케줄 컨테이너 -->
+                <div class="day-anchor">
+                    <!-- 스케줄 헤더 정보 -->
+                    <div id="dayHeader1" class="day-header">
+                        <span class="detail-schedule-id" hidden></span>
+                        <span class="date-order">Day 1</span>
+                        <button class="delete-day-btn">-</button>
+                    </div>
+                    <!-- 관광지 목록 -->
+                    <div class="flex-item">
+                        <div class="route-id" hidden></div>
+                        <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-id" hidden>1</span>
+                                <span class="dest-name">WE ROAD</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">관광 명소</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item">
+                        <div class="route-id" hidden></div>
+                        <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">도쿄 도청</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">관광 명소</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item">
+                        <div class="route-id" hidden></div>
+                        <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">식당 1</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">식당</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item">
+                        <div class="route-id" hidden></div>
+                        <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">신주쿠 쿄엔</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">공원</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-item">
+                        <div class="route-id" hidden></div>
+                        <div class="attraction-box">
+                            <button class="delete-dest-btn">-</button>
+                            <div class="dest-img">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                            <div class="dest-info">
+                                <span class="dest-name">시부야 스카이</span>
+                                <div class="dest-meta">
+                                    <span class="dest-type">관광 명소</span>
+                                    <span class="separator">·</span>
+                                    <span class="loc-city">도쿄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-dest-btn-container">
+                    <button class="add-dest-btn">+</button>
+                </div>
+            </div>
+            <div class="add-day-btn-container">
+                <button class="add-day-btn">다음 날 추가</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오른쪽 영역 -->
+    <div class="right">
+        
+        <!-- 검색창 배치 -->
+        <div id="searchWrapper" class="search-wrapper">
+            <input type="text" id="searchBox" class="search-box" placeholder="검색어 입력">
+            <span class="search-icon"></span>
+        </div>
+
+        <!-- 달력 컨테이너 -->
+        <div id="calendarContainer" class="calendar-container">
+            <input type="text" id="dateRangePicker" class="date-picker-input" placeholder="날짜 선택">
+        </div>
+
+        <!-- 검색 결과 컨테이너 -->
+        <div class="result-box">
+            <div class="destination-card">
+                <div class="dest-img">
+                    <img src="your-image-url.jpg" alt="Destination Image">
+                </div>
+                <div class="dest-info">
+                    <div class="dest-line1">
+                        <span class="dest-krName">도쿄 도청</span>
+                        <div class="rating-container">
+                            <span class="star-rating" style="--score-percent: 90%;"></span>
+                            <span class="dest-score">9.0</span>
+                        </div>
+                    </div>
+                    <div class="dest-line2">
+                        <span class="dest-title">도쿄 도청에서 일본의 야경을!</span>
+                    </div>
+                    <div class="dest-line3">
+                        <span class="dest-type">관광 명소</span>
+                    </div>
+                </div>
+                <div class="append-destination-container">
+                    <button class="append-destination-btn">+</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

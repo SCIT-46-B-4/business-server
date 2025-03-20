@@ -2,7 +2,7 @@ package com.scit.letsleave.domain.schedule.dto;
 
 import java.time.LocalDateTime;
 
-import com.scit.letsleave.domain.destination.dto.DestinationDto;
+import com.scit.letsleave.domain.destination.dto.DestinationForScheduleDto;
 import com.scit.letsleave.domain.schedule.entity.RouteEntity;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public class RouteDto {
     // Request & Response
     private Long id;
     private Integer orderNumber;
-    private DestinationDto destination;
+    private DestinationForScheduleDto destination;
 
     // Request Only
     private LocalDateTime createdAt;
@@ -30,7 +30,7 @@ public class RouteDto {
         return RouteDto.builder()
             .id(entity.getId())
             .orderNumber(entity.getOrderNumber())
-            .destination(DestinationDto.toDto(entity.getDestination()))
+            .destination(DestinationForScheduleDto.toDto(entity.getDestination()))
             .build();
     }
 }

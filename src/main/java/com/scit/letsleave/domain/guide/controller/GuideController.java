@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scit.letsleave.domain.destination.dto.CityDto;
 import com.scit.letsleave.domain.destination.service.CityService;
-import com.scit.letsleave.domain.guide.dto.GuidesDto;
-import com.scit.letsleave.domain.guide.service.GuidesService;
+import com.scit.letsleave.domain.guide.dto.GuideDto;
+import com.scit.letsleave.domain.guide.service.GuideService;
 import com.scit.letsleave.domain.guide.util.PageNavigator;
 
 import lombok.RequiredArgsConstructor;
@@ -27,27 +27,25 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/guides")
 @RequiredArgsConstructor
 @Slf4j
-public class GuidesController {
+public class GuideController {
 
-    private final GuidesService guidesService;
+    private final GuideService guidesService;
     private final CityService cityService;
-    private int pageLimit = 3;
+    private final int pageLimit = 3;
 
     @GetMapping("")
     public String mainCity(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(name = "cityId", defaultValue = "0") Long cityId,
+            @RequestParam(name = "cityId", defaultValue = "0") Integer cityId,
             @PageableDefault(page = 0, size = 5) Pageable pageable,
             Model model) {
-        
-        log.info("cityId:{}", cityId);
 
         if (page < 0) {
             page = 0;
         }
         
         Pageable validPageable = PageRequest.of(page, pageable.getPageSize());
-        Page<GuidesDto> list = cityId == 0
+        Page<GuideDto> list = cityId == 0
                 ? guidesService.selectAll(validPageable)
                 : guidesService.selectPart(validPageable, cityId);
 
@@ -61,7 +59,6 @@ public class GuidesController {
 
         String cityName = cityService.getCityNameById(cityId);
 
-        log.info("현재 페이지: {}, 전체 페이지 수: {}", page, totalPages);
 
         model.addAttribute("cityName", cityName);
         model.addAttribute("list", list);
@@ -71,19 +68,15 @@ public class GuidesController {
         model.addAttribute("cityId", cityId);
         model.addAttribute("startintItemNum", (pageLimit * page));
 
-        return "guides/main-city";
+        return "guide/main-city";
     }
 
     @GetMapping("/main-city-search")
-    public String mainCitySearch(
-            Model model,
-            @RequestParam(name = "countryId", required = false) Long countryId) {
-        if (countryId != null) {
-            model.addAttribute("popularCities", cityService.getPopularCities(countryId));
-        } else {
-            model.addAttribute("popularCities", cityService.getPopularCities(1L));
-        }
-        return "guides/main-city-search";
+    public String mainCitySearch(Model model, @RequestParam(name = "countryId", required = false, defaultValue="1") Integer countryId) {
+
+        model.addAttribute("popularCities", cityService.getPopularCities(countryId));
+
+        return "guide/main-city-search";
     }
 
     @GetMapping("/search")
@@ -101,9 +94,9 @@ public class GuidesController {
      */
     @GetMapping("/{guideId}")
     public String getGuideDetailPage(@PathVariable("guideId") Long guideId, Model model) {
-        GuidesDto guideDto = guidesService.getGuideById(guideId);
+        GuideDto guideDto = guidesService.getGuideById(guideId);
 
-        model.addAttribute("guide",guideDto);
+        model.addAttribute("guide", guideDto);
         
         return "guide/detail";
     }

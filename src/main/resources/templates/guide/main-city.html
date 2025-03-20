@@ -7,8 +7,8 @@
     <!-- css -->
     <link
       rel="stylesheet"
-      href="../../static/css/main-city.css"
-      th:href="@{/css/main-city.css}"
+      href="../../static/css/guide/main-city.css"
+      th:href="@{/css/guide/main-city.css}"
     />
   </head>
 
@@ -16,7 +16,7 @@
     <div class="container">
       <div class="search">
         <a th:href="@{/guides/main-city-search}" class="search-box">
-          <span class="icon">🔍</span> 어디든지
+          <span class="icon">🔍 어디든지</span> 
         </a>
       </div>
 
@@ -34,7 +34,7 @@
             <a th:href="@{/guides/{id}(id = ${place.id})}" class="tour-item">
               <div class="tour-info">
                 <h2 th:text="${place.title}"></h2>
-                <p th:text="${place.content}"></p>
+                <p th:utext="${place.content}"></p>
               </div>
             </a>
           </div>

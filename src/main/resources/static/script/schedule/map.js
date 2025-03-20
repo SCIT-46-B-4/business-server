@@ -58,6 +58,7 @@ async function drawMapWithMarkers(routes, date) {
 // 해당 날자의 마커만 보여주는 함수
 function filterMarkersByDate(targetDate) {
     markers.forEach(marker => {
+
         if (marker.routeDate === targetDate) {
             marker.setMap(map);
         } else {

@@ -21,6 +21,11 @@ public class DestinationService {
     private final DestinationRepository destinationRepository;
     private static final double EARTH_RADIUS_KM = 6371.01; // 지구 반지름 (킬로미터)
 
+    public List<DestinationDto> findByQuery(String query, Integer cityId) {
+
+        return destinationRepository.searchByFullText(query, cityId).stream().map(DestinationDto::toDto).collect(Collectors.toList());
+    }
+
     // 특정 여행지의 상세 정보를 가져오는 메서드
     public DestinationDto getDestinationById(Long destinationId) {
         DestinationEntity entity = destinationRepository.findById(destinationId)
@@ -47,7 +52,7 @@ public class DestinationService {
     }
 
     // 근처 추천 장소를 타입별로 그룹화
-    public Map<String, List<DestinationDto>> getNearbyDestinationsByType(Long destinationId, double radiusMeters, int limit) {
+     public Map<String, List<DestinationDto>> getNearbyDestinationsByType(Long destinationId, double radiusMeters, int limit) {
         DestinationEntity currentDestination = destinationRepository.findById(destinationId)
                 .orElseThrow(() -> new RuntimeException("Destination not found"));
 

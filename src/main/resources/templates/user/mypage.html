@@ -22,21 +22,30 @@
     <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
 
     <div class="button-container">
+<<<<<<< HEAD
       <p>
         <a th:href="@{/users/auth/logout}" class="logout-button">로그아웃</a>
       </p>
       <p>
+=======
+      <p><a th:href="@{/users/auth/logout}" class="logout-button">로그아웃</a></p>
+      <p>
+>>>>>>> 2c50295946ef14d31dc5dd5d69de47612008394e
         <a th:href="@{/users/editpage}" class="edit-button">프로필 편집</a>
       </p>
     </div>
 
     <div class="profile-section">
+<<<<<<< HEAD
       <img
         th:src="@{${userInfo.profileImg} != null ? ${userInfo.profileImg} : '/images/user/profile_default.jpg'}"
         alt="profile_photo"
         class="profile-photo"
         id="profilePhoto"
       />
+=======
+      <img th:src="@{/images/user/circle.png}" alt="profile_photo" class="profile-photo" id="profilePhoto">
+>>>>>>> 2c50295946ef14d31dc5dd5d69de47612008394e
       <h2 id="name" th:text="${userInfo.nickname}">이름</h2>
     </div>
 

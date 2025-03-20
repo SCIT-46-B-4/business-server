@@ -99,19 +99,96 @@ input[type="checkbox"] {
     background-color: #f8f8f8;
 }
 
+.submit-button-container {
+    margin-top: 15px;
+}
+
 .submit-button {
+    display: block;       /* 블록 요소로 변환하여 전체 너비 차지 */
+    margin-top: 40px;     /* 달력 아래로 떨어지게 상단 여백 추가 */
     width: 100%;
     padding: 15px;
-    background-color: #FF385C;
+    background-color: var(--color-red);
     color: white;
     border: none;
     border-radius: 8px;
-    /* 네모 모양으로 변경 */
     font-size: 16px;
     cursor: pointer;
-    margin-top: 20px;
 }
 
 .submit-button:hover {
     background-color: #E6314F;
+}
+
+/* 달력 컨테이너 */
+.calendar-container {
+    width: 700px;
+    margin: 50px auto;
+}
+/* jQuery UI Datepicker 기본 스타일 커스터마이징 */
+/* 폰트 크기와 내부 여백을 키워서 달력 전체 크기를 확대 */
+.ui-datepicker {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.2em;
+    width: 100%;
+}
+
+/* 달력 헤더 스타일 (폰트 크기 및 패딩 확대) */
+.ui-datepicker-header {
+    background: var(--color-green);
+    border: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: var(--color-white);
+    font-weight: bold;
+    padding: 15px;
+}
+
+/* 달력 타이틀 (월, 연도) 스타일 */
+.ui-datepicker-title {
+    margin: 0;
+    font-size: 1.3em;
+}
+
+/* 달력의 요일(헤더) 스타일 */
+.ui-datepicker-calendar th {
+    color: var(--color-blue);
+    font-weight: bold;
+    padding: 10px;
+}
+
+/* 달력의 날짜 셀 스타일 */
+.ui-datepicker-calendar td {
+    height: 50px;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+/* 날짜 링크 스타일 */
+.ui-datepicker-calendar td a {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--color-black);
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1.2em;
+}
+
+/* 호버 시 효과 */
+.ui-datepicker-calendar td a:hover {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+}
+
+/* 선택된 범위 하이라이트 스타일 */
+.ui-datepicker-calendar td.range-highlight a {
+    background-color: var(--color-blue) !important;
+    color: var(--color-black) !important;
 }

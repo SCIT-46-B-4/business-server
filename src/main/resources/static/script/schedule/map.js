@@ -1,11 +1,9 @@
 let map;
 let markers = [];
 
-// 지도에 마커와 Polyline을 그리는 함수
-async function drawMapWithMarkers(routes, date) {
-    markers.forEach(marker => marker.setMap(null));
-    markers = [];
 
+// 지도에 마커와 Polyline을 그리는 함수
+async function drawMapWithMarkers(routes) {
     const bounds = new google.maps.LatLngBounds();
     const infoWindow = new google.maps.InfoWindow();
 
@@ -16,13 +14,11 @@ async function drawMapWithMarkers(routes, date) {
                 const lat = parseFloat(dest.latitude);
                 const lng = parseFloat(dest.longitude);
 
-                // google.maps.marker는 error issue로 deprecated
                 const marker = new google.maps.Marker({
                     position: { lat, lng },
                     map,
                     title: dest.krName,
                 });
-                marker.routeDate = date;
 
                 marker.addListener("click", () => {
                     map.panTo(marker.position)
@@ -30,7 +26,6 @@ async function drawMapWithMarkers(routes, date) {
                     infoWindow.open({ anchor: marker, map });
                 });
                 bounds.extend(marker.position);
-                markers.push(marker);
                 resolve(marker)
             })
         )
@@ -52,6 +47,7 @@ async function drawMapWithMarkers(routes, date) {
         }]
     });
     pathLine.setMap(map);
+
     map.fitBounds(bounds);
 }
 

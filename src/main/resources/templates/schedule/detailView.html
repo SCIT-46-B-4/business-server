@@ -23,199 +23,194 @@
     <script th:src="@{/script/fragments/slidePanel.js}" src="../../static/script/fragments/slidePanel.js"></script>
 
     <!-- css -->
-    <link rel="stylesheet" th:href="@{/css/schedule/detail.css}" href="../../static//css/schedule/detail.css">
-    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../../static//css/fragments/header.css">
-    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../../static//css/fragments/slidePanel.css">
+    <link rel="stylesheet" th:href="@{/css/schedule/detail.css}" href="../../static/css/schedule/detail.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}" href="../../static/css/fragments/header.css">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}" href="../../static/css/fragments/slidePanel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 
-    <!-- fragments place -->
-    <div th:insert="~{fragments/header :: top-bar}"></div>
-    <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
+    <!-- <div class="fragments-container">
+        <div th:insert="~{fragments/header :: top-bar}"></div>
+        <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
+    </div> -->
 
-    <!-- total-container -->
-    <div class="total-container">
-        <div id="scroll-root">
-                <!-- 제목 입력 구간 -->
-                <div class="container_title">
-                    <!-- 제목 Tag 입력 구간 -->
-                    <div class="container_title title_tag tagContainer">
-                        <div class="container_title title_tag tagName">
-                            <div class="title_tag flex-box">
-                                <div id="textTag" class="text_tag" style="font-size: 13px; color: gray;">오사카 여행</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 제목 입력 구간 -->
-                    <div id="scheduleName" class="container_title title titleContainer">
-                        현지인 맛집으로 떠나는 오사카 먹방 여행
-                    </div>
-                    <div class="container_title title float titleContainer" style="font-size: 13px"></div>
-                    <div id="updateBtnContainer">
-                        <button id="updateBtn">수정하기</button>
-                    </div>
-                </div> <!--제목 컨테이너(제목tag/제목)-->
-            <!-- Schedule Box -->
-            <div class="container_schedule scheduleContainer">
-                <div id="schedule-container" class="container_schedule">
-                    <div class="container_schedule scheduleBox">
-                        <!-- 반복문을 돌려서 뽑아낼 데이터 및 일정자리 -->
-                        <div class="detail-schedule"><!--day-->
-                            <div class="day">Day 1</div>
-                            <!-- id자리에는 증가시켜서 값을 넣을 idx / count값으로 대체 -->
-                            <div id="component" class="scheduleBox flex-box"><!--destination-->
-                                <div class="scheduleBox flex-box flexItem">
-                                    <a class="route-guide-link" href="" target="_blank">
-                                        <div class="scheduleBox text">
-                                            <div class="scheduleBox attraction-name" style="font-size: 24px">
-                                                도톤보리
-                                                <button class="removeBtn">-</button>
-                                            </div>
-                                            <div class="scheduleBox flex-box">
-                                                <div class="text" style="font-size: 13px; color: gray">
-                                                    <span>관광명소</span>
-                                                    <span>"난바"</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <!------------------------------------------->
-                            <div id="component" class="scheduleBox flex-box">
-                                <div class="scheduleBox flex-box flexItem">
-                                    <a class="route-guide-link" href="" target="_blank">
-                                        <div class="scheduleBox text">
-                                            <div class="scheduleBox attraction-name" style="font-size: 24px">
-                                                djelsrk
-                                                <button class="removeBtn">-</button>
-                                            </div>
-                                            <div class="scheduleBox flex-box">
-                                                <div class="text" style="font-size: 13px; color: gray">
-                                                    <span>관광명소</span>
-                                                    <span>"난바"</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+    <!-- Schedule Container -->
+    <div class="left">
+        <div class="schedule-meta-info">
+            <div class="country-name-container">
+                <span class="country-name">일본</span>
+                <span class="country-id" hidden>1</span>
+            </div>
+            <div class="city-name-container">
+                <span class="city-name">도쿄</span>
+                <span class="city-id" hidden>1</span>
+            </div>
+            <div class="schedule-info-container">
+                <span class="schedule-id" hidden>1</span>
+                <span class="schedule-name">마천루 여행</span>
+            </div>
+            <div class="schedule-duratin-container">
+                <span class="start-date">2024-12-30</span>
+                <span class="schedule-date-seperator">~</span>
+                <span class="end-date">2025-01-03</span>
+            </div>
+            <div class="update-container">
+                <span id="updateBtn" class="update-schedule-btn">수정하기</span>
+            </div>
+        </div>
 
-                        <div class="detail-schedule">
-                            <div class="day">Day 2</div>
-                            <!-- id자리에는 증가시켜서 값을 넣을 idx / count값으로 대체 -->
-                            <div id="component" class="scheduleBox flex-box">
-                                <div class="scheduleBox flex-box flexItem">
-                                    <a class="route-guide-link" href="" target="_blank">
-                                        <div class="scheduleBox text">
-                                            <div class="scheduleBox attraction-name" style="font-size: 24px">
-                                                도톤보리
-                                                <button class="removeBtn">-</button>
-                                            </div>
-                                            <div class="scheduleBox flex-box">
-                                                <div class="text" style="font-size: 13px; color: gray">
-                                                    <span>관광명소</span>
-                                                    <span>"난바"</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div id="component" class="scheduleBox flex-box">
-                                <div class="scheduleBox flex-box flexItem">
-                                    <a class="route-guide-link" href="" target="_blank">
-                                        <div class="scheduleBox text">
-                                            <div class="scheduleBox attraction-name" style="font-size: 24px">
-                                                djelsrk
-                                                <button class="removeBtn">-</button>
-                                            </div>
-                                            <div class="scheduleBox flex-box">
-                                                <div class="text" style="font-size: 13px; color: gray">
-                                                    <span>관광명소</span>
-                                                    <span>"난바"</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
+        <div class="detail-container">
+            <div class="day-anchor">
+                <div class="day-header">
+                    <span class="detail-schedule-id" hidden>1</span>
+                    <span class="date-order">Day 1</span>
+                    <span class="detail-schedule-date" hidden>2024-12-30</span>
                 </div>
-            </div> <!-- end .scheduleContainer -->
-        </div> <!-- end #scroll-root -->
-<!------------------------------------------------------------------------>
-        <div id="fullscreen-map" class="mapContainer">
-            <div id="map"></div>
-<!--지도 밑에 footer 주석처리 해두라고 하셨는데 걍 hidden으로 숨겨놨어요! css 맨 위에!-->
-            <div class="hidden">
-                <div class="mapContainer footer">
-                    <div class="mapContainer top-footer buttonBox">
-                        <div class="mapContainer top-footer flex-box buttonBox">
-                            <div class="buttonBox top-footer">
-                                <button class="top-footer-button"></button>
+                <div class="route-container">
+                    <span class="route-id" hidden>1</span>
+                    <span class="route-order-number" hidden>1</span>
+                    <div class="dest-box">
+                        <div class="dest-info">
+                            <span class="dest-id" hidden>1</span>
+                            <div class="dest-titleImg-container">
+                                <a href="#"></a>
                             </div>
-                        </div>
-                        <div role="tablist" aria-orientation="horizontal" class="buttonBox top-footer flex-box"
-                            style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
-                            <!-- 동적인 버튼 생성 자리 button : day1, day2 ,,, -->
-                        </div>
-                    </div>
-
-                    <!-- End .top-footer -->
-                    <div class="mapContainer bottom-footer">
-                        <div class="mapContainer bottom-footer flex-box">
-                            <div class="bottom-footer flex-box left-button" >
-                                <!-- 좌측 사이드 버튼 -->
-                                <div class="side-button">
-                                    <button class="bottom-footer-button">Left</button>
+                            <div class="dest-data">
+                                <div class="dest-str-container">
+                                    <span class="dest-krName">도쿄 도청</span>
+                                    <span class="dest-title">여기 놀러 오세요!@ 무려 공짜!</span>
                                 </div>
-                            </div>
-                            <div class="flicking-viewport" style="user-select: none; -webkit-user-drag: none; touch-action: auto;">
-                                <div class="flicking-camera">
-                                    <div class="flicking-panel flex-box guideBox">
-                                        <div class="guideBox flex-box" style="display: flex; flex-direction: row; align-items: center;">
-                                            <a class="route-guided-link" href="#" style="display: flex; flex-direction: row; align-items: center;">
-                                                <!-- 왼쪽 이미지 영역 -->
-                                                <div class="guideBox guide-image" style="flex-shrink: 0;">
-                                                    <img src="https://via.placeholder.com/150" alt="우라 난바 이미지" style="width:150px; height:auto;">
-                                                </div>
-                                                <!-- 오른쪽 텍스트 영역 -->
-                                                <div class="guideBox guide-text" style="display: flex; flex-direction: column; margin-left: 10px;">
-                                                    <!-- 제목 -->
-                                                    <div style="font-size: 16px; font-weight: bold;">우라 난바</div>
-                                                    <!-- 상세 설명 -->
-                                                    <div style="font-size: 13px; margin-top: 4px;">일본 특유의 분위기를 물씬 풍기는 이자카야 골목</div>
-                                                    <!-- 카테고리 정보 -->
-                                                    <div style="font-size: 13px; color: gray; margin-top: 4px;">
-                                                        <span>관광 명소</span>
-                                                        <span>::before 난바</span>
-                                                    </div>
-                                                    <!-- 별점 및 리뷰 -->
-                                                    <div style="font-size: 13px; color: gray; margin-top: 4px;">
-                                                        <span><!-- 별점 표시 --></span>
-                                                        <span>(리뷰 2)</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
+                                <div class="dest-meta">
+                                    <span class="dest-type">관광지</span>
+                                    <div class="coordinate">
+                                        <span class="lat" hidden>135.1234567</span>
+                                        <span class="lng" hidden>35.12446</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bottom-footer flex-box right-button">
-                                <!-- 우측 사이드 버튼 -->
-                                <div class="side-button">
-                                    <button class="bottom-footer-button">Right</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="route-container">
+                    <span class="route-id" hidden>3</span>
+                    <span class="route-order-number" hidden>1</span>
+                    <div class="dest-box">
+                        <div class="dest-info">
+                            <span class="dest-id" hidden>1</span>
+                            <div class="dest-titleImg-container">
+                                <a href="#"></a>
+                            </div>
+                            <div class="dest-data">
+                                <div class="dest-str-container">
+                                    <span class="dest-krName">스카이 트리</span>
+                                    <span class="dest-title">아니 여기서 요코하마가 보인다고?!</span>
+                                </div>
+                                <div class="dest-meta">
+                                    <span class="dest-type">관광지</span>
+                                    <div class="coordinate">
+                                        <span class="lat" hidden>135.1234567</span>
+                                        <span class="lng" hidden>35.12446</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> <!-- end #fullscreen-map -->
+            <div class="day-anchor">
+                <div class="day-header">
+                    <span class="detail-schedule-id" hidden></span>
+                    <span class="date-order">Day 2</span>
+                    <span class="detail-schedule-date" hidden>2024-12-31</span>
+                </div>
+                <div class="day-body">
+                    <div class="route-container">
+                        <span class="route-id" hidden>2</span>
+                        <span class="route-order-number" hidden>1</span>
+                        <div class="dest-box">
+                            <div class="dest-info">
+                                <span class="dest-id" hidden>3</span>
+                                <div class="dest-titleImg-container">
+                                    <a href="#"></a>
+                                </div>
+                                <div class="dest-data">
+                                    <div class="dest-str-container">
+                                        <span class="dest-krName">롯폰기 힐즈</span>
+                                        <span class="dest-title">도쿄 타워 야경을 바라보며 우아하게 커피 한잔!!</span>
+                                    </div>
+                                    <div class="dest-meta">
+                                        <span class="dest-type">관광지</span>
+                                        <div class="coordinate">
+                                            <span class="lat" hidden>135.1234567</span>
+                                            <span class="lng" hidden>35.12446</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+<!------------------------------------------------------------------------>
+    <div class="right">
+        <div id="map" class="google-map"></div>
+        <div class="footer-container">
+            <div class="left-btn-container">
+                <span class="left-btn"><i class="fas fa-chevron-left"></i></span>
+            </div>
+            <div class="footer-slider">
+                <div class="footer-dest-container">
+                    <div class="footer-anchor">
+                        <div class="footer-dest-header">
+                            <span class="footer-dest-id" hidden>2</span>
+                        </div>
+                        <div class="footer-body-left">
+                            <div class="footer-dest-titleImg-container">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                        </div>
+                        <div class="footer-body-right">
+                            <div class="footer-dest-data">
+                                <span class="footer-dest-krName">롯폰기 힐즈</span>
+                                <span class="footer-dest-content">시원한 하늘을 볼 수 있는 마천루!</span>
+                            </div>
+                            <div class="footer-dest-meta-info">
+                                <span class="footer-dest-score">4.3</span>
+                                <span class="footer-dest-reviews">(120개 리뷰)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-anchor">
+                        <div class="footer-dest-header">
+                            <span class="footer-dest-id" hidden>3</span>
+                        </div>
+                        <div class="footer-body-left">
+                            <div class="footer-dest-titleImg-container">
+                                <img src="#" alt="대표 이미지">
+                            </div>
+                        </div>
+                        <div class="footer-body-right">
+                            <div class="footer-dest-data">
+                                <span class="footer-dest-krName">비싼 레스토랑</span>
+                                <span class="footer-dest-content">예쁜 도쿄 타워를 마주보며 식사가 가능한 곳!</span>
+                            </div>
+                            <div class="footer-dest-meta-info">
+                                <span class="footer-dest-score">4.7</span>
+                                <span class="footer-dest-reviews">(250개 리뷰)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-btn-container">
+                <span class="right-btn"><i class="fas fa-chevron-right"></i></span>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

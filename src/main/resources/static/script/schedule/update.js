@@ -78,7 +78,7 @@ $(function() {
 
     $(".search-icon").on("click", () => {
         const searchWord = $("#searchBox").val();
-        AjaxAPI.getDestinations({ name: searchWord })
+        AjaxAPI.getDestinations({name: searchWord, cityId: 1})
             .done((data) => renderSearchDestination(data));
     });
 

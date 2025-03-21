@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,21 +32,26 @@ public class RestScheduleController {
     private final ScheduleService scheduleService;
     private final RecommendService recommendService;
 
+    // 스케줄 저장하기
     @PostMapping({"/", ""})
     public ScheduleDto saveSchedule(@ModelAttribute ScheduleDto dto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long scheduleId = dto.getId();
-        ScheduleDto savedDto;
 
-        if (scheduleId == null) {
-            savedDto = scheduleService.saveSchedule(dto, Long.valueOf(authentication.getName()));
-        } else {
-            savedDto = scheduleService.updateSchedule(dto, Long.valueOf(authentication.getName()), scheduleId);
-        }
+        ScheduleDto savedDto = scheduleService.saveSchedule(dto, Long.valueOf(authentication.getName()));
 
         return savedDto;
     }
 
+    @PatchMapping("/{scheduleId}")
+    public ScheduleDto updateSchedule(@PathVariable(name="scheduleId") Long scheduleId, @ModelAttribute ScheduleDto dto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        ScheduleDto updatedDto = scheduleService.updateSchedule(dto, scheduleId, Long.valueOf(authentication.getName()));
+
+        return updatedDto;
+    }
+
+    // 유저 정보 기반 내 여행 스케줄 목록 가져오기
     @GetMapping({"/", ""})
     public ResponseEntity<List<ScheduleDto>> userSchedules() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,6 +66,7 @@ public class RestScheduleController {
         return ResponseEntity.ok(scheduleService.findById(id));
     }
 
+    // 추천 시스템에 접속 해 추천 목록 가져오기
     @PostMapping("/recommendation/{cityId}")
     public ScheduleDto getRecommendedSchedule(@PathVariable(name="cityId") Integer cityId, @RequestBody SurveyDto surveyDto) {
 

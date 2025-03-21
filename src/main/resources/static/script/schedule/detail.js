@@ -1,134 +1,108 @@
 import { AjaxAPI } from "../global/ajax.js";
 import { drawMapWithMarkers, filterMarkersByDate } from "./map.js";
 
+const typeEnum = {
+    1: "관광지",
+    2: "식당",
+    3: "쇼핑센터",
+    4: "숙박업소",
+    5: "대중교통",
+    6: "여행지"
+};
 
-// 상위 컨테이너(#schedule-container)에 날짜별 anchor 컨테이너를 동적으로 생성하는 함수
-function renderScheduleBoxByDay(schedule) {
-    const scheduleName = schedule["name"];
-    const cityName =  schedule["cityName"];
-    const countryName =  schedule["countryName"];
-    const endDate = schedule["endDate"];
-    const startDate = schedule["startDate"];
-    const detailSchedules = schedule["detailSchedules"];
-
-    $("#textTag").text(cityName + " 여행");
-    $("#scheduleName").text(scheduleName);
-
-    const $container = $("#schedule-container");
-    $container.empty();
-    // 각 날짜 그룹마다 별도의 anchor 컨테이너 생성
-    detailSchedules.forEach((detailSchedule, index) => {
-        // 새로운 anchor 컨테이너 생성
-        const $dayAnchor = $("<div>", {
-            id: `day_${index+1}_anchor`,
-            class: "day-anchor",
-            css: { marginBottom: "20px" },
+$(function() {
+    const isRecommend = getQueryParam("isRecommend");
+    if (isRecommend) {
+        const cityId = $(".city-id").text();
+        let schedule = localStorage.getItem("schedule")
+        if (!schedule) {
+            AjaxAPI.getRecommendSchedule(getSurveyData(), cityId)
+            .done((response) => {
+                renderSchedule(response, isRecommend);
+                // filterMarkersByDate(0);
+                localStorage.setItem("schedule", JSON.stringify(response))
+            });
+        } else {
+            renderSchedule(schedule);
+            // filterMarkersByDate(schedule[0]);
+        }
+    } else {
+        AjaxAPI.getScheduleById(getPathParam())
+        .done((response) => {
+            renderSchedule(response, false);
+            localStorage.setItem("schedule", JSON.stringify(response))
+            // filterMarkersByDate(0);
         });
+    }
 
-        // 그룹 헤더 생성 (예: "day1")
-        const $dayHeader = $("<div>", {
-            id: `dayHeader${index + 1}`,
-            class: "day-header",
-            css: {
-                fontSize: "20px",
-                fontWeight: "bold",
-                marginBottom: "10px",
-            },
-            text: `Day ${index + 1}`,
-            "data-date": detailSchedule.date
-        }).on("click", function() {
-            const selectedDate = $(this).attr("data-date");
-            filterMarkersByDate(selectedDate);
-        });
-        $dayAnchor.append($dayHeader);
+    // Footer slider
+    let currentIndex = 0;
+    const $footerDestContainer = $(".footer-dest-container");
+    const $anchors = $(".footer-anchor");
+    const totalItems = $anchors.length;
 
-        const routes = detailSchedule["routes"]
-        drawMapWithMarkers(routes, detailSchedule.date)
-        // 각 그룹에 속한 스케줄 박스 생성
-        routes.forEach(route => {
-            const destination = route.destination;
-
-            // 상위 박스 생성: scheduleBox
-            const $scheduleBox = $("<div>", {
-                class: "container-schedule scheduleBox",
-                css : {marginTop: "10px"}
-            });
-            // 내부 Flex 박스 생성 (flexItem)
-            const $flexItem = $("<div>", {
-                class: "container-schedule flex-box flexItem"
-            });
-            // 텍스트 영역 생성
-            const $textContainer = $("<div>", {
-                class: "container-schedule text"
-            });
-            // 첫 번째 줄: 장소명와 편집 버튼 영역
-            const $attractionName = $("<div>", {
-                class: "container-schedule attraction-name",
-                css: {fontSize: "24px"}
-            });
-            // 장소명 정보를 감싸는 링크 생성
-            const $destinationLink = $("<a>", {
-                href: `/destinations/${destination.id}`,
-                css: {
-                    textDecoration: "none",
-                    color: "inherit",
-                },
-                text: destination.krName
-            });
-            $attractionName.append($destinationLink);
-
-            // 두 번째 줄: 유형과 지역명 (작은 글씨, 회색)
-            const $innerFlex = $("<div>", {
-                class: "container-schedule flex-box"
-            });
-            const $infoText = $("<div>", {
-                class: "text",
-                css: {
-                    fontSize: "13px",
-                    color: "gray"
-                }
-            });
-            const $typeSpan = $("<span>", {
-                text: destination.type
-            });
-            $infoText.append($typeSpan);
-            
-            const $locSpan = $("<span>", {
-                class: "city-name",
-                text: destination.city.krName
-            });
-
-            $infoText.append($locSpan);
-            $innerFlex.append($infoText);
-            $textContainer.append($attractionName);
-            $textContainer.append($innerFlex);
-            $flexItem.append($textContainer);
-            $scheduleBox.append($flexItem);
-            $dayAnchor.append($scheduleBox);
-        });
-        $container.append($dayAnchor);
-    });
-
-    // Day 스크롤 이벤트
-    const scrollRoot = $("#scroll-root")[0];
-    const observerOptions = {
-        root: scrollRoot,
-        threshold: 0.05,
-        rootMargin: "0px 0px -60px 0px"
-    };
+    $footerDestContainer.css("width", `${100 * totalItems}%`);
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const selectedDate = $(entry.target).attr("data-date");
-                filterMarkersByDate(selectedDate);
-            }
-        });
-    }, observerOptions);
-    $(".day-header").each(function() {
-        observer.observe(this);
+    function updateSlide() {
+        const offset = -currentIndex * 100;
+        $footerDestContainer.css("transform", `translateX(${offset}%)`);
+    }
+
+    $(".right-btn").click(function () {
+        if (currentIndex < totalItems - 1) {
+            currentIndex++;
+            updateSlide();
+        }
     });
+
+    $(".left-btn").click(function () {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateSlide();
+        }
+    });
+
+    $(document).on("click", ".day-header", function() {
+        // filterMarkersByDate($(this).find(".date-order").text().split(" ")[1]);
+    })
+
+    $(document).on("click", ".update-schedule-btn", () => {
+        location.href = "/schedules/updateView";
+    });
+});
+
+function getPathParam() {
+    const pathSegments = window.location.pathname.split('/').filter(segment => segment !== "");
+
+    return pathSegments[1];
 }
+
+function getQueryParam(key) {
+    const queryParams = new URLSearchParams(window.location.search);
+
+    return queryParams.get(key);
+}
+
+// // Day 스크롤 이벤트
+// const scrollRoot = $("#scroll-root")[0];
+// const observerOptions = {
+//     root: scrollRoot,
+//     threshold: 0.05,
+//     rootMargin: "0px 0px -60px 0px"
+// };
+
+// const observer = new IntersectionObserver((entries) => {
+//     entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//             const selectedDate = $(entry.target).attr("data-date");
+            // filterMarkersByDate(selectedDate);
+//         }
+//     });
+// }, observerOptions);
+// $(".day-header").each(function() {
+//     observer.observe(this);
+// });
+
 
 function getSurveyData() {
     const cityEnum = {
@@ -140,6 +114,7 @@ function getSurveyData() {
     const city_name = localStorage.getItem("selectedCity");
 
     const survey =  {
+        country_name: "일본",
         city: city_name,
         cityId: cityEnum[city_name],
         period: localStorage.getItem("selectedPeriod"),
@@ -152,58 +127,130 @@ function getSurveyData() {
     }
     return survey
 }
-
-// 백엔드에서 Schedule에 속한 Destination 데이터를 가져오는 함수
-function getScheduleData(scheduleId, isRecommend) {
-    const survey = getSurveyData();
-    let ajaxCall = isRecommend ?
-        AjaxAPI.getRecommendSchedule(survey, survey["cityId"]) :
-        AjaxAPI.getScheduleById(scheduleId);
-
-    ajaxCall
-    .done((schedule) => {
-        $("#loading").show();
-        localStorage.setItem("schedule", JSON.stringify(schedule));
-
-        setTimeout(() => {
-            renderScheduleBoxByDay(schedule);
-        }, 0);
-    })
-    .fail((xhr, _, errorThrown) => {
-        console.log(`HTTP ${xhr.status} error! ${xhr.responseText}`);
-        console.log("Error fetching schedule schedule:", errorThrown);
-        // location.href = "/users/mypage";
-    })
-    .always(() => {
-        $("#loading").fadeOut();
-    })
+function createInfoContainer(containerClass, labelClass, labelText, idClass, idText, isHidden=true) {
+    return $("<div>").addClass(containerClass).append(
+        $("<span>").addClass(labelClass).text(labelText),
+        $("<span>").addClass(idClass).attr("hidden", isHidden).text(idText)
+    );
 }
 
-$(function() {
-    $("#loadingContainer").load("../../../templates/loading.html", function () {
-        $("#loading").hide();
-    });
+function createDateContainer(startDate, endDate) {
+    return $("<div>").addClass("schedule-duration-container").append(
+        $("<span>").addClass("start-date").text(startDate),
+        $("<span>").addClass("schedule-date-seperator").text("~"),
+        $("<span>").addClass("end-date").text(endDate)
+    );
+}
 
-    $("#updateBtnContainer").on("click", () => {
-        location.href = "/schedules/updateView";
-    });
-    if ($("#schedule-container").length === 0) {
-        let $parentDiv = $("<div>", {
-            id: "schedule-container",
-            class: "container-schedule scheduleContainer"
+function createUpdateButton() {
+    return $("<div>").addClass("update-container").append(
+        $("<span>").attr("id", "updateBtn").addClass("update-schedule-btn").text("수정하기")
+    );
+}
+
+function createFooter(destId, krName, title, titleImg, score) {
+    return $("<div>").addClass("footer-anchor").append(
+        $("<div>").addClass("footer-dest-header").append(
+            $("<span>").addClass("footer-dest-id").attr("hidden", true).text(destId)
+        ),
+        $("<div>").addClass("footer-body-left").append(
+            $("<div>").addClass("footer-dest-titleImg-container").append(
+                $("<img>").attr("src", titleImg).attr("alt", "대표 이미지")
+            )
+        ),
+        $("<div>").addClass("footer-body-right").append(
+            $("<div>").addClass("footer-dest-data").append(
+                $("<span>").addClass("footer-dest-krName").text(krName ? krName : title),
+                $("<span>").addClass("footer-dest-content").text(title)
+            ),
+            $("<div>").addClass("footer-dest-meta-info").append(
+                $("<span>").addClass("footer-dest-score").text(score)
+            )
+        )
+    );
+}
+
+function renderSchedule(schedule, isRecommend) {
+    console.log(schedule);
+    let {countryName, countryId, cityName, cityId, id, name, startDate, endDate, detailSchedules} = schedule;
+    const $left = $(".left").empty();
+    const $footerDestContainer = $(".footer-dest-container").empty();
+    if (isRecommend) {
+        const cityNames = {
+            "tokyo": "도쿄",
+            "sapporo": "삿포로",
+            "osaka": "오사카",
+            "fukuoka": "후쿠오카"
+        }
+        cityName = cityNames[cityName];
+    }
+    const $scheduleMetaInfo = $("<div>").addClass("schedule-meta-info").append(
+        createInfoContainer("country-name-container", "country-name", countryName || "일본", "country-id", countryId),
+        createInfoContainer("city-name-container", "city-name", cityName, "city-id", cityId),
+        createInfoContainer("schedule-info-container", "schedule-name", name, "schedule-id", id, true),
+        createDateContainer(startDate, endDate),
+        createUpdateButton()
+    );
+    $left.append($scheduleMetaInfo);
+    console.log(detailSchedules);
+    const $detailContainer = $("<div>", {class: "detail-container"})
+    detailSchedules.forEach((detailSchedule, dIndex) => {
+        const detailId = detailSchedule["id"];
+        let date = detailSchedule["date"];
+        const day = detailSchedule["day"];
+        const routes = detailSchedule["routes"];
+        if (!date) {
+            date = new Date(startDate);
+            date.setDate(date.getDate() + dIndex - 1);
+            date = date.toISOString().split("T")[0];
+        }
+            
+        const $dayAnchor = $("<div>").addClass("day-anchor");
+        const $dayHeader = $("<div>").addClass("day-header").append(
+            $("<span>").addClass("detail-schedule-id").attr("hidden", true).text(detailId),
+            $("<span>").addClass("date-order").text(`Day ${dIndex + 1}`),
+            $("<span>").addClass("detail-schedule-date").attr("hidden", true).text(date)
+        );
+        $dayAnchor.append($dayHeader);
+        // 마커 그리기
+        drawMapWithMarkers(routes)
+
+        routes.forEach((route, rIndex) => {
+            const {id: routeId, orderNumber, destination} = route;
+            const {id: destId, type, krName, title, latitude, longitude, titleImg, score} = destination;
+
+            const $routeContainer = $("<div>").addClass("route-container").append(
+                $("<span>").addClass("route-id").attr("hidden", true).text(routeId),
+                $("<span>").addClass("route-order-number").attr("hidden", true).text(orderNumber),
+                $("<div>").addClass("dest-box").append(
+                    $("<a>", {attr: {"href": `/destinations/${destId}`}}).append(
+                        $("<div>").addClass("dest-info").append(
+                            $("<span>").addClass("dest-id").attr("hidden", true).text(destId),
+                            $("<div>").addClass("dest-titleImg-container").append(
+                                $("<a>").attr("href", titleImg)
+                            ),
+                            $("<div>").addClass("dest-data").append(
+                                $("<div>").addClass("dest-str-container").append(
+                                    $("<span>").addClass("dest-krName").text(krName || title),
+                                    $("<span>").addClass("dest-title").text(title)
+                                ),
+                                $("<div>").addClass("dest-meta").append(
+                                    $("<span>").addClass("dest-type").text(typeEnum[type]),
+                                    $("<div>").addClass("coordinate").append(
+                                        $("<span>").addClass("lat").attr("hidden", true).text(latitude),
+                                        $("<span>").addClass("lng").attr("hidden", true).text(longitude)
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+            $dayAnchor.append($routeContainer);
+            const $footer = createFooter(destId, krName, title, titleImg, score);
+            $footerDestContainer.append($footer);
         });
-        $("#scroll-root").append($parentDiv);
-    }
-    
-    let scheduleId = null;
-    const urlParams = new URLSearchParams(window.location.search);
-    const isRecommend = urlParams.get('isRecommend') === "true";
-    
-    if (!isRecommend) {
-        const path = window.location.pathname;
-        const lastSlashIndex = path.lastIndexOf('/');
-        scheduleId = parseInt(path.substring(lastSlashIndex + 1), 10);
-    }
-    getScheduleData(scheduleId, isRecommend);
-});
-
+        $detailContainer.append($dayAnchor);
+    });
+    $scheduleMetaInfo.append($detailContainer);
+}

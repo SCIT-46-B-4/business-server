@@ -9,17 +9,15 @@
     
     <!-- 드래그 앤 드랍 -->
     <script type="module" th:src="@{/script/schedule/update.js}" src="../../static/script/schedule/update.js"></script>
-    <script th:src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js" src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <!-- 달력 -->
-    <script th:src="https://cdn.jsdelivr.net/npm/flatpickr" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script th:src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js" src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
-    <script th:src="https://npmcdn.com/flatpickr/dist/l10n/ko.js" src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-<div th:insert="~{fragments/header :: top-bar}"></div>
-<div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
 
 <div class="container">
     <!-- 왼쪽 영역: 내용이 많을 경우 스크롤 생김 -->
@@ -31,7 +29,7 @@
                 <!-- 왼쪽 요소 (국가명 & 일정 기간) -->
                 <div class="schedule-info-left">
                     <div class="schedule-country-name-container">
-                        <span id="countryName" class="country-name">일본 여행</span>
+                        <span id="countryName" class="country-name">일본</span>
                         <span id="id" hidden></span>
                         <span id="countryId" hidden></span>
                         <span id="cityId" hidden></span>

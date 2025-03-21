@@ -1,266 +1,298 @@
 @import url(../global/reset.css);
 
-/* 지도 footer 주석처리가 안돼서 숨겨놨어요!!!!! */
-.hidden {
-    display: none;
-}
 
-a:link{text-decoration:none;}
-a:visited,a:active{color:black}
-
-.route-guided-link:link{
-    text-decoration:none;
-}
-
-.route-guided-link {
-    color:black;
-}
-.route-guided-link:visited{
-    color:gray;
-}
-.route-guided-link:active{
-    color:gray;
-}
-
-.city-name::before {
-    content: ":: ";
-}
-
-.total-container {
-    display: flex;
-    justify-content: flex-end;
+/* 전체 페이지 설정 */
+body, html {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    height: 100vh;
-}
-
-#scroll-root {
-    overflow-y: auto;
-}
-
-/* 사이드바 영역: schedule 및 스케줄 관련 콘텐츠 */
-#scroll-root {
-    width: 35%;
-    overflow-y: scroll;
-    padding: 20px;
-}
-
-/* 지도와 footer가 포함된 영역 */
-#fullscreen-map.mapContainer {
-    width: 65%;
-    position: relative;
-    height: 100vh;
-}
-
-.text_tag{
-    margin: 0 0 5px 0;
-}
-
-.titleContainer {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-#sticky-element {
-    position: sticky;
-    top: 30px;
-}
-
-.container-schedule.attraction-name {
+    height: 100%;
     display: flex;
-    justify-content: space-between; /* 좌우 공간을 분배하여 배치 */
-    align-items: center; /* 수직 가운데 정렬 */
+    overflow: hidden;
 }
 
-.removeBtn {
-    background: none;
-    border: none;
-    color: gray;
-    font-size: 16px;
-    cursor: pointer;
-    width: 20px;
+.left {
+    width: 40%;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: #f8f8f8;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.container_schedule.flex-box {
-    margin-top: 10px;
-}
-/* 수정하기 버튼 */
-#updateBtnContainer {
-  display: flex; /* 내부 콘텐츠 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
-  justify-content: center; /* 버튼을 가운데 정렬 */
-  margin: 20px 0;
-}
-#updateBtn {
-  width: 100%; /* 부모 요소의 폭에 맞춤 */
-  background-color: #007bff; /* 파란색 배경 */
-  color: white; /* 흰색 텍스트 */
-  border: none; /* 기본 테두리 제거 */
-  border-radius: 5px; /* 둥근 모서리 */
-  padding: 11px; /* 내부 여백 */
-  font-size: 16px; /* 텍스트 크기 */
-  text-align: center; /* 텍스트 가운데 정렬 */
-  cursor: pointer; /* 클릭 가능한 커서 */
-}
-#updateBtn:hover {
-  background-color: #0056b3; /* 호버 시 더 진한 파란색 */
-}
-#updateBtn:active {
-  background-color: #004085; /* 클릭 시 더 어두운 파란색 */
+
+.right {
+    width: 60%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
 }
 
-/* 디테일 스케줄 (날짜별) */
-.detail-schedule {
-    margin: 40px 0;
-}
-
-/* Day n */
-.day {
-    margin: 5px;
-    font-weight: bold;
-    font-size: 16px;
-    color: #007bff;
-}
-
-/* destination (장소 하나하나..) */
-#component {
-    display: flex; /* 내부 콘텐츠 정렬 */
-    align-items: center; /* 수직 가운데 정렬 */
-    border-radius: 5px; /* 둥근 모서리 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-    background-color: #fff; /* 흰색 배경 */
-    padding: 16px; /* 내부 여백 */
-    margin-bottom: 16px; /* 박스 간 간격 */
-  }  
-
-/* 지도 영역 */
+/* 구글 맵 */
 #map {
     width: 100%;
     height: 100%;
-}
-
-/* footer 영역: 지도 위에 고정 */
-.mapContainer.footer {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
-    width: 100%;
-    z-index: 999;
-    background-color: rgba(248, 248, 248, 0.95); /* 반투명 배경 */
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
 }
 
-/* footer 내부 예시 스타일 */
-.mapContainer.top-footer.buttonBox {
-    padding: 8px;
-}
-
-.mapContainer.bottom-footer {
-    padding: 8px;
-}
-
-.day-tabs {
+.footer-container {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1000px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 100;
     display: flex;
-    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+    height: 220px;
+    margin-bottom: 20px;
+    border: 0.5px solid #CCC;
+}
+
+/* 디자인 요소 */
+.update-schedule-btn {
+    font-size: large;
+}
+.schedule-meta-info {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--color-light-gray);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    max-width: 600px;
+    margin: 20px auto;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.schedule-info-container {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+    color: var(--color-blue);
+}
+
+.schedule-duratin-container {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    text-align: center;
+    font-weight: 500;
     margin-bottom: 10px;
 }
 
-.day-tabs button {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px 10px;
+.update-container {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--color-blue);
     cursor: pointer;
+    background-color: var(--color-white);
+    padding: 6px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+.update-container:hover {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.day-tabs button:hover {
-    background-color: #eee;
+@media (max-width: 768px) {
+    .schedule-meta-info {
+        max-width: 100%;
+        margin: 10px;
+        padding: 15px;
+    }
+    .update-container {
+        font-size: 0.8rem;
+        top: 10px;
+        right: 10px;
+    }
 }
 
-.footer-content {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 16px;
+/* 상세 스케줄 CSS */
+.day-anchor {
+    margin-top: 15px;
 }
 
-.footer-item {
+.day-header {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    border-bottom: 2px solid #999;
+}
+
+.dest-info {
     display: flex;
     align-items: center;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    min-width: 300px;
-    padding: 8px;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #999;
 }
 
-.footer-item-img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 10px;
+.dest-titleImg-container {
+    width: 30%;
+    height: 130px;
+     /* 확인용 배경색 (테스트 후 제거 가능) */
+    background-color: #555;
 }
 
-.footer-item-text h3 {
-    margin: 0 0 4px 0;
-    font-size: 16px;
-}
-
-.footer-item-text p {
-    margin: 0 0 6px 0;
-    font-size: 14px;
-    color: #666;
-}
-
-.footer-item-meta {
-    font-size: 12px;
-    color: #999;
-}
-
-.footer-item-meta span {
-    margin-right: 6px;
-}
-
-.footer-item-rating {
-    margin-top: 4px;
-    font-size: 14px;
-    color: #f5a623;
-}
-
-.footer-item-rating .stars {
-    margin-right: 4px;
-}
-
-/* Bottom-footer SideButton */
-/* 기존 하단 footer 영역에 대해 flex 레이아웃 설정 */
-.mapContainer.bottom-footer.flex-box {
+.dest-data {
+    width: 70%;
     display: flex;
-    flex-direction: row; /* 가로 배치 */
+    padding-left: 10px;
+    flex-direction: column;
     justify-content: space-between;
+    height: 100%;
+}
+
+.dest-str-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.dest-krName {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.dest-title {
+    font-size: 1em;
+    margin: 15px 0px;
+}
+
+.dest-meta {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding-bottom: 0px;
+    align-self: flex-end;
+    text-align: right;
+}
+
+/* Footer 요소 */
+.left-btn-container, .right-btn-container {
+    width: 7%;
+    height: 100%;
+    display: flex;
     align-items: center;
-    padding: 8px;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0px;
 }
 
-/* 좌측, 우측 버튼은 고정 크기로 설정 */
-.left-button, .right-button {
-    flex: 0 0 auto;
-}
-
-/* 중앙 flicking 영역은 남은 공간을 차지하도록 설정 */
-.flicking-viewport {
-    flex: 1 1 auto;
-    margin: 0 10px;  /* 좌우 간격 */
-}
-
-/* (필요에 따라) 버튼 스타일 조정 */
-.bottom-footer-button {
-    padding: 8px 16px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 4px;
+.left-btn, .right-btn {
+    font-size: 24px; /* 아이콘 크기 */
+    color: #333; /* 기본 색상 */
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
     cursor: pointer;
 }
 
-.bottom-footer-button:hover {
-    background-color: #eee;
+.left-btn:hover, .right-btn:hover {
+    color: #007bff; /* 호버 시 색상 변경 */
+    transform: scale(1.2); /* 약간 확대 효과 */
+}
+
+.footer-slider {
+    height: 100%;
+    width: auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-anchor {
+    flex: 0 0 100%;
+    height: 100%;
+    display: flex;
+    padding: 15px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.footer-dest-container {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.footer-body-left {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-dest-titleImg-container {
+    width: 100%;
+    max-width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #ddd;
+}
+
+.footer-dest-titleImg-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.footer-body-right {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+}
+
+.footer-dest-data {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.footer-dest-krName {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.footer-dest-content {
+    font-size: 1em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.footer-dest-meta-info {
+    height: 20%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 0.9em;
+    color: #555;
+    padding-top: 5px;
 }

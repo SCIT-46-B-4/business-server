@@ -1,5 +1,9 @@
 import { AjaxAPI } from "../global/ajax.js";
 
+
+$(function() {
+    
+})
 class ScheduleManager {
     // 생성자: DOM 요소와 변수를 초기화합니다.
     constructor() {
@@ -341,6 +345,12 @@ class ScheduleManager {
             4: "삿포로",
         }
         const scheduleStartDate = new Date($("#scheduleStartDate").text());
+        let scheduleId = $("#id").text();
+        if (scheduleId) {
+            ajaxApi = AjaxAPI.updateSchedule
+        } else {
+            ajaxApi = AjaxAPI.createSchedule
+        }
         let schedule = {
             id: Number($("#id").text()),
             name: $("#scheduleName").val(),
@@ -379,7 +389,7 @@ class ScheduleManager {
         })
         schedule["detailSchedules"] = detailSchedules;
 
-        AjaxAPI.createOrUpdateSchedle(schedule)
+        ajaxApi(schedule, scheduleId)
         .done((data) => this.renderSchedule(data));
     }
 }

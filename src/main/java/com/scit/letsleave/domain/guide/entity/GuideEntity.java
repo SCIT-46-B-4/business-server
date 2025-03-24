@@ -55,19 +55,29 @@ public class GuideEntity {
     @Column(name="title_img", length=512)
     private String titleImg;
 
+    @Builder.Default
+    @Column(name="score")
+    private Double score = 0.0;
+
+    @Builder.Default
+    @Column(name="like_count")
+    private Integer likeCount = 0;
+
     @Column(name="created_at", nullable=false, updatable=false)
     private LocalDateTime createdAt;
 
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    public static GuideEntity toEntity (GuideDto guidesDTO, DestinationEntity destination, CityEntity city) { 
+    public static GuideEntity toEntity (GuideDto guideDto, DestinationEntity destination, CityEntity city) { 
         return GuideEntity.builder()    
-                .id(guidesDTO.getId())
-                .title(guidesDTO.getTitle())
-                .content(guidesDTO.getContent())
-                .titleImg(guidesDTO.getTitleImg())
-                .updatedAt(guidesDTO.getUpdatedAt())
+                .id(guideDto.getId())
+                .title(guideDto.getTitle())
+                .content(guideDto.getContent())
+                .titleImg(guideDto.getTitleImg())
+                .score(guideDto.getScore())
+                .likeCount(guideDto.getLikeCount())
+                .updatedAt(guideDto.getUpdatedAt())
                 .destination(destination)
                 .city(city)
                 .build();

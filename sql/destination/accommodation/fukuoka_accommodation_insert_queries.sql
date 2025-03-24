@@ -3,17 +3,8 @@ INSERT INTO destinations (
         contact, homepage, how_to_go, available_time, score, title_img, feature
     ) 
     VALUES (
-        3, 4, 'ｻﾞﾐｯｷｰｶｰﾙﾄﾝ井尻', 'ｻﾞﾐｯｷｰｶｰﾙﾄﾝ井尻', 'ｻﾞﾐｯｷｰｶｰﾙﾄﾝ井尻', 'accommodation', 
-        ST_GeomFromText('POINT(33.5510726 130.4412774)', 4326), NULL, NULL, NULL, '井尻駅', 
-        '체크인 시간: 오후 3:00', 2.8, 'b3b67f59-76b5-4e4e-9cad-e336ce5f3951.jpg', '[]'
-    );
-INSERT INTO destinations (
-        city_id, type, kr_name, loc_name, title, content, coordinate, address, 
-        contact, homepage, how_to_go, available_time, score, title_img, feature
-    ) 
-    VALUES (
         3, 4, 'Mac&Sun Samp.Inn', '三箱院 / Samp.Inn', 'Mac&Sun Samp.Inn', 'accommodation', 
-        ST_GeomFromText('POINT(33.5531704 130.449413)', 4326), NULL, NULL, NULL, '井尻駅', 
+        ST_GeomFromText('POINT(33.5531704 130.449413)', 4326), '5 Chome-31-31 Morooka, Hakata Ward, Fukuoka, 812-0894 일본', NULL, NULL, '井尻駅', 
         '체크인 시간: 오후 5:00', 4.9, '7f908d22-99f6-4cff-838f-ae0af4cf2c1e.jpg', '{"facilities": ["무료 Wi-Fi", "조식 포함", "무료 주차", "휠체어 사용 가능", "수영장", "비즈니스 센터", "애완동물 허용", "유아 동반 가능", "음식점", "공항 셔틀 서비스", "피트니스 센터", "금연"]}'
     );
 INSERT INTO destinations (
@@ -86,7 +77,7 @@ INSERT INTO destinations (
     ) 
     VALUES (
         3, 4, 'Leo Palace Morooka 2 By Arua-Ru', 'Leo Palace Morooka 2 By Arua-Ru', 'Leo Palace Morooka 2 By Arua-Ru', 'accommodation', 
-        ST_GeomFromText('POINT(33.5599387 130.4443392)', 4326), NULL, NULL, NULL, '井尻駅', 
+        ST_GeomFromText('POINT(33.5599387 130.4443392)', 4326), '3 Chome-29-12 Morooka, Hakata Ward, Fukuoka, 812-0894 일본', NULL, NULL, '井尻駅', 
         NULL, 0.0, 'b36766c6-0421-4aa5-83e8-4a79d2a899d4.jpg', '[]'
     );
 INSERT INTO destinations (
@@ -107,7 +98,7 @@ INSERT INTO destinations (
     ) 
     VALUES (
         3, 4, 'Minami-Fukuoka Good Place Hotel', 'Minami-Fukuoka Good Place Hotel', 'Minami-Fukuoka Good Place Hotel', 'accommodation', 
-        ST_GeomFromText('POINT(33.5442606 130.4603258)', 4326), NULL, NULL, NULL, '井尻駅', 
+        ST_GeomFromText('POINT(33.5442606 130.4603258)', 4326), '일본 812-0884 Fukuoka, Hakata Ward, Kotobukimachi, 3 Chome−4−15 ２０６', NULL, NULL, '井尻駅', 
         NULL, 0.0, 'dafcd2c0-c08d-48d2-ab5e-1fa62ef44406.jpg', '[]'
     );
 INSERT INTO destinations (
@@ -128,7 +119,7 @@ INSERT INTO destinations (
     ) 
     VALUES (
         3, 4, 'The Mickey Carton Ohashi', 'The Mickey Carton Ohashi', 'The Mickey Carton Ohashi', 'accommodation', 
-        ST_GeomFromText('POINT(33.5529104 130.4305715)', 4326), NULL, NULL, NULL, '井尻駅', 
+        ST_GeomFromText('POINT(33.5529104 130.4305715)', 4326), '일본 815-0033 Fukuoka, Minami Ward, Ohashi, 3 Chome−21−20 アルファ-コ-ト', NULL, NULL, '井尻駅', 
         NULL, 3.0, '2273e372-655a-4e6c-95ff-a093913131ff.jpg', '[]'
     );
 INSERT INTO destinations (
@@ -179,7 +170,7 @@ INSERT INTO destinations (
     ) 
     VALUES (
         3, 4, 'ホテルリファレンス六本松コンドミニアム', 'ホテルリファレンス六本松コンドミニアム', 'ホテルリファレンス六本松コンドミニアム', 'accommodation', 
-        ST_GeomFromText('POINT(33.5780337 130.3796457)', 4326), NULL, NULL, 'https://re-hotel.jp/ropponmatsu/', '六本松駅', 
+        ST_GeomFromText('POINT(33.5780337 130.3796457)', 4326), '1 Chome-14-21 Tani, Chuo Ward, Fukuoka, 810-0031 일본', NULL, 'https://re-hotel.jp/ropponmatsu/', '六本松駅', 
         '체크인 시간: 오후 3:00', 5.0, '22715444-8f90-493d-a0c6-9f7d453a5493.jpg', '[]'
     );
 INSERT INTO destinations (
@@ -231,7 +222,7 @@ INSERT INTO destinations (
     ) 
     VALUES (
         3, 4, 'Comfort CUBE PHOENIX S ROPPONMATSU', 'Comfort CUBE PHOENIX S ROPPONMATSU', 'Comfort CUBE PHOENIX S ROPPONMATSU', 'accommodation', 
-        ST_GeomFromText('POINT(33.5784621 130.3811007)', 4326), NULL, NULL, 'https://phoenix-re.jp/ropponmatsu/', '六本松駅', 
+        ST_GeomFromText('POINT(33.5784621 130.3811007)', 4326), '일본 〒810-0044 Fukuoka, Chuo Ward, Ropponmatsu, 3 Chome−10−8 サンシャイン六本松', NULL, 'https://phoenix-re.jp/ropponmatsu/', '六本松駅', 
         NULL, 0.0, 'e53f212d-512a-4e88-a4b4-1cdf81ee5115.jpg', '[]'
     );
 INSERT INTO destinations (
@@ -258,7 +249,7 @@ INSERT INTO destinations (
     ) 
     VALUES (
         3, 4, '베이케이션 렌탈스 아카사카', 'Vacation Rentals AKASAKA', '베이케이션 렌탈스 아카사카', 'accommodation', 
-        ST_GeomFromText('POINT(33.583858 130.3849918)', 4326), NULL, NULL, NULL, '六本松駅', 
+        ST_GeomFromText('POINT(33.583858 130.3849918)', 4326), '2 Chome-6-88 Akasaka, Chuo Ward, Fukuoka, 810-0042 일본', NULL, NULL, '六本松駅', 
         '체크인 시간: 오후 3:00
 체크아웃 시간: 오전 10:00', 4.3, '86039118-0053-4654-acc9-e5aee887f89e.jpg', '{"facilities": ["무료 Wi-Fi", "조식 포함", "수영장", "애완동물 허용", "유아 동반 가능", "음식점", "공항 셔틀 서비스", "피트니스 센터"]}'
     );
@@ -278,7 +269,7 @@ INSERT INTO destinations (
     ) 
     VALUES (
         3, 4, 'Fuel Inn 大濠', 'Fuel Inn 大濠', 'Fuel Inn 大濠', 'accommodation', 
-        ST_GeomFromText('POINT(33.5887852 130.3711182)', 4326), NULL, NULL, 'http://www.fuelinnjapan.com/', '六本松駅', 
+        ST_GeomFromText('POINT(33.5887852 130.3711182)', 4326), '6-21 Kuromon, Chuo Ward, Fukuoka, 810-0055 일본', NULL, 'http://www.fuelinnjapan.com/', '六本松駅', 
         '체크인 시간: 오후 3:00
 체크아웃 시간: 오전 11:00', 4.2, 'db1b3543-6468-499d-a328-41ab22c102ef.jpg', '{"facilities": ["무료 Wi-Fi", "조식 포함", "수영장", "에어컨", "애완동물 허용", "음식점", "일부 객실 내 주방 시설", "공항 셔틀 서비스", "피트니스 센터"]}'
     );

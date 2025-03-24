@@ -2,6 +2,8 @@ package com.scit.letsleave.domain.guide.dto;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.scit.letsleave.domain.destination.dto.CityDto;
 import com.scit.letsleave.domain.destination.dto.DestinationDto;
 import com.scit.letsleave.domain.destination.entity.CityEntity;
@@ -22,12 +24,17 @@ import lombok.Setter;
 @Builder
 public class GuideDto {
 
+	@Value("${app.review-image-file.base-path}")
+	private String imageBasePath;
+
     private Long id;
     private DestinationDto destination;
     private CityDto city;
     private String title;
     private String content;
     private String titleImg;
+    private Double score;
+    private Integer likeCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -44,6 +51,8 @@ public class GuideDto {
             .title(entity.getTitle())
             .content(entity.getContent())
             .titleImg(entity.getTitleImg())
+            .score(entity.getScore())
+            .likeCount(entity.getLikeCount())
             .build();
     }
 }

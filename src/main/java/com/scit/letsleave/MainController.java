@@ -17,7 +17,8 @@ public class MainController {
 
     @GetMapping({"/", ""})
     public String index(Model model) {
-        model.addAttribute("guides", guideService.getPopularGuideLimit10());
+
+    	model.addAttribute("guides", guideService.getPopularGuideLimit10());
 
         return "index";
     }

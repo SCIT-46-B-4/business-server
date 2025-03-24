@@ -68,7 +68,7 @@
 <body>
     <div id="topNav" class="top-nav">
         <nav>
-            <a href="">aaa</a>
+            <a href="#">aaa</a>
         </nav>
     </div>
     <section class="scroll-section">
@@ -81,24 +81,17 @@
     <section class="scroll-section">
         <div class="content">
             <div th:each="i : ${#numbers.sequence(0, guides.size() - 1)}" class="guide-row">
+            	<span>[[${i}]]</span>
                 <div th:if="${i % 2 == 0}" style="width: 50%;">
                     <div class="odd-row" style="background-color: #e8f0fe; margin: 10px; padding: 10px; box-sizing: border-box;">
+                        <img th:src="${guides[i].titleImg}">
                         <h3 th:text="${guides[i].title}"></h3>
                         <p th:utext="${guides[i].content}"></p>
                     </div>
                     <div class="odd-row" style="background-color: #ffffff; margin: 10px; padding: 10px; box-sizing: border-box; border-left: 1px solid #ccc;">
+                        <img th:src="${guides[i+1].titleImg}">
                         <h3 th:text="${guides[i+1].title}"></h3>
                         <p th:text="${guides[i+1].content}"></p>
-                    </div>
-                </div>
-
-                <div th:if="${i % 2 == 1}" style="width: 50%;">
-                    <div class="even-row" style="width: 40%; background-color: #e8f0fe; margin: 10px; padding: 10px; box-sizing: border-box;">
-                        <h3 th:text="${guides[i].title}"></h3>
-                        <p th:text="${guides[i].content}"></p>
-                    </div>
-                    <div style="background-color: #ffffff; margin: 10px; padding: 10px; box-sizing: border-box; border-left: 1px solid #ccc;">
-                        <p th:text="${guides[i].content}"></p>
                     </div>
                 </div>
             </div>

@@ -74,6 +74,7 @@ public class GuideService {
     }
 
     public List<GuideDto> getPopularGuideLimit10() {
+
         return guideRepository.findTop10Guides().stream().map(GuideDto::toDto).collect(Collectors.toList());
     }
 }

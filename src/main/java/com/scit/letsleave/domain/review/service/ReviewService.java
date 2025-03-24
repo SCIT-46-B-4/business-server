@@ -1,20 +1,12 @@
 package com.scit.letsleave.domain.review.service;
 
-import com.scit.letsleave.domain.review.dto.request.ReviewRequestDTO;
-import com.scit.letsleave.domain.review.dto.response.DetailReviewResponseDTO;
-import com.scit.letsleave.domain.review.dto.response.PageableResponseDTO;
-import com.scit.letsleave.domain.review.dto.response.ReviewResponseDTO;
-import com.scit.letsleave.domain.review.dto.request.ReviewListRequestDTO;
-import com.scit.letsleave.domain.review.dto.response.ReviewWithUserCountDto;
-import com.scit.letsleave.domain.review.entity.ReviewEntity;
-import com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection;
-import com.scit.letsleave.domain.review.projection.ReviewWithUserCountProjection;
-import com.scit.letsleave.domain.review.repository.ReviewRepository;
-import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
-import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,8 +17,21 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
-import java.util.*;
+import com.scit.letsleave.domain.review.dto.request.ReviewListRequestDTO;
+import com.scit.letsleave.domain.review.dto.request.ReviewRequestDTO;
+import com.scit.letsleave.domain.review.dto.response.DetailReviewResponseDTO;
+import com.scit.letsleave.domain.review.dto.response.PageableResponseDTO;
+import com.scit.letsleave.domain.review.dto.response.ReviewResponseDTO;
+import com.scit.letsleave.domain.review.dto.response.ReviewWithUserCountDto;
+import com.scit.letsleave.domain.review.entity.ReviewEntity;
+import com.scit.letsleave.domain.review.projection.DetailReviewResponseProjection;
+import com.scit.letsleave.domain.review.projection.ReviewWithUserCountProjection;
+import com.scit.letsleave.domain.review.repository.ReviewRepository;
+import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
+import com.scit.letsleave.domain.schedule.repository.ScheduleRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service

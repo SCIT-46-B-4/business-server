@@ -30,30 +30,25 @@
 </head>
 <body>
 
-    <!-- <div class="fragments-container">
-        <div th:insert="~{fragments/header :: top-bar}"></div>
-        <div th:insert="~{fragments/slidePanel :: slide-panel}"></div>
-    </div> -->
-
     <!-- Schedule Container -->
     <div class="left">
         <div class="schedule-meta-info">
             <div class="country-name-container">
-                <span class="country-name">일본</span>
-                <span class="country-id" hidden>1</span>
+                <span class="country-name">[[${schedule.countryName}]]</span>
+                <span class="country-id" hidden>[[${schedule.countryId}]]</span>
             </div>
             <div class="city-name-container">
-                <span class="city-name">도쿄</span>
-                <span class="city-id" hidden>1</span>
+                <span class="city-name">[[${schedule.cityName}]]</span>
+                <span class="city-id" hidden>[[${schedule.cityId}]]</span>
             </div>
             <div class="schedule-info-container">
-                <span class="schedule-id" hidden>1</span>
-                <span class="schedule-name">마천루 여행</span>
+                <span class="schedule-name">[[${schedule.name}]]</span>
+                <span class="schedule-id" hidden>[[${schedule.id}]]</span>
             </div>
             <div class="schedule-duratin-container">
-                <span class="start-date">2024-12-30</span>
+                <span class="start-date">[[${schedule.startDate}]]</span>
                 <span class="schedule-date-seperator">~</span>
-                <span class="end-date">2025-01-03</span>
+                <span class="end-date">[[${schedule.endDate}]]</span>
             </div>
             <div class="update-container">
                 <span id="updateBtn" class="update-schedule-btn">수정하기</span>
@@ -61,90 +56,31 @@
         </div>
 
         <div class="detail-container">
-            <div class="day-anchor">
+            <div class="day-anchor" th:each="detailSchedule, status: ${schedule.detailSchedule}">
                 <div class="day-header">
-                    <span class="detail-schedule-id" hidden>1</span>
-                    <span class="date-order">Day 1</span>
-                    <span class="detail-schedule-date" hidden>2024-12-30</span>
+                    <span class="detail-schedule-id" hidden>[[${detailSchedule.id}]]</span>
+                    <span class="date-order">Day [[${status.count}]]</span>
+                    <span class="detail-schedule-date" hidden>[[${detailSchedule.date}]]</span>
                 </div>
-                <div class="route-container">
-                    <span class="route-id" hidden>1</span>
-                    <span class="route-order-number" hidden>1</span>
+                <div class="route-container" th:each="route, routeStatus: ${detailSchedule.routes}">
+                    <span class="route-id" hidden>[[${route.id}]]</span>
+                    <span class="route-order-number" hidden>[[${route.orderNumber}]]</span>
                     <div class="dest-box">
                         <div class="dest-info">
-                            <span class="dest-id" hidden>1</span>
+                            <span class="dest-id" hidden>[[${route.destination.id}]]</span>
                             <div class="dest-titleImg-container">
-                                <a href="#"></a>
+                                <a th:href="${baseStaticURL} + '/' + ${route.destination.type} + '/destination/' + ${route.destination.titleImg}"></a>
                             </div>
                             <div class="dest-data">
                                 <div class="dest-str-container">
-                                    <span class="dest-krName">도쿄 도청</span>
-                                    <span class="dest-title">여기 놀러 오세요!@ 무려 공짜!</span>
+                                    <span class="dest-krName">[[${route.destination.krName}]]</span>
+                                    <span class="dest-title">[[${route.destination.title}]]</span>
                                 </div>
                                 <div class="dest-meta">
-                                    <span class="dest-type">관광지</span>
+                                    <span class="dest-type">[[route.destination.type]]</span>
                                     <div class="coordinate">
-                                        <span class="lat" hidden>135.1234567</span>
-                                        <span class="lng" hidden>35.12446</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="route-container">
-                    <span class="route-id" hidden>3</span>
-                    <span class="route-order-number" hidden>1</span>
-                    <div class="dest-box">
-                        <div class="dest-info">
-                            <span class="dest-id" hidden>1</span>
-                            <div class="dest-titleImg-container">
-                                <a href="#"></a>
-                            </div>
-                            <div class="dest-data">
-                                <div class="dest-str-container">
-                                    <span class="dest-krName">스카이 트리</span>
-                                    <span class="dest-title">아니 여기서 요코하마가 보인다고?!</span>
-                                </div>
-                                <div class="dest-meta">
-                                    <span class="dest-type">관광지</span>
-                                    <div class="coordinate">
-                                        <span class="lat" hidden>135.1234567</span>
-                                        <span class="lng" hidden>35.12446</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="day-anchor">
-                <div class="day-header">
-                    <span class="detail-schedule-id" hidden></span>
-                    <span class="date-order">Day 2</span>
-                    <span class="detail-schedule-date" hidden>2024-12-31</span>
-                </div>
-                <div class="day-body">
-                    <div class="route-container">
-                        <span class="route-id" hidden>2</span>
-                        <span class="route-order-number" hidden>1</span>
-                        <div class="dest-box">
-                            <div class="dest-info">
-                                <span class="dest-id" hidden>3</span>
-                                <div class="dest-titleImg-container">
-                                    <a href="#"></a>
-                                </div>
-                                <div class="dest-data">
-                                    <div class="dest-str-container">
-                                        <span class="dest-krName">롯폰기 힐즈</span>
-                                        <span class="dest-title">도쿄 타워 야경을 바라보며 우아하게 커피 한잔!!</span>
-                                    </div>
-                                    <div class="dest-meta">
-                                        <span class="dest-type">관광지</span>
-                                        <div class="coordinate">
-                                            <span class="lat" hidden>135.1234567</span>
-                                            <span class="lng" hidden>35.12446</span>
-                                        </div>
+                                        <span class="lat" hidden>[[${route.destination.latitude}]]</span>
+                                        <span class="lng" hidden>[[${route.destination.longitude}]]</span>
                                     </div>
                                 </div>
                             </div>

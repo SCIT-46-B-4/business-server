@@ -24,8 +24,9 @@ import lombok.Setter;
 @Builder
 public class GuideDto {
 
-	@Value("${app.review-image-file.base-path}")
+	@Value("${app.image-file.base-path}")
 	private String imageBasePath;
+    private final String domainName = "guide";
 
     private Long id;
     private DestinationDto destination;

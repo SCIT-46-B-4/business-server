@@ -5,6 +5,27 @@
     <title>떠나조</title>
     <script src="../static/script/global/jquery.js" th:src="@{/script/global/jquery.js}"></script>
     <script src="../static/script/index.js" th:src="@{/script/index.js}"></script>
+    <script>
+    window.onload = function () {
+	        document.querySelectorAll(".limited-text").forEach(function (el) {
+	            const maxHeight = 200;
+	            if (el.scrollHeight > maxHeight) {
+	                el.style.maxHeight = maxHeight + "px";
+	                el.style.overflow = "hidden";
+	                el.style.position = "relative";
+	
+	                const fade = document.createElement("div");
+	                fade.style.position = "absolute";
+	                fade.style.bottom = "0";
+	                fade.style.right = "0";
+	                fade.style.width = "100%";
+	                fade.style.height = "30px";
+	                fade.style.background = "linear-gradient(to bottom, transparent, white)";
+	                el.appendChild(fade);
+	            }
+	        });
+    }
+</script>
     <style>
         body {
             margin: 0;
@@ -48,6 +69,9 @@
             /* 애니메이션 딜레이는 스크롤 위치나 원하는 타이밍에 따라 조절 */
             animation-delay: 0.4s;
         }
+		.guide-row {
+            display: flex;
+        }
 
         /* 슬라이드 업 애니메이션 정의 */
         @keyframes slideUp {
@@ -59,9 +83,6 @@
                 transform: translateY(0);
                 opacity: 1;
             }
-        }
-        .guide-row {
-            display: flex;
         }
     </style>
 </head>
@@ -84,14 +105,14 @@
             	<span>[[${i}]]</span>
                 <div th:if="${i % 2 == 0}" style="width: 50%;">
                     <div class="odd-row" style="background-color: #e8f0fe; margin: 10px; padding: 10px; box-sizing: border-box;">
-                        <img th:src="${guides[i].titleImg}">
+                        <img th:src="${baseStaticURL} + '/images/guide/' + ${guides[i].titleImg}">
                         <h3 th:text="${guides[i].title}"></h3>
-                        <p th:utext="${guides[i].content}"></p>
+                        <div th:utext="${guides[i].content}" class="limited-text"></div>
                     </div>
                     <div class="odd-row" style="background-color: #ffffff; margin: 10px; padding: 10px; box-sizing: border-box; border-left: 1px solid #ccc;">
-                        <img th:src="${guides[i+1].titleImg}">
+                        <img th:src="${baseStaticURL} + '/images/guide/' + ${guides[i].titleImg}">
                         <h3 th:text="${guides[i+1].title}"></h3>
-                        <p th:text="${guides[i+1].content}"></p>
+                        <p th:utext="${guides[i+1].content}" class="limited-text"></p>
                     </div>
                 </div>
             </div>

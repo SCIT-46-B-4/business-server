@@ -1,4 +1,4 @@
-import { AjaxAPI } from "../global/ajax.js";
+/*import { AjaxAPI } from "../global/ajax.js";
 import { drawMapWithMarkers, filterMarkersByDate } from "./map.js";
 
 const typeEnum = {
@@ -14,18 +14,10 @@ $(function() {
     const isRecommend = getQueryParam("isRecommend");
     if (isRecommend) {
         const cityId = $(".city-id").text();
-        let schedule = localStorage.getItem("schedule")
-        if (!schedule) {
-            AjaxAPI.getRecommendSchedule(getSurveyData(), cityId)
-            .done((response) => {
-                renderSchedule(response, isRecommend);
-                // filterMarkersByDate(0);
-                localStorage.setItem("schedule", JSON.stringify(response))
-            });
-        } else {
-            renderSchedule(schedule);
-            // filterMarkersByDate(schedule[0]);
-        }
+        AjaxAPI.getRecommendSchedule(getSurveyData(), cityId)
+        .done((response) => {
+            location.href = `/schedules/${response.id}`
+        });
     } else {
         AjaxAPI.getScheduleById(getPathParam())
         .done((response) => {
@@ -171,8 +163,16 @@ function createFooter(destId, krName, title, titleImg, score) {
 }
 
 function renderSchedule(schedule, isRecommend) {
-    console.log(schedule);
-    let {countryName, countryId, cityName, cityId, id, name, startDate, endDate, detailSchedules} = schedule;
+    const countryName = schedule["countryName"];
+    const countryId = schedule["countryId"];
+    const cityName = schedule["cityName"];
+    const cityId = schedule["cityId"];
+    const id = schedule["id"];
+    const name = schedule["name"];
+    const startDate = schedule["startDate"];
+    const endDate = schedule["endDate"];
+    const detailSchedules = schedule["detailSchedules"];
+
     const $left = $(".left").empty();
     const $footerDestContainer = $(".footer-dest-container").empty();
     if (isRecommend) {
@@ -253,4 +253,4 @@ function renderSchedule(schedule, isRecommend) {
         $detailContainer.append($dayAnchor);
     });
     $scheduleMetaInfo.append($detailContainer);
-}
+}*/

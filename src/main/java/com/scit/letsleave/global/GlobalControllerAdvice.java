@@ -32,6 +32,14 @@ public class GlobalControllerAdvice {
     public String getReviewImgUploadDir() {
         return reviewImgUploadDir;
     }
+    
+    @Value("${app.image-file.base-path}")
+    private String imageBasePath;
+    
+    @ModelAttribute("imageBasePath")
+    public String addImageBasePath() {
+    	return imageBasePath;
+    }
 
     /**
      * @return 정적 파일 URL

@@ -5,24 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${guide.title}">가이드 디테일</title>
     <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/guide/guideDetail.css}">
+    <script th:src="@{/script/global/jquery.js}"></script>
+    <script th:src="@{/script/guideLikeAjax.js}"></script>
+    <script th:src="@{/script/likeButton.js}"></script>
 </head>
 <body>
     <div class="container">
         <div class="breadcrumb">
-            <a th:href="@{#}" th:text="${guide.cityName}">도시</a> >
+            <a th:href="@{#}" th:text="${guide.cityName}">도시</a> 
             <span>가이드</span>
         </div>
         <!-- 제목 -->
+    <div class="title-row">
         <div class="title" th:text="${guide.title}">삿포로의 밤을 빛내줄 야경 명소 10</div>
-
+        <button class="like-btn like-button-guide" type="button" th:data-guide-id="${guide.id}">
+                <i class="fa fa-heart"></i>
+        </button>
+    </div>
         <!-- 이미지 -->
         <div class="image-container">
             <img th:src="@{/images/guide/{titleImg}(titleImg=${guide.titleImg})}"></img>
         </div>
 
         <div th:utext="${guide.content}"></div>
-
     </div>
 </body>
 </html>

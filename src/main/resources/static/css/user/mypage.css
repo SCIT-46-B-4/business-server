@@ -1,31 +1,25 @@
 @import url(../global/reset.css);
 
-
-.sample-photo {
-  width: 80px;
-  height: 80px;
-  margin-right: 0;
-  margin-left: 19em;
-  margin-bottom: 50px;
-}
 .profile-photo {
-  margin-bottom: 10px;
-  width: 90px;
-  height: 90px;
-  margin-top: 20px;
+  margin-bottom: 15px;
+  width: 120px;
+  height: 120px;
+  margin-top: 0px;
+  object-fit: cover;
+  border-radius: 100px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .profile-section {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 25px;
-  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-top: 45px;
 }
 .menu-section {
   display: flex;
   justify-content: center;
   padding: 15px;
-  padding-bottom: 20px;
 }
 
 .button-section {
@@ -34,6 +28,7 @@
   justify-content: space-around;
   gap: 180px;
   position: relative;
+  margin-bottom: 0px;
 }
 
 .button-section::after {
@@ -41,7 +36,7 @@
   position: absolute;
   bottom: -5px;
   left: 40;
-  width: 160%;
+  width: 110%;
   height: 2px;
 
   border-bottom: solid rgba(0, 0, 0, 0.248) 2px;
@@ -62,59 +57,67 @@
 .menu-btn.active {
   color: #007bff;
 }
-.trip-history {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: fit-content;
-  padding: 10px;
-}
-
-.trip-info {
-  display: flex;
-  flex-direction: column;
-  height: 6em;
-}
-
-.trip-info span.tripName,
-.trip-info span.tripPeriod {
-  margin-left: 20px;
-  margin-bottom: 5px;
-}
-.trip-history p:first-child {
-  top: 2px;
-  left: 0;
-  font-weight: bold;
-  font-size: 14px;
-  color: black;
-}
-
-.trip-record .former-trip {
-  margin-left: 16em;
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-.trip-record {
-  margin-top: 30px;
-  margin-left: 6em;
-}
-
 .button-container {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 50px;
-  margin-top: 3em;
-  padding-right: 12em;
+  justify-content: center;
+  margin-left: 29.7em;
+  margin-top: 50px;
 }
 .logout-button,
 .edit-button {
   text-decoration: none;
-  margin-right: 15px;
+  margin-right: 30px;
   font-size: 16px;
   color: black;
   font-weight: bold;
 }
-.former-trip {
-  margin: 0;
+
+.logout-button:hover,
+.edit-button:hover {
+  color: #007bff;
+  border-bottom: solid #007bff 1px;
+  transition: ease-in 0.2s;
+}
+/* 전체 아이템 목록 영역 */
+#likeItems {
+  /* 목록 간 간격을 주거나 배경을 적용하고 싶다면 여기서 지정 */
+  margin: 0 auto;
+  max-width: 600px; /* 예시로 중앙 정렬 및 너비 제한 */
+}
+
+/* 이미지와 텍스트를 가로로 배치 */
+.trip-history {
+  margin-left: 25px;
+  display: flex;
+  align-items: center; /* 수직 정렬 */
+  gap: 16px; /* 이미지와 텍스트 사이 간격 */
+}
+
+/* 이미지 크기 통일 */
+.sample-photo {
+  width: 80px; /* 고정 너비 */
+  height: 80px; /* 고정 높이 */
+  object-fit: cover; /* 이미지를 잘라서라도 정사각형에 맞춤 */
+  border-radius: 8px; /* 모서리를 둥글게 (옵션) */
+}
+
+/* 텍스트 영역 */
+.trip-info {
+  margin-left: 25px;
+}
+.trip-info h3 {
+  margin: 0; /* 기본 여백 제거 */
+  font-size: 1.1rem; /* 제목 크기 */
+  font-weight: bold; /* 볼드체 */
+}
+
+.trip-info p {
+  margin: 4px 0 0; /* 제목과 간격을 조금 둠 */
+  font-size: 0.9rem;
+  color: #666;
+}
+.noLike {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }

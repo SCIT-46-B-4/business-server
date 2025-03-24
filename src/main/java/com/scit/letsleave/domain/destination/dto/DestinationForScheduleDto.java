@@ -3,7 +3,6 @@ package com.scit.letsleave.domain.destination.dto;
 import java.math.BigDecimal;
 
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
-import com.scit.letsleave.domain.destination.entity.DestinationType;
 
 import lombok.*;
 

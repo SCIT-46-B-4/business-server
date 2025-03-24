@@ -47,6 +47,12 @@ public class GuideService {
         return temp.map(GuideDto::toDto);
     }
 
+    public Page<GuideDto> guidesList(Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<GuideEntity> temp = guidesRepository.findAll(pageRequest);
+        return temp.map(GuideDto::toDto);
+    }
+
     public Page<GuideDto> search(String query, Pageable pageable) {
         Page<GuideEntity> temp = guidesRepository.findByTitleContaining(query, pageable);
         return temp.map(GuideDto::toDto);

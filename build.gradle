@@ -45,6 +45,9 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JWT JSON 처리
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // Validation Starter
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 구글 소셜 로그인 관련
+	// 헬스체크, S3 를 위한
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.503'
 }
 
 tasks.named('test') {
@@ -52,5 +55,18 @@ tasks.named('test') {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs.add("-parameters")
+	options.compilerArgs.add("-parameters")
+}
+
+// Destination 이미지가 너무 커서 빌드에 제외
+bootJar {
+	exclude 'static/images/destination/**'
+}
+
+jar {
+	exclude 'static/images/destination/**'
+}
+
+processResources {
+	exclude 'static/images/destination/**'
 }

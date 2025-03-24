@@ -32,7 +32,6 @@ public class GuideDto {
     private Integer likeCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
     private String cityName;
 
     public static GuideDto toDto(GuideEntity entity) {

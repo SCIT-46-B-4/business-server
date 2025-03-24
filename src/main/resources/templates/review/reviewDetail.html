@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title th:text="'여행 후기 상세보기 - ' + ${reviewDetail.scheduleName}">여행 후기 상세보기</title>
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script th:src="@{|${baseStaticURL}/script/global/jquery.js|}"></script>
 
     <script>
         let staticURL = "[[${baseStaticURL}]]";

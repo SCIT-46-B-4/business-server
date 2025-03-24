@@ -68,8 +68,13 @@
                     <div class="dest-box">
                         <div class="dest-info">
                             <span class="dest-id" hidden>[[${route.destination.id}]]</span>
-                            <div class="dest-titleImg-container">
-                                <a th:href="${baseStaticURL} + '/' + ${route.destination.type} + '/destination/' + ${route.destination.titleImg}"></a>
+                            <div class="dest-titleImg-container" th:switch="${route.destination.type}">
+                                <a th:case="1" th:href="${baseStaticURL} + '/sightseeing/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="2" th:href="${baseStaticURL} + '/restaurant/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="3" th:href="${baseStaticURL} + '/shopping/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="4" th:href="${baseStaticURL} + '/accommodation/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="5" th:href="${baseStaticURL} + '/transport/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="6" th:href="${baseStaticURL} + '/tourism/destination/' + ${route.destination.titleImg}"></a>
                             </div>
                             <div class="dest-data">
                                 <div class="dest-str-container">
@@ -100,43 +105,28 @@
             </div>
             <div class="footer-slider">
                 <div class="footer-dest-container">
-                    <div class="footer-anchor">
+                    <div class="footer-anchor" th:each="destination : ${destinations}">
                         <div class="footer-dest-header">
-                            <span class="footer-dest-id" hidden>2</span>
+                            <span class="footer-dest-id" hidden>[[${destination.id}]]</span>
                         </div>
                         <div class="footer-body-left">
-                            <div class="footer-dest-titleImg-container">
-                                <img src="#" alt="대표 이미지">
+                            <div class="footer-dest-titleImg-container" th:switch="${route.destination.type}">
+                                <a th:case="1" th:href="${baseStaticURL} + '/sightseeing/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="2" th:href="${baseStaticURL} + '/restaurant/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="3" th:href="${baseStaticURL} + '/shopping/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="4" th:href="${baseStaticURL} + '/accommodation/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="5" th:href="${baseStaticURL} + '/transport/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="6" th:href="${baseStaticURL} + '/tourism/destination/' + ${route.destination.titleImg}"></a>
                             </div>
                         </div>
                         <div class="footer-body-right">
                             <div class="footer-dest-data">
-                                <span class="footer-dest-krName">롯폰기 힐즈</span>
-                                <span class="footer-dest-content">시원한 하늘을 볼 수 있는 마천루!</span>
+                                <span class="footer-dest-krName">[[${destination.krName}]]</span>
+                                <span class="footer-dest-content">[[${destination.content}]]</span>
                             </div>
                             <div class="footer-dest-meta-info">
-                                <span class="footer-dest-score">4.3</span>
-                                <span class="footer-dest-reviews">(120개 리뷰)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer-anchor">
-                        <div class="footer-dest-header">
-                            <span class="footer-dest-id" hidden>3</span>
-                        </div>
-                        <div class="footer-body-left">
-                            <div class="footer-dest-titleImg-container">
-                                <img src="#" alt="대표 이미지">
-                            </div>
-                        </div>
-                        <div class="footer-body-right">
-                            <div class="footer-dest-data">
-                                <span class="footer-dest-krName">비싼 레스토랑</span>
-                                <span class="footer-dest-content">예쁜 도쿄 타워를 마주보며 식사가 가능한 곳!</span>
-                            </div>
-                            <div class="footer-dest-meta-info">
-                                <span class="footer-dest-score">4.7</span>
-                                <span class="footer-dest-reviews">(250개 리뷰)</span>
+                                <span class="footer-dest-score">[[${destination.score}]]</span>
+                                <span class="footer-dest-reviews"></span>
                             </div>
                         </div>
                     </div>

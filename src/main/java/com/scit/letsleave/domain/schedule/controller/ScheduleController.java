@@ -1,5 +1,8 @@
 package com.scit.letsleave.domain.schedule.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.scit.letsleave.domain.destination.dto.DestinationDto;
+import com.scit.letsleave.domain.destination.dto.DestinationForScheduleDto;
+import com.scit.letsleave.domain.schedule.dto.RouteDto;
+import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
 import com.scit.letsleave.domain.schedule.dto.SurveyDto;
 import com.scit.letsleave.domain.schedule.service.ScheduleService;
 
@@ -64,7 +71,14 @@ public class ScheduleController {
 
     @GetMapping("/{id}")
     public String detailSchedule(@PathVariable(name="id") Long id, Model model) {
-        model.addAttribute("schedule", scheduleService.findById(id));
+    	ScheduleDto schedule = scheduleService.findById(id);
+    	List<DestinationForScheduleDto> destinations = schedule.getDetailSchedules().stream()
+			.flatMap(d -> d.getRoutes().stream())
+			.map(RouteDto::getDestination)
+			.collect(Collectors.toList()
+		);
+        model.addAttribute("schedule", schedule);
+        model.addAttribute("destinations", destinations);
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
 
         return "schedule/detailView";

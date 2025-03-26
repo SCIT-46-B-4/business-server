@@ -1,91 +1,118 @@
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 /* 전체 컨테이너 */
 .container {
-    max-width: 800px; /* 최대 너비 */
-    margin: 0 auto; /* 가운데 정렬 */
-    padding: 20px; /* 좌우 여백 */
+  max-width: 800px; /* 최대 너비 */
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 20px; /* 좌우 여백 */
 }
 /* Breadcrumb 스타일 */
 .breadcrumb {
-    font-size: 14px;
-    color: gray; /* 기본 텍스트 색상 */
-    margin: 20px 20px 10px;
+  font-size: 14px;
+  color: gray; /* 기본 텍스트 색상 */
+  margin: 20px 20px 10px;
 }
 .breadcrumb a {
-    font-size: 14px;
-    color: gray; /* 기본 텍스트 색상 */
-    text-decoration: none; /* 밑줄 제거 */
+  font-size: 14px;
+  color: gray; /* 기본 텍스트 색상 */
+  text-decoration: none; /* 밑줄 제거 */
 }
 .breadcrumb a:hover {
-    text-decoration: underline; /* 마우스를 가져다 댈 때 밑줄 표시 */
-    cursor: pointer; /* 손가락 모양 포인터로 변경 */
+  text-decoration: underline; /* 마우스를 가져다 댈 때 밑줄 표시 */
+  cursor: pointer; /* 손가락 모양 포인터로 변경 */
 }
 .title {
-    font-size: 25px;
-    font-weight: bold;
-    color: #333;
-    margin: 0px 20px 30px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #333;
+  margin: 0px 20px 20px;
 }
 /* 이미지 컨테이너 */
 .image-container {
-    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
-    max-width: 800px; /* 최대 너비 제한 */
-    height: 400px; /* 고정된 높이 */
-    margin: 20px auto 40px; /* 상하 여백과 중앙 정렬 */
-    overflow: hidden; /* 넘치는 부분 숨김 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+  max-width: 800px; /* 최대 너비 제한 */
+  height: 400px; /* 고정된 높이 */
+  margin: 20px auto 40px; /* 상하 여백과 중앙 정렬 */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 .image-container img {
-    width: 100%; /* 반응형 너비 */
-    height: 100%; /* 컨테이너 높이에 맞춤 */
-    object-fit: cover; /* 비율 유지하며 컨테이너를 채움 */
-    border-radius: 10px; /* 모서리를 둥글게 */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+  width: 100%; /* 반응형 너비 */
+  height: 100%; /* 컨테이너 높이에 맞춤 */
+  object-fit: cover; /* 비율 유지하며 컨테이너를 채움 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
 }
 .main-content {
-    font-size: 16px;
-    color: #555;
-    margin: 20px;
+  font-size: 16px;
+  color: #555;
+  margin: 20px;
 }
 .guide-block {
-    padding: 20px;
+  padding: 20px;
 }
 .block-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
 }
 .subtitle {
-    font-size: 14px;
-    color: #4a95d2; 
-    font-weight: bold;
+  font-size: 14px;
+  color: #4a95d2;
+  font-weight: bold;
 }
 .block-content {
-    font-size: 16px;
-    color: #555;
+  font-size: 16px;
+  color: #555;
 }
 .guide-image {
-    display: block;
-    margin: 20px auto;
-    max-width: 100%;
-    border-radius: 8px;
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+  border-radius: 8px;
 }
 .source-link {
-    font-size: 14px;
-    text-align: right;
-    display: block;
-    margin-top: 10px;
-    color: #0078d7; /* 파란색 */
+  font-size: 14px;
+  text-align: right;
+  display: block;
+  margin-top: 10px;
+  color: #0078d7; /* 파란색 */
 }
 .divider {
-    border-top: 1px solid #ddd; /* 구분선 */
-    margin: 20px 0; /* 상하 여백 */
+  border-top: 1px solid #ddd; /* 구분선 */
+  margin: 20px 0; /* 상하 여백 */
+}
+/* 좋아요 버튼 기본 스타일 */
+.image-container {
+  position: relative;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 왼쪽: 타이틀, 오른쪽: 하트버튼 */
+}
+
+.like-btn {
+  margin-bottom: 20px;
+  margin-right: 20px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+/* 호버, 클릭 시 하트색으로 변경 */
+.like-btn:hover,
+.like-btn.active {
+  color: #e74c3c;
 }

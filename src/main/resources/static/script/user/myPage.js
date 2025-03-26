@@ -1,28 +1,29 @@
 import { AjaxAPI } from "../global/ajax.js";
 
-$(function() {
-    init();
+$(function () {
+  init();
 });
 
 function init() {
-    try {
-        AjaxAPI.getSchedule()
-        .done((data) => {
-            renderSchedules(data);
-        })
-    } catch (error) {
-        console.error(error);
-    }
+  try {
+    AjaxAPI.getSchedule().done((data) => {
+      renderSchedules(data);
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function renderSchedules(data) {
-    const $scheduleContainer = $("#scheduleContainer");
-    if (!data || !data.length) {
-        $scheduleContainer.empty();
-        return;
-    }
+  const $scheduleContainer = $("#scheduleContainer");
+  if (!data || !data.length) {
+    $scheduleContainer.empty();
+    return;
+  }
 
-    const insertHtml = data.map(schedule => `
+  const insertHtml = data
+    .map(
+      (schedule) => `
         <div class="trip-history" data-id="${schedule.id}">
             <img src="/images/user/circle.png" alt="plus-image" class="sample-photo"/>
             <div class="trip-info">
@@ -31,12 +32,14 @@ function renderSchedules(data) {
                 <span class="tripPeriod">${schedule.startDate} ~ ${schedule.endDate}</span>
             </div>
         </div>
-    `).join("");
-    
-    $scheduleContainer.html(insertHtml);
+    `
+    )
+    .join("");
+
+  $scheduleContainer.html(insertHtml);
 }
 
 $(document).on("click", ".trip-history", function () {
-    const id = $(this).attr("data-id");
-    location.href = `/schedules/${id}`;
+  const id = $(this).attr("data-id");
+  location.href = `/schedules/${id}`;
 });

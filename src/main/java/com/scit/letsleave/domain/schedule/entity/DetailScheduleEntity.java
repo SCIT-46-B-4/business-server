@@ -52,7 +52,7 @@ public class DetailScheduleEntity {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="detailSchedule", cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="detailSchedule", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<RouteEntity> routes;
 
     public static DetailScheduleEntity toEntity(DetailScheduleDto dto) {

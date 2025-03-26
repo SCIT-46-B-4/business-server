@@ -75,7 +75,7 @@ public class ScheduleEntity {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="schedule", cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="schedule", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<DetailScheduleEntity> detailSchedules;
 
     public static ScheduleEntity toEntity(ScheduleDto dto, UserEntity user, CountryEntity country, CityEntity city) {

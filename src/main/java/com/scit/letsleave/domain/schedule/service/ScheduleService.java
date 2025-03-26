@@ -131,7 +131,7 @@ public class ScheduleService {
         originSchedule.setEndDate(dto.getEndDate());
         originSchedule.setUpdatedAt(LocalDateTime.now());
 
-        detailScheduleRepository.deleteAll(originSchedule.getDetailSchedules());
+        originSchedule.getDetailSchedules().clear();
         saveDetailAndRoute(originSchedule, dto.getDetailSchedules());
 
         return scheduleRepository.findById(originSchedule.getId()).map(ScheduleDto::toDto)

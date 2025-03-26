@@ -1,26 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>일정 보기</title>
     <script th:src="@{/script/global/jquery.js}" src="../../static/script/global/jquery.js"></script>
-
+	<script th:inline="javascript">
+        window.googleMapsApiKey = [[ ${googleMapsApiKey} ]];
+	</script>
     <!-- google map api script -->
-    <script th:inline="javascript">
-        function loadGoogleMapsApi() {
-            const gmaScript = document.createElement("script");
-            gmaScript.src = "https://maps.googleapis.com/maps/api/js?key="
-            + /*[[${googleMapsApiKey}]]*/
-            + "&loading=async&callback=initMap"
-            gmaScript.async = true;
-            gmaScript.defer = true;
-            document.head.appendChild(gmaScript);
-        }
-        document.addEventListener("DOMContentLoaded", loadGoogleMapsApi);
-    </script>
     <!-- script -->
-    <script type="module" th:src="@{/script/schedule/detail.js}" src="../../static/script/schedule/detail.js"></script>
     <script th:src="@{/script/fragments/slidePanel.js}" src="../../static/script/fragments/slidePanel.js"></script>
+    <script type="module" th:src="@{/script/schedule/detail.js}" src="../../static/script/schedule/detail.js"></script>
 
     <!-- css -->
     <link rel="stylesheet" th:href="@{/css/schedule/detail.css}" href="../../static/css/schedule/detail.css">
@@ -29,7 +19,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-
     <!-- Schedule Container -->
     <div class="left">
         <div class="schedule-meta-info">
@@ -56,9 +45,9 @@
         </div>
 
         <div class="detail-container">
-            <div class="day-anchor" th:each="detailSchedule, status: ${schedule.detailSchedule}">
+            <div class="day-anchor" th:each="detailSchedule, status: ${schedule.detailSchedules}">
                 <div class="day-header">
-                    <span class="detail-schedule-id" hidden>[[${detailSchedule.id}]]</span>
+                    <span class="detail-schedule-id" hidden>[[ ${detailSchedule.id} ]]</span>
                     <span class="date-order">Day [[${status.count}]]</span>
                     <span class="detail-schedule-date" hidden>[[${detailSchedule.date}]]</span>
                 </div>
@@ -69,23 +58,30 @@
                         <div class="dest-info">
                             <span class="dest-id" hidden>[[${route.destination.id}]]</span>
                             <div class="dest-titleImg-container" th:switch="${route.destination.type}">
-                                <a th:case="1" th:href="${baseStaticURL} + '/sightseeing/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="2" th:href="${baseStaticURL} + '/restaurant/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="3" th:href="${baseStaticURL} + '/shopping/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="4" th:href="${baseStaticURL} + '/accommodation/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="5" th:href="${baseStaticURL} + '/transport/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="6" th:href="${baseStaticURL} + '/tourism/destination/' + ${route.destination.titleImg}"></a>
+                                <a th:case="1" th:href="|${baseStaticURL}/sightseeing/destination/${route.destination.titleImg}|"></a>
+                                <a th:case="2" th:href="|${baseStaticURL}/restaurant/destination/${route.destination.titleImg}|"></a>
+                                <a th:case="3" th:href="|${baseStaticURL}/shopping/destination/${route.destination.titleImg}|"></a>
+                                <a th:case="4" th:href="|${baseStaticURL}/accommodation/destination/${route.destination.titleImg}|"></a>
+                                <a th:case="5" th:href="|${baseStaticURL}/transport/destination/${route.destination.titleImg}|"></a>
+                                <a th:case="6" th:href="|${baseStaticURL}/tourism/destination/${route.destination.titleImg}|"></a>
                             </div>
                             <div class="dest-data">
                                 <div class="dest-str-container">
                                     <span class="dest-krName">[[${route.destination.krName}]]</span>
                                     <span class="dest-title">[[${route.destination.title}]]</span>
                                 </div>
-                                <div class="dest-meta">
-                                    <span class="dest-type">[[route.destination.type]]</span>
-                                    <div class="coordinate">
-                                        <span class="lat" hidden>[[${route.destination.latitude}]]</span>
-                                        <span class="lng" hidden>[[${route.destination.longitude}]]</span>
+                                <div th:switch="${route.destination.type}">
+                                    <div class="dest-meta">
+                                        <span th:case="1" th:value="관광지" class="dest-type"></span>
+                                        <span th:case="2" th:value="식당" class="dest-type"></span>
+                                        <span th:case="3" th:value="쇼핑센터" class="dest-type"></span>
+                                        <span th:case="4" th:value="숙박업소" class="dest-type"></span>
+                                        <span th:case="5" th:value="대중교통" class="dest-type"></span>
+                                        <span th:case="6" th:value="여행지" class="dest-type"></span>
+                                        <div class="coordinate" hidden>
+                                            <span class="lat">[[${route.destination.latitude}]]</span>
+                                            <span class="lng">[[${route.destination.longitude}]]</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -107,22 +103,22 @@
                 <div class="footer-dest-container">
                     <div class="footer-anchor" th:each="destination : ${destinations}">
                         <div class="footer-dest-header">
-                            <span class="footer-dest-id" hidden>[[${destination.id}]]</span>
+                            <span class="footer-dest-id" hidden>[[ ${destination.id} ]]</span>
                         </div>
                         <div class="footer-body-left">
-                            <div class="footer-dest-titleImg-container" th:switch="${route.destination.type}">
-                                <a th:case="1" th:href="${baseStaticURL} + '/sightseeing/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="2" th:href="${baseStaticURL} + '/restaurant/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="3" th:href="${baseStaticURL} + '/shopping/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="4" th:href="${baseStaticURL} + '/accommodation/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="5" th:href="${baseStaticURL} + '/transport/destination/' + ${route.destination.titleImg}"></a>
-                                <a th:case="6" th:href="${baseStaticURL} + '/tourism/destination/' + ${route.destination.titleImg}"></a>
+                            <div class="footer-dest-titleImg-container" th:switch="${destination.type}">
+                                <a th:case="1" th:href="|${baseStaticURL}/sightseeing/destination/${destination.titleImg}|"></a>
+                                <a th:case="2" th:href="|${baseStaticURL}/restaurant/destination/${destination.titleImg}|"></a>
+                                <a th:case="3" th:href="|${baseStaticURL}/shopping/destination/${destination.titleImg}|"></a>
+                                <a th:case="4" th:href="|${baseStaticURL}/accommodation/destination/${destination.titleImg}|"></a>
+                                <a th:case="5" th:href="|${baseStaticURL}/transport/destination/${destination.titleImg}|"></a>
+                                <a th:case="6" th:href="|${baseStaticURL}/tourism/destination/${destination.titleImg}|"></a>
                             </div>
                         </div>
                         <div class="footer-body-right">
                             <div class="footer-dest-data">
                                 <span class="footer-dest-krName">[[${destination.krName}]]</span>
-                                <span class="footer-dest-content">[[${destination.content}]]</span>
+                                <span class="footer-dest-content">[[${destination.title}]]</span>
                             </div>
                             <div class="footer-dest-meta-info">
                                 <span class="footer-dest-score">[[${destination.score}]]</span>

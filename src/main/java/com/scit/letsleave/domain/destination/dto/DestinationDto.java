@@ -37,6 +37,7 @@ public class DestinationDto {
     // JsonType
     private Map<String, Object> feature;
     private Double score;
+    private Integer likeCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String titleImg;
@@ -60,6 +61,7 @@ public class DestinationDto {
             .availableTime(entity.getAvailableTime())
             .feature(entity.getFeature())
             .score(entity.getScore())
+            .likeCount(entity.getLikeCount())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
             .titleImg(entity.getTitleImg())

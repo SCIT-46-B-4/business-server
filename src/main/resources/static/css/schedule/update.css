@@ -337,6 +337,7 @@
 
 .search-wrapper {
     position: relative;
+    display: none;
 }
 
 .search-box {

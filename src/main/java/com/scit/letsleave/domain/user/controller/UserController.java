@@ -37,10 +37,9 @@ public class UserController {
 // }
     @GetMapping("/editpage")
     public String editpage(Model model, Principal principal) {
-    // principal.getName()을 통해 현재 인증된 사용자 ID를 얻는다고 가정합니다.
     Long userId = Long.valueOf(principal.getName());
     UserEntity user = userService.findById(userId);
-    model.addAttribute("user", user); // 모델에 user 객체를 추가
+    model.addAttribute("user", user); 
     return "user/editpage";
 }
     /**

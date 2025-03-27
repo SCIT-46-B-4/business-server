@@ -24,7 +24,7 @@ public class UserLikesRestController {
     private final LikeService likeService;
 
     @PostMapping("/destinations/{destinationId}/likes")
-    public ResponseEntity<?> addDestinationLike(@PathVariable Long destinationId) {
+    public ResponseEntity<?> addDestinationLike(@PathVariable(name = "destinationId") Long destinationId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = Long.valueOf(authentication.getName());
         likeService.addDestinationLike(destinationId, userId);
@@ -32,7 +32,7 @@ public class UserLikesRestController {
     }
     
     @PostMapping("/guides/{guideId}/likes")
-    public ResponseEntity<?> addGuideLike(@PathVariable Long guideId) {
+    public ResponseEntity<?> addGuideLike(@PathVariable(name = "guideId") Long guideId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = Long.valueOf(authentication.getName());
         likeService.addGuideLike(guideId, userId);
@@ -40,7 +40,7 @@ public class UserLikesRestController {
     }
 
     @PostMapping("/schedules/reviews/{scheduleReviewId}/likes")
-    public ResponseEntity<?> addScheduleReviewLike(@PathVariable Long scheduleReviewId) {
+    public ResponseEntity<?> addScheduleReviewLike(@PathVariable(name = "scheduleReviewId") Long scheduleReviewId) {
          Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = Long.valueOf(authentication.getName());
         likeService.addScheduleReviewLike(scheduleReviewId, userId);

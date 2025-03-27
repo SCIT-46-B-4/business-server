@@ -1,6 +1,8 @@
 $(function() {
+    let $selectedCity = null;
+
     $("#saveAndGoToNextPage").on("click", () => {
-        const $selectedCity = $('input[name="city"]:checked');
+        $selectedCity = $('input[name="city"]:checked');
         const $selectedPeriod = $('input[name="period"]:checked');
 
         if (!$selectedCity.length || !$selectedPeriod.length) {
@@ -41,6 +43,12 @@ $(function() {
     })
 
     $("#submitSurvey").on("click", () => {
-        window.location.href = "/schedules?isRecommend=true";
+        const cityEnum = {
+            tokyo: 1,
+            osaka: 2,
+            fukuoka: 3,
+            sapporo: 4
+        }
+        window.location.href = `/schedules/recommendation/${cityEnum[$selectedCity]}`;
     });
 });

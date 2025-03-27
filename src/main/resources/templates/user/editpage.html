@@ -53,15 +53,31 @@
         </div>
         <div class="input-group">
           <label for="nickname">닉네임</label>
-          <input type="text" id="nickname" name="nickname" required />
+          <input
+            type="text"
+            id="nickname"
+            name="nickname"
+            th:value="${user.nickname}"
+            required
+          />
         </div>
         <div class="input-group checkbox-group">
           <label>
-            <input type="checkbox" id="agreeLoc" name="isAgreeLoc" />
+            <input
+              type="checkbox"
+              id="agreeLoc"
+              name="isAgreeLoc"
+              th:checked="${user.isAgreeLoc}"
+            />
             위치 정보 동의
           </label>
           <label>
-            <input type="checkbox" id="agreeNewsNoti" name="isAgreeNewsNoti" />
+            <input
+              type="checkbox"
+              id="agreeNewsNoti"
+              name="isAgreeNewsNoti"
+              th:checked="${user.isAgreeNewsNoti}"
+            />
             뉴스 및 알림 동의
           </label>
           <label>
@@ -69,6 +85,7 @@
               type="checkbox"
               id="agreeMarketingNoti"
               name="isAgreeMarketingNoti"
+              th:checked="${user.isAgreeMarketingNoti}"
             />
             마케팅 알림 동의
           </label>

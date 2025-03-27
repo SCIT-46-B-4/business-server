@@ -96,6 +96,10 @@ public class DestinationEntity {
     @Builder.Default
     private Double score = 0.0;
 
+    @Column(name="like_count")
+    @Builder.Default
+    private Integer likeCount = 0;
+
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -135,6 +139,7 @@ public class DestinationEntity {
             .availableTime(dto.getAvailableTime())
             .feature(dto.getFeature())
             .score(dto.getScore())
+            .likeCount(dto.getLikeCount())
             .createdAt(dto.getCreatedAt())
             .updatedAt(dto.getUpdatedAt())
             .titleImg(dto.getTitleImg())

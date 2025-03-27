@@ -55,6 +55,14 @@ public class GuideEntity {
     @Column(name="title_img", length=512)
     private String titleImg;
 
+    @Builder.Default
+    @Column(name="score")
+    private Double score = 0.0;
+
+    @Builder.Default
+    @Column(name="like_count")
+	private Integer likeCount = 0;
+
     @Column(name="created_at", nullable=false, updatable=false)
     private LocalDateTime createdAt;
 

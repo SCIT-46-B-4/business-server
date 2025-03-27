@@ -2,83 +2,74 @@ let map;
 let markers = [];
 
 
-// 지도에 마커와 Polyline을 그리는 함수
-async function drawMapWithMarkers(routes) {
-    const bounds = new google.maps.LatLngBounds();
-    const infoWindow = new google.maps.InfoWindow();
-
-    await Promise.all(
-        routes.map(route => 
-            new Promise(resolve => {
-                const dest = route["destination"]
-                const lat = parseFloat(dest.latitude);
-                const lng = parseFloat(dest.longitude);
-
-                const marker = new google.maps.Marker({
-                    position: { lat, lng },
-                    map,
-                    title: dest.krName,
-                });
-
-                marker.addListener("click", () => {
-                    map.panTo(marker.position)
-                    infoWindow.setContent(dest.krName);
-                    infoWindow.open({ anchor: marker, map });
-                });
-                bounds.extend(marker.position);
-                resolve(marker)
-            })
-        )
-    );
-
-    const pathLine = new google.maps.Polyline({
-        path: routes.map(route => ({
-            lat: parseFloat(route.destination.latitude),
-            lng: parseFloat(route.destination.longitude)
-        })),
-        geodesic: true,
-        strokeColor: "gray",
-        strokeOpacity: 0,
-        strokeWeight: 2,
-        icons: [{
-            icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 2 },
-            offset: '0',
-            repeat: '10px'
-        }]
-    });
-    pathLine.setMap(map);
-
-    map.fitBounds(bounds);
-}
-
-// 해당 날자의 마커만 보여주는 함수
-function filterMarkersByDate(targetDate) {
-    markers.forEach(marker => {
-
-        if (marker.routeDate === targetDate) {
-            marker.setMap(map);
-        } else {
-            marker.setMap(null);
-        }
-    });
-}
-
-// Forcus On 함수
-function moveToFocus(lat, lng) {
-    if (map) {
-        const newPosition = new google.maps.LatLng(lat, lng);
-        map.panTo(newPosition);
-    }
-}
-
-// Google Maps API가 호출하는 initMap 함수
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 38.0, lng: 138.0 },
         zoom: 6,
     });
-};
+}
 
-window.initMap = initMap
+function renderAllMarkers(routes) {
+    const infoWindow = new google.maps.InfoWindow();
 
-export {moveToFocus, drawMapWithMarkers, filterMarkersByDate};
+    routes.forEach(route => {
+        const dest = route.destination;
+        const lat = parseFloat(dest.latitude);
+        const lng = parseFloat(dest.longitude);
+
+        const marker = new google.maps.Marker({
+            position: { lat, lng },
+            map: null,
+            title: dest.krName,
+        });
+
+        marker.routeDate = route.date;
+
+        marker.addListener("click", () => {
+            map.panTo(marker.position);
+            infoWindow.setContent(dest.krName);
+            infoWindow.open({ anchor: marker, map });
+        });
+
+        markers.push(marker);
+    });
+}
+
+function filterMarkersByDate(targetDate) {
+    const bounds = new google.maps.LatLngBounds();
+    let anyShown = false;
+
+    markers.forEach(marker => {
+        if (marker.routeDate === targetDate) {
+            marker.setMap(map);
+            bounds.extend(marker.getPosition());
+            anyShown = true;
+        } else {
+            marker.setMap(null);
+        }
+    });
+
+    if (anyShown) {
+        map.fitBounds(bounds);
+    }
+}
+
+function focusMarkersByDate(date) {
+    const bounds = new google.maps.LatLngBounds();
+    let visibleMarkers = 0;
+
+    markers.forEach(marker => {
+        if (marker.routeDate === date) {
+            marker.setMap(map);
+            bounds.extend(marker.getPosition());
+            visibleMarkers++;
+        } else {
+            marker.setMap(null);
+        }
+    });
+    if (visibleMarkers > 0) {
+        map.fitBounds(bounds);
+    }
+}
+
+export {initMap, renderAllMarkers, filterMarkersByDate, focusMarkersByDate};

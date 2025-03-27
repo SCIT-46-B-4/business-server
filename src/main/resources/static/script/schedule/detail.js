@@ -1,256 +1,94 @@
-import { AjaxAPI } from "../global/ajax.js";
-import { drawMapWithMarkers, filterMarkersByDate } from "./map.js";
+import { initMap, filterMarkersByDate, focusMarkersByDate, renderAllMarkers } from "./map.js";
 
-const typeEnum = {
-    1: "관광지",
-    2: "식당",
-    3: "쇼핑센터",
-    4: "숙박업소",
-    5: "대중교통",
-    6: "여행지"
-};
 
 $(function() {
-    const isRecommend = getQueryParam("isRecommend");
-    if (isRecommend) {
-        const cityId = $(".city-id").text();
-        let schedule = localStorage.getItem("schedule")
-        if (!schedule) {
-            AjaxAPI.getRecommendSchedule(getSurveyData(), cityId)
-            .done((response) => {
-                renderSchedule(response, isRecommend);
-                // filterMarkersByDate(0);
-                localStorage.setItem("schedule", JSON.stringify(response))
+    const googleMapsApiKey = window.googleMapsApiKey;
+
+    loadingGoogleMap(googleMapsApiKey)
+    .then(() => {
+        initMap();
+
+        const routes = [];
+        $('.route-container').each(function () {
+            const $route = $(this);
+            const date = $route.closest('.day-anchor').find('.detail-schedule-date').text().trim();
+            const lat = parseFloat($route.find('.lat').text());
+            const lng = parseFloat($route.find('.lng').text());
+            const krName = $route.find('.dest-krName').text().trim();
+
+            routes.push({
+                date: date,
+                destination: {
+                    latitude: lat,
+                    longitude: lng,
+                    krName: krName,
+                }
             });
-        } else {
-            renderSchedule(schedule);
-            // filterMarkersByDate(schedule[0]);
-        }
-    } else {
-        AjaxAPI.getScheduleById(getPathParam())
-        .done((response) => {
-            renderSchedule(response, false);
-            localStorage.setItem("schedule", JSON.stringify(response))
-            // filterMarkersByDate(0);
         });
-    }
+        renderAllMarkers(routes);
 
-    // Footer slider
+        const firstDate = $('.detail-schedule-date').first().text().trim();
+        filterMarkersByDate(firstDate);
+    })
+    .catch(error => {
+        console.error("구글 맵 로딩 실패", error);
+    });
+
+    $(document).on('click', '.day-header', function () {
+        const $dayAnchor = $(this).closest('.day-anchor');
+        const targetDate = $dayAnchor.find('.detail-schedule-date').text().trim();
+        focusMarkersByDate(targetDate);
+    });
+
+    const $footerSlider = $(".footer-slider");
+    const $footerDestContiner = $(".footer-dest-container");
+    const $footerAnchor = $(".footer-anchor");
+    const anchorWidth = $footerAnchor.outerWidth(true);
+    const visibleCount = Math.floor($footerSlider.width() / anchorWidth);
+    const totalAnchor = $footerAnchor.length;
+    const maxIndex = totalAnchor - visibleCount;
+
+    $footerDestContiner.css("width", anchorWidth * totalAnchor + "px");
+
     let currentIndex = 0;
-    const $footerDestContainer = $(".footer-dest-container");
-    const $anchors = $(".footer-anchor");
-    const totalItems = $anchors.length;
-
-    $footerDestContainer.css("width", `${100 * totalItems}%`);
-    
-    function updateSlide() {
-        const offset = -currentIndex * 100;
-        $footerDestContainer.css("transform", `translateX(${offset}%)`);
-    }
-
-    $(".right-btn").click(function () {
-        if (currentIndex < totalItems - 1) {
+    $('.right-btn').click(function() {
+        if (currentIndex < maxIndex) {
             currentIndex++;
-            updateSlide();
+            $footerDestContiner.css('transform', `translateX(-${anchorWidth * currentIndex}px)`);
         }
     });
 
-    $(".left-btn").click(function () {
+    // 왼쪽 버튼
+    $('.left-btn').click(function() {
         if (currentIndex > 0) {
             currentIndex--;
-            updateSlide();
+            $footerDestContiner.css('transform', `translateX(-${anchorWidth * currentIndex}px)`);
         }
     });
 
-    $(document).on("click", ".day-header", function() {
-        // filterMarkersByDate($(this).find(".date-order").text().split(" ")[1]);
-    })
+    $('#updateBtn').on('click', function() {
+        const scheduleId = $('.schedule-id').text().trim();
 
-    $(document).on("click", ".update-schedule-btn", () => {
-        location.href = "/schedules/updateView";
+        window.location.href = `/schedules/update/${scheduleId}`;
     });
 });
 
-function getPathParam() {
-    const pathSegments = window.location.pathname.split('/').filter(segment => segment !== "");
+function loadingGoogleMap(apiKey) {
+    return new Promise((resolve, reject) => {
+        if (window.google && window.google.maps) {
+            resolve(window.google.maps);
 
-    return pathSegments[1];
-}
-
-function getQueryParam(key) {
-    const queryParams = new URLSearchParams(window.location.search);
-
-    return queryParams.get(key);
-}
-
-// // Day 스크롤 이벤트
-// const scrollRoot = $("#scroll-root")[0];
-// const observerOptions = {
-//     root: scrollRoot,
-//     threshold: 0.05,
-//     rootMargin: "0px 0px -60px 0px"
-// };
-
-// const observer = new IntersectionObserver((entries) => {
-//     entries.forEach(entry => {
-//         if (entry.isIntersecting) {
-//             const selectedDate = $(entry.target).attr("data-date");
-            // filterMarkersByDate(selectedDate);
-//         }
-//     });
-// }, observerOptions);
-// $(".day-header").each(function() {
-//     observer.observe(this);
-// });
-
-
-function getSurveyData() {
-    const cityEnum = {
-        "tokyo": 1,
-        "osaka": 2,
-        "fukuoka": 3,
-        "sapporo": 4,
-    }
-    const city_name = localStorage.getItem("selectedCity");
-
-    const survey =  {
-        country_name: "일본",
-        city: city_name,
-        cityId: cityEnum[city_name],
-        period: localStorage.getItem("selectedPeriod"),
-        companion: JSON.parse(localStorage.getItem("selectedCompanion")),
-        travelStyle: JSON.parse(localStorage.getItem("selectedTravelStyle")),
-        transport: JSON.parse(localStorage.getItem("selectedTransport")),
-        scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
-        startDate: new Date(localStorage.getItem("startDate")).toISOString().split("T")[0],
-        endDate: new Date(localStorage.getItem("endDate")).toISOString().split("T")[0],
-    }
-    return survey
-}
-function createInfoContainer(containerClass, labelClass, labelText, idClass, idText, isHidden=true) {
-    return $("<div>").addClass(containerClass).append(
-        $("<span>").addClass(labelClass).text(labelText),
-        $("<span>").addClass(idClass).attr("hidden", isHidden).text(idText)
-    );
-}
-
-function createDateContainer(startDate, endDate) {
-    return $("<div>").addClass("schedule-duration-container").append(
-        $("<span>").addClass("start-date").text(startDate),
-        $("<span>").addClass("schedule-date-seperator").text("~"),
-        $("<span>").addClass("end-date").text(endDate)
-    );
-}
-
-function createUpdateButton() {
-    return $("<div>").addClass("update-container").append(
-        $("<span>").attr("id", "updateBtn").addClass("update-schedule-btn").text("수정하기")
-    );
-}
-
-function createFooter(destId, krName, title, titleImg, score) {
-    return $("<div>").addClass("footer-anchor").append(
-        $("<div>").addClass("footer-dest-header").append(
-            $("<span>").addClass("footer-dest-id").attr("hidden", true).text(destId)
-        ),
-        $("<div>").addClass("footer-body-left").append(
-            $("<div>").addClass("footer-dest-titleImg-container").append(
-                $("<img>").attr("src", titleImg).attr("alt", "대표 이미지")
-            )
-        ),
-        $("<div>").addClass("footer-body-right").append(
-            $("<div>").addClass("footer-dest-data").append(
-                $("<span>").addClass("footer-dest-krName").text(krName ? krName : title),
-                $("<span>").addClass("footer-dest-content").text(title)
-            ),
-            $("<div>").addClass("footer-dest-meta-info").append(
-                $("<span>").addClass("footer-dest-score").text(score)
-            )
-        )
-    );
-}
-
-function renderSchedule(schedule, isRecommend) {
-    console.log(schedule);
-    let {countryName, countryId, cityName, cityId, id, name, startDate, endDate, detailSchedules} = schedule;
-    const $left = $(".left").empty();
-    const $footerDestContainer = $(".footer-dest-container").empty();
-    if (isRecommend) {
-        const cityNames = {
-            "tokyo": "도쿄",
-            "sapporo": "삿포로",
-            "osaka": "오사카",
-            "fukuoka": "후쿠오카"
+            return ;
         }
-        cityName = cityNames[cityName];
-    }
-    const $scheduleMetaInfo = $("<div>").addClass("schedule-meta-info").append(
-        createInfoContainer("country-name-container", "country-name", countryName || "일본", "country-id", countryId),
-        createInfoContainer("city-name-container", "city-name", cityName, "city-id", cityId),
-        createInfoContainer("schedule-info-container", "schedule-name", name, "schedule-id", id, true),
-        createDateContainer(startDate, endDate),
-        createUpdateButton()
-    );
-    $left.append($scheduleMetaInfo);
-    console.log(detailSchedules);
-    const $detailContainer = $("<div>", {class: "detail-container"})
-    detailSchedules.forEach((detailSchedule, dIndex) => {
-        const detailId = detailSchedule["id"];
-        let date = detailSchedule["date"];
-        const day = detailSchedule["day"];
-        const routes = detailSchedule["routes"];
-        if (!date) {
-            date = new Date(startDate);
-            date.setDate(date.getDate() + dIndex - 1);
-            date = date.toISOString().split("T")[0];
-        }
-            
-        const $dayAnchor = $("<div>").addClass("day-anchor");
-        const $dayHeader = $("<div>").addClass("day-header").append(
-            $("<span>").addClass("detail-schedule-id").attr("hidden", true).text(detailId),
-            $("<span>").addClass("date-order").text(`Day ${dIndex + 1}`),
-            $("<span>").addClass("detail-schedule-date").attr("hidden", true).text(date)
-        );
-        $dayAnchor.append($dayHeader);
-        // 마커 그리기
-        drawMapWithMarkers(routes)
 
-        routes.forEach((route, rIndex) => {
-            const {id: routeId, orderNumber, destination} = route;
-            const {id: destId, type, krName, title, latitude, longitude, titleImg, score} = destination;
+        const script = document.createElement("script");
+        script.src = `http://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+        script.async = true;
+        script.defer = true;
 
-            const $routeContainer = $("<div>").addClass("route-container").append(
-                $("<span>").addClass("route-id").attr("hidden", true).text(routeId),
-                $("<span>").addClass("route-order-number").attr("hidden", true).text(orderNumber),
-                $("<div>").addClass("dest-box").append(
-                    $("<a>", {attr: {"href": `/destinations/${destId}`}}).append(
-                        $("<div>").addClass("dest-info").append(
-                            $("<span>").addClass("dest-id").attr("hidden", true).text(destId),
-                            $("<div>").addClass("dest-titleImg-container").append(
-                                $("<a>").attr("href", titleImg)
-                            ),
-                            $("<div>").addClass("dest-data").append(
-                                $("<div>").addClass("dest-str-container").append(
-                                    $("<span>").addClass("dest-krName").text(krName || title),
-                                    $("<span>").addClass("dest-title").text(title)
-                                ),
-                                $("<div>").addClass("dest-meta").append(
-                                    $("<span>").addClass("dest-type").text(typeEnum[type]),
-                                    $("<div>").addClass("coordinate").append(
-                                        $("<span>").addClass("lat").attr("hidden", true).text(latitude),
-                                        $("<span>").addClass("lng").attr("hidden", true).text(longitude)
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-            $dayAnchor.append($routeContainer);
-            const $footer = createFooter(destId, krName, title, titleImg, score);
-            $footerDestContainer.append($footer);
-        });
-        $detailContainer.append($dayAnchor);
-    });
-    $scheduleMetaInfo.append($detailContainer);
+        script.onload = () => resolve(window.google.maps);
+        script.onerror = reject;
+
+        document.head.appendChild(script);
+    })
 }

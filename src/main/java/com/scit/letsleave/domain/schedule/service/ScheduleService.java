@@ -1,5 +1,6 @@
 package com.scit.letsleave.domain.schedule.service;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,11 +8,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.scit.letsleave.domain.destination.dto.DestinationForScheduleDto;
 import com.scit.letsleave.domain.destination.entity.CityEntity;
@@ -24,6 +32,7 @@ import com.scit.letsleave.domain.schedule.dto.DetailScheduleDto;
 import com.scit.letsleave.domain.schedule.dto.RouteDto;
 import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
 import com.scit.letsleave.domain.schedule.dto.ScheduleWithDetailInfoResponseDTO;
+import com.scit.letsleave.domain.schedule.dto.SurveyDto;
 import com.scit.letsleave.domain.schedule.entity.DetailScheduleEntity;
 import com.scit.letsleave.domain.schedule.entity.RouteEntity;
 import com.scit.letsleave.domain.schedule.entity.ScheduleEntity;
@@ -42,6 +51,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ScheduleService {
+
+    @Value("${RECOMMEND_SERVER_URI}")
+    private String recommend_server_uri;
+    @Value("${RECOMMEND_SERVER_PATH}")
+    private String recommend_server_path;
 
     private final CityRepository cityRepository;
     private final CountryRepository countryRepository;
@@ -117,7 +131,7 @@ public class ScheduleService {
         originSchedule.setEndDate(dto.getEndDate());
         originSchedule.setUpdatedAt(LocalDateTime.now());
 
-        detailScheduleRepository.deleteAll(originSchedule.getDetailSchedules());
+        originSchedule.getDetailSchedules().clear();
         saveDetailAndRoute(originSchedule, dto.getDetailSchedules());
 
         return scheduleRepository.findById(originSchedule.getId()).map(ScheduleDto::toDto)
@@ -178,5 +192,25 @@ public class ScheduleService {
                 first.getUserNickName(),
                 detailSchedules
         );
+    }
+
+    public Long getRecommendSchedule(SurveyDto surveyDto, Long userId) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        URI uri = UriComponentsBuilder
+            .fromUriString(recommend_server_uri)
+            .path(recommend_server_path)
+            .queryParam("userId", authentication.getName())
+            .encode()
+            .build()
+            .toUri();
+        RequestEntity<SurveyDto> requestEntity = RequestEntity.post(uri).body(surveyDto);
+        System.out.println(requestEntity);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<ScheduleDto> responseEntity = restTemplate.exchange(requestEntity, ScheduleDto.class);
+        ScheduleDto responseBody = responseEntity.getBody();
+        ScheduleDto schedule = saveSchedule(responseBody, userId);
+        		
+        return schedule.getId();
     }
 }

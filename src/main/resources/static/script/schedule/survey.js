@@ -41,14 +41,4 @@ $(function() {
 
         window.location.href = "/schedules/survey/calendar";
     })
-
-    $("#submitSurvey").on("click", () => {
-        const cityEnum = {
-            tokyo: 1,
-            osaka: 2,
-            fukuoka: 3,
-            sapporo: 4
-        }
-        window.location.href = `/schedules/recommendation/${cityEnum[$selectedCity]}`;
-    });
 });

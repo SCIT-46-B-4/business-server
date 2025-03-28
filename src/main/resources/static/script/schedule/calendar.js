@@ -1,3 +1,6 @@
+import {AjaxAPI} from "../global/ajax.js"
+
+
 $(function() {
     const dateFormat = "yy-mm-dd";
     let startDate = null;
@@ -30,5 +33,30 @@ $(function() {
             localStorage.setItem("startDate", startDate.toISOString());
             localStorage.setItem("endDate", endDate.toISOString());
         }
+    });
+
+    $("#submitSurvey").on("click", () => {
+        const cityEnum = {
+            tokyo: 1,
+            osaka: 2,
+            fukuoka: 3,
+            sapporo: 4
+        }
+        let surveyData = {
+            city: localStorage.getItem("selectedCity"),
+            period: localStorage.getItem("selectedPeriod"),
+            companion: localStorage.getItem("selectedCompanion"),
+            travelStyle: localStorage.getItem("selectedTravelStyle"),
+            transport: localStorage.getItem("selectedTransport"),
+            scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
+            startDate: localStorage.getItem("startDate"),
+            endDate: localStorage.getItem("endDate"),
+        };
+        const cityId = cityEnum[city];
+        surveyData["cityId"] = cityId;
+        AjaxAPI.getRecommendSchedule(surveyData, cityId)
+        .done((redirectUrl) => {
+            window.location.href = redirectUrl["scheduleDetailUrl"];
+        })
     });
 })

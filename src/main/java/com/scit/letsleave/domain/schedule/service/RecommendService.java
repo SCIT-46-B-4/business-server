@@ -36,7 +36,7 @@ public class RecommendService {
             .build()
             .toUri();
         RequestEntity<SurveyDto> requestEntity = RequestEntity.post(uri).body(surveyDto);
-        System.out.println(requestEntity);
+
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ScheduleDto> responseEntity = restTemplate.exchange(requestEntity, ScheduleDto.class);
         ScheduleDto responseBody = responseEntity.getBody();

@@ -30,10 +30,6 @@ public class DestinationController {
         // 1000m 이내의 추천 장소 (타입별 그룹화)
         Map<String, List<DestinationDto>> nearbyDestinations = destinationService.getNearbyDestinationsByType(destinationId, 1000, 4);
 
-        // 디버깅 로그 추가
-        System.out.println("Destination: " + destination);
-        System.out.println("Nearby Destinations: " + nearbyDestinations);
-
         model.addAttribute("destination", destination);
         model.addAttribute("nearbyDestinations", nearbyDestinations);
 

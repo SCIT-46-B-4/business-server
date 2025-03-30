@@ -30,8 +30,6 @@ $(function() {
             endDate.setDate(endDate.getDate() + daysToAdd);
 
             $("#startDateCalendar").datepicker("refresh");
-            localStorage.setItem("startDate", startDate.toISOString());
-            localStorage.setItem("endDate", endDate.toISOString());
         }
     });
 
@@ -42,21 +40,34 @@ $(function() {
             fukuoka: 3,
             sapporo: 4
         }
+        const city = localStorage.getItem("selectedCity");
+
         let surveyData = {
-            city: localStorage.getItem("selectedCity"),
+            city: city,
             period: localStorage.getItem("selectedPeriod"),
-            companion: localStorage.getItem("selectedCompanion"),
-            travelStyle: localStorage.getItem("selectedTravelStyle"),
-            transport: localStorage.getItem("selectedTransport"),
+            companion: JSON.parse(localStorage.getItem("selectedCompanion")),
+            travelStyle: JSON.parse(localStorage.getItem("selectedTravelStyle")),
+            transport: JSON.parse(localStorage.getItem("selectedTransport")),
             scheduleStyle: localStorage.getItem("selectedScheduleStyle"),
-            startDate: localStorage.getItem("startDate"),
-            endDate: localStorage.getItem("endDate"),
+            startDate: formatDate(startDate),
+            endDate: formatDate(endDate),
         };
         const cityId = cityEnum[city];
         surveyData["cityId"] = cityId;
+
         AjaxAPI.getRecommendSchedule(surveyData, cityId)
-        .done((redirectUrl) => {
-            window.location.href = redirectUrl["scheduleDetailUrl"];
+        .done((res) => {
+            window.location.href = res.redirectUrl;
+        })
+        .fail((res) => {
+            console.error(res);
         })
     });
 })
+
+function formatDate(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+}

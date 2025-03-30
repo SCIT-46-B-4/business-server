@@ -2,7 +2,7 @@
 
 
 body {
-    background-image: url("../static/images/index/background1.png");
+    background-image: url("../images/index/background1.png");
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
@@ -29,6 +29,11 @@ section {
     justify-content: center;
 }
 
+.title {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
 .content {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.8);
@@ -40,6 +45,15 @@ section {
     animation: slideUp 0.8s ease-out forwards;
     /* 애니메이션 딜레이는 스크롤 위치나 원하는 타이밍에 따라 조절 */
     animation-delay: 0.4s;
+}
+
+span.eng-title {
+    font-size: x-large;
+    font-weight: bolder;
+}
+span.kr-title {
+    font-size: medium;
+    font-weight: 500;
 }
 
 /* 슬라이드 업 애니메이션 정의 */

@@ -72,12 +72,12 @@
                         <div class="attraction-box">
                             <button class="delete-dest-btn">-</button>
                             <div class="dest-img" th:switch="${route.destination.type}">
-                                <img th:case="1" th:href="|${baseStaticURL}/sightseeing/destination/${route.destination.titleImg}|">
-                                <img th:case="2" th:href="|${baseStaticURL}/restaurant/destination/${route.destination.titleImg}|">
-                                <img th:case="3" th:href="|${baseStaticURL}/shopping/destination/${route.destination.titleImg}|">
-                                <img th:case="4" th:href="|${baseStaticURL}/accommodation/destination/${route.destination.titleImg}|">
-                                <img th:case="5" th:href="|${baseStaticURL}/transport/destination/${route.destination.titleImg}|">
-                                <img th:case="6" th:href="|${baseStaticURL}/tourism/destination/${route.destination.titleImg}|">
+                                <img th:case="1" th:src="|${baseStaticURL}/sightseeing/destination/${route.destination.titleImg}|">
+                                <img th:case="2" th:src="|${baseStaticURL}/restaurant/destination/${route.destination.titleImg}|">
+                                <img th:case="3" th:src="|${baseStaticURL}/shopping/destination/${route.destination.titleImg}|">
+                                <img th:case="4" th:src="|${baseStaticURL}/accommodation/destination/${route.destination.titleImg}|">
+                                <img th:case="5" th:src="|${baseStaticURL}/transport/destination/${route.destination.titleImg}|">
+                                <img th:case="6" th:src="|${baseStaticURL}/tourism/destination/${route.destination.titleImg}|">
                             </div>
                             <div class="dest-info">
                                 <span class="dest-id" th:text="${route.destination.id}" hidden></span>
@@ -122,30 +122,33 @@
 
         <!-- 검색 결과 컨테이너 -->
         <div class="result-box">
-            <div class="destination-card" th:each="hotDestination: ${hotDestinations}">
-                <div class="dest-img-container">
-                    <img class="dest-img" src="your-image-url.jpg" alt="Destination Image">
+            <div class="destination-card" th:each="destination: ${hotDestinations}">
+                <div class="dest-img-container" th:switch="${destination.type}">
+                    <img class="dest-img" th:case="1" th:src="|${baseStaticURL}/sightseeing/destination/${route.destination.titleImg}|" alt="Destination Image">
+                    <img class="dest-img" th:case="2" th:src="|${baseStaticURL}/restaurant/destination/${route.destination.titleImg}|" alt="Destination Image">
+                    <img class="dest-img" th:case="3" th:src="|${baseStaticURL}/shopping/destination/${route.destination.titleImg}|" alt="Destination Image">
+                    <img class="dest-img" th:case="4" th:src="|${baseStaticURL}/accommodation/destination/${route.destination.titleImg}|" alt="Destination Image">
+                    <img class="dest-img" th:case="5" th:src="|${baseStaticURL}/transport/destination/${route.destination.titleImg}|" alt="Destination Image">
+                    <img class="dest-img" th:case="6" th:src="|${baseStaticURL}/tourism/destination/${route.destination.titleImg}|" alt="Destination Image">
                 </div>
-                <div class="dest-info" th:each="destination: ${hotDestinations}">
-                    <div class="dest-line1">
-                        <span class="dest-id" hidden th:text="${destination.id}"></span>
-                        <span class="dest-krName" th:text="${destination.krName}"></span>
-                        <div class="rating-container">
-                            <span class="star-rating" style="--score-percent: 90%;"></span>
-                            <span class="dest-score" th:text="${destination.score}"></span>
-                        </div>
+                <div class="dest-line1">
+                    <span class="dest-id" hidden th:text="${destination.id}"></span>
+                    <span class="dest-krName" th:text="${destination.krName}"></span>
+                    <div class="rating-container">
+                        <span class="star-rating" style="--score-percent: 90%;"></span>
+                        <span class="dest-score" th:text="${destination.score}"></span>
                     </div>
-                    <div class="dest-line2">
-                        <span class="dest-title" th:text="${destination.title}"></span>
-                    </div>
-                    <div class="dest-line3" th:switch="${destination.type}">
-                        <span class="dest-type" th:case="1" th:text="관광지"></span>
-                        <span class="dest-type" th:case="2" th:text="식당"></span>
-                        <span class="dest-type" th:case="3" th:text="쇼핑센터"></span>
-                        <span class="dest-type" th:case="4" th:text="숙박업소"></span>
-                        <span class="dest-type" th:case="5" th:text="대중교통"></span>
-                        <span class="dest-type" th:case="6" th:text="여행지"></span>
-                    </div>
+                </div>
+                <div class="dest-line2">
+                    <span class="dest-title" th:text="${destination.title}"></span>
+                </div>
+                <div class="dest-line3" th:switch="${destination.type}">
+                    <span class="dest-type" th:case="1" th:text="관광지"></span>
+                    <span class="dest-type" th:case="2" th:text="식당"></span>
+                    <span class="dest-type" th:case="3" th:text="쇼핑센터"></span>
+                    <span class="dest-type" th:case="4" th:text="숙박업소"></span>
+                    <span class="dest-type" th:case="5" th:text="대중교통"></span>
+                    <span class="dest-type" th:case="6" th:text="여행지"></span>
                 </div>
                 <div class="append-destination-container">
                     <button class="append-destination-btn">+</button>

@@ -10,6 +10,27 @@
       href="../../static/css/guide/main-city.css"
       th:href="@{/css/guide/main-city.css}"
     />
+    <script>
+      window.onload = function () {
+          document.querySelectorAll(".limited-text").forEach(function (el) {
+              const maxHeight = 200;
+              if (el.scrollHeight > maxHeight) {
+                  el.style.maxHeight = maxHeight + "px";
+                  el.style.overflow = "hidden";
+                  el.style.position = "relative";
+
+                  const fade = document.createElement("div");
+                  fade.style.position = "absolute";
+                  fade.style.bottom = "0";
+                  fade.style.right = "0";
+                  fade.style.width = "100%";
+                  fade.style.height = "30px";
+                  fade.style.background = "linear-gradient(to bottom, transparent, white)";
+                  el.appendChild(fade);
+              }
+          });
+      }
+  </script>
   </head>
 
   <body>
@@ -34,7 +55,7 @@
             <a th:href="@{/guides/{id}(id = ${place.id})}" class="tour-item">
               <div class="tour-info">
                 <h2 th:text="${place.title}"></h2>
-                <p th:utext="${place.content}"></p>
+                <div th:utext="${place.content}" class="limited-text"></div>
               </div>
             </a>
           </div>

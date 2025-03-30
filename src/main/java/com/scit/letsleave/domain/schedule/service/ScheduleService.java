@@ -97,20 +97,17 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleDto saveSchedule(ScheduleDto dto, Long userId) {
+    public Long saveSchedule(ScheduleDto dto, Long userId) {
         UserEntity user = userRepository.findById(userId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-        CountryEntity country = countryRepository.findById(dto.getCountryId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
         CityEntity city = cityRepository.findById(dto.getCityId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "City not found"));
+        CountryEntity country = city.getCountry();
 
         ScheduleEntity savedSchedule = scheduleRepository.save(ScheduleEntity.toEntity(dto, user, country, city));
-
         saveDetailAndRoute(savedSchedule, dto.getDetailSchedules());
 
-        return scheduleRepository.findById(savedSchedule.getId()).map(ScheduleDto::toDto)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "저장된 스케줄을 찾을 수 없습니다."));
+        return savedSchedule.getId();
     }
 
     @Transactional
@@ -205,12 +202,12 @@ public class ScheduleService {
             .build()
             .toUri();
         RequestEntity<SurveyDto> requestEntity = RequestEntity.post(uri).body(surveyDto);
-        System.out.println(requestEntity);
+
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ScheduleDto> responseEntity = restTemplate.exchange(requestEntity, ScheduleDto.class);
         ScheduleDto responseBody = responseEntity.getBody();
-        ScheduleDto schedule = saveSchedule(responseBody, userId);
-        		
-        return schedule.getId();
+        Long scheduleId = saveSchedule(responseBody, userId);
+
+        return scheduleId;
     }
 }

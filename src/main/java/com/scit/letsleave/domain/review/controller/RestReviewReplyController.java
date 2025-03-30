@@ -19,17 +19,17 @@ public class RestReviewReplyController {
 
     /** 댓글 목록 조회 */
     @GetMapping("/{reviewId}/replies")
-    public List<ReviewReplyDTO> getReviewCommentList(@PathVariable Long reviewId) {
+    public List<ReviewReplyDTO> getReviewCommentList(@PathVariable(name="reviewId") Long reviewId) {
         return reviewReplyService.getReplies(reviewId);
     }
 
     /**
      * 댓글 등록
      */
-    // parentReplyId = null이면 최상위, 있으면 대댓글
+    // parentReplyId=null이면 최상위, 있으면 대댓글
     @PostMapping("/{reviewId}/replies")
     public void saveReviewComment(
-            @PathVariable(name = "reviewId") Long reviewId,
+            @PathVariable(name="reviewId") Long reviewId,
             @RequestBody ReviewReplyCreateRequestDTO requestBody,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
@@ -39,8 +39,8 @@ public class RestReviewReplyController {
     /** 댓글 수정 */
     @PutMapping("/{reviewId}/replies/{replyId}")
     public boolean updateReviewComment(
-            @PathVariable(name = "reviewId") Long reviewId,
-            @PathVariable(name = "replyId") Long replyId,
+            @PathVariable(name="reviewId") Long reviewId,
+            @PathVariable(name="replyId") Long replyId,
             @RequestBody ReviewReplyUpdateRequestDTO requestBody
     ) {
         return reviewReplyService.updateReply(replyId, requestBody.getNewContent());
@@ -49,8 +49,8 @@ public class RestReviewReplyController {
     /** 댓글 삭제 */
     @DeleteMapping("/{reviewId}/replies/{replyId}")
     public boolean deleteReviewComment(
-            @PathVariable(name = "reviewId") Long reviewId,
-            @PathVariable(name = "replyId") Long replyId
+            @PathVariable(name="reviewId") Long reviewId,
+            @PathVariable(name="replyId") Long replyId
     ) {
         return reviewReplyService.deleteReply(replyId);
     }

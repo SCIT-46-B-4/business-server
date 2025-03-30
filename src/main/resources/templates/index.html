@@ -3,41 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>떠나조</title>
-    <script src="../static/script/global/jquery.js" th:src="@{/script/global/jquery.js}"></script>
-    <script src="../static/script/index.js" th:src="@{/script/index.js}"></script>
-    <link rel="stylesheet" href="../static/css/index.css">
+    <script th:src="@{/script/global/jquery.js}"></script>
+    <script th:src="@{/script/index.js}"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}">
     <script>
-    window.onload = function () {
-	        document.querySelectorAll(".limited-text").forEach(function (el) {
-	            const maxHeight = 200;
-	            if (el.scrollHeight > maxHeight) {
-	                el.style.maxHeight = maxHeight + "px";
-	                el.style.overflow = "hidden";
-	                el.style.position = "relative";
-	
-	                const fade = document.createElement("div");
-	                fade.style.position = "absolute";
-	                fade.style.bottom = "0";
-	                fade.style.right = "0";
-	                fade.style.width = "100%";
-	                fade.style.height = "30px";
-	                fade.style.background = "linear-gradient(to bottom, transparent, white)";
-	                el.appendChild(fade);
-	            }
-	        });
-    }
-</script>
+        window.onload = function () {
+            document.querySelectorAll(".limited-text").forEach(function (el) {
+                const maxHeight = 200;
+                if (el.scrollHeight > maxHeight) {
+                    el.style.maxHeight = maxHeight + "px";
+                    el.style.overflow = "hidden";
+                    el.style.position = "relative";
+
+                    const fade = document.createElement("div");
+                    fade.style.position = "absolute";
+                    fade.style.bottom = "0";
+                    fade.style.right = "0";
+                    fade.style.width = "100%";
+                    fade.style.height = "30px";
+                    fade.style.background = "linear-gradient(to bottom, transparent, white)";
+                    el.appendChild(fade);
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-    <div id="topNav" class="top-nav">
-        <nav>
-            <a href="/schedules/1">aaa</a>
-        </nav>
-    </div>
+    <div th:insert="~{fragments/header::top-bar}"></div>
+    <div th:insert="~{fragments/slidePanel::slide-panel}"></div>
+
     <section class="scroll-section">
-        <div class="content">
-            
-            <p>Let’s Leave 고민 없이 떠나조</p>
+        <div class="content title">
+            <span class="eng-title">Let’s Leave</span>
+            <span class="kr-title">고민 없이 떠나조</span>
         </div>
     </section>
     <!-- 추가 섹션: 스크롤하면 다른 콘텐츠가 나타납니다 -->

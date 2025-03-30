@@ -97,7 +97,8 @@ function bindAppendDestinationEvent() {
             name: $card.find(".dest-krName").text(),
             type: $card.find(".dest-type").text(),
             city: $card.find(".loc-city").text(),
-            score: $card.find(".dest-img").text()
+            imageUrl: $card.find("img.dest-img").attr("src").split("/").pop(),
+            title: $card.find(".dest-title").text()
         };
 
         const newFlexItem = createFlexItem(destData);
@@ -105,9 +106,10 @@ function bindAppendDestinationEvent() {
 
         $currentDayAnchor = null;
         $("#searchWrapper").hide();
-        $(".result-box").empty()
+        $(".result-box").empty();
     });
 }
+
 
 function bindAddDayEvent() {
     $(document).on("click", ".add-day-btn", function () {
@@ -137,7 +139,6 @@ function bindUpdateScheduleEvent() {
 
         AjaxAPI.updateSchedule(schedule, scheduleId)
         .done((res) => {
-            console.log(res);
             window.location.href = res.redirectUrl;
         })
         .fail((err) => {console.error(err);});
@@ -162,7 +163,7 @@ function createDayAnchor() {
 }
 
 function createFlexItem({ id, name, type, city, imageUrl, title }) {
-    const engType = getTypeLabel(type);
+    const engType = getEngTypeLabel(type);
     return `
         <div class="flex-item">
             <div class="route-id" hidden></div>
@@ -266,14 +267,16 @@ function triggerSearch() {
     }
 
     AjaxAPI.getDestinations(keyword, cityId)
-    .done(renderSearchResults)
+    .done((response) => {
+        renderSearchResults(response);
+    })
     .fail(err => {
         console.error(err);
         alert("검색 중 오류가 발생했습니다.");
     });
 }
 
-function getTypeLabel(type) {
+function getEngTypeLabel(type) {
     switch (type) {
         case "1": return "sightseeing";
         case "2": return "restaurant";
@@ -284,39 +287,54 @@ function getTypeLabel(type) {
     }
 }
 
+function getKrTypeLabel(type) {
+    switch (type) {
+        case "1": return "관광지";
+        case "2": return "식당";
+        case "3": return "쇼핑센터";
+        case "4": return "숙박업소";
+        case "5": return "대중교통";
+        case "6": return "여행지";
+    }
+}
+
 function renderSearchResults(results) {
-    const $resultBox = $(".result-box");
-    $resultBox.empty();
+    let $resultBox = $(".result-box");
+    if ($resultBox.length === 0) {
+        $resultBox = $("<div>", {class: "result-box"})
+        $(".right").append($resultBox);
+    }
 
-    results.forEach(destination => {
-        const engType = getTypeLabel(destination.type);
+    let card = "";
 
-        const card = `
+    results.forEach((destination) => {
+        const engType = getEngTypeLabel(destination.type);
+        const krType = getKrTypeLabel(destination.type);
+
+        card += `
             <div class="destination-card">
-                <div class="dest-img">
-                    <img src="/destination/${engType}/${destination.imageUrl}" alt="Destination Image">
+                <div class="dest-img-container">
+                    <img class="dest-img" src="/${engType}/destination/${destination.imageUrl}" alt="Destination Image">
                 </div>
-                <div class="dest-info">
-                    <div class="dest-line1">
-                        <span class="dest-krName">${destination.krName}</span>
-                        <div class="rating-container">
-                            <span class="star-rating" style="--score-percent: ${destination.score * 20}%"></span>
-                            <span class="dest-score">${destination.score}</span>
-                        </div>
+                <div class="dest-line1">
+                    <span class="dest-id" hidden>${destination.id}</span>
+                    <span class="dest-krName">${destination.krName}</span>
+                    <div class="rating-container">
+                        <span class="star-rating" style="--score-percent: ${destination.score * 20}%"></span>
+                        <span class="dest-score">${destination.score}</span>
                     </div>
-                    <div class="dest-line2">
-                        <span class="dest-title">${destination.title}</span>
-                    </div>
-                    <div class="dest-line3">
-                        <span class="dest-type">${destination.typeName}</span>
-                    </div>
+                </div>
+                <div class="dest-line2">
+                    <span class="dest-title">${destination.title}</span>
+                </div>
+                <div class="dest-line3">
+                    <span class="dest-type">${krType}</span>
                 </div>
                 <div class="append-destination-container">
                     <button class="append-destination-btn">+</button>
                 </div>
-                <div class="dest-id" hidden>${destination.id}</div>
             </div>
         `;
-        $resultBox.append(card);
     });
+    $resultBox.html(card).slideDown(300);
 }

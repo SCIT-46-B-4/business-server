@@ -38,14 +38,12 @@ $(document).ready(function () {
         const msg = $btn.hasClass("active")
           ? "좋아요 등록 성공!"
           : "좋아요 취소 성공!";
-        console.log(msg);
         alert(msg);
       },
       error: function (err) {
         const msg = $btn.hasClass("active")
           ? "좋아요 등록 실패!"
           : "좋아요 취소 실패!";
-        console.log(msg, err);
         alert(msg);
       },
     });

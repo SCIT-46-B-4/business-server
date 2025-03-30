@@ -1,6 +1,8 @@
 $(function() {
+    let $selectedCity = null;
+
     $("#saveAndGoToNextPage").on("click", () => {
-        const $selectedCity = $('input[name="city"]:checked');
+        $selectedCity = $('input[name="city"]:checked');
         const $selectedPeriod = $('input[name="period"]:checked');
 
         if (!$selectedCity.length || !$selectedPeriod.length) {
@@ -39,8 +41,4 @@ $(function() {
 
         window.location.href = "/schedules/survey/calendar";
     })
-
-    $("#submitSurvey").on("click", () => {
-        window.location.href = "/schedules?isRecommend=true";
-    });
 });

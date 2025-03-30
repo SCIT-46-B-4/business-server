@@ -1,16 +1,29 @@
 package com.scit.letsleave.domain.review.entity;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.scit.letsleave.domain.user.entity.UserEntity;
-import jakarta.persistence.*;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -64,26 +77,12 @@ public class ReviewReplyEntity {
         isDeleted = true;
     }
 
-    public void modifyContent(String content) {
-        this.content = content;
-    }
-
-    public void setReplyOrder(Integer replyOrder) {
-        this.replyOrder = replyOrder;
-    }
-
-    public void setReplyDepth(Integer replyDepth) {
-        this.replyDepth = replyDepth;
-    }
+    public void modifyContent(String content) {this.content = content;}
+    public void setReplyOrder(Integer replyOrder) {this.replyOrder = replyOrder;}
+    public void setReplyDepth(Integer replyDepth) {this.replyDepth = replyDepth;}
 
     @Builder
-    public ReviewReplyEntity(ReviewEntity review,
-                             UserEntity user,
-                             String content,
-                             ReviewReplyEntity parentReply,
-                             Integer replyOrder,
-                             Integer replyDepth
-    ) {
+    public ReviewReplyEntity(ReviewEntity review, UserEntity user, String content, ReviewReplyEntity parentReply, Integer replyOrder, Integer replyDepth) {
         this.review = review;
         this.user = user;
         this.content = content;

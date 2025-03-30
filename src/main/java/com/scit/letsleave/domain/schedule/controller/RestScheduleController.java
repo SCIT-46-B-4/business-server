@@ -30,16 +30,6 @@ public class RestScheduleController {
 
     private final ScheduleService scheduleService;
 
-    // 스케줄 저장하기
-    @PostMapping("")
-    public ScheduleDto saveSchedule(@RequestBody ScheduleDto dto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        ScheduleDto savedDto = scheduleService.saveSchedule(dto, Long.valueOf(authentication.getName()));
-
-        return savedDto;
-    }
-
     @PatchMapping("/{scheduleId}")
     public ResponseEntity<Map<String, String>> updateSchedule(@PathVariable(name="scheduleId") Long scheduleId, @RequestBody ScheduleDto dto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,19 +47,12 @@ public class RestScheduleController {
         return ResponseEntity.ok(scheduleService.findByUserId(Long.valueOf(authentication.getName())));
     }
 
-    // 일정 상세 조회를 위한 api
-    @GetMapping("/{id}")
-    public ResponseEntity<ScheduleDto> getSchedule(@PathVariable(name="id") Long id) {
-
-        return ResponseEntity.ok(scheduleService.findById(id));
-    }
-
-    // 추천 시스템에 접속 해 추천 목록 가져오기
+    
     @PostMapping("/recommendation/{cityId}")
-    public Long getRecommendedSchedule(@PathVariable(name="cityId") Integer cityId, @RequestBody SurveyDto surveyDto) {
+    public ResponseEntity<Map<String, String>> getRecommendSchedule(@PathVariable(name="cityId") Integer cityId, @RequestBody SurveyDto surveyDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long recommendScheduleId = scheduleService.getRecommendSchedule(surveyDto, Long.valueOf(authentication.getName()));
+        Long scheduleId = scheduleService.getRecommendSchedule(surveyDto, Long.valueOf(authentication.getName()));
 
-        return recommendScheduleId;
+        return ResponseEntity.ok(Map.of("redirectUrl", "/schedules/" + scheduleId));
     }
 }

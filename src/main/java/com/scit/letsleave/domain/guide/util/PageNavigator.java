@@ -27,7 +27,6 @@ public class PageNavigator {
 		//총글개수 152개 이면 16펭지, 2그룹
 		totalGroupCount = totalPages / pagePerGroup;
 		totalGroupCount += (totalPages % pagePerGroup == 0) ? 0 : 1;  
-		System.out.println("총 그룹수 : " + totalGroupCount);   
 		
 		//사용자가 요청한 페이지의 첫 번쨰, 마지막
 		//page : 15, pageLimit : 10 :1
@@ -36,7 +35,6 @@ public class PageNavigator {
 		// 1~10페이지 요청하면  ==> 1
 		// 12 페이지 요청하면  ==> 11
 		startPageGroup = ((int)(Math.ceil((double)page / pageLimit)) - 1) * pageLimit + 1;
-		System.out.println("첫 페이지 총 그룹수 : " + startPageGroup);   
 		
 		
 		// 1~10 사이의 페이지 요청하면 epg  ==> 10
@@ -46,11 +44,9 @@ public class PageNavigator {
 		endPageGroup = (startPageGroup + pagePerGroup -1) >= totalPages
 				 	? totalPages : (startPageGroup + pagePerGroup - 1);
 		if(endPageGroup == 0 ) endPageGroup = 1;
-		System.out.println("요청한 마지막 (총 그룹수 : " + endPageGroup);   
 		
 		// 16p를 요청했다면 현재 그룹? 2
 		//(16-1) / 10 ==? 1 + 1 ==> 2
 		currentGroup = (page - 1) / pagePerGroup + 1;
-		System.out.println("현재 (총 그룹수 : " + currentGroup);   
 	}
 }

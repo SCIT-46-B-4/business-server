@@ -3,24 +3,18 @@ package com.scit.letsleave.domain.schedule.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scit.letsleave.domain.destination.dto.DestinationDto;
 import com.scit.letsleave.domain.destination.dto.DestinationForScheduleDto;
 import com.scit.letsleave.domain.destination.service.DestinationService;
 import com.scit.letsleave.domain.schedule.dto.RouteDto;
 import com.scit.letsleave.domain.schedule.dto.ScheduleDto;
-import com.scit.letsleave.domain.schedule.dto.SurveyDto;
 import com.scit.letsleave.domain.schedule.service.ScheduleService;
 import com.scit.letsleave.global.GoogleMapConfig;
 
@@ -97,15 +91,5 @@ public class ScheduleController {
         model.addAttribute("hotDestinations", top10Destinations);
 
         return "schedule/updateView";
-    }
-
-    @PostMapping("/recommendation/{cityId}")
-    public String getRecoomendSchedule(@PathVariable(name="cityId") Integer cityId, @RequestBody SurveyDto surveyDto, RedirectAttributes redirection) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long scheduleId = scheduleService.getRecommendSchedule(surveyDto, Long.valueOf(authentication.getName()));
-
-        redirection.addAttribute("id", scheduleId);
-
-        return "redirect:/schedules/{id}";
     }
 }

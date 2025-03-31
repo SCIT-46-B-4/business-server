@@ -4,7 +4,12 @@ import java.math.BigDecimal;
 
 import com.scit.letsleave.domain.destination.entity.DestinationEntity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 
 @AllArgsConstructor
@@ -12,6 +17,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@ToString
 public class DestinationForScheduleDto {
     
     private Long id;

@@ -19,21 +19,17 @@ public class RestReviewLikeController {
 
     @GetMapping("/{reviewId}/like")
     public ResponseEntity<ReviewLikeResponseDTO> getLike(
-            @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable("reviewId") Long reviewId
+        @AuthenticationPrincipal UserDetails userDetails,
+        @PathVariable(name="reviewId") Long reviewId
     ) {
-        return ResponseEntity.ok(
-                reviewLikeService.getLike(userDetails, reviewId)
-        );
+        return ResponseEntity.ok(reviewLikeService.getLike(userDetails, reviewId));
     }
 
     @GetMapping("/{reviewId}/changeLike")
     public ResponseEntity<ReviewLikeResponseDTO> changeLike(
-            @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable("reviewId") Long reviewId
+        @AuthenticationPrincipal UserDetails userDetails,
+        @PathVariable(name="reviewId") Long reviewId
     ) {
-        return ResponseEntity.ok(
-                reviewLikeService.changeLike(userDetails, reviewId)
-        );
+        return ResponseEntity.ok(reviewLikeService.changeLike(userDetails, reviewId));
     }
 }

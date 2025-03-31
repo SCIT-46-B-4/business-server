@@ -3,117 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>떠나조</title>
-    <script src="../static/script/global/jquery.js" th:src="@{/script/global/jquery.js}"></script>
-    <script src="../static/script/index.js" th:src="@{/script/index.js}"></script>
+    <script th:src="@{/script/global/jquery.js}"></script>
+    <script th:src="@{/script/index.js}"></script>
+    <script th:src="@{/script/fragments/slidePanel.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/slidePanel.css}">
     <script>
-    window.onload = function () {
-	        document.querySelectorAll(".limited-text").forEach(function (el) {
-	            const maxHeight = 200;
-	            if (el.scrollHeight > maxHeight) {
-	                el.style.maxHeight = maxHeight + "px";
-	                el.style.overflow = "hidden";
-	                el.style.position = "relative";
-	
-	                const fade = document.createElement("div");
-	                fade.style.position = "absolute";
-	                fade.style.bottom = "0";
-	                fade.style.right = "0";
-	                fade.style.width = "100%";
-	                fade.style.height = "30px";
-	                fade.style.background = "linear-gradient(to bottom, transparent, white)";
-	                el.appendChild(fade);
-	            }
-	        });
-    }
-</script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url("../static/images/index/background1.png");
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            font-family: sans-serif;
-        }
+        window.onload = function () {
+            document.querySelectorAll(".limited-text").forEach(function (el) {
+                const maxHeight = 200;
+                if (el.scrollHeight > maxHeight) {
+                    el.style.maxHeight = maxHeight + "px";
+                    el.style.overflow = "hidden";
+                    el.style.position = "relative";
 
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            z-index: 1000;
+                    const fade = document.createElement("div");
+                    fade.style.position = "absolute";
+                    fade.style.bottom = "0";
+                    fade.style.right = "0";
+                    fade.style.width = "100%";
+                    fade.style.height = "30px";
+                    fade.style.background = "linear-gradient(to bottom, transparent, white)";
+                    el.appendChild(fade);
+                }
+            });
         }
-        section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .content {
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            transform: translateY(100px);
-            opacity: 0;
-            animation: slideUp 0.8s ease-out forwards;
-            /* 애니메이션 딜레이는 스크롤 위치나 원하는 타이밍에 따라 조절 */
-            animation-delay: 0.4s;
-        }
-		.guide-row {
-            display: flex;
-        }
-
-        /* 슬라이드 업 애니메이션 정의 */
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-    </style>
+    </script>
 </head>
 <body>
-    <div id="topNav" class="top-nav">
-        <nav>
-            <a href="/schedules/1">aaa</a>
-        </nav>
-    </div>
+    <div th:insert="~{fragments/header::top-bar}"></div>
+    <div th:insert="~{fragments/slidePanel::slide-panel}"></div>
+
     <section class="scroll-section">
-        <div class="content">
-            
-            <p>Let’s Leave 고민 없이 떠나조</p>
+        <div class="content title">
+            <span class="eng-title">Let’s Leave</span>
+            <span class="kr-title">고민 없이 떠나조</span>
         </div>
     </section>
     <!-- 추가 섹션: 스크롤하면 다른 콘텐츠가 나타납니다 -->
     <section class="scroll-section">
         <div class="content">
-            <div th:each="i : ${#numbers.sequence(0, guides.size() - 1)}" class="guide-row">
-            	<span>[[${i}]]</span>
-                <div th:if="${i % 2 == 0}" style="width: 50%;">
-                    <div class="odd-row" style="background-color: #e8f0fe; margin: 10px; padding: 10px; box-sizing: border-box;">
-                        <img th:src="${baseStaticURL} + '/images/guide/' + ${guides[i].titleImg}">
-                        <h3 th:text="${guides[i].title}"></h3>
-                        <div th:utext="${guides[i].content}" class="limited-text"></div>
-                    </div>
-                    <div class="odd-row" style="background-color: #ffffff; margin: 10px; padding: 10px; box-sizing: border-box; border-left: 1px solid #ccc;">
-                        <img th:src="${baseStaticURL} + '/images/guide/' + ${guides[i].titleImg}">
-                        <h3 th:text="${guides[i+1].title}"></h3>
-                        <p th:utext="${guides[i+1].content}" class="limited-text"></p>
-                    </div>
+            <div th:each="i : ${#numbers.sequence(0, guides.size() - 1)}" th:if="${i % 4 == 0}" class="guide-row">
+                <div class="guide-card">
+                    <img class="guide-img" th:src="${baseStaticURL} + '/images/guide/' + ${guides[i].titleImg}">
+                    <h3 class="guide-title" th:text="${guides[i].title}"></h3>
+                    <div th:utext="${guides[i].content}" class="limited-text"></div>
+                </div>
+                <div class="guide-card">
+                    <img class="guide-img" th:src="${baseStaticURL} + '/images/guide/' + ${guides[i+1].titleImg}">
+                    <h3 class="guide-title" th:text="${guides[i+1].title}"></h3>
+                    <div th:utext="${guides[i+1].content}" class="limited-text"></div>
+                </div>
+                <div class="guide-card">
+                    <img class="guide-img" th:src="${baseStaticURL} + '/images/guide/' + ${guides[i+2].titleImg}">
+                    <h3 class="guide-title" th:text="${guides[i+2].title}"></h3>
+                    <div th:utext="${guides[i+2].content}" class="limited-text"></div>
+                </div>
+                <div class="guide-card">
+                    <img class="guide-img" th:src="${baseStaticURL} + '/images/guide/' + ${guides[i+3].titleImg}">
+                    <h3 class="guide-title" th:text="${guides[i+3].title}"></h3>
+                    <div th:utext="${guides[i+3].content}" class="limited-text"></div>
                 </div>
             </div>
         </div>

@@ -102,11 +102,6 @@ CREATE TABLE subtypes (
 CREATE TABLE destinations (
 	id				BIGINT			PRIMARY KEY AUTO_INCREMENT,
 	city_id			INT				NULL,
-	-- 1: 관광지, 2: 식당, 3: 쇼핑센터, 4: 숙박업소, 5: 대중교통
-	`type_id`		INT				NULL,
-	-- 1: 공원, 2: 신사, 3: 한식당, 4: 중식 등
-	subtype_id		INT				NULL,
-    -- 임시 항목 
 	type			CHAR(1)			NOT NULL,
 	kr_name			VARCHAR(256)	NOT NULL,
 	loc_name		VARCHAR(256)	NOT NULL,
@@ -130,8 +125,6 @@ CREATE TABLE destinations (
 	updated_at		DATETIME		NULL,
 
 	CONSTRAINT		`fk_destinations_city`		FOREIGN KEY (city_id)		REFERENCES cities	(id) ON DELETE SET NULL,
-	CONSTRAINT		`fk_destinations_types`		FOREIGN KEY (type_id)		REFERENCES `types`	(id) ON DELETE SET NULL,
-	CONSTRAINT		`fk_destinations_subtypes`	FOREIGN KEY (subtype_id)	REFERENCES subtypes	(id) ON DELETE SET NULL,
 
 	SPATIAL  INDEX	`idx_coordinate` (coordinate),
 	FULLTEXT INDEX	`idx_fulltext` (kr_name, title, `content`)
@@ -201,15 +194,20 @@ CREATE TABLE schedule_review_likes (
 	CONSTRAINT `fk_schedule_review_likes_schedule_review_id`	FOREIGN KEY (schedule_review_id)	REFERENCES schedule_reviews (id)	ON DELETE CASCADE
 );
 
-CREATE TABLE schedule_reviews_replies (
+CREATE TABLE schedule_review_replies (
 	id					BIGINT			PRIMARY KEY AUTO_INCREMENT,
 	user_id				BIGINT			NOT NULL,
 	schedule_review_id	BIGINT			NOT NULL,
+	parent_reply		BIGINT			NULL,
 	content				VARCHAR(512)	NOT NULL,
+	is_deleted			TINYINT(1)		NOT NULL DEFAULT 0,
+	reply_depth			INT				NOT NULL DEFAULT 0,
+	reply_order			INT				NOT NULL DEFAULT 0,
 	created_at			DATETIME		NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at			DATETIME		NULL,
-	CONSTRAINT `fk_schedule_reviews_replies_user`				FOREIGN KEY (user_id)				REFERENCES users (id)				ON DELETE CASCADE,
-	CONSTRAINT `fk_schedule_reviews_replies_schedule_review`	FOREIGN KEY (schedule_review_id)	REFERENCES schedule_reviews (id)	ON DELETE CASCADE
+	CONSTRAINT `fk_schedule_reviews_replies_user`				FOREIGN KEY (user_id)				REFERENCES users (id)					ON DELETE CASCADE,
+	CONSTRAINT `fk_schedule_reviews_replies_schedule_reCview`	FOREIGN KEY (schedule_review_id)	REFERENCES schedule_reviews (id)		ON DELETE CASCADE,
+	CONSTRAINT `fk_self_reference_to_parent`					FOREIGN KEY (parent_reply)			REFERENCES schedule_review_replies (id) ON DELETE CASCADE
 );
 
 CREATE TABLE destination_likes (
